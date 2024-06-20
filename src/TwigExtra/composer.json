@@ -1,0 +1,33 @@
+{
+    "name": "sylius/twig-extra",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sylius project",
+            "homepage": "https://sylius.com"
+        },
+        {
+            "name": "Community contributions",
+            "homepage": "https://github.com/Sylius/Stack/contributors"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "symfony/http-kernel": "^6.4 || ^7.0",
+        "symfony/twig-bundle": "^6.4 || ^7.0"
+    },
+    "conflict": {
+        "sylius/ui-bundle": "<2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sylius\\TwigExtra\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Sylius\\TwigExtra\\": "tests/"
+        }
+    }
+}

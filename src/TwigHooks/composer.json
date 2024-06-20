@@ -1,7 +1,7 @@
 {
     "name": "sylius/twig-hooks",
     "description": "Composable Twig layouts",
-    "type": "project",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {

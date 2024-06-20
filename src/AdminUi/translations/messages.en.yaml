@@ -1,0 +1,29 @@
+sylius:
+    ui:
+        actions: Actions
+        are_your_sure_you_want_to_perform_this_action: Are you sure to want to perform this action?
+        cancel: Cancel
+        contains: Contains
+        create: Create
+        dashboard: Dashboard
+        delete: Delete
+        edit: Edit
+        empty: Empty
+        ends_with: Ends with
+        equal: Equal
+        filter: Filter
+        filters: Filters
+        in: In
+        new: New
+        not_contains: Not contains
+        not_empty: Not empty
+        not_equal: Not equal
+        not_in: Not in
+        pagination:
+            number_of_results: 'Showing %from% to %to% of %total% entries'
+        reset: Reset
+        search: Search
+        show: Show
+        starts_with: Starts with
+        update: Update
+        value: Value
