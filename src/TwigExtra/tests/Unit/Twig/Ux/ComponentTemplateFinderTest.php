@@ -37,12 +37,12 @@ final class ComponentTemplateFinderTest extends TestCase
     public function testItFindsAnonymousComponentTemplate(): void
     {
         $componentTemplateFinder = $this->createTemplateFinder(
-            ['@SyliusBootstrapUi/components/some_sub_component.html.twig' => ''],
-            ['sylius_admin_ui:component' => '@SyliusBootstrapUi/components'],
+            ['@SyliusBootstrapTheme/components/some_sub_component.html.twig' => ''],
+            ['sylius_admin_ui:component' => '@SyliusBootstrapTheme/components'],
         );
 
         $this->assertEquals(
-            '@SyliusBootstrapUi/components/some_sub_component.html.twig',
+            '@SyliusBootstrapTheme/components/some_sub_component.html.twig',
             $componentTemplateFinder->findAnonymousComponentTemplate('sylius_admin_ui:component:some_sub_component'),
         );
     }
