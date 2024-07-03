@@ -1,0 +1,15 @@
+sylius:
+    ui:
+        actions: Actions
+        are_your_sure_you_want_to_perform_this_action: 'Are you sure you want to perform this action?'
+        cancel: Cancel
+        create: Create
+        dashboard: Dashboard
+        delete: Delete
+        edit: Edit
+        filter: Filter
+        filters: Filters
+        new: New
+        reset: Reset
+        show: Show
+        update: Update

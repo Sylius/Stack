@@ -1,3 +1,5 @@
 app:
     ui:
+        book: Book
         books: Books
+        library: Library

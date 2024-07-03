@@ -5,7 +5,7 @@
     'sylius_admin.common'
 ] %}
 
-{% set event_name = metadata.applicationName ~ '.admin.' ~ 'index.body' %}
+{% set metadata = resource_metadata|default(metadata) %}
 
 {% set header = configuration.vars.header|default(metadata.applicationName~'.ui.'~metadata.pluralName) %}
 

@@ -21,8 +21,10 @@
         "knplabs/knp-menu-bundle": "^3.0",
         "laminas/laminas-stdlib": "^3.18",
         "pagerfanta/doctrine-orm-adapter": "^4.6",
+        "pagerfanta/twig": "^4.6",
         "sylius/grid-bundle": "dev-symfony-7",
         "sylius/resource-bundle": "dev-symfony-7",
+        "symfony/asset": "^6.4 || ^7.0",
         "symfony/config": "^6.4 || ^7.0",
         "symfony/dependency-injection": "^6.4 || ^7.0",
         "symfony/expression-language": "^6.4 || ^7.0",
@@ -57,6 +59,7 @@
     "autoload": {
         "psr-4": {
             "Sylius\\AdminUi\\": "src/AdminUi/src/",
+            "Sylius\\BootstrapTheme\\": "src/BootstrapTheme/src/",
             "Sylius\\TwigExtra\\": "src/TwigExtra/src/",
             "Sylius\\TwigHooks\\": "src/TwigHooks/src/"
         }

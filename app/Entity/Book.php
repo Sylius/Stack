@@ -10,19 +10,25 @@ use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Resource\Annotation\SyliusCrudRoutes;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Resource\Metadata\AsResource;
+use Sylius\Resource\Metadata\BulkDelete;
 use Sylius\Resource\Metadata\Create;
+use Sylius\Resource\Metadata\Delete;
 use Sylius\Resource\Metadata\Index;
 use Sylius\Resource\Metadata\Update;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 #[AsResource(
     section: 'admin',
     templatesDir: '@SyliusAdminUi/crud',
     routePrefix: '/admin',
+    pluralName: 'library',
     operations: [
         new Create(),
         new Update(),
         new Index(grid: BookGrid::class),
+        new Delete(),
+        new BulkDelete(),
     ],
 )]
 #[SyliusCrudRoutes(
@@ -46,9 +52,11 @@ class Book implements ResourceInterface
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
     private ?string $title = null;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
     private ?string $authorName = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
