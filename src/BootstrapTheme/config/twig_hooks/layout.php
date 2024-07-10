@@ -9,12 +9,12 @@ return static function (ContainerConfigurator $container): void {
         'hooks' => [
             'sylius_admin.base#stylesheets' => [
                 'styles' => [
-                    'template' => '@SyliusBootstrapTheme/layout/stylesheets.html.twig',
+                    'template' => '@SyliusBootstrapTheme/shared/layout/stylesheets.html.twig',
                 ],
             ],
             'sylius_admin.base#javascripts' => [
                 'javascripts' => [
-                    'template' => '@SyliusBootstrapTheme/layout/javascripts.html.twig',
+                    'template' => '@SyliusBootstrapTheme/shared/layout/javascripts.html.twig',
                 ],
             ],
         ],

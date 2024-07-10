@@ -3,6 +3,7 @@ sylius:
         actions: Actions
         are_your_sure_you_want_to_perform_this_action: 'Are you sure you want to perform this action?'
         cancel: Cancel
+        contains: Contains
         create: Create
         dashboard: Dashboard
         delete: Delete
@@ -12,4 +13,6 @@ sylius:
         new: New
         reset: Reset
         show: Show
+        search: Search
         update: Update
+        value: Value
