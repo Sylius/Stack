@@ -61,7 +61,8 @@
             "Sylius\\AdminUi\\": "src/AdminUi/src/",
             "Sylius\\BootstrapTheme\\": "src/BootstrapTheme/src/",
             "Sylius\\TwigExtra\\": "src/TwigExtra/src/",
-            "Sylius\\TwigHooks\\": "src/TwigHooks/src/"
+            "Sylius\\TwigHooks\\": "src/TwigHooks/src/",
+            "Sylius\\UiTranslations\\": "src/UiTranslations/src/"
         }
     },
     "autoload-dev": {
