@@ -16,5 +16,6 @@ sylius:
         reset: Reset
         show: Show
         search: Search
+        search_menu: 'Search menu'
         update: Update
         value: Value

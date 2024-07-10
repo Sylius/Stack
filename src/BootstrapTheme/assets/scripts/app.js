@@ -7,4 +7,5 @@ import 'bootstrap';
 import './bulk-delete';
 import './check-all';
 import './confirm';
+import './menu-search';
 import './tree';
