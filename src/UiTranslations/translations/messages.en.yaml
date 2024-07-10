@@ -11,6 +11,8 @@ sylius:
         filter: Filter
         filters: Filters
         new: New
+        pagination:
+            number_of_results: 'Showing %from% to %to% of %total% entries'
         reset: Reset
         show: Show
         search: Search
