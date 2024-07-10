@@ -1,7 +1,5 @@
-{% set event_name = 'sylius.admin.common.navbar' %}
-
-<header class="navbar navbar-expand-md d-none d-lg-flex d-print-none">
-    <div class="container-xl">
-{#        {{ sylius_template_event(event_name, { event_prefix: event_name }) }}#}
+<header class="navbar d-print-none">
+    <div class="container-xl d-flex">
+        {% hook 'sylius_admin.common.component.navbar' with { _prefixes: [] } %}
     </div>
 </header>
