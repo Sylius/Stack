@@ -8,4 +8,5 @@ import './bulk-delete';
 import './check-all';
 import './confirm';
 import './menu-search';
+import './sticky-header';
 import './tree';
