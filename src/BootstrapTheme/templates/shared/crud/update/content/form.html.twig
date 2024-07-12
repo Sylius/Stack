@@ -33,7 +33,7 @@
             {{ form_end(form, {'render_rest': render_rest}) }}
             {% if render_rest %}
                 </div>
-                <div class="card-footer">
+                <div class="card-footer" {{ sylius_test_html_attribute('form-actions') }}>
                     <div class="row align-items-center">
                         <div class="col"></div>
                         <div class="col-auto">

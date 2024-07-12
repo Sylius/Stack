@@ -102,8 +102,8 @@ final class BookTest extends WebTestCase
         self::assertSelectorExists('#sylius_resource_authorName');
 
         // Validate Buttons
-        self::assertSelectorTextContains('[type=submit]', 'Create');
-        self::assertSelectorTextContains('.btn', 'Cancel');
+        self::assertSelectorExists('[data-test-form-actions] [type="submit"]:contains("Create")');
+        self::assertSelectorExists('[data-test-form-actions] .btn:contains("Cancel")');
     }
 
     public function testAddingBook(): void
@@ -149,8 +149,8 @@ final class BookTest extends WebTestCase
         self::assertSelectorExists('#sylius_resource_authorName');
 
         // Validate Buttons
-        self::assertSelectorTextContains('[type=submit]', 'Update');
-        self::assertSelectorTextContains('.btn', 'Cancel');
+        self::assertSelectorExists('[data-test-form-actions] [type="submit"]:contains("Update")');
+        self::assertSelectorExists('[data-test-form-actions] .btn:contains("Cancel")');
     }
 
     public function testEditingBook(): void
