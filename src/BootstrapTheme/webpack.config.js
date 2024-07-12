@@ -34,7 +34,7 @@ Encore
 
   .addPlugin(new WebpackRTLPlugin())
 
-  .addEntry('app', './assets/scripts/app.js')
+  .addEntry('app', './assets/entrypoint.js')
   .enableSassLoader((options) => {
     //options.additionalData = '@import "~semantic-ui-css/semantic.min.css";';
   })
