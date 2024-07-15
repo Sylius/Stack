@@ -23,9 +23,9 @@ return static function (ContainerConfigurator $container): void {
                     'template' => '@SyliusBootstrapTheme/shared/crud/common/content/header.html.twig',
                 ],
                 'form' => [
-                    'template' => '@SyliusBootstrapTheme/shared/crud/create/content/form.html.twig',
+                    'template' => '@SyliusBootstrapTheme/shared/crud/common/content/form.html.twig',
                     'configuration' => [
-                        'render_rest' => true,
+                        'render_rest' => false,
                     ],
                 ],
             ],
@@ -51,6 +51,21 @@ return static function (ContainerConfigurator $container): void {
                 ],
                 'create' => [
                     'template' => '@SyliusBootstrapTheme/shared/crud/common/content/header/title_block/actions/create.html.twig',
+                ],
+            ],
+            'sylius_admin.common.create.content.form' => [
+                'sections' => [
+                    'template' => '@SyliusBootstrapTheme/shared/crud/common/content/form/sections.html.twig',
+                ],
+            ],
+            'sylius_admin.common.create.content.form.sections' => [
+                'details' => [
+                    'template' => '@SyliusBootstrapTheme/shared/crud/common/content/form/sections/details.html.twig',
+                ],
+            ],
+            'sylius_admin.common.create.content.form.sections.details' => [
+                'default' => [
+                    'template' => '@SyliusBootstrapTheme/shared/crud/common/content/form/sections/details/default.html.twig',
                 ],
             ],
         ],
