@@ -9,12 +9,11 @@
 
 import './styles/main.scss';
 
-// import './bootstrap';
+import './bootstrap';
 
 import './scripts/bulk-delete';
 import './scripts/check-all';
 import './scripts/choices';
-import './scripts/confirm';
 import './scripts/menu-search';
 import './scripts/sticky-header';
 import './scripts/tree';

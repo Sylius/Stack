@@ -39,5 +39,8 @@ Encore
     //options.additionalData = '@import "~semantic-ui-css/semantic.min.css";';
   })
   .autoProvidejQuery()
+  .enableStimulusBridge(
+    './assets/controllers.json'
+  )
 
 module.exports = Encore.getWebpackConfig();
