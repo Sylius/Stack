@@ -16,6 +16,6 @@ final class DefaultBooksStory extends Story
             ->withAuthorName('George Orwell')
         ;
 
-        BookFactory::createMany(20);
+        BookFactory::createMany(100);
     }
 }

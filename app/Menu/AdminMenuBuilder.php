@@ -61,26 +61,18 @@ final class AdminMenuBuilder implements MenuBuilderInterface
 
     private function addConfigurationSubMenu(ItemInterface $menu): void
     {
-        $library = $menu
+        $configuration = $menu
             ->addChild('configuration')
             ->setLabel('Configuration')
             ->setLabelAttribute('icon', 'dashboard')
         ;
 
-        $library->addChild('backend_channel')
-            ->setLabel('Channels')
-            ->setLabelAttribute('icon', 'shuffle');
+        $configuration->addChild('admin_talks', ['route' => 'app_admin_talk_index'])
+            ->setLabel('app.ui.talks')
+        ;
 
-        $library->addChild('backend_countries')
-            ->setLabel('Countries')
-            ->setLabelAttribute('icon', 'flag');
-
-        $library->addChild('backend_zones')
-            ->setLabel('Zones')
-            ->setLabelAttribute('icon', 'globe');
-
-        $library->addChild('backend_administrators')
-            ->setLabel('Admin Users')
-            ->setLabelAttribute('icon', 'lock');
+        $configuration->addChild('admin_speakers', ['route' => 'app_admin_speaker_index'])
+            ->setLabel('app.ui.speakers')
+        ;
     }
 }

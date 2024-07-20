@@ -7,7 +7,14 @@
 {%- endblock pager_widget -%}
 
 {%- block page_link -%}
-    <li class="page-item"><a class="page-link" href="{{- path -}}">{{- page -}}</a></li>
+    <li class="page-item">
+        <a class="page-link"
+           href="{{- path -}}"
+           data-live-action-param="changePage"
+           data-action="live#action"
+           data-live-page-param="{{ page }}"
+        >{{- page -}}</a>
+    </li>
 {%- endblock page_link -%}
 
 {%- block current_page_link -%}
@@ -18,7 +25,7 @@
     {% from '@SyliusBootstrapTheme/shared/helper/icon.html.twig' import icon as _icon %}
 
     <li class="page-item">
-        <a class="page-link" href="{{- path -}}" rel="prev">
+        <a class="page-link" href="{{- path -}}" rel="prev" data-live-action-param="previousPage" data-action="live#action">
             {{ _icon({ icon: 'chevron-left' }) }} {{- block('previous_page_message') -}}
         </a>
     </li>
@@ -38,7 +45,7 @@
     {% from '@SyliusBootstrapTheme/shared/helper/icon.html.twig' import icon as _icon %}
 
     <li class="page-item">
-        <a class="page-link" href="{{- path -}}" rel="next">
+        <a class="page-link" href="{{- path -}}" rel="next" data-live-action-param="nextPage" data-action="live#action">
             {{- block('next_page_message') -}} {{ _icon({ icon: 'chevron-right' }) }}
         </a>
     </li>

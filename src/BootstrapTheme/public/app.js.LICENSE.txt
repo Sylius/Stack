@@ -15,4 +15,8 @@
  * Date: 2023-08-28T13:37Z
  */
 
+/*! @orchidjs/unicode-variants | https://github.com/orchidjs/unicode-variants | Apache License (v2) */
+
 /*! choices.js v10.2.0 | © 2022 Josh Johnson | https://github.com/jshjohnson/Choices#readme */
+
+/*! sifter.js | https://github.com/orchidjs/sifter.js | Apache License (v2) */

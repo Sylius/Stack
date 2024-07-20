@@ -1,0 +1,18 @@
+{% import '@SyliusBootstrapTheme/shared/helper/avatar.html.twig' as avatar %}
+{% import '@SyliusBootstrapTheme/shared/helper/dropdown.html.twig' as dropdown %}
+
+{% if app.user %}
+    {% set dropdown_trigger %}
+        <div class="d-flex lh-1 text-reset p-0 cursor-pointer">
+            <div>
+                {{ avatar.small() }}
+            </div>
+            <div class="d-none d-xl-block ps-2">
+                <div class="mb-1 small text-muted">Hello</div>
+                <div>{{ user.userIdentifier }}</div>
+            </div>
+        </div>
+    {% endset %}
+
+    {{ dropdown.list({ customTrigger: dropdown_trigger, direction: 'down-end' }, menu_items) }}
+{% endif %}

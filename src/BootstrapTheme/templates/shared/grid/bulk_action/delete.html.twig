@@ -1,6 +1,9 @@
 {% import '@SyliusBootstrapTheme/shared/helper/button.html.twig' as _button %}
 
-{% set path = options.link.url|default(path(options.link.route|default(grid.requestConfiguration.getRouteName('bulk_delete')), options.link.parameters|default({}))) %}
+{% set parametersRoutePath = grid.parameters.get('operations').bulk_delete ? path(grid.parameters.get('operations').bulk_delete, options.link.parameters|default({})) : null %}
+{% set requestConfigurationRoutePath = grid.requestConfiguration is defined ? path(grid.requestConfiguration.getRouteName('bulk_delete'), options.link.parameters|default({})) : null %}
+
+{% set path = options.link.url|default(parametersRoutePath|default(requestConfigurationRoutePath)) %}
 
 {% component 'sylius_admin_ui:delete_modal' with {id: 'bulk_delete', path: path, type: 'bulk-delete', form_attr: 'data-bulk-delete=index'} %}
     {% import '@SyliusBootstrapTheme/shared/helper/button.html.twig' as button %}

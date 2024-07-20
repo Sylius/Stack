@@ -29,6 +29,11 @@ final class SyliusBootstrapThemeBundle extends AbstractBundle
         return $this->path;
     }
 
+    public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+    {
+        $container->import('../../config/services.php');
+    }
+
     public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
     {
         $bundles = $builder->getParameter('kernel.bundles');
@@ -56,7 +61,7 @@ final class SyliusBootstrapThemeBundle extends AbstractBundle
             ],
         ]);
 
-        $container->import('../../config/twig_hooks.php');
-        $container->import('../../config/sylius_grid.php');
+        // $container->import('../../config/twig_hooks.php');
+        // $container->import('../../config/sylius_grid.php');
     }
 }

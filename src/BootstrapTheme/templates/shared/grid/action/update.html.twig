@@ -1,6 +1,10 @@
 {% from '@SyliusBootstrapTheme/shared/helper/icon.html.twig' import icon %}
 
-{% set path = options.link.url|default(path(options.link.route|default(grid.requestConfiguration.getRouteName('update')), options.link.parameters|default({'id': data.id}))) %}
+{% set contextRoutePath = grid.parameters.get('operations').update is defined ? path(grid.parameters.get('operations').update, options.link.parameters|default({'id': data.id})) : null %}
+{% set requestConfigurationRoutePath = grid.requestConfiguration is defined ? path(grid.requestConfiguration.getRouteName('update'), options.link.parameters|default({'id': data.id})) : null %}
+
+{% set path = options.link.url|default(contextRoutePath|default(requestConfigurationRoutePath)) %}
+
 {% set message = action.label|default('sylius.ui.edit') %}
 
 <a href="{{ path }}" class="btn btn-icon" data-bs-toggle="tooltip" data-bs-title="{{ message|trans }}">

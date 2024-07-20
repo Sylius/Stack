@@ -1,7 +1,7 @@
 {% import '@SyliusBootstrapTheme/shared/helper/table.html.twig' as _table %}
 {% import '@SyliusBootstrapTheme/shared/helper/pagination.html.twig' as _pagination %}
 
-{% set resources = hookable_metadata.context.resources %}
+{% set resources = resources|default(hookable_metadata.context.resources|default(null)) %}
 {% set data = resources.data %}
 {% set definition = resources.definition %}
 

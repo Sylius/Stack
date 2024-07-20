@@ -1,7 +1,7 @@
 {% import "@SyliusBootstrapTheme/shared/helper/accordion.html.twig" as _accordion %}
 {% import "@SyliusBootstrapTheme/shared/helper/button.html.twig" as _button %}
 
-{% set resources = hookable_metadata.context.resources %}
+{% set resources = resources|default(hookable_metadata.context.resources|default(null)) %}
 
 {% set path = path(app.request.attributes.get('_route'), app.request.attributes.all('_route_params')) %}
 {% set are_criteria_set = app.request.query.has('criteria') %}
@@ -9,7 +9,14 @@
 <div class="bg-white mb-5">
     {% set content %}
         <div class="mb-3">
-            <form method="get" action="{{ path }}" novalidate {{ sylius_test_html_attribute('filters-form') }}>
+            <form method="get"
+                  action="{{ path }}"
+                  data-action="live#action:prevent"
+                  data-live-action-param="debounce(300)|filter"
+                  data-model="norender|*"
+                  novalidate
+                  {{ sylius_test_html_attribute('filters-form') }}
+            >
                 <div class="sylius-filters">
                     {% for filter in resources.definition.enabledFilters|filter(filter => filter.enabled)|sort_by('position') %}
                         <div class="sylius-filters__item">

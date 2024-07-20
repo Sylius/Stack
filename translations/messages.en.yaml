@@ -3,3 +3,8 @@ app:
         book: Book
         books: Books
         library: Library
+        show_talks: Show talks
+        speaker: Speaker
+        speakers: Speakers
+        talk: Talk
+        talks: Talks

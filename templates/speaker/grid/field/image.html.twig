@@ -1,0 +1,5 @@
+{% import '@SyliusBootstrapTheme/shared/helper/avatar.html.twig' as avatar %}
+
+{% set avatar_path = data.avatar.path is defined ? vich_uploader_asset(data.avatar) : null %}
+
+{{ avatar.default(avatar_path, 'img-thumbnail') }}

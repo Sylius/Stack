@@ -31,6 +31,19 @@ use Symfony\Component\Validator\Constraints as Assert;
         new BulkDelete(),
     ],
 )]
+#[AsResource(
+    section: 'admin_live_component',
+    templatesDir: '@SyliusAdminUi/crud',
+    routePrefix: '/admin/live-component',
+    pluralName: 'library',
+    operations: [
+        new Create(),
+        new Update(),
+        new Index(template: 'book/index.html.twig', grid: BookGrid::class),
+        new Delete(),
+        new BulkDelete(),
+    ],
+)]
 #[SyliusCrudRoutes(
     alias: 'app.book',
     path: '/admin/legacy/books',

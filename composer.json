@@ -29,8 +29,11 @@
         "symfony/dependency-injection": "^6.4 || ^7.0",
         "symfony/expression-language": "^6.4 || ^7.0",
         "symfony/http-kernel": "^6.4 || ^7.0",
+        "symfony/security-bundle": "^6.4 || ^7.0",
+        "symfony/serializer": "6.4 || ^7.0",
         "symfony/stopwatch": "^6.4 || ^7.0",
         "symfony/twig-bundle": "^6.4 || ^7.0",
+        "symfony/ux-autocomplete": "^2.17",
         "symfony/ux-live-component": "^2.17",
         "symfony/ux-twig-component": "^2.17",
         "twig/twig": "^2.15 || ^3.0"
@@ -50,11 +53,13 @@
         "symfony/dotenv": "^6.4 || ^7.0",
         "symfony/flex": "^2.4",
         "symfony/framework-bundle": "^6.4 || ^7.0",
+        "symfony/maker-bundle": "^1.60",
         "symfony/runtime": "^6.4 || ^7.0",
         "symfony/translation": "^6.4 || ^7.0",
         "symfony/web-profiler-bundle": "^6.4 || ^7.0",
         "symfony/yaml": "^6.4 || ^7.0",
         "symplify/monorepo-builder": "11.2.*",
+        "vich/uploader-bundle": "^2.4",
         "zenstruck/foundry": "^2.0"
     },
     "autoload": {

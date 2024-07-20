@@ -11,6 +11,8 @@
         "sylius/twig-hooks": "^0.2",
         "symfony/asset": "^6.4 || ^7.0",
         "symfony/http-kernel": "^6.4 || ^7.0",
-        "symfony/ux-live-component": "^2.17"
+        "symfony/security-bundle": "^6.4 || ^7.0",
+        "symfony/ux-live-component": "^2.17",
+        "symfony/ux-autocomplete": "^2.13"
     }
 }

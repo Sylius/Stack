@@ -15,7 +15,7 @@ return static function (ContainerConfigurator $container): void {
                 'delete' => '@SyliusBootstrapTheme/shared/grid/action/delete.html.twig',
 //                    'links' => '@SyliusUi/Grid/Action/links.html.twig',
                 'update' => '@SyliusBootstrapTheme/shared/grid/action/update.html.twig',
-//                    'show' => '@SyliusUi/Grid/Action/show.html.twig',
+                    'show' => '@SyliusBootstrapTheme/shared/grid/action/show.html.twig',
             ],
             'filter' => [
                 'boolean' => '@SyliusBootstrapTheme/shared/grid/filter/boolean.html.twig',
@@ -25,6 +25,7 @@ return static function (ContainerConfigurator $container): void {
                 'money' => '@SyliusBootstrapTheme/shared/grid/filter/money.html.twig',
                 'select' => '@SyliusBootstrapTheme/shared/grid/filter/select.html.twig',
                 'string' => '@SyliusBootstrapTheme/shared/grid/filter/string.html.twig',
+                'ux_autocomplete' => '@SyliusBootstrapTheme/shared/grid/filter/autocomplete.html.twig',
             ],
             'bulk_action' => [
                 'delete' => '@SyliusBootstrapTheme/shared/grid/bulk_action/delete.html.twig',

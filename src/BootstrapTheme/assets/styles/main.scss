@@ -1,4 +1,4 @@
-/*
+/*!
  * This file is part of the Sylius package.
  *
  * (c) Sylius Sp. z o.o.
@@ -15,16 +15,31 @@
 //@import "@tabler/core/src/scss/tabler-flags.scss";
 @import "_flags.scss";
 
+body {
+    --bs-body-bg: #{$body-bg};
+    --bs-tertiary-bg: #{$body-bg};
+    --bs-body-color: #{$body-color};
+}
+
+@import "alert";
+@import "avatar";
 @import "collapse";
+@import "datatable";
+@import "filters";
 @import "form";
 @import "layout";
+@import "loader";
 @import "modal";
 @import "navbar";
+@import "rating";
 @import "sidebar";
+@import "tom-select";
 
 @import "body";
 @import "choices";
 
-.focus .ts-control {
-    box-shadow: none;
+.sylius-admin-product-attribute-autocomplete {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem;
 }

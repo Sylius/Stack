@@ -1,0 +1,12 @@
+{% extends '@SyliusAdminUi/crud/index.html.twig' %}
+
+{% block content %}
+    {{ component('app_book_grid', {
+        operationName: operation.name,
+        grid: resources.definition.code,
+        resources: resources,
+        page: app.request.get('page', 1),
+        currentCriteria: app.request.get('criteria', []),
+        nbPages: resources.data.nbPages,
+    }) }}
+{% endblock %}

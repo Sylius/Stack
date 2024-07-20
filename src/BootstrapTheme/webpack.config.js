@@ -1,3 +1,4 @@
+const path = require('path');
 var Encore = require('@symfony/webpack-encore');
 const WebpackRTLPlugin = require('webpack-rtl-plugin');
 
@@ -34,13 +35,13 @@ Encore
 
   .addPlugin(new WebpackRTLPlugin())
 
-  .addEntry('app', './assets/entrypoint.js')
+  .addEntry('app', path.resolve(__dirname, 'assets/entrypoint.js'))
   .enableSassLoader((options) => {
     //options.additionalData = '@import "~semantic-ui-css/semantic.min.css";';
   })
   .autoProvidejQuery()
   .enableStimulusBridge(
-    './assets/controllers.json'
+    path.resolve(__dirname, 'assets/controllers.json')
   )
 
 module.exports = Encore.getWebpackConfig();

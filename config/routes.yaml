@@ -3,3 +3,7 @@ index:
     controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
     defaults:
         template: base.html.twig
+
+sylius_admin_entity_autocomplete:
+    controller: ux.autocomplete.entity_autocomplete_controller
+    path: '/autocomplete/{alias}'
