@@ -1,0 +1,15 @@
+{% form_theme form '@SyliusBootstrapTheme/shared/form_theme.html.twig' %}
+
+<div class="sylius-filters__string">
+    {% if form.type is defined %}
+        {{ form_row(form.type, {
+            attr: {'data-model': 'norender|' ~ (form.type.vars.id|replace({'criteria_': '', '_': '.'}))
+        }, 'label': filter.label}) }}
+    {% endif %}
+
+    {{ form_row(form.value, {
+        attr: {
+            placeholder: form.value.vars.label,
+            'data-model': 'norender|' ~ (form.value.vars.id|replace({'criteria_': '', '_': '.'}))
+        }, 'label': form.type is defined ? form.value.vars.label : filter.label}) }}
+</div>

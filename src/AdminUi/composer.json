@@ -1,0 +1,15 @@
+{
+  "name": "sylius/admin-ui",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "Sylius\\AdminUi\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^8.1",
+    "knplabs/knp-menu-bundle": "^3.0",
+    "sylius/twig-hooks": "^0.2",
+    "symfony/http-kernel": "^6.4 || ^7.0"
+  }
+}

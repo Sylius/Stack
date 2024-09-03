@@ -2,6 +2,10 @@
 
 * [About Sylius Stack](README.md)
 
+## 🍀 Twig Extra
+
+* [Getting started](twig-extra/getting-started.md)
+
 ## 🌱 Twig Hooks
 
 * [Getting started](twig-hooks/getting-started.md)

@@ -22,8 +22,12 @@ services:
         resource: '../app/*'
         exclude: '../app/{Entity,Migrations,Tests,Kernel.php}'
 
+    App\Grid\Renderer\Context\Factory\ActionContextFactoryInterface: '@App\Grid\Renderer\Context\Factory\ActionContextFactory'
+
     # Controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
 #    App\Controller\:
 #        resource: '../src/Controller'
 #        tags: ['controller.service_arguments']
+
+    Sylius\BootstrapTheme\Twig\Component\UserDropdownComponent: null

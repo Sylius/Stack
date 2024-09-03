@@ -1,0 +1,8 @@
+{% set dashboard_path = hookable_metadata.context.routing.dashboard_path|default('/admin') %}
+
+<h1 class="navbar-brand">
+    <a href="{{ dashboard_path }}" style="text-decoration: none">
+        <img src="{{ asset('afup-icon-color.png') }}" alt="AFUP logo" class="navbar-brand-image" />
+        AFUP
+    </a>
+</h1>

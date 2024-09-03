@@ -1,7 +1,7 @@
 {
     "name": "sylius/twig-hooks",
     "description": "Composable Twig layouts",
-    "type": "project",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
@@ -52,6 +52,18 @@
         "psr-4": {
             "TestApplication\\Sylius\\TwigHooks\\": "tests/Functional/.application/src/",
             "Tests\\Sylius\\TwigHooks\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "symfony/runtime": true
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "symfony": {
+            "require": "7.0.*"
         }
     }
 }

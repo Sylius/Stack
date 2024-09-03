@@ -14,6 +14,8 @@ final class HookableTwigComponentTest extends KernelTestCase
 {
     public function testItRendersHookableLiveComponentWithUsingTwigHooks(): void
     {
+        self::bootKernel();
+
         $this->assertSame(
             <<<EXPECTED
             <!-- BEGIN HOOK | name: "hookable_twig_component" -->

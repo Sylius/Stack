@@ -14,6 +14,7 @@ jobs:
             fail-fast: false
             matrix:
                 php: [ "8.1", "8.2", "8.3" ]
+                postgres: ["14.6"]
                 symfony: [ "^6.4", "^7.0" ]
                 exclude:
                     - php: "8.1"
@@ -21,6 +22,7 @@ jobs:
         name: "PHP ${{ matrix.php }} / Symfony ${{ matrix.symfony }}"
         env:
             APP_ENV: test
+            DATABASE_URL: "pgsql://postgres:postgres@127.0.0.1/sylius_stack?charset=utf8&serverVersion=${{ matrix.postgres }}"
         steps:
             -   name: "Checkout"
                 uses: actions/checkout@v3
@@ -31,6 +33,15 @@ jobs:
                     php-version: "${{ matrix.php }}"
                     tools: symfony
                     coverage: none
+
+            -   name: Shutdown default MySQL
+                run: sudo service mysql stop
+
+            -   name: Setup PostgreSQL
+                uses: harmon758/postgresql-action@v1
+                with:
+                    postgresql version: "${{ matrix.postgres }}"
+                    postgresql password: "postgres"
 
             -   name: "Restrict packages' versions"
                 run: |
@@ -67,8 +78,23 @@ jobs:
             -   name: Run PHPStan
                 run: vendor/bin/phpstan analyse
 
+            -   name: Create Testing database
+                run: |
+                    bin/console doctrine:database:create
+                    bin/console doctrine:schema:create
+
             -   name: Run PHPUnit
                 run: vendor/bin/phpunit
 
+            - name: "Restrict packages' versions (Twig Hooks)"
+              run: |
+                  (cd src/TwigHooks/ && composer global config --no-plugins allow-plugins.symfony/flex true)
+                  (cd src/TwigHooks/ && composer global config --no-plugins allow-plugins.symfony/runtime true)
+                  (cd src/TwigHooks/ && composer global require --no-progress --no-scripts --no-plugins "symfony/flex")
+                  (cd src/TwigHooks/ && composer config extra.symfony.require "${{ matrix.symfony }}")
+
+            -   name: "Install dependencies (Twig Hooks)"
+                run: (cd src/TwigHooks/ && composer update --no-interaction --no-scripts)
+
             -   name: Run PHPUnit (Twig Hooks)
-                run: vendor/bin/phpunit -c src/TwigHooks/phpunit.xml.dist
+                run: (cd src/TwigHooks/ && vendor/bin/phpunit)
