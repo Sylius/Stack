@@ -16,11 +16,8 @@ class TalkType extends AbstractType
     {
         $builder
             ->add('title')
+            ->add('speaker', SpeakerAutocompleteType::class)
             ->add('description')
-            ->add('speaker', EntityType::class, [
-                'class' => Speaker::class,
-                'choice_label' => fn (Speaker $speaker) :string => $speaker->getFullName(),
-            ])
         ;
     }
 
