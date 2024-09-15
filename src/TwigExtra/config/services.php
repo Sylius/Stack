@@ -42,6 +42,7 @@ return function (ContainerConfigurator $configurator): void {
     ;
 
     $services->set('sylius_twig_extra.twig.ux.component_template_finder', ComponentTemplateFinder::class)
+        ->decorate('ux.twig_component.component_template_finder')
         ->args([
             service('.inner'),
             service('twig.loader.native_filesystem'),

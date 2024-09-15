@@ -3,3 +3,15 @@ twig_hooks:
         'app.base':
             content:
                 template: 'base/content.html.twig'
+#        'sylius_admin.book.create.content':
+#            form:
+#                component: 'App\Twig\Component\Book\BookFormComponent'
+#                props:
+#                    form: '@=_context.form'
+#                    resource: '@=_context.resource'
+        'sylius_admin.book.update.content':
+            form:
+                component: 'App\Twig\Component\Book\BookFormComponent'
+                props:
+                    form: '@=_context.form'
+                    resource: '@=_context.resource'

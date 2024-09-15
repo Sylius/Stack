@@ -1,0 +1,7 @@
+{% set dashboard_path = hookable_metadata.context.routing.dashboard_path|default('/admin') %}
+
+<h1 class="navbar-brand">
+    <a href="{{ dashboard_path }}">
+        <img src="{{ asset('bundles/syliusbootstraptheme/images/sylius-logo.svg') }}" alt="Sylius" class="navbar-brand-image" />
+    </a>
+</h1>

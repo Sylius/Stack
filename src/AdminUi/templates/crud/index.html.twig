@@ -1,11 +1,13 @@
 {% extends '@SyliusAdminUi/base.html.twig' %}
 
+{% set metadata = resource_metadata|default(metadata) %}
+
 {% set prefixes = [
     'sylius_admin.%resource_name%'|replace({'%resource_name%': resource_name|default(metadata.name)}),
     'sylius_admin.common'
 ] %}
 
-{% set header = configuration.vars.header|default(metadata.applicationName~'.ui.'~metadata.pluralName) %}
+{% set header = vars.header|default(metadata.applicationName~'.ui.'~metadata.pluralName) %}
 
 {% block title %}{{ header|trans }} {{ parent() }}{% endblock %}
 

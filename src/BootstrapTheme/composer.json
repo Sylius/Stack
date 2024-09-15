@@ -1,0 +1,16 @@
+{
+    "name": "sylius/bootstrap-theme",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Sylius\\BootstrapTheme\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.1",
+        "sylius/twig-hooks": "^0.2",
+        "symfony/asset": "^6.4 || ^7.0",
+        "symfony/http-kernel": "^6.4 || ^7.0",
+        "symfony/ux-live-component": "^2.17"
+    }
+}
