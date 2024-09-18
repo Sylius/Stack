@@ -14,13 +14,18 @@
     ],
     "require": {
         "php": "^8.1",
+        "symfony/form": "^6.4 || ^7.0",
         "symfony/http-kernel": "^6.4 || ^7.0",
         "symfony/twig-bundle": "^6.4 || ^7.0",
         "symfony/ux-twig-component": "^2.17"
     },
     "require-dev": {
+        "doctrine/doctrine-bundle": "^2.12",
+        "doctrine/orm": "^2.0",
         "matthiasnoback/symfony-dependency-injection-test": "^5.1",
         "phpunit/phpunit": "^9.6",
+        "sylius/grid-bundle": "^1.13@beta",
+        "sylius/resource-bundle": "^1.12@beta",
         "symfony/browser-kit": "^6.4 || ^7.0",
         "symfony/console": "^6.4 || ^7.0",
         "symfony/css-selector": "^6.4 || ^7.0",
@@ -56,5 +61,7 @@
         "branch-alias": {
             "dev-main": "0.4-dev"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

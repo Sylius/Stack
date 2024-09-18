@@ -9,7 +9,7 @@
         "symfony/security-bundle": "^6.4 || ^7.0",
         "symfony/security-http": "^6.4 || ^7.0",
         "symfony/twig-bundle": "^6.4 || ^7.0",
-        "sylius/resource-bundle": "^1.11 || ^1.12@alpha",
+        "sylius/resource-bundle": "^1.12@beta",
         "twig/twig": "^2.15 || ^3.0"
     },
     "require-dev": {

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Sylius\TwigExtra\Twig\Extension\MergeRecursiveExtension;
+use Sylius\TwigExtra\Twig\Extension\RedirectPathExtension;
 use Sylius\TwigExtra\Twig\Extension\RouteExistsExtension;
 use Sylius\TwigExtra\Twig\Extension\SortByExtension;
 use Sylius\TwigExtra\Twig\Extension\TestFormAttributeExtension;
@@ -49,6 +50,14 @@ return function (ContainerConfigurator $configurator): void {
     $services->set('sylius_twig_extra.twig.extension.route_exists', RouteExistsExtension::class)
         ->args([
             service('router'),
+        ])
+        ->tag(name: 'twig.extension')
+    ;
+
+    $services->set('sylius_twig_extra.twig.extension.redirect_path', RedirectPathExtension::class)
+        ->args([
+            service('router'),
+            service('sylius.grid.filter_storage')->nullOnInvalid(),
         ])
         ->tag(name: 'twig.extension')
     ;
