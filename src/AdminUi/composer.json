@@ -46,7 +46,7 @@
     "repositories": [
         {
             "type": "path",
-            "url": "../*/*"
+            "url": "../*"
         }
     ],
     "extra": {
