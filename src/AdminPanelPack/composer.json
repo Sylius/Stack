@@ -1,0 +1,17 @@
+{
+    "name": "sylius/admin-panel-pack",
+    "description": "A pack to set up all packages for the admin panel",
+    "type": "symfony-pack",
+    "require": {
+        "php": "^8.1",
+        "doctrine/doctrine-bundle": "^2.12",
+        "doctrine/orm": "^2.0",
+        "sylius/admin-ui": "^0.4",
+        "sylius/bootstrap-admin-ui": "^0.4",
+        "sylius/grid-bundle": "^1.13@beta",
+        "sylius/resource-bundle": "^1.11 || ^1.12@beta",
+        "sylius/twig-extra": "^0.4",
+        "sylius/twig-hooks": "^0.4",
+        "sylius/ui-translations": "^0.4"
+    }
+}
