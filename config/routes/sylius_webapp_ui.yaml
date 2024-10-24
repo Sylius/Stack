@@ -1,0 +1,2 @@
+sylius_webapp_ui:
+    resource: '@SyliusFrontUiBundle/config/routes.php'

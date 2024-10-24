@@ -28,12 +28,14 @@
         "symfony/config": "^6.4 || ^7.0",
         "symfony/dependency-injection": "^6.4 || ^7.0",
         "symfony/expression-language": "^6.4 || ^7.0",
+        "symfony/http-client": "^6.4 || ^7.0",
         "symfony/http-kernel": "^6.4 || ^7.0",
         "symfony/security-bundle": "^6.4 || ^7.0",
         "symfony/security-http": "^6.4 || ^7.0",
         "symfony/stopwatch": "^6.4 || ^7.0",
         "symfony/twig-bundle": "^6.4 || ^7.0",
         "symfony/ux-autocomplete": "^2.17",
+        "symfony/ux-icons": "^2.20",
         "symfony/ux-live-component": "^2.17",
         "symfony/ux-twig-component": "^2.17",
         "twig/twig": "^2.15 || ^3.0",
@@ -68,9 +70,11 @@
         "psr-4": {
             "Sylius\\AdminUi\\": "src/AdminUi/src/",
             "Sylius\\BootstrapAdminUi\\": "src/BootstrapAdminUi/src/",
+            "Sylius\\BootstrapFrontUi\\": "src/BootstrapFrontUi/src/",
             "Sylius\\TwigExtra\\": "src/TwigExtra/src/",
             "Sylius\\TwigHooks\\": "src/TwigHooks/src/",
-            "Sylius\\UiTranslations\\": "src/UiTranslations/src/"
+            "Sylius\\UiTranslations\\": "src/UiTranslations/src/",
+            "Sylius\\FrontUi\\": "src/FrontUi/src/"
         }
     },
     "autoload-dev": {
@@ -79,6 +83,7 @@
             "MainTests\\Sylius\\": "tests/",
             "TestApplication\\Sylius\\AdminUi\\": "src/AdminUi/tests/Functional/.application/src/",
             "TestApplication\\Sylius\\BootstrapAdminUi\\": "src/BootstrapAdminUi/tests/Functional/.application/src/",
+            "TestApplication\\Sylius\\BootstrapFrontUi\\": "src/BootstrapFrontUi/tests/Functional/.application/src/",
             "TestApplication\\Sylius\\TwigExtra\\": "src/TwigExtra/tests/Functional/.application/src/",
             "TestApplication\\Sylius\\TwigHooks\\": "src/TwigHooks/tests/Functional/.application/src/",
             "TestApplication\\Sylius\\UiTranslations\\": "src/UiTranslations/tests/Functional/.application/src/",
@@ -91,6 +96,8 @@
     "replace": {
         "sylius/admin-ui": "self.version",
         "sylius/bootstrap-admin-ui": "self.version",
+        "sylius/bootstrap-front-ui": "self.version",
+        "sylius/front-ui": "self.version",
         "sylius/twig-extra": "self.version",
         "sylius/twig-hooks": "self.version",
         "sylius/ui-translations": "self.version"

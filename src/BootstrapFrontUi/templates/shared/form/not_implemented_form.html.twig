@@ -1,0 +1,5 @@
+{% import '@SyliusBootstrapFrontUi/shared/messages.html.twig' as messages %}
+
+{% if hookable_metadata.context.form is not defined %}
+    {{ messages.info('sylius.ui.this_feature_has_not_been_implemented_yet') }}
+{% endif %}

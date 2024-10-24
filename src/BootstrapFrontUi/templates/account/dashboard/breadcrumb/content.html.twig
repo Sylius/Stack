@@ -1,0 +1,6 @@
+{% from '@SyliusBootstrapFrontUi/shared/breadcrumbs.html.twig' import breadcrumbs as breadcrumbs %}
+
+{{ breadcrumbs([
+    { label: 'sylius.ui.home'|trans, path: path('sylius_front_ui_homepage')},
+    { label: 'sylius.ui.my_account'|trans, active: true }
+]) }}

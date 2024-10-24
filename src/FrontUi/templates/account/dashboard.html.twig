@@ -1,0 +1,6 @@
+{% extends '@SyliusFrontUi/account/common/index.html.twig' %}
+
+{% set prefixes = ['sylius_front.account.dashboard'] %}
+{% set attrs = { user: app.user } %}
+
+{% block title %}{{ 'sylius.ui.my_account'|trans }} | {{ parent() }}{% endblock %}

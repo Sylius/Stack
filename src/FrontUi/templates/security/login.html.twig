@@ -1,0 +1,7 @@
+{% extends '@SyliusFrontUi/base.html.twig' %}
+
+{% block title %}{{ 'sylius.ui.login'|trans }} | {{ parent() }}{% endblock %}
+
+{% block content %}
+    {% hook 'sylius_front.account.login' with { form, last_error } %}
+{% endblock %}

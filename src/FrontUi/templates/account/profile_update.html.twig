@@ -1,0 +1,6 @@
+{% extends '@SyliusFrontUi/account/common/update.html.twig' %}
+
+{% set prefixes = ['sylius_front.account.profile_update'] %}
+{% set attrs = { _context } %}
+
+{% block title %}{{ 'sylius.ui.your_profile'|trans }} | {{ parent() }}{% endblock %}

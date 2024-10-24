@@ -1,0 +1,12 @@
+{% extends '@SyliusFrontUi/base.html.twig' %}
+
+{% set prefixes = prefixes|default([])|merge(['sylius_front.account.common']) %}
+{% set attrs = attrs|default([]) %}
+
+{% block content %}
+    <div class="container mb-auto">
+        <div class="row my-4">
+            {% hook 'update' with { _prefixes: prefixes, ...attrs } %}
+        </div>
+    </div>
+{% endblock %}

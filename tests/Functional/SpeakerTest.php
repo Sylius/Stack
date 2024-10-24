@@ -28,7 +28,7 @@ final class SpeakerTest extends WebTestCase
             ->create()
         ;
 
-        $this->client->loginUser($user->_real());
+        $this->client->loginUser($user->_real(), 'admin');
     }
 
     public function testBrowsingSpeakers(): void

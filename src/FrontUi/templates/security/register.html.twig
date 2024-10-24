@@ -1,0 +1,7 @@
+{% extends '@SyliusFrontUi/base.html.twig' %}
+
+{% block title %}{{ 'sylius.ui.register'|trans }} | {{ parent() }}{% endblock %}
+
+{% block content %}
+    {% hook 'sylius_front.account.register' with { ..._context } %}
+{% endblock %}

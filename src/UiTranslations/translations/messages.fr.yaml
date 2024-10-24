@@ -33,6 +33,7 @@ sylius:
         no_results_adjust_your_search: 'Modifie ta recherche et réessaie'
         pagination:
             number_of_results: 'Affiche de %from à %to sur %total% items'
+        register: 'Créer un compte'
         reset: 'Réinitialiser'
         search: 'Rechercher'
         search_menu: 'Recherche menu'
