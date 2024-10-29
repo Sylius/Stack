@@ -1,0 +1,9 @@
+{% extends '@SyliusFrontUi/base.html.twig' %}
+
+{% block content %}
+    {% set prefixes = prefixes|default([])|merge(['sylius_front.account.common']) %}
+    {% set title = title|default('sylius.ui.my_account') %}
+    {% set description = description|default('') %}
+
+    {% hook 'body' with { _prefixes: prefixes, user: app.user, title, description } %}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% set form = hookable_metadata.context.form %}
+
+{% form_theme form '@SyliusBootstrapFrontUi/form/theme.html.twig' %}
+
+<div class="container my-auto">
+    {{ form_start(form, {'action': path('sylius_front_ui_login_check'), 'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="row my-4">
+        {% hook 'form' %}
+    </div>
+    {{ form_end(form, {'render_rest': false}) }}
+</div>

@@ -13,18 +13,11 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-            lazy: true
+
+        admin:
             provider: app_user_provider
-
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
+            pattern: '^/admin/'
             form_login:
-                # "app_login" is the name of the route created previously
                 login_path: sylius_admin_ui_login
                 check_path: sylius_admin_ui_login_check
                 default_target_path: app_admin_conference_index
@@ -32,12 +25,30 @@ security:
                 path: sylius_admin_ui_logout
                 target: sylius_admin_ui_login
 
+        main:
+            lazy: true
+            provider: app_user_provider
+            form_login:
+                login_path: sylius_front_ui_login
+                check_path: sylius_front_ui_login_check
+                default_target_path: sylius_front_ui_account_dashboard
+            logout:
+                path: sylius_front_ui_logout
+                target: sylius_front_ui_login
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#the-firewall
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/admin/login, roles: PUBLIC_ACCESS }
         - { path: ^/admin/logout, roles: PUBLIC_ACCESS }
         - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/account, roles: ROLE_USER }
         - { path: ^/, roles: PUBLIC_ACCESS }
         # - { path: ^/profile, roles: ROLE_USER }
 

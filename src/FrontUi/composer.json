@@ -1,0 +1,62 @@
+{
+    "name": "sylius/webapp-ui",
+    "description": "Minimalist generic templates and routes for your webapp",
+    "type": "library",
+    "require": {
+        "php": "^8.1",
+        "sylius/twig-hooks": "^0.4",
+        "symfony/http-kernel": "^6.4 || ^7.0",
+        "symfony/security-bundle": "^6.4 || ^7.0",
+        "symfony/security-http": "^6.4 || ^7.0",
+        "symfony/twig-bundle": "^6.4 || ^7.0",
+        "twig/twig": "^2.15 || ^3.0"
+    },
+    "require-dev": {
+        "matthiasnoback/symfony-dependency-injection-test": "^5.1",
+        "phpunit/phpunit": "^9.6",
+        "symfony/browser-kit": "^6.4 || ^7.0",
+        "symfony/config": "^6.4 || ^7.0",
+        "symfony/console": "^6.4 || ^7.0",
+        "symfony/css-selector": "^6.4 || ^7.0",
+        "symfony/dotenv": "^6.4 || ^7.0",
+        "symfony/framework-bundle": "^6.4 || ^7.0",
+        "symfony/runtime": "^6.4 || ^7.0",
+        "symfony/yaml": "^6.4 || ^7.0"
+    },
+    "suggest": {
+        "sylius/bootstrap-webapp-ui": "^0.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sylius\\AdminUi\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TestApplication\\Sylius\\FrontUi\\": "tests/Functional/.application/src/",
+            "Tests\\Sylius\\FrontUi\\": "tests/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../*/*"
+        }
+    ],
+    "extra": {
+        "symfony": {
+            "require": "7.1.*"
+        },
+        "branch-alias": {
+            "dev-main": "0.x-dev"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/runtime": true
+        },
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

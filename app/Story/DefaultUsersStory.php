@@ -24,6 +24,14 @@ final class DefaultUsersStory extends Story
             ->admin()
             ->withEmail('admin@example.com')
             ->withPassword('admin')
-            ->create();
+            ->create()
+        ;
+
+        UserFactory::new()
+            ->admin()
+            ->withEmail('front@example.com')
+            ->withPassword('front')
+            ->create()
+        ;
     }
 }

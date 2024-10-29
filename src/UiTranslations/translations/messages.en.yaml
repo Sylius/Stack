@@ -1,5 +1,12 @@
 sylius:
+    account:
+        dont_have_an_account: "Don't have an account?"
+        register_here: 'Register here'
     form:
+        user_change_password:
+            confirmation: Confirmation
+            current: Current password
+            new: New password
         login:
             username: 'Username'
             password: 'Password'
@@ -11,36 +18,50 @@ sylius:
         all: All
         are_your_sure_you_want_to_perform_this_action: 'Are you sure you want to perform this action?'
         cancel: Cancel
+        change_password: 'Change password'
         contains: Contains
         create: Create
+        create_a_new_account: 'Create a new account'
         dashboard: Dashboard
         date_filter: '%label% | %altLabel%'
         delete: Delete
         details: Details
         edit: Edit
+        edit_your_personal_information: 'Edit your personal information'
         error: Error
         filter: Filter
         filters: Filters
         from: From
         hello: Hello
+        have_an_account_already: 'Have an account already?'
+        home: Home
         info: Info
         login: Login
         login_to_your_account: 'Login to your account'
         logout: Logout
+        manage_your_personal_information_and_preferences: 'Manage your personal information and preferences'
+        my_account: 'My account'
         new: New
         no_label: No
         no_results: No results found
         no_results_adjust_your_search: 'Adjust your search and try again.'
         pagination:
             number_of_results: 'Showing %from% to %to% of %total% entries'
+        personal_information: Personal information
+        register: Register
         reset: Reset
+        save_changes: 'Save changes'
         search: Search
         search_menu: 'Search menu'
+        set_a_new_password_for_your_account: 'Set a new password for your account'
         show: Show
+        sign_in_here: 'Sign in here'
         success: Success
         this_form_contains_errors: 'This form contains errors.'
+        this_feature_has_not_been_implemented_yet: 'This feature has not been implemented yet.'
         to: To
         update: Update
         value: Value
         warning: Warning
         yes_label: Yes
+        your_profile: Your profile

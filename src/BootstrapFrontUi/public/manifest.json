@@ -1,0 +1,6 @@
+{
+  "bundles/SyliusBootstrapFrontUi/app.css": "./app.css",
+  "bundles/SyliusBootstrapFrontUi/app.js": "./app.js",
+  "bundles/SyliusBootstrapFrontUi/fonts/inter-variable-font-slnt-wght.ttf": "./fonts/inter-variable-font-slnt-wght.853e0197.ttf",
+  "bundles/SyliusBootstrapFrontUi/images/loader.gif": "./images/loader.gif"
+}

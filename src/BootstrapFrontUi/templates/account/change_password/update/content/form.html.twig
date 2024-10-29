@@ -1,0 +1,17 @@
+{% set form = hookable_metadata.context.form %}
+
+{% form_theme form '@SyliusBootstrapFrontUi/form/theme.html.twig' %}
+
+<div {{ attributes|default() }} class="mb-4 position-relative">
+{#    <div data-loading>#}
+{#        <div class="sylius-shop-loader">#}
+{#            <img src="{{ asset('bundles/syliusbootstrapfrontui/images/loader.gif') }}" alt="{{ 'sylius.ui.loading'|trans }}"/>#}
+{#        </div>#}
+{#    </div>#}
+    {{ form_start(form, {'action': path('sylius_front_ui_account_change_password'), 'attr': {'novalidate': 'novalidate'}}) }}
+
+    {% hook 'form' with { form } %}
+
+    {{ form_row(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+</div>
