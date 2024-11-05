@@ -2,6 +2,10 @@
     {% set form = hookable_metadata.context.form %}
 {% endif %}
 
+{% if resource is not defined %}
+    {% set resource = hookable_metadata.context.resource %}
+{% endif %}
+
 {% form_theme form '@SyliusBootstrapAdminUi/shared/form_theme.html.twig' %}
 
 <div class="container-xl" {% if attributes is defined %} {{ attributes }} {% endif %}>
@@ -9,13 +13,13 @@
     <div class="card-body">
         {% if hookable_metadata.configuration.method is defined %}
             <input type="hidden" name="_method" value="{{ hookable_metadata.configuration.method }}"/>
-        {% elseif form.vars.data.id is not null %}
+        {% elseif form.vars.data.id|default(null) is not null %}
             <input type="hidden" name="_method" value="PUT"/>
         {% endif %}
         {{ form_errors(form) }}
         {{ form_widget(form._token) }}
 
-        {% hook 'form' with { form } %}
+        {% hook 'form' with { form, resource } %}
     </div>
     {{ form_end(form, {render_rest: hookable_metadata.configuration.render_rest|default(false)}) }}
 </div>
