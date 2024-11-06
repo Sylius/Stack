@@ -2,6 +2,14 @@
 
 * [About Sylius Stack](README.md)
 
+## Admin UI
+
+* [Getting started](admin-ui/getting-started.md)
+
+## Bootstrap Admin UI
+
+* [Getting started](bootstrap-admin-ui/getting-started.md)
+
 ## 🍀 Twig Extra
 
 * [Getting started](twig-extra/getting-started.md)
