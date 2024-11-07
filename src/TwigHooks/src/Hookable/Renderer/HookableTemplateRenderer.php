@@ -42,12 +42,15 @@ final class HookableTemplateRenderer implements SupportableHookableRendererInter
             return $this->twig->render($hookable->template, [
                 HooksRuntime::HOOKABLE_METADATA => $metadata,
             ]);
+        } catch (HookRenderException $exception) {
+            throw $exception;
         } catch (\Throwable $exception) {
             throw new HookRenderException(
                 sprintf(
-                    'An error occurred during rendering the "%s" hook in the "%s" hookable',
+                    'An error occurred during rendering the "%s" hook in the "%s" hookable. %s',
                     $hookable->name,
                     $hookable->hookName,
+                    $exception->getMessage(),
                 ),
                 previous: $exception,
             );

@@ -16,10 +16,12 @@ namespace Tests\Sylius\TwigHooks\Unit\Hookable\Renderer;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\TwigHooks\Hookable\Metadata\HookableMetadata;
+use Sylius\TwigHooks\Hookable\Renderer\Exception\HookRenderException;
 use Sylius\TwigHooks\Hookable\Renderer\HookableTemplateRenderer;
 use Tests\Sylius\TwigHooks\Utils\MotherObject\HookableComponentMotherObject;
 use Tests\Sylius\TwigHooks\Utils\MotherObject\HookableTemplateMotherObject;
 use Twig\Environment as Twig;
+use Twig\Error\Error;
 
 final class HookableTemplateRendererTest extends TestCase
 {
@@ -63,6 +65,22 @@ final class HookableTemplateRendererTest extends TestCase
         $renderedTemplate = $this->getTestSubject()->render($hookable, $metadata);
 
         $this->assertSame('some-rendered-template', $renderedTemplate);
+    }
+
+    public function testItThrowsAnExceptionWhenTwigThrowsAnError(): void
+    {
+        $metadata = $this->createMock(HookableMetadata::class);
+
+        $this->twig->expects($this->once())->method('render')->with('some-template', [
+            'hookable_metadata' => $metadata,
+        ])->willThrowException(new Error('Unable to find the template.'));
+
+        $hookable = HookableTemplateMotherObject::withTarget('some-template');
+
+        $this->expectException(HookRenderException::class);
+        $this->expectExceptionMessage('An error occurred during rendering the "some_name" hook in the "some_hook" hookable. Unable to find the template at line 76.');
+
+        $this->getTestSubject()->render($hookable, $metadata);
     }
 
     private function getTestSubject(): HookableTemplateRenderer
