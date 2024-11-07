@@ -11,17 +11,12 @@
 
 @import "@tabler/core/src/scss/tabler.scss";
 
-body {
-    --bs-body-bg: #{$body-bg};
-    --bs-tertiary-bg: #{$body-bg};
-    --bs-body-color: #{$body-color};
-}
+@import "body";
 
 @import "alert";
 @import "datatable";
 @import "form";
+@import "navbar";
 @import "icons";
 @import "sidebar";
 @import "tom-select";
-
-@import "body";
