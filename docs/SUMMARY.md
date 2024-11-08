@@ -1,6 +1,8 @@
 # Table of contents
 
 * [About Sylius Stack](README.md)
+* [Cookbook](cookbook/index.md)
+  * [How to customize your admin panel](cookbook/admin_panel/index.md)
 
 ## Admin UI
 
@@ -9,6 +11,7 @@
 ## Bootstrap Admin UI
 
 * [Getting started](bootstrap-admin-ui/getting-started.md)
+* [Customizing](bootstrap-admin-ui/customizing.md)
 
 ## 🍀 Twig Extra
 
