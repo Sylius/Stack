@@ -3,6 +3,15 @@ imports:
 
 default:
     extensions:
+        Behat\MinkExtension:
+            files_path: "%paths.base%/src/Sylius/Behat/Resources/fixtures/"
+            base_url: "https://127.0.0.1:8080/"
+            default_session: symfony
+            sessions:
+                symfony:
+                    symfony: ~
+            show_auto: false
+
         FriendsOfBehat\SymfonyExtension:
             bootstrap: tests/bootstrap.php
 
