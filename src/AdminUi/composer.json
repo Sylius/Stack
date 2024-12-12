@@ -5,7 +5,7 @@
     "require": {
         "php": "^8.1",
         "knplabs/knp-menu-bundle": "^3.0",
-        "sylius/twig-hooks": "^0.6",
+        "sylius/twig-hooks": "^0.7",
         "symfony/http-kernel": "^6.4 || ^7.0",
         "symfony/security-bundle": "^6.4 || ^7.0",
         "symfony/security-http": "^6.4 || ^7.0",
@@ -54,7 +54,7 @@
             "require": "7.1.*"
         },
         "branch-alias": {
-            "dev-main": "0.6-dev"
+            "dev-main": "0.7-dev"
         }
     },
     "config": {
