@@ -1,11 +1,11 @@
-Creating custom Field type
+Creating a custom Field type
 ==========================
 
 There are certain cases when built-in field types are not enough. Sylius
-Grids allows to define new types with ease!
+Grids make it easy to define new types.
 
 All you need to do is create your own class implementing
-FieldTypeInterface and register it as a service.
+**FieldTypeInterface** and register it as a service.
 
 ```php
 <?php
