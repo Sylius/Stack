@@ -1,5 +1,11 @@
 # Configuring the Security access
 
+<div data-full-width="false">
+
+<figure><img src="../../.gitbook/assets/login.png" alt="Login page"></figure>
+
+</div>
+
 Now that you have an admin panel, you want to make sure admin users are the only ones allowed to access its URL.
 To secure your back-office interface, you can simply resort to Symfony's Security configuration with 4 basic steps : 
 * [Create a User](#create-a-user-entity)
