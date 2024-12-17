@@ -2,7 +2,7 @@
 
 ## How to customize the sidebar menu
 
-You should decorate the `sylius_admin_ui.knp.menu_builder` service to customize the admin menu.
+To customize the admin menu, you need to decorate the `sylius_admin_ui.knp.menu_builder` service.
 
 ```php
 declare(strict_types=1);

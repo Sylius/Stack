@@ -75,7 +75,7 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return static function (ContainerConfigurator $containerConfigurator): void {
     // ...
 
-    // Add these following lines to define your own Twig template for the logo.
+    // Add the following lines to define your own Twig template for the logo.
     $containerConfigurator->extension('sylius_twig_hooks', [
         'hooks' => [
             'sylius_admin.security.login.logo' => [

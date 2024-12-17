@@ -46,7 +46,7 @@ Use the Symfony `debug:router` command to check the results.
 bin/console debug:router
 ```
 
-Your route should look like this.
+Your route should look like this:
 
 ```shell
  ------------------------------ ---------------------------
@@ -101,7 +101,7 @@ Use the Symfony `debug:router` command to check the results.
 bin/console debug:router
 ```
 
-Your route should look like this.
+Your route should look like this:
 
 ```shell
  ------------------------------ ---------------------------
@@ -152,7 +152,7 @@ Use the Symfony `debug:router` command to check the results.
 bin/console debug:router
 ```
 
-Your route should look like this.
+Your route should look like this:
 
 ```shell
  ------------------------------ ---------------------------
@@ -200,7 +200,7 @@ Use the Symfony `debug:router` command to check the results.
 bin/console debug:router
 ```
 
-Your route should look like this.
+Your route should look like this:
 
 ```shell
  ------------------------------ ---------------------------
