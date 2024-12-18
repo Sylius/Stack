@@ -1,7 +1,7 @@
 Advanced Configuration
 ======================
 
-By default, Doctrine option `fetchJoinCollection` and `useOutputWalkers` are enabled in all grids, but you can simply disable it with this config:
+By default, Doctrine options `fetchJoinCollection` and `useOutputWalkers` are enabled in all grids, but you can simply disable them with this config:
 
 <details open><summary>Yaml</summary>
 
