@@ -1,7 +1,7 @@
 Configuration Reference
 =======================
 
-Here you will find all configuration options of `sylius_grid`.
+This section provides all the configuration options for `sylius_grid`.
 
 <details open><summary>Yaml</summary>
 
@@ -42,7 +42,7 @@ sylius_grid:
                     options:
                         fields: { }
                     form_options:
-                        type: contains # type of string filtering option, if you one to have just one
+                        type: contains # type of string filtering option, if you only want to have one
                     default_value: ~
                 enabled:
                     type: boolean # Type of filter
@@ -186,7 +186,7 @@ return static function (GridConfig $grid): void {
                 ->setLabel('app.ui.name')
                 ->setEnabled(true)
                 ->setOptions(['fields' => []])
-                ->setFormOptions(['type' => 'contains']) // type of string filtering option, if you one to have just one
+                ->setFormOptions(['type' => 'contains']) // type of string filtering option, if you only want to have one
         )
         ->addActionGroup(MainActionGroup::create(
             Action::create('create', 'create')
