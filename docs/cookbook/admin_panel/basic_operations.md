@@ -8,11 +8,66 @@
 
 </div>
 
-Create a grid for your resource.
+Create a grid for your resource using Symfony's Maker Bundle.
 
 ```shell
 bin/console make:grid
 ```
+
+Magic! Here is the generated grid.
+
+````php
+final class BookGrid extends AbstractGrid implements ResourceAwareGridInterface
+{
+    public function __construct()
+    {
+        // TODO inject services if required
+    }
+
+    public static function getName(): string
+    {
+        return 'app_book';
+    }
+
+    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    {
+        $gridBuilder
+            // see https://github.com/Sylius/SyliusGridBundle/blob/master/docs/field_types.md
+            ->addField(
+                StringField::create('title')
+                    ->setLabel('Title')
+                    ->setSortable(true),
+            )
+            ->addField(
+                StringField::create('author')
+                    ->setLabel('Author')
+                    ->setSortable(true),
+            )
+            ->addActionGroup(
+                MainActionGroup::create(
+                    CreateAction::create(),
+                ),
+            )
+            ->addActionGroup(
+                ItemActionGroup::create(
+                    // ShowAction::create(),
+                    UpdateAction::create(),
+                    DeleteAction::create(),
+                ),
+            )
+            ->addActionGroup(
+                BulkActionGroup::create(
+                    DeleteAction::create(),
+                ),
+            )
+        ;
+    }
+
+    public function getResourceClass(): string
+    {
+        return Book::class;
+    }
+````
 
 Configure the `index` operation in your resource.
 
