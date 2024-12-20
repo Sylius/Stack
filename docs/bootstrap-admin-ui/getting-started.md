@@ -1,11 +1,11 @@
 ---
 description: >-
-    Bootstrap Admin Ui allow you to build your Bootstrap admin panels with Sylius and Symfony UX.
+    Bootstrap Admin Ui lets you build your Bootstrap admin panels using Sylius and Symfony UX.
 ---
 
 # Getting started
 
-This package configures content of the [AdminUi package](../admin-ui/getting-started.md) templates.
+This package lets you set up the content of the [AdminUi package](../admin-ui/getting-started.md) templates.
 
 ## Installation
 
@@ -17,15 +17,15 @@ composer require sylius/bootstrap-admin-ui
 
 ## Configuring the CRUD templates
 
-Content of CRUD templates is split into configurable blocks.
+CRUD templates are split into configurable blocks.
 
-You are able to add new blocks, disable existing ones, or reorder them using the [TwigHooks package](../twig-hooks/getting-started.md).
+You can add new blocks, disable existing ones, or reorder them using the [TwigHooks package](../twig-hooks/getting-started.md).
 
 ### Create
 
-This package configures content of the template to create a new resource.
+This package sets up the template content needed to create a new resource.
 
-This adds configurable blocks into the `@SyliusAdminUi/crud/create.html.twig` template.
+This adds configurable blocks to the `@SyliusAdminUi/crud/create.html.twig` template.
 
 **Overview of the blocks**
 
@@ -58,9 +58,9 @@ flowchart LR
 
 ### Index
 
-This package configures content of the template to list resources.
+This package sets up the template content needed to list resources.
 
-This adds configurable blocks into the `@SyliusAdminUi/crud/index.html.twig` template.
+This adds configurable blocks to the `@SyliusAdminUi/crud/index.html.twig` template.
 
 **Overview of the blocks**
 
@@ -81,9 +81,9 @@ flowchart LR
 
 ### Show
 
-This package configures content of the template to show resource details.
+This package sets up the template content needed to show resource details.
 
-This adds configurable blocks into the `@SyliusAdminUi/crud/show.html.twig` template.
+This adds configurable blocks to the `@SyliusAdminUi/crud/show.html.twig` template.
 
 **Overview of the blocks**
 
