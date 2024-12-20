@@ -1,6 +1,6 @@
 ---
 description: >-
-  Twig Extra is a set of Twig extensions to bring more Twig helpers.
+  Twig Extra is a set of Twig extensions that provides additional Twig helpers.
 ---
 
 # Getting started
@@ -17,7 +17,7 @@ composer require sylius/twig-extra
 
 ### Sort by
 
-This sort by extension allows to sort an array of objects by a specific property.
+This extension allows you to sort an array of objects by a specific property.
 
 ```php
 class Book {
@@ -26,7 +26,13 @@ class Book {
     }
 }
 
-$books = [new Book('Shinning'), new Book('A Lord Of The Rings')];
+$books = [
+    new Book('The Shining'), 
+    new Book('The Lord Of The Rings'), 
+    new Book('Dune'),
+    new Book('Wuthering Heights'),
+    new Book('Fahrenheit 451'),
+     ];
 ```
 
 ```twig
@@ -40,15 +46,24 @@ $books = [new Book('Shinning'), new Book('A Lord Of The Rings')];
 ```
 
 ```text
-. A Lord Of The Rings
-. Shinning
+. Dune
+. Fahrenheit 451
+. The Lord Of The Rings
+. The Shining
+. Wuthering Heights
 ```
 
-You can also sort array of arrays.
+You can also sort nested arrays.
 
 ```php
 
-$books = [['name' => 'Shinning'], ['name' => 'A Lord Of The Rings']];
+$books = [
+    ['name' => 'The Shining'], 
+    ['name' => 'The Lord Of The Rings'],
+    ['name' => 'Dune'],
+    ['name' => 'Wuthering Heights'],
+    ['name' => 'Fahrenheit 451'],
+];
 ```
 
 You just need to encapsulate the key with `[]`.
@@ -65,20 +80,20 @@ You just need to encapsulate the key with `[]`.
 
 ### Test HTML attribute
 
-This Twig extension allows you to add some data attributes in test environment or when debug is enabled.
-This allows to identify your data easily in E2E tests without being too much dependant of your HTML changes.
+This Twig extension lets you add data attributes in a test environment or when debug mode is enabled.
+This makes it easy to identify your data in E2E tests while minimizing dependency on HTML changes.
 
 ```twig
-<h1 {{ sylius_test_html_attribute('title')>Shinning</h1>
+<h1 {{ sylius_test_html_attribute('title')>The Shining</h1>
 ```
 
 ```html
-<h1 data-test-title>Shinning</h1>
+<h1 data-test-title>The Shining</h1>
 ```
 
 ### Test Form HTML attribute
 
-Like the `sylius_test_html_attribute` Twig extension, this one allows you to add some data attributes in test environment or when debug is enabled.
+Like the `sylius_test_html_attribute` Twig extension, this one allows you to add some data attributes in your test environment or when debug mode is enabled.
 This function adds the data attribute via the `attr` Twig variable on a form theme block.
 
 ```twig
@@ -86,7 +101,7 @@ This function adds the data attribute via the `attr` Twig variable on a form the
 ```
 
 ```html
-<!-- Actual html output bellow depends on your form theme -->
+<!-- Actual html output below depends on your form theme -->
 <label for="book_title">Title</label>
 <input 
         type="text" 
