@@ -47,7 +47,7 @@ final class AdminMenuBuilder implements MenuBuilderInterface
         $library = $menu
             ->addChild('library')
             ->setLabel('app.ui.library')
-            ->setLabelAttribute('icon', 'tabler:users')
+            ->setLabelAttribute('icon', 'tabler:books')
         ;
 
         $library->addChild('books', ['route' => 'app_admin_book_index'])
