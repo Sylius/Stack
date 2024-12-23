@@ -10,6 +10,11 @@
   * [Customizing the logo](cookbook/admin_panel/logo.md)
   * [Customizing the menu](cookbook/admin_panel/menu.md)
   * [Configuring the security access](cookbook/admin_panel/security.md)
+* [How to use in a DDD architecture](cookbook/ddd_architecture.md)
+  * [Architecture overview](cookbook/ddd_architecture/overview.md)
+  * [Resource configuration](cookbook/ddd_architecture/resource_configuration.md)
+  * [Basic operations](cookbook/ddd_architecture/basic_operations.md)
+  * [Operation using a grid](cookbook/ddd_architecture/grid.md)
 
 ## Admin UI
 
