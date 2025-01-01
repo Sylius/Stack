@@ -1,3 +1,6 @@
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false">
+    <span class="navbar-toggler-icon"></span>
+</button>
 <div class="collapse navbar-collapse" id="sidebar-menu">
     {% include '@SyliusBootstrapAdminUi/shared/crud/common/sidebar/search.html.twig' %}
     {{ knp_menu_render('sylius_admin_ui.menu.sidebar', {'template': '@SyliusBootstrapAdminUi/shared/crud/common/sidebar/menu/menu.html.twig', 'currentClass': 'active'}) }}
