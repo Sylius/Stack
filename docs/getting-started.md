@@ -25,7 +25,7 @@ Type "a" or "p" to configure the packages via Symfony Flex.
 ### Install missing tom-select assets
 
 ```bash
-symfony console importmap:require tom-select/dist/css/tom-select.default.cs
+symfony console importmap:require tom-select/dist/css/tom-select.default.css
 ```
 
 ### Run your web server
