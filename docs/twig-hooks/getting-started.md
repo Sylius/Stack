@@ -29,13 +29,11 @@ Once Twig Hooks is installed, you can open **any** Twig file and define your fir
 
 {% code title="some.html.twig" %}
 ```twig
-{# ... #}
-
 {% raw %}
-{% hook 'my_first_hook' %}
-{% endraw %}
-
-{# ... #}
+<div>
+   {% hook 'my_first_hook' %}
+</div>
+{% endraw %}   
 ```
 {% endcode %}
 
