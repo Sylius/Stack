@@ -43,11 +43,14 @@ If for some reason you want to take the control over the passed prefixes, you ca
 
 {% code title="index.html.twig" lineNumbers="true" %}
 ```twig
-{% hook 'index.form with {
+{% raw %}
+{% hook 'index.form' with {
     _prefixes: ['my_custom_prefix']
 } %}
+{% endraw %}
 ```
 {% endcode %}
+
 
 From now, only the value of `_prefixes` will be taken into account.
 
@@ -57,11 +60,11 @@ From now, only the value of `_prefixes` will be taken into account.
 ```twig
 {% raw %}
 {% hook 'app.index' %}
-{% endraw %}
 
 {# 
  # index.html.twig is an entry template, so it is not an hookable
  #}
+{% endraw %}
 ```
 {% endcode %}
 
@@ -76,9 +79,9 @@ From now, only the value of `_prefixes` will be taken into account.
 
 {#
  # so {% hook 'content' %} this is a shorter form of {% hook 'app.index.content' %}
-{% endraw %}
  # when autoprefixing is turned on
  #}
+{% endraw %} 
 ```
 {% endcode %}
 
