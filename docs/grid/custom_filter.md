@@ -1,7 +1,7 @@
-Creating custom filter
+Creating custom filters
 ======================
 
-Sylius Grids come with built-in filters, but there are use-cases where you need something more than basic filter. Grids allow you to define your own filter types!
+Sylius Grids come with built-in filters, but there are use-cases where you need something more than a basic filter. Grids let you define your own filter types!
 
 To add a new filter, we need to create an appropriate class and form type.
 
@@ -28,7 +28,7 @@ class SuppliersStatisticsFilter implements ConfigurableFilterInterface
             ->setParameter(':stats', $data['stats'])
         ;
     
-        // For driver abstraction you can use the expression builder. ExpressionBuilder is kind of query builder.
+        // For driver abstraction you can use the expression builder. ExpressionBuilder is a kind of query builder.
         // $data['stats'] contains the submitted value!
         // here is an example
         $dataSource->restrict($dataSource->getExpressionBuilder()->equals('stats', $data['stats']));
@@ -98,7 +98,7 @@ Create a template for the filter, similar to the existing ones:
 
 If you use Autoconfiguration, the filter is automatically registered as a grid filter.
 
-But if you don't use autoconfiguration, let's register your new filter type as service.
+But if you don't use autoconfiguration, let's register your new filter type as a service.
 
 {% code title="config/services.yaml" lineNumbers="true" %}
 ```yaml
