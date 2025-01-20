@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Sylius\BehatBridge\Behat\Context\Hook\DoctrineORMContext;
 use Sylius\BehatBridge\Behat\Context\Transform\SharedStorageContext;
 
 return function (ContainerConfigurator $configurator): void {
@@ -29,4 +30,12 @@ return function (ContainerConfigurator $configurator): void {
         ])
     ;
     $services->alias(SharedStorageContext::class, 'sylius_behat_bridge.behat.context.transform.shared_storage');
+
+    $services
+        ->set('sylius_behat_bridge.behat.context.hook.doctrine.orm', DoctrineORMContext::class)
+        ->args([
+            service('doctrine.orm.entity_manager'),
+        ])
+    ;
+    $services->alias(DoctrineORMContext::class, 'sylius_behat_bridge.behat.context.hook.doctrine.orm');
 };

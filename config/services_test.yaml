@@ -3,6 +3,11 @@ services:
         autowire: true
         autoconfigure: true
 
+    # TODO should be autoconfigured on friends-of-behat/page-object-extension
+    _instanceof:
+        FriendsOfBehat\PageObjectExtension\Page\SymfonyPage:
+            bind:
+                $minkParameters: '@behat.mink.parameters'
 
     MainTests\Sylius\Behat\:
         resource: '../tests/Behat/*'

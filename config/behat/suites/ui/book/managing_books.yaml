@@ -2,11 +2,10 @@ default:
     suites:
         ui_managing_books:
             contexts:
+                - Sylius\BehatBridge\Behat\Context\Hook\DoctrineORMContext
                 - Sylius\BehatBridge\Behat\Context\Transform\SharedStorageContext
-
                 - MainTests\Sylius\Behat\Context\Setup\BookContext
-
                 - MainTests\Sylius\Behat\Context\Ui\ManagingBooksContext
-
+                - MainTests\Sylius\Behat\Context\Domain\BookContext
             filters:
                 tags: "@managing_books&&@ui"

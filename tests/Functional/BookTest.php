@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Sylius Sp. z o.o.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace MainTests\Sylius\Functional;
@@ -16,7 +25,7 @@ use Zenstruck\Foundry\Test\ResetDatabase;
 
 final class BookTest extends WebTestCase
 {
-    Use Factories;
+    use Factories;
     use ResetDatabase;
 
     private KernelBrowser $client;
@@ -275,6 +284,6 @@ final class BookTest extends WebTestCase
         // Test flash message
         self::assertSelectorTextContains('[data-test-sylius-flash-message]', 'Book has been successfully deleted.');
 
-        $this->assertCount(0,  BookFactory::all());
+        $this->assertCount(0, BookFactory::all());
     }
 }

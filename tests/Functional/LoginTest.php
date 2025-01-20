@@ -1,23 +1,28 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Sylius Sp. z o.o.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace Functional;
 
-use App\Entity\Book;
-use App\Factory\BookFactory;
 use App\Factory\UserFactory;
-use App\Story\DefaultUsersStory;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use Zenstruck\Foundry\Persistence\Proxy;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
 final class LoginTest extends WebTestCase
 {
-    Use Factories;
+    use Factories;
     use ResetDatabase;
 
     private KernelBrowser $client;
