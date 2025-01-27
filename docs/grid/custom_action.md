@@ -1,14 +1,14 @@
-Creating custom Action
-======================
+# Creating a custom Action
 
 There are certain cases when built-in action types are not enough.
 
 All you need to do is create your own action template and register it
 for the `sylius_grid`.
 
-In the template we will specify the button's icon to be `mail` and its
-colour to be `purple`.
+In this example, we will specify the action button's icon to be `mail` and its
+colour to be `purple` inside the template.
 
+{% code title="@App/Grid/Action/contactSupplier.html.twig" lineNumbers="true" %}
 ```twig
 {% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
 
@@ -16,8 +16,9 @@ colour to be `purple`.
 
 {{ buttons.default(path, action.label, null, 'mail', 'purple') }}
 ```
+{% endcode %}
 
-Now configure the new action's template like below in the
+Now configure the new action's template like below in
 `config/packages/sylius_grid.yaml`:
 
 {% code title="config/packages/sylius_grid.yaml" lineNumbers="true" %}
@@ -29,13 +30,13 @@ sylius_grid:
 ```
 {% endcode %}
 
-From now on you can use your new action type in the grid configuration!
+From now on, you can use your new action type in the grid configuration!
 
 Let's assume that you already have a route for contacting your
 suppliers, then you can configure the grid action:
 
-<details open><summary>Yaml</summary>
-
+{% tabs %}
+{% tab title="YAML" %}
 {% code title="config/packages/sylius_grid.yaml" lineNumbers="true" %}
 ```yaml
 sylius_grid:
@@ -57,11 +58,9 @@ sylius_grid:
                                     id: resource.id
 ```
 {% endcode %}
+{% endtab %}
 
-</details>
-
-<details open><summary>PHP</summary>
-
+{% tab title="PHP" %}
 {% code title="config/packages/sylius_grid.php" lineNumbers="true" %}
 ```php
 <?php
@@ -144,5 +143,5 @@ final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridI
 }
 ```
 {% endcode %}
-
-</details>
+{% endtab %}
+{% endtabs %}
