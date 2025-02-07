@@ -5,11 +5,11 @@
     "require": {
         "php": "^8.1",
         "pagerfanta/twig": "^4.6",
-        "sylius/admin-ui": "^0.7",
+        "sylius/admin-ui": "^0.8",
         "sylius/grid-bundle": "^1.13",
         "sylius/resource-bundle": "^1.11",
-        "sylius/twig-extra": "^0.7",
-        "sylius/twig-hooks": "^0.7",
+        "sylius/twig-extra": "^0.8",
+        "sylius/twig-hooks": "^0.8",
         "symfony/asset": "^6.4 || ^7.0",
         "symfony/http-kernel": "^6.4 || ^7.0",
         "symfony/http-client": "^6.4 || ^7.0",
@@ -59,7 +59,7 @@
             "require": "7.1.*"
         },
         "branch-alias": {
-            "dev-main": "0.7-dev"
+            "dev-main": "0.8-dev"
         }
     },
     "minimum-stability": "dev",
