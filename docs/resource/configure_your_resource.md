@@ -1,10 +1,11 @@
 # Configure your resource
 
-Read the previous chapter to [create a new resource](create_new_resource.md).
+Read the previous chapter to [create a new resource](create_new_resource.md). In order for your resource to truly become a `Sylius Resource`, 
+you will need to configure a couple of things.
 
 <!-- TOC -->
 * [Configure your resource](#configure-your-resource)
-  * [Implements the Resource interface](#implements-the-resource-interface)
+  * [Implement the Resource interface](#implement-the-resource-interface)
   * [Use the Resource attribute](#use-the-resource-attribute)
   * [Advanced configuration](#advanced-configuration)
     * [Configure the resource name](#configure-the-resource-name)
@@ -12,10 +13,10 @@ Read the previous chapter to [create a new resource](create_new_resource.md).
     * [Configure the resource vars](#configure-the-resource-vars)
 <!-- TOC -->
 
-## Implements the Resource interface
+## Implement the Resource interface
 
-To declare your resource as a Sylius one, you need to implement
-the ```Sylius\Component\Resource\Model\ResourceInterface``` which requires you to implement a `getId()` method.
+First, to declare your resource as a Sylius Resource, implement the ```Sylius\Component\Resource\Model\ResourceInterface```,
+which requires defining a getId() method to uniquely identify the resource.
 
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
@@ -34,8 +35,7 @@ class Book implements ResourceInterface
 
 ## Use the Resource attribute
 
-We add the PHP attribute ```#[Resource]``` to the Doctrine entity.
-It will configure your entity as a Sylius resource.
+Next, add the ```#[AsResource]``` PHP attribute to your Doctrine entity to register it as a Sylius resource.
 
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
@@ -52,8 +52,10 @@ class Book implements ResourceInterface
 ```
 {% endcode %}
 
+Run the following command to verify that your resource is correctly configured.
+
 ```shell
-$ bin/console sylius:debug:resource 'App\Entity\book'
+$ bin/console sylius:debug:resource 'App\Entity\Book'
 ```
 
 ```
@@ -68,14 +70,14 @@ $ bin/console sylius:debug:resource 'App\Entity\book'
 +--------------------+------------------------------------------------------------+
 ```
 
-By default, it will have the `app.book` alias in Sylius resource which is a concatenation of the application name and
-the resource name `{application}.{name}`.
+By default, the alias for your Sylius resource will be `app.book`, which combines the application name and the resource name
+with this format : `{application}.{resource}`.
 
 ## Advanced configuration
 
 ### Configure the resource name
 
-It defines the resource name.
+You can override your resource's name via the `name` parameter of the `AsResource` PHP attribute.
 
 {% code title="src/Entity/Order.php" lineNumbers="true" %}
 ```php
@@ -91,9 +93,8 @@ class Order implements ResourceInterface
 ```
 {% endcode %}
 
-On your Twig templates, the `order` variable will be replaced by the `cart` one.
-
-As an example, on a `show` operation following Twig variables will be available:
+In this example, the `order` variable is replaced with `cart` in your Twig templates.
+As a result, for the `show` operation, the following Twig variables will be available within the template:
 
 | Name              | Type                                      |
 |-------------------|-------------------------------------------|
@@ -105,7 +106,7 @@ As an example, on a `show` operation following Twig variables will be available:
 
 ### Configure the resource plural name
 
-It defines the resource plural name.
+You can override your resource's plural name via the `pluralName` parameter of the `AsResource` PHP attribute.
 
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
@@ -121,9 +122,8 @@ class Book implements ResourceInterface
 ```
 {% endcode %}
 
-On your Twig templates, the `books` variable will be replaced by the `library` one.
-
-As an example, on an `index` operation these Twig variables will be available:
+In this example, the `books` variable is replaced with `library` in your Twig templates.
+As a result, for the `index` operation, the following Twig variables will be available within the template:
 
 | Name              | Type                                      |
 |-------------------|-------------------------------------------|
@@ -133,9 +133,9 @@ As an example, on an `index` operation these Twig variables will be available:
 | resource_metadata | Sylius\Resource\Metadata\ResourceMetadata |
 | app               | Symfony\Bridge\Twig\AppVariable           |
 
-### Configure the resource vars
+### Configure additional resource vars
 
-It defines the simple vars that you can use on your templates.
+You can define simple variables within the `AsResource` attribute via the `vars` parameter.
 
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
@@ -151,8 +151,8 @@ class Book implements ResourceInterface
 ```
 {% endcode %}
 
-You can use these vars on your Twig templates.
-These vars will be available on any operations for this resource.
+You can then access these variables in your Twig templates.
+These variables will be available for every operation associated with this resource.
 
 {% code %}
 ```html
