@@ -59,7 +59,7 @@
   * [Configuring Fields](grid/field_configuration.md)
   * [Field types](grid/field_types.md)
   * [Creating a custom Field Type](grid/custom_field_type.md)
-  * [Creating custom Action](grid/custom_action.md)
+  * [Creating a custom Action](grid/custom_action.md)
   * [Creating a custom Bulk Action](grid/custom_bulk_action.md)
   * [Filters](grid/filters.md)
   * [Creating a custom Filter](grid/custom_filter.md)
