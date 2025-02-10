@@ -99,8 +99,9 @@ Next: When you're ready, create a migration with php bin/console make:migration
 
 ## Configure the BookRepository
 
-The command also generated a Doctrine repository class: `App\Repository\BookRepository`.
+The command also generated a Doctrine repository class.
 
+{% code title="App\Repository\BookRepository.php" lineNumbers="true" %}
 ```php
 <?php
 
@@ -123,14 +124,16 @@ class BookRepository extends ServiceEntityRepository
     // [...]
 }
 ```
+{% endcode %}
 
-The generated code is not compatible with Sylius Resource yet, so we need to make few changes.
+The generated code is not compatible with Sylius Resource yet, so we need to make a few changes.
 
 * First, your repository should implement the `Sylius\Component\Resource\Repository\RepositoryInterface` interface
 * Then, add the `Sylius\Bundle\ResourceBundle\Doctrine\ORM\ResourceRepositoryTrait` trait
 
 Your repository should look like this:
 
+{% code title="App\Repository\BookRepository.php" lineNumbers="true" %}
 ```php
 <?php
 
@@ -160,3 +163,4 @@ class BookRepository extends ServiceEntityRepository implements RepositoryInterf
     }
 }
 ```
+{% endcode %}
