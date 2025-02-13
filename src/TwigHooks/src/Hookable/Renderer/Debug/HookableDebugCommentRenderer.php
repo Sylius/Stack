@@ -70,8 +70,7 @@ final class HookableDebugCommentRenderer implements HookableRendererInterface
 
     private function wrapWithDebugAttributes(string $content, AbstractHookable $hookable): string
     {
-        dump($hookable);
-        $debugAttributes = sprintf('data-hook="%s" data-hookable="%s" data-hookable-config="%s"',
+        $debugAttributes = sprintf(' data-hook="%s" data-hookable="%s" data-hookable-config="%s"',
             htmlspecialchars($hookable->hookName, ENT_QUOTES),
             htmlspecialchars($hookable->name, ENT_QUOTES),
             $hookable->priority()
