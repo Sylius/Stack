@@ -16,6 +16,7 @@ namespace App\Statistics\ValueObject;
 final class Statistics
 {
     public function __construct(
+        public array $talks,
         public BusinessActivitySummary $businessActivitySummary,
     ) {
     }

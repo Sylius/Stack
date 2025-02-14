@@ -61,8 +61,17 @@ final class StatisticsComponent
             ),
         );
 
+        $talksSummary = [
+            'intervals' => array_column($statistics->talks ?? [], 'period'),
+            'talks' => array_map(
+                static fn (int $total): string => (string) $total,
+                array_column($statistics->talks ?? [['total' => 2]], 'total'),
+            ),
+        ];
+
         return [
             'business_activity_summary' => $statistics->businessActivitySummary,
+            'talks_summary' => $talksSummary,
         ];
     }
 

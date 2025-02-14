@@ -87,6 +87,11 @@ jobs:
                 run: |
                     bin/console doctrine:database:create
                     bin/console doctrine:schema:create
+                    
+            -   name: "Install & compile assets"
+                run: |
+                    bin/console importmap:install      
+                    bin/console asset-map:compile      
 
             -   name: Run PHPUnit
                 run: vendor/bin/phpunit
