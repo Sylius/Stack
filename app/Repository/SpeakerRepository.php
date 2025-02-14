@@ -26,4 +26,35 @@ class SpeakerRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Speaker::class);
     }
+
+    public function getLastSpeakers(int $numberOfSpeakers): array
+    {
+        $queryBuilder = $this->createQueryBuilder('o');
+        $queryBuilder
+            ->orderBy('o.id', 'DESC')
+            ->setMaxResults($numberOfSpeakers)
+        ;
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findTotalTalks(\DatePeriod $datePeriod): int
+    {
+        $queryBuilder = $this->createQueryBuilder('o');
+
+        $queryBuilder
+            ->select('COUNT(DISTINCT o.id)')
+            ->join('o.talks', 't')
+            ->andWhere(
+                $queryBuilder->expr()->gte('t.startsAt', ':start_date'),
+            )
+            ->andWhere(
+                $queryBuilder->expr()->lt('t.startsAt', ':end_date'),
+            )
+            ->setParameter('start_date', $datePeriod->getStartDate())
+            ->setParameter('end_date', $datePeriod->getEndDate())
+        ;
+
+        return (int) $queryBuilder->getQuery()->getSingleScalarResult();
+    }
 }
