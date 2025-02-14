@@ -17,6 +17,7 @@ use App\Story\DefaultBooksStory;
 use App\Story\DefaultConferencesStory;
 use App\Story\DefaultSpeakersStory;
 use App\Story\DefaultSyliusCon2024TalksStory;
+use App\Story\DefaultTalksStory;
 use App\Story\DefaultUsersStory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -29,6 +30,7 @@ class AppFixtures extends Fixture
         DefaultConferencesStory::load();
         DefaultSpeakersStory::load();
         DefaultSyliusCon2024TalksStory::load();
+        DefaultTalksStory::load();
         DefaultUsersStory::load();
     }
 }

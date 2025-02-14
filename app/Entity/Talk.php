@@ -76,7 +76,7 @@ class Talk implements ResourceInterface
     private ?Conference $conference = null;
 
     /** @var Collection<int, Speaker> */
-    #[ORM\ManyToMany(targetEntity: Speaker::class)]
+    #[ORM\ManyToMany(targetEntity: Speaker::class, inversedBy: 'talks')]
     private Collection $speakers;
 
     public function __construct()

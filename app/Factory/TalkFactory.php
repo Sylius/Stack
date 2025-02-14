@@ -18,6 +18,7 @@ use App\Entity\Speaker;
 use App\Entity\Talk;
 use App\Enum\Track;
 use function Zenstruck\Foundry\lazy;
+use Zenstruck\Foundry\Persistence\Exception\NotEnoughObjects;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 use Zenstruck\Foundry\Persistence\Proxy;
 
@@ -75,11 +76,18 @@ final class TalkFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'title' => self::faker()->text(255),
+            'title' => self::faker()->sentence(),
             'startsAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'endsAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'track' => self::faker()->randomElement(Track::cases()),
             'conference' => lazy(fn () => ConferenceFactory::randomOrCreate()),
+            'speakers' => lazy(function () {
+                try {
+                    return SpeakerFactory::randomSet(1);
+                } catch (NotEnoughObjects) {
+                    return SpeakerFactory::new()->many(1);
+                }
+            }),
         ];
     }
 }
