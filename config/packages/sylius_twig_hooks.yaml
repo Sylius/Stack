@@ -1,64 +1,8 @@
+imports:
+    - { resource: '../sylius/twig_hooks/**/**' }
+
 sylius_twig_hooks:
     hooks:
         'app.base':
             content:
                 template: 'base/content.html.twig'
-
-        'sylius_admin.common.show.content':
-            page_body:
-                template: 'book/show/content/page_body.html.twig'
-
-        'sylius_admin.common.index.content.header.title_block':
-            title:
-                configuration:
-                    icon: tabler:list-details
-
-        'sylius_admin.book.index.content.header':
-            description:
-                template: 'book/index/content/header/description.html.twig'
-
-        'sylius_admin.book.show.content.header.title_block':
-            title:
-                template: '@SyliusBootstrapAdminUi/shared/crud/show/content/header/title_block/title.html.twig'
-                configuration:
-                    title: '@=_context.book.getTitle()'
-                    icon: 'tabler:book'
-                    subheader: '@=_context.book.getAuthorName()'
-
-        'sylius_admin.conference.create.content.header.title_block':
-            title:
-                template: '@SyliusBootstrapAdminUi/shared/crud/create/content/header/title_block/title.html.twig'
-                configuration:
-                    title: 'app.ui.new_conference'
-                    icon: 'tabler:plus'
-                    subheader: app.ui.managing_your_conferences
-
-        'sylius_admin.conference.update.content.header.title_block':
-            title:
-                template: '@SyliusBootstrapAdminUi/shared/crud/update/content/header/title_block/title.html.twig'
-                configuration:
-                    title: app.ui.edit_conference
-                    icon: 'tabler:pencil'
-                    subheader: app.ui.managing_your_conferences
-
-        'sylius_admin.talk.create.content':
-            form:
-                component: 'App\Twig\Component\TalkFormComponent'
-                props:
-                    form: '@=_context.form'
-                    initialFormData: '@=_context.resource'
-
-        'sylius_admin.talk.update.content':
-            form:
-                component: 'App\Twig\Component\TalkFormComponent'
-                props:
-                    form: '@=_context.form'
-                    initialFormData: '@=_context.resource'
-
-        'sylius_admin.speaker.index.content.header.title_block':
-            title:
-                template: '@SyliusBootstrapAdminUi/shared/crud/common/content/header/title_block/title.html.twig'
-                configuration:
-                    title: app.ui.browsing_speakers
-                    icon: tabler:users
-                    subheader: app.ui.managing_your_speakers

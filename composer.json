@@ -25,6 +25,7 @@
         "sylius/grid-bundle": "^1.13",
         "sylius/resource-bundle": "^1.11",
         "symfony/asset": "^6.4 || ^7.0",
+        "symfony/asset-mapper": "^6.4 || ^7.0",
         "symfony/config": "^6.4 || ^7.0",
         "symfony/dependency-injection": "^6.4 || ^7.0",
         "symfony/expression-language": "^6.4 || ^7.0",
@@ -109,5 +110,18 @@
         "symfony": {
             "require": "7.1.*"
         }
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "importmap:install": "symfony-cmd"
+        },
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ]
     }
 }
