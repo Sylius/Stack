@@ -21,7 +21,10 @@ app:
         managing_your_speakers: Managing your speakers
         name: Name
         new_conference: New conference
+        new_speakers: New speakers
+        new_talks: New talks
         past_event: Past event
+        show_all: Show all
         show_talks: Show talks
         speaker: Speaker
         speakers: Speakers

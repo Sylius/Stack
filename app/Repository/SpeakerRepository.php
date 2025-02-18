@@ -26,4 +26,15 @@ class SpeakerRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Speaker::class);
     }
+
+    public function getLastSpeakers(int $numberOfSpeakers): array
+    {
+        $queryBuilder = $this->createQueryBuilder('o');
+        $queryBuilder
+            ->orderBy('o.id', 'DESC')
+            ->setMaxResults($numberOfSpeakers)
+        ;
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }
