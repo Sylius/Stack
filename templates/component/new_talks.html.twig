@@ -1,0 +1,54 @@
+{% import '@SyliusBootstrapAdminUi/shared/helper/avatar.html.twig' as avatar %}
+
+<div class="col-12 col-md-6">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h3 class="card-title">{{ 'app.ui.new_talks'|trans }}</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-vcenter card-table">
+                <thead>
+                <tr>
+                    <th>{{ 'app.ui.title'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for talk in new_talks|default([]) %}
+                    <tr>
+                        <td>
+                            <div class="row align-items-center py-1">
+                                <div class="col-auto">
+                                    {% set firstSpeaker = talk.speakers.first %}
+
+                                    {% if firstSpeaker.avatar %}
+                                        {% set avatar_path = vich_uploader_asset(firstSpeaker.avatar) %}
+
+                                        {{ avatar.default(avatar_path, 'img-thumbnail') }}
+                                    {% else %}
+                                        <span class="avatar ">
+                                            {{ firstSpeaker.firstName|first }}{{ firstSpeaker.lastName|first }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                                <div class="col text-truncate">
+                                    <div>{{ talk.title }}</div>
+                                    <div class="text-muted text-truncate mt-n1">
+                                        {%- for speaker in talk.speakers -%}
+                                            {% if not loop.index0 == 0 %},{% endif %} {{ speaker.fullName }}
+                                        {%- endfor -%}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="2" class="text-center"><a href="{{ path('app_admin_talk_index') }}">{{ 'app.ui.show_all'|trans }}</a></td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

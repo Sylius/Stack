@@ -16,6 +16,8 @@ namespace App\Entity;
 use App\Form\SpeakerType;
 use App\Grid\SpeakerGrid;
 use App\Repository\SpeakerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\BulkDelete;
@@ -60,6 +62,14 @@ class Speaker implements ResourceInterface
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?SpeakerAvatar $avatar = null;
+
+    #[ORM\ManyToMany(targetEntity: Talk::class, mappedBy: 'speakers')]
+    private Collection $talks;
+
+    public function __construct()
+    {
+        $this->talks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {

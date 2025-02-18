@@ -37,5 +37,10 @@ final class DefaultConferencesStory extends Story
             ->withArchivingDate(new DateTimeImmutable('2024-01-01 00:00:00'))
             ->create()
         ;
+
+        ConferenceFactory::new()->withStartingDate(new \DateTimeImmutable('first day of january this year'))->many(3)->create();
+        ConferenceFactory::new()->withStartingDate(new \DateTimeImmutable('today'))->many(2)->create();
+
+        ConferenceFactory::createMany(100);
     }
 }
