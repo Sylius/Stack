@@ -26,4 +26,34 @@ class TalkRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Talk::class);
     }
+
+    public function getLastTalks(int $numberOfTalks): array
+    {
+        $queryBuilder = $this->createQueryBuilder('o');
+        $queryBuilder
+            ->orderBy('o.id', 'DESC')
+            ->setMaxResults($numberOfTalks)
+        ;
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findTotalTalks(\DatePeriod $datePeriod): int
+    {
+        $queryBuilder = $this->createQueryBuilder('o');
+
+        $queryBuilder
+            ->select('COUNT(o.id)')
+            ->andWhere(
+                $queryBuilder->expr()->gte('o.startsAt', ':start_date'),
+            )
+            ->andWhere(
+                $queryBuilder->expr()->lt('o.startsAt', ':end_date'),
+            )
+            ->setParameter('start_date', $datePeriod->getStartDate())
+            ->setParameter('end_date', $datePeriod->getEndDate())
+        ;
+
+        return (int) $queryBuilder->getQuery()->getSingleScalarResult();
+    }
 }
