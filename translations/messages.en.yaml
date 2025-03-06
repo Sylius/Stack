@@ -29,6 +29,13 @@ app:
         speaker: Speaker
         speakers: Speakers
         starts_at: Starts at
+        statistics:
+            day: Jour
+            lifetime: Durée de vie
+            month: Mois
+            week: Semaine
+            2weeks: 2 Semaines
+            year: Année
         talk: Talk
         talks: Talks
         tech_one: Tech#1
