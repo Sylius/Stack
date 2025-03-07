@@ -315,7 +315,12 @@ $field->setOptions([
 ## Callable
 
 The Callable column aims to offer almost as much flexibility as the Twig column, but without requiring the creation of a template.
+
 You simply need to specify a callable, which allows you to transform the `data` variable on the fly.
+
+This field type has can be configured in two differents ways. Either you define a callable using the `callable` options or you can define a service with the `service` option.
+
+### Using `callable` option
 
 When defining callables in YAML, only string representations of callables are supported.
 When configuring grids using PHP (as opposed to service grid configuration), both string and array callables are supported. However, closures cannot be used due to restrictions in Symfony's configuration (values of type "Closure" are not permitted in service configuration files).
@@ -420,6 +425,82 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
         return User::class;
     }
 }
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
+
+### Using `service` option
+
+For more complex tasks, the callable option may not be the most suited choice, especially when accessing a service is required to transform data. In such cases, you can use the `service` option to define a callable service.
+
+If the service itself is callable, specifying the `service` option is sufficient. Alternatively, you can define a specific method within the service by using the `method` option.
+
+Internally, Sylius uses a tagged locator to provide these services. To use a custom service, it must be tagged with `sylius.grid_field_callable_service`. As an alternative, you can use the `AsGridFieldCallableService` attribute on your service, which will automatically apply the required tag.
+
+Before diving in examples, let's create a service that uses both a `PriceHelper` and `ChannelContextInterface` to retrieve the price of a product variant.
+
+{% code title="src/Helper/ProductVariantHelper.php" lineNumbers="true" %}
+```php
+<?php
+
+use Sylius\Bundle\CoreBundle\Templating\Helper\PriceHelper;
+use Sylius\Component\Channel\Context\ChannelContextInterface;
+use Sylius\Component\Grid\Annotation\AsGridFieldCallableService;
+
+#[AsGridFieldCallableService]
+final class ProductVariantHelper
+{
+    public function __construct(
+        private PriceHelper $priceHelper,
+        private ChannelContextInterface $channelContext,
+    ) {
+    }
+
+    public function getPrice($variant): string
+    {
+        return $this->priceHelper->getPrice($variant, [
+            'channel' => $this->channelContext->getChannel(),
+        ]);
+    }
+}
+```
+{% endcode %}
+
+{% tabs %}
+{% tab title="YAML" %}
+{% code title="config/packages/sylius_grid.yaml" lineNumbers="true" %}
+```yaml
+sylius_grid:
+    grids:
+        app_product_variant:
+            fields:
+                price:
+                    type: callable
+                    path: .
+                    options:
+                        service: "App\Helper\ProductVariantHelper"
+                        method: 'getPrice'
+```
+{% endcode %}
+{% endtab %}
+{% tab title="PHP" %}
+{% code title="config/packages/sylius_grid.php" lineNumbers="true" %}
+```php
+<?php
+
+use Sylius\Bundle\GridBundle\Builder\Field\CallableField;
+use Sylius\Bundle\GridBundle\Builder\GridBuilder;
+use Sylius\Bundle\GridBundle\Config\GridConfig;
+
+return static function (GridConfig $grid): void {
+    $grid->addGrid(GridBuilder::create('app_product_variant', '%app.model.product_variant.class%')
+        ->addField(
+            CallableField::createForService('price', \App\Helper\ProductVariantHelper, 'getPrice')
+                ->setPath('.')
+        )
+    )
+};
 ```
 {% endcode %}
 {% endtab %}
