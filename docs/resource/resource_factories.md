@@ -130,11 +130,14 @@ use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Create;
 use Sylius\Resource\Model\ResourceInterface;
 
-#[AsResource]
-#[Create(
-    path: 'authors/{authorId}/books',
-    factoryMethod: 'createWithCreator',
-)]
+#[AsResource(
+    operations: [
+        new Create(
+            path: 'authors/{authorId}/books',
+            factoryMethod: 'createWithCreator',
+        ),
+    ],
+)
 class Book implements ResourceInterface
 {
 }
@@ -202,12 +205,15 @@ use Sylius\Resource\Model\ResourceInterface;
 use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Create;
 
-#[AsResource]
-#[Create(
-    path: 'authors/{authorId}/books',
-    factoryMethod: 'createForAuthor',
-    factoryArguments: ['authorId' => "request.attributes.get('authorId')"],
-)]
+#[AsResource(
+    operations: [
+        new Create(
+            path: 'authors/{authorId}/books',
+            factoryMethod: 'createForAuthor',
+            factoryArguments: ['authorId' => "request.attributes.get('authorId')"],
+        ),
+    ],
+)
 class Book implements ResourceInterface
 {
 }
@@ -230,14 +236,17 @@ use Sylius\Resource\Model\ResourceInterface;
 use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Create;
 
-#[AsResource]
-#[Create(
-    path: 'authors/{authorId}/books',
-    # Here we declared the factory to use with its fully classified class name
-    factory: BookFactory::class,
-    factoryMethod: 'createForAuthor', 
-    factoryArguments: ['authorId' => "request.attributes.get('authorId')"],
-)]
+#[AsResource(
+    operations: [
+        new Create(
+            path: 'authors/{authorId}/books',
+            # Here we declared the factory to use with its fully classified class name
+            factory: BookFactory::class,
+            factoryMethod: 'createForAuthor', 
+            factoryArguments: ['authorId' => "request.attributes.get('authorId')"],
+        ),
+    ],
+)
 class Book implements ResourceInterface
 {
 }
@@ -278,10 +287,13 @@ use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Create;
 use Sylius\Resource\Model\ResourceInterface
 
-#[AsResource]
-#[Create(
-    factory: [BookFactory::class, 'create'], 
-)]
+#[AsResource(
+    operations: [
+        new Create(
+            factory: [BookFactory::class, 'create'], 
+        ),
+    ],
+)
 class Book implements ResourceInterface
 {
 }

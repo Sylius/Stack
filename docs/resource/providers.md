@@ -39,8 +39,13 @@ use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Show;
 use Sylius\Resource\Model\ResourceInterface;
 
-#[AsResource]
-#[Show(repositoryMethod: 'findOneByEmail')]
+#[AsResource(
+    operations: [
+        new Show(
+            repositoryMethod: 'findOneByEmail',
+        ),
+    ],
+)
 final class Customer implements ResourceInterface
 {
     // [...]
@@ -71,8 +76,14 @@ use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Show;
 use Sylius\Resource\Model\ResourceInterface;
 
-#[AsResource]
-#[Show(repositoryMethod: 'findOneByEmail', repositoryArguments: ['email' => "request.attributes.get('email')"])]
+#[AsResource(
+    operations: [
+        new Show(
+            repositoryMethod: 'findOneByEmail', 
+            repositoryArguments: ['email' => "request.attributes.get('email')"],
+        ),
+    ],
+)
 final class Customer implements ResourceInterface
 {
     // [...]
@@ -131,8 +142,13 @@ use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Show;
 use Sylius\Resource\Model\ResourceInterface;
 
-#[AsResource]
-#[Show(provider: BoardGameItemProvider::class)]
+#[AsResource(
+    operations: [
+        new Show(
+            provider: BoardGameItemProvider::class, 
+        ),
+    ],
+)
 final class BoardGameResource implements ResourceInterface
 {
     // [...]
@@ -158,11 +174,14 @@ use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Delete;
 use Sylius\Resource\Model\ResourceInterface;
 
-#[AsResource]
-#[Delete(
-    processor: DeleteBoardGameProcessor::class,
-    read: false,
- )]
+#[AsResource(
+    operations: [
+        new Delete(
+            processor: DeleteBoardGameProcessor::class,
+            read: false,
+        ),
+    ],
+)
 final class BoardGameResource implements ResourceInterface
 {
     // [...]

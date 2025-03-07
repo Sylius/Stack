@@ -144,7 +144,12 @@ namespace App\Entity;
 use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Model\ResourceInterface;
 
-#[AsResource(vars: ['header' => 'Library', 'subheader' => 'Managing your library'])]
+#[AsResource(
+    vars: [
+        'header' => 'Library', 
+        'subheader' => 'Managing your library',
+    ],
+)]
 class Book implements ResourceInterface
 {
 }
