@@ -1,0 +1,49 @@
+[data-hook] {
+    position: relative;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Styl tooltipa generowanego przez Popper.js */
+.custom-tooltip {
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    z-index: 9999;
+    padding: 2px 2px;
+    border-radius: 6px;
+    white-space: pre-wrap;
+    font-size: 1em;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+    user-select: text;
+
+    .tooltip-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+    }
+
+    .tooltip-line {
+        line-height: 1;
+    }
+
+    .tooltip-line strong {
+        margin-right: 3px;
+    }
+
+    .tooltip-config {
+        margin: 0;
+        padding-left: 2px;
+        list-style-type: disc;
+    }
+
+    .tooltip-copied {
+        margin-top: 6px;
+        font-size: 0.85em;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 3px 6px;
+        border-radius: 4px;
+        text-align: center;
+    }
+}
