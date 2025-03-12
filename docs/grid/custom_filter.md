@@ -48,7 +48,7 @@ class SuppliersStatisticsFilter implements ConfigurableFilterInterface
 
 And the form type:
 
-{% code title="src/Grid/Filter/SuppliersStatisticsFilter.php" lineNumbers="true" %}
+{% code title="src/Grid/Filter/SuppliersStatisticsFilterType.php" lineNumbers="true" %}
 ```php
 <?php
 
@@ -86,8 +86,7 @@ class SuppliersStatisticsFilterType extends AbstractType
 Create a template for the filter, similar to the existing ones:
 
 {% code title="templates/Grid/Filter/suppliers_statistics.html.twig" lineNumbers="true" %}
-```html
-# 
+```twig
 {% form_theme form '@SyliusUi/Form/theme.html.twig' %}
 
 {{ form_row(form) }}
@@ -130,7 +129,7 @@ sylius_grid:
 {% endcode %}
 {% endtab %}
 
-{% tab title="YAML" %}
+{% tab title="PHP" %}
 {% code title="config/packages/sylius_grid.php" lineNumbers="true" %}
 ```php
 <?php
