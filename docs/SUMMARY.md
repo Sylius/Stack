@@ -7,6 +7,7 @@
 
 * [How to customize your admin panel](cookbook/admin_panel.md)
   * [Basic operations](cookbook/admin_panel/basic_operations.md)
+  * [Customizing your grids](cookbook/admin_panel/grids.md)
   * [Customizing the logo](cookbook/admin_panel/logo.md)
   * [Customizing the menu](cookbook/admin_panel/menu.md)
   * [Configuring the security access](cookbook/admin_panel/security.md)
