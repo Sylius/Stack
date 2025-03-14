@@ -36,9 +36,16 @@ use Sylius\Resource\Metadata\Create;
 use Sylius\Resource\Metadata\Update;
 use Sylius\Resource\Model\ResourceInterface;
 
-#[AsResource]
-#[Create(redirectToRoute: 'app_book_update')]
-#[Update(redirectToRoute: 'app_book_update')]
+#[AsResource(
+    operations: [
+        new Create(
+            redirectToRoute: 'app_book_update',
+        ),
+        new Update(
+            redirectToRoute: 'app_book_update',
+        ),
+    ],
+)
 class Book implements ResourceInterface
 {
 }
@@ -72,14 +79,17 @@ use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Create;
 use Sylius\Resource\Model\ResourceInterface;
 
-#[AsResource]
-#[Create(
-    redirectToRoute: 'app_author_show', 
-    # You can use either the generic resource variable
-    redirectArguments: ['id' => 'resource.getAuthor().getId()']
-    # Or you can use the resource name
-    redirectArguments: ['id' => 'book.getAuthor().getId()']
-)]
+#[AsResource(
+    operations: [
+        new Create(
+            redirectToRoute: 'app_author_show', 
+            # You can use either the generic resource variable
+            redirectArguments: ['id' => 'resource.getAuthor().getId()']
+            # Or you can use the resource name
+            redirectArguments: ['id' => 'book.getAuthor().getId()']
+        ),
+    ],
+)
 class Book implements ResourceInterface
 {
 }

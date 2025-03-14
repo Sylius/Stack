@@ -40,8 +40,11 @@ use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Index;
 use Sylius\Resource\Model\ResourceInterface;
 
-#[AsResource]
-#[Index]
+#[AsResource(
+    operations: [
+        new Index(),
+    ],
+)]
 class Book implements ResourceInterface
 {
 }
@@ -78,11 +81,14 @@ use Sylius\Resource\Model\ResourceInterface;
 use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Index;
 
-#[AsResource]
-// You can use either the FQCN of your grid
-#[Index(grid: BookGrid::class)]
-// Or you can use the grid name
-#[Index(grid: 'app_book')]
+#[AsResource(
+    operations: [
+        // You can use either the FQCN of your grid
+        new Index(grid: BookGrid::class),
+        // Or you can use the grid name
+        new Index(grid: 'app_book'),
+    ],
+)]
 class Book implements ResourceInterface
 {
 }
@@ -113,8 +119,11 @@ use Sylius\Resource\Model\ResourceInterface;
 use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Show;
 
-#[AsResource]
-#[Show]
+#[AsResource(
+    operations: [
+        new Show(),
+    ],
+)
 class Book implements ResourceInterface
 {
 }
@@ -149,8 +158,11 @@ use Sylius\Resource\Model\ResourceInterface;
 use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Create;
 
-#[AsResource]
-#[Create]
+#[AsResource(
+    operations: [
+        new Create(),
+    ],
+)
 class Book implements ResourceInterface
 {
 }
@@ -187,8 +199,11 @@ use Sylius\Resource\Model\ResourceInterface;
 use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Update;
 
-#[AsResource]
-#[Update]
+#[AsResource(
+    operations: [
+        new Update(),
+    ],
+)
 class Book implements ResourceInterface
 {
 }
@@ -223,8 +238,11 @@ use Sylius\Resource\Model\ResourceInterface;
 use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Delete;
 
-#[AsResource]
-#[Delete]
+#[AsResource(
+    operations: [
+        new Delete(),
+    ],
+)
 class Book implements ResourceInterface
 {
 }
@@ -249,8 +267,11 @@ use Sylius\Resource\Model\ResourceInterface;
 use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\BulkDelete;
 
-#[AsResource]
-#[BulkDelete]
+#[AsResource(
+    operations: [
+        new BulkDelete(),
+    ],
+)
 class Book implements ResourceInterface
 {
 }
@@ -277,8 +298,11 @@ use Sylius\Resource\Model\ResourceInterface;
 use Sylius\Resource\Metadata\ApplyStateMachineTransition;
 use Sylius\Resource\Metadata\AsResource;
 
-#[AsResource]
-#[ApplyStateMachineTransition(stateMachineTransition: 'publish')]
+#[AsResource(
+    operations: [
+        new ApplyStateMachineTransition(stateMachineTransition: 'publish'),
+    ],
+)
 class Book implements ResourceInterface
 {
 }
@@ -306,9 +330,12 @@ use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Create;
 use Sylius\Resource\Metadata\Update;
 
-#[AsResource]
-#[Create(path: 'register')]
-#[Update(path: '{id}/edition')]
+#[AsResource(
+    operations: [
+        new Create(path: 'register'),
+        new Update(path: '{id}/edition'),
+    ],
+)
 class Customer implements ResourceInterface
 {
 }
@@ -332,8 +359,11 @@ use Sylius\Resource\Model\ResourceInterface;
 use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Create;
 
-#[AsResource]
-#[Create(shortName: 'register')]
+#[AsResource(
+    operations: [
+        new Create(shortName: 'register'),
+    ],
+)
 class Customer implements ResourceInterface
 {
 }
@@ -363,11 +393,15 @@ use Sylius\Resource\Metadata\Index;
 use Sylius\Resource\Metadata\Show;
 use Sylius\Resource\Metadata\Update;
 
-#[AsResource(templatesDir: 'book')]
-#[Index]
-#[Create]
-#[Update]
-#[Show]
+#[AsResource(
+    templatesDir: 'book',
+    operations: [
+        new Index(),
+        new Create(),
+        new Update(),
+        new Show(),
+    ],
+)
 class Book implements ResourceInterface
 {
 }
@@ -410,13 +444,17 @@ use Sylius\Resource\Metadata\Index;
 use Sylius\Resource\Metadata\Show;
 use Sylius\Resource\Metadata\Update;
 
-#[AsResource(routePrefix: 'admin')]
-#[Index]
-#[Create]
-#[Update]
-#[Delete]
-#[BulkDelete]
-#[Show]
+#[AsResource(
+    routePrefix: 'admin',
+    operations: [
+        new Index(),
+        new Create(),
+        new Update(),
+        new Delete(),
+        new BulkDelete(),
+        new Show(),
+    ],
+)
 class Book implements ResourceInterface
 {
 }
@@ -449,16 +487,24 @@ use Sylius\Resource\Metadata\Index;
 use Sylius\Resource\Metadata\Show;
 use Sylius\Resource\Metadata\Update;
 
-#[AsResource(section: 'admin', routePrefix: 'admin')]
-#[Index]
-#[Create]
-#[Update]
-#[Delete]
-#[BulkDelete]
-
-#[AsResource(section: 'shop')]
-#[Index]
-#[Show]
+#[AsResource(
+    section: 'admin',
+    routePrefix: 'admin',
+    operations: [
+        new Index(),
+        new Create(),
+        new Update(),
+        new Delete(),
+        new BulkDelete(),
+    ],
+)
+#[AsResource(
+    section: 'shop',
+    operations: [
+        new Index(),
+        new Show(),
+    ],
+)
 class Book implements ResourceInterface
 {
 }
@@ -491,12 +537,16 @@ use Sylius\Resource\Metadata\Delete;
 use Sylius\Resource\Metadata\Index;
 use Sylius\Resource\Metadata\Update;
 
-#[AsResource(identifier: 'code')]
-#[Index]
-#[Create]
-#[Update]
-#[Delete]
-#[BulkDelete]
+#[AsResource(
+    identifier: 'code',
+    operations: [
+        new Index(),
+        new Create(),
+        new Update(),
+        new Delete(),
+        new BulkDelete(),
+    ],
+)
 class Book implements ResourceInterface
 {
 }
@@ -523,8 +573,17 @@ use Sylius\Resource\Model\ResourceInterface;
 use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Create;
 
-#[AsResource(vars: ['header' => 'Library', 'subheader' => 'Managing your library'])]
-#[Create(vars: ['subheader' => 'Adding a book'])]
+#[AsResource(
+    vars: [
+        'header' => 'Library', 
+        'subheader' => 'Managing your library',
+    ],
+    operations: [
+        new Create(vars: [
+            'subheader' => 'Adding a book',
+        ]),
+    ],
+)
 class Book implements ResourceInterface
 {
 }

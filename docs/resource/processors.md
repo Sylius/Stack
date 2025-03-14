@@ -74,8 +74,13 @@ use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Create;
 use Sylius\Resource\Model\ResourceInterface;
 
-#[AsResource]
-#[Create(processor: CreateCustomerProcessor::class)]
+#[AsResource(
+    operations: [
+        new Create(
+            processor: CreateCustomerProcessor::class,
+        ),
+    ],
+)
 final class BoardGameResource implements ResourceInterface
 ```
 {% endcode %}
@@ -120,13 +125,16 @@ use Sylius\Resource\Metadata\Delete;
 use Sylius\Resource\Model\ResourceInterface;
 
 #[AsResource(
-    alias: 'app.board_game',
     section: 'admin',
     formType: BoardGameType::class,
     templatesDir: 'crud',
     routePrefix: '/admin',
-)]
-#[Delete(processor: DeleteBoardGameProcessor::class)]
+    operations: [
+        new Delete(
+            processor: DeleteBoardGameProcessor::class,
+        ),
+    ],
+)
 final class BoardGameResource implements ResourceInterface
 ```
 {% endcode %}
@@ -152,16 +160,17 @@ use Sylius\Resource\Metadata\Update;
 use Sylius\Resource\Model\ResourceInterface;
 
 #[AsResource(
-    alias: 'app.board_game',
     section: 'admin',
     formType: BoardGameType::class,
     templatesDir: 'crud',
     routePrefix: '/admin',
-)]
-#[Update(
-    shortName: 'update_preview',
-    provider: BoardGameItemProvider::class,
-    write: false,    
+    operations: [
+        new Update(
+            shortName: 'update_preview',
+            provider: BoardGameItemProvider::class,
+            write: false,   
+        ),
+    ],
 )]
 final class BoardGameResource implements ResourceInterface
 ```

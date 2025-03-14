@@ -71,11 +71,14 @@ use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Show;
 use Sylius\Resource\Model\ResourceInterface;
 
-#[AsResource]
-#[Show(
-    template: 'subscription/show.html.twig',
-    twigContextFactory: ShowSubscriptionContextFactory::class,
-)]
+#[AsResource(
+    operations: [
+        new Show(
+            template: 'subscription/show.html.twig',
+            twigContextFactory: ShowSubscriptionContextFactory::class,      
+        ),
+    ],
+)
 class Subscription implements ResourceInterface
 {
 }

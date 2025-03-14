@@ -22,8 +22,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[AsResource(
     formType: BookType::class, 
+    operations: [
+        new Create(),
+    ],
 )
-#[Create]
 class Book implements ResourceInterface
 {
     // ...
@@ -47,8 +49,11 @@ use Sylius\Resource\Model\ResourceInterface;
 use Sylius\Resource\Metadata\AsResource;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[AsResource()
-#[Post]
+#[AsResource(
+    operations: [
+        new Post(),
+    ],
+)
 class Book implements ResourceInterface
 {
     // ...
@@ -81,12 +86,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[AsResource(
     formType: BoardGameType::class, 
+    operations: [
+        new Update(
+            provider: BoardGameItemProvider::class, 
+            processor: PublishBoardGameProcessor::class,
+            validate: false, // disable resource validation        
+        ),
+    ],
 )
-#[Update(
-    provider: BoardGameItemProvider::class, 
-    processor: PublishBoardGameProcessor::class,
-    validate: false, // disable resource validation
- )]
 class BoardGameResource implements ResourceInterface
 {
 }
