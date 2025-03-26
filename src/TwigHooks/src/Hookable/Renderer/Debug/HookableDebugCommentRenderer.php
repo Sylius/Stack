@@ -27,10 +27,7 @@ final class HookableDebugCommentRenderer implements HookableRendererInterface
 
     public function render(AbstractHookable $hookable, HookableMetadata $metadata): string
     {
-        $renderedParts = [];
-        $renderedParts[] = $this->getOpeningDebugComment($hookable);
-        $renderedParts[] = trim($this->innerRenderer->render($hookable, $metadata));
-        $renderedParts[] = $this->getClosingDebugComment($hookable);
+        $renderedParts[] = $this->wrapWithDebugAttributes(trim($this->innerRenderer->render($hookable, $metadata)), $hookable);
 
         return implode(\PHP_EOL, $renderedParts);
     }
@@ -69,5 +66,16 @@ final class HookableDebugCommentRenderer implements HookableRendererInterface
             $targetValue,
             $hookable->priority(),
         );
+    }
+
+    private function wrapWithDebugAttributes(string $content, AbstractHookable $hookable): string
+    {
+        $debugAttributes = sprintf(' data-hook="%s" data-hookable="%s" data-hookable-config="%s"',
+            htmlspecialchars($hookable->hookName, ENT_QUOTES),
+            htmlspecialchars($hookable->name, ENT_QUOTES),
+            $hookable->priority()
+        );
+
+        return preg_replace('/<(?!\/)(\w+)([^>]*)>/', '<$1$2' . $debugAttributes . '>', $content, 1);
     }
 }
