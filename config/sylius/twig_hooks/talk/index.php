@@ -16,18 +16,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 return static function (ContainerConfigurator $container): void {
     $container->extension('sylius_twig_hooks', [
         'hooks' => [
-            'sylius_admin.speaker.index.content.header.title_block' => [
-                'title' => [
-                    'template' => '@SyliusBootstrapAdminUi/shared/crud/common/content/header/title_block/title.html.twig',
-                    'configuration' => [
-                        'title' => 'app.ui.browsing_speakers',
-                        'icon' => 'tabler:users',
-                        'subheader' => 'app.ui.managing_your_speakers',
-                    ],
-                ],
-            ],
-
-            'sylius_admin.speaker.index.content.grid' => [
+            'sylius_admin.talk.index.content.grid' => [
                 'data_table' => [
                     'component' => 'sylius_grid_data_table',
                     'props' => [
