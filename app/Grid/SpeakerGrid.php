@@ -38,6 +38,7 @@ final class SpeakerGrid extends AbstractGrid implements ResourceAwareGridInterfa
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
+            ->setLimits([10, 25, 50])
             ->addFilter(
                 StringFilter::create('search', ['firstName', 'lastName', 'companyName'])
                     ->setLabel('sylius.ui.search'),
@@ -64,7 +65,12 @@ final class SpeakerGrid extends AbstractGrid implements ResourceAwareGridInterfa
             )
             ->addActionGroup(
                 MainActionGroup::create(
-                    CreateAction::create(),
+                    CreateAction::create()
+                        ->setOptions([
+                            'link' => [
+                                'route' => 'app_admin_speaker_create',
+                            ],
+                        ]),
                 ),
             )
             ->addActionGroup(
@@ -82,15 +88,23 @@ final class SpeakerGrid extends AbstractGrid implements ResourceAwareGridInterfa
                                 ],
                             ],
                         ]),
-                    UpdateAction::create(),
-                    DeleteAction::create(),
+                    UpdateAction::create()
+                        ->setOptions([
+                            'link' => [
+                                'route' => 'app_admin_speaker_update',
+                                'parameters' => [
+                                    'id' => 'resource.id',
+                                ],
+                            ],
+                        ]),
+//                    DeleteAction::create(),
                 ),
             )
-            ->addActionGroup(
-                BulkActionGroup::create(
-                    DeleteAction::create(),
-                ),
-            )
+//            ->addActionGroup(
+//                BulkActionGroup::create(
+//                    DeleteAction::create(),
+//                ),
+//            )
         ;
     }
 

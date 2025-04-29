@@ -21,7 +21,12 @@
             <div class="dropdown-menu dropdown-menu-end ">
                 {% for limit in other_pagination_limits %}
                     {% set path = path(app.request.attributes.get('_route'), app.request.attributes.all('_route_params')|merge(app.request.query)|merge({'limit': limit})) %}
-                    <a class="dropdown-item" href="{{ path }}">{{ limit }}</a>
+                    <a class="dropdown-item"
+                       href="{{ path }}"
+                       data-action="live#action"
+                       data-live-action-param="updateLimit"
+                       data-live-limit-param="{{ limit }}"
+                    >{{ limit }}</a>
                 {% endfor %}
             </div>
         </div>

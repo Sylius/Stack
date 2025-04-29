@@ -1,12 +1,16 @@
 {% import '@SyliusBootstrapAdminUi/shared/helper/table.html.twig' as table %}
 {% import '@SyliusBootstrapAdminUi/shared/helper/pagination.html.twig' as pagination %}
 
-{% set resources = hookable_metadata.context.resources %}
-{% set data = resources.data %}
-{% set definition = resources.definition %}
+{% set resources = hookable_metadata.context.resources|default(this.resources|default(null)) %}
+{% set data = resources.data|default([]) %}
+{% set definition = resources.definition|default(null) %}
+{% set is_live = attributes is defined %}
 
 {% if data|length > 0 %}
-    <div class="card">
+    <div class="card" data-sylius-data-table {{ attributes.defaults(stimulus_controller('data_table', {
+        page: page,
+        pushOnBrowserHistory: pushOnBrowserHistory
+    }))|default(null) }}>
         <div class="card-body border-bottom py-3">
             <div class="d-flex">
                 {% if data|length > 0 and definition.actionGroups.bulk is defined and definition.getEnabledActions('bulk')|length > 0 %}

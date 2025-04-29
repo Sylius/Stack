@@ -92,17 +92,17 @@ final class TalkGrid extends AbstractGrid implements ResourceAwareGridInterface
                     CreateAction::create(),
                 ),
             )
-            ->addActionGroup(
-                ItemActionGroup::create(
-                    UpdateAction::create(),
-                    DeleteAction::create(),
-                ),
-            )
-            ->addActionGroup(
-                BulkActionGroup::create(
-                    DeleteAction::create(),
-                ),
-            )
+//            ->addActionGroup(
+//                ItemActionGroup::create(
+//                    UpdateAction::create(),
+//                    DeleteAction::create(),
+//                ),
+//            )
+//            ->addActionGroup(
+//                BulkActionGroup::create(
+//                    DeleteAction::create(),
+//                ),
+//            )
         ;
     }
 

@@ -1,3 +1,8 @@
+{% set grid = hookable_metadata.context.resources.definition.code|default(null) %}
+{% set page = app.request.query.getInt('page', 1)  %}
+{% set limit = app.request.query.has('limit') ? app.request.query.getInt('limit') : null %}
+{% set criteria = app.request.query.has('criteria') ? app.request.query.all('criteria') : null %}
+
 <div class="page-body">
     <div class="container-xl">
         {% hook 'grid' %}
