@@ -160,7 +160,7 @@ use Sylius\Resource\Model\ResourceInterface;
 #[AsResource(
     section: 'admin', // This will influence the route name
     routePrefix: '/admin',
-    templatesDir: '@SyliusAdminUi/crud', // This directory contains the generic template for your list
+    templatesDir: '@SyliusAdmin/shared/crud', // This directory contains the generic template for your list
     operations: [
         // You can use either the FQCN of your grid
         new Index(grid: AdminSupplierGrid::class)
