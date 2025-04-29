@@ -88,3 +88,41 @@ final readonly class MenuBuilder implements MenuBuilderInterface
     }
 }
 ```
+
+### Opening a link in a new tab
+
+You can make a link open in a new browser tab by adding the `target="_blank"` link attribute to menu items. This can be applied to top-level menu items without children, or to child items themselves. In other words, it only works for items that do not have submenus.
+
+To configure this behavior, set the target link attribute on the menu item as shown below:
+
+{% code title="src/Menu/MenuBuilder.php" lineNumbers="true" %}
+```php
+// ...
+#[AsDecorator(decorates: 'sylius_admin_ui.knp.menu_builder')]
+final readonly class MenuBuilder implements MenuBuilderInterface
+{
+    // ...
+
+    public function createMenu(array $options): ItemInterface
+    {
+        $menu = $this->factory->createItem('root');
+        // ...
+        $this->addYourWebsitebMenu($menu);
+
+        return $menu;
+    }
+
+    private function addYourWebsitebMenu(ItemInterface $menu): void
+    {
+        $apiDoc = $menu
+            ->addChild('your_website', [
+                'route' => 'app_homepage',
+            ])
+            ->setLabel('app.ui.your_website')
+            ->setLabelAttribute('icon', 'tabler:arrow-up-right')
+            ->setLinkAttribute('target', '_blank') // Opens the link in a new tab
+        ;
+    }
+}
+```
+{% endcode %}
