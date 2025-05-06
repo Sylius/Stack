@@ -9,7 +9,7 @@
 
 import './styles/main.scss';
 
-import './scripts/bulk-delete';
+import './scripts/bulk-action';
 import './scripts/check-all';
 import './scripts/menu-search';
 
