@@ -41,7 +41,7 @@ abstract class File
         return $this->path;
     }
 
-    public function setPath(string $path): void
+    public function setPath(?string $path): void
     {
         $this->path = $path;
     }

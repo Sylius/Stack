@@ -2,3 +2,5 @@ sylius_grid:
     templates:
         filter:
             'App\Grid\Filter\SpeakerFilter': '@SyliusBootstrapAdminUi/shared/grid/filter/entity.html.twig'
+        bulk_action:
+            'redirect_to_speaker_talks': 'shared/grid/bulk_action/redirect_to_speaker_talks.html.twig'
