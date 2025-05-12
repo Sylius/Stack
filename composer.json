@@ -108,7 +108,7 @@
     },
     "extra": {
         "symfony": {
-            "require": "7.1.*"
+            "require": "7.2.*"
         }
     },
     "scripts": {
