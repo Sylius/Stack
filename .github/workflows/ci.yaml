@@ -17,6 +17,11 @@ jobs:
                 php: [ "8.1", "8.2", "8.3" ]
                 postgres: ["14.6"]
                 symfony: [ "^6.4", "^7.0" ]
+                include:
+                    - php: "8.3"
+                      symfony: "7.3.*"
+                      postgres: "14.6"
+                      unstable: true
                 exclude:
                     - php: "8.1"
                       symfony: "^7.0"
@@ -50,6 +55,12 @@ jobs:
                     composer global config --no-plugins allow-plugins.symfony/flex true
                     composer global require --no-progress --no-scripts --no-plugins "symfony/flex"
                     composer config extra.symfony.require "${{ matrix.symfony }}"
+                    
+            -   name: "Configure unstable package' versions"
+                if: ${{ matrix.unstable || false }}
+                run: |
+                    composer config minimum-stability dev
+                    composer config prefer-stable false 
 
             -   name: Get Composer cache directory
                 id: composer-cache
@@ -107,6 +118,12 @@ jobs:
                   (cd src/AdminUi/ && composer global require --no-progress --no-scripts --no-plugins "symfony/flex")
                   (cd src/AdminUi/ && composer config extra.symfony.require "${{ matrix.symfony }}")
 
+            -   name: "Configure package' versions as unstable (Admin Ui)"
+                if: ${{ matrix.unstable || false }}
+                run: |
+                    (cd src/AdminUi/ && composer config minimum-stability dev)
+                    (cd src/AdminUi/ && composer config prefer-stable false)
+
             -   name: "Install dependencies (Admin Ui)"
                 run: (cd src/AdminUi/ && composer update --no-interaction --no-scripts)
 
@@ -120,6 +137,12 @@ jobs:
                   (cd src/BootstrapAdminUi/ && composer global require --no-progress --no-scripts --no-plugins "symfony/flex")
                   (cd src/BootstrapAdminUi/ && composer config extra.symfony.require "${{ matrix.symfony }}")
 
+            -   name: "Configure package' versions as unstable (Bootstrap Admin Ui)"
+                if: ${{ matrix.unstable || false }}
+                run: |
+                    (cd src/BootstrapAdminUi/ && composer config minimum-stability dev)
+                    (cd src/BootstrapAdminUi/ && composer config prefer-stable false)
+
             -   name: "Install dependencies (Bootstrap Admin Ui)"
                 run: (cd src/BootstrapAdminUi/ && composer update --no-interaction --no-scripts)
 
@@ -132,6 +155,12 @@ jobs:
                   (cd src/TwigHooks/ && composer global config --no-plugins allow-plugins.symfony/runtime true)
                   (cd src/TwigHooks/ && composer global require --no-progress --no-scripts --no-plugins "symfony/flex")
                   (cd src/TwigHooks/ && composer config extra.symfony.require "${{ matrix.symfony }}")
+                  
+            -   name: "Configure package' versions as unstable (Twig Hooks)"
+                if: ${{ matrix.unstable || false }}
+                run: |
+                    (cd src/TwigHooks/ && composer config minimum-stability dev)
+                    (cd src/TwigHooks/ && composer config prefer-stable false)                  
 
             -   name: "Install dependencies (Twig Hooks)"
                 run: (cd src/TwigHooks/ && composer update --no-interaction --no-scripts)
@@ -145,6 +174,12 @@ jobs:
                   (cd src/TwigExtra/ && composer global config --no-plugins allow-plugins.symfony/runtime true)
                   (cd src/TwigExtra/ && composer global require --no-progress --no-scripts --no-plugins "symfony/flex")
                   (cd src/TwigExtra/ && composer config extra.symfony.require "${{ matrix.symfony }}")
+                  
+            -   name: "Configure package' versions as unstable (Twig Extra)"
+                if: ${{ matrix.unstable || false }}
+                run: |
+                    (cd src/TwigExtra/ && composer config minimum-stability dev)
+                    (cd src/TwigExtra/ && composer config prefer-stable false)                      
 
             -   name: "Install dependencies (Twig Extra)"
                 run: (cd src/TwigExtra/ && composer update --no-interaction --no-scripts)
@@ -158,6 +193,12 @@ jobs:
                   (cd src/UiTranslations/ && composer global config --no-plugins allow-plugins.symfony/runtime true)
                   (cd src/UiTranslations/ && composer global require --no-progress --no-scripts --no-plugins "symfony/flex")
                   (cd src/UiTranslations/ && composer config extra.symfony.require "${{ matrix.symfony }}")
+
+            -   name: "Configure package' versions as unstable (Ui Translations)"
+                if: ${{ matrix.unstable || false }}
+                run: |
+                    (cd src/UiTranslations/ && composer config minimum-stability dev)
+                    (cd src/UiTranslations/ && composer config prefer-stable false)
 
             -   name: "Install dependencies (Ui Translations)"
                 run: (cd src/UiTranslations/ && composer update --no-interaction --no-scripts)
