@@ -1,5 +1,55 @@
 # Customizing the page titles
 
+## Defining the application base title
+
+The application’s base title can be configured using the `sylius_admin.base#base_title` Twig hook. Here's an example of how to define it:
+
+<div data-full-width="false">
+
+<figure><img src=".gitbook/assets/custom_title.png" alt="Example of a Custom Title in Google Chrome"></figure>
+
+</div>
+
+{% tabs %}
+{% tab title="YAML" %}
+{% code title="config/packages/sylius_bootstrap_admin_ui.yaml" lineNumbers="true" %}
+```yaml
+# ...
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin.base#base_title': # The base title block
+            default:
+                configuration:
+                    title: 'My app' # here is our title override
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="PHP" %}
+{% code title="config/packages/sylius_bootstrap_admin_ui.php" lineNumbers="true" %}
+```php
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+return static function (ContainerConfigurator $containerConfigurator): void {
+    // ...
+    $containerConfigurator->extension('sylius_twig_hooks', [
+        'hooks' => [
+            // The base title block
+            'sylius_admin.base#base_title' => [
+                'default' => [
+                    'configuration' => [
+                        'title' => 'My app' // here is our title override 
+                    ],
+                ],
+            ],
+        ],        
+    ]);
+};
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
+
 ## Changing the default title for a specific page
 
 <div data-full-width="false">
