@@ -55,6 +55,7 @@ final class TalkGrid extends AbstractGrid implements ResourceAwareGridInterface
             ->addFilter(
                 Filter::create(name: 'speaker', type: SpeakerFilter::class)
                     ->setLabel('app.ui.speaker')
+                    ->setFormOptions(['multiple' => true])
                     ->setOptions(['fields' => ['speakers.id']]),
             )
             ->addFilter(
