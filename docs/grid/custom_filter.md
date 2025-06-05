@@ -4,6 +4,126 @@ Sylius Grids come with built-in filters, but there are use-cases where you need 
 
 To add a new filter, we need to create an appropriate class and form type.
 
+## Using attributes
+
+{% code title="src/Grid/Filter/SuppliersStatisticsFilter.php" lineNumbers="true" %}
+```php
+<?php
+
+namespace App\Grid\Filter;
+
+use App\Form\Type\Filter\SuppliersStatisticsFilterType;
+use Sylius\Bundle\GridBundle\Doctrine\DataSourceInterface;
+use Sylius\Component\Grid\Attribute\AsFilter;
+use Sylius\Component\Grid\Filtering\FilterInterface;
+
+#[AsFilter(
+    formType: SuppliersStatisticsFilterType::class,
+    type: 'suppliers_statistics',
+    template: 'templates/Grid/Filter/suppliers_statistics.html.twig'
+)]
+class SuppliersStatisticsFilter implements FilterInterface
+{
+    public function apply(DataSourceInterface $dataSource, $name, $data, array $options = []): void
+    {
+        // Your filtering logic.
+        // $data['stats'] contains the submitted value!
+        // here is an example
+        $queryBuilder = $dataSource->getQueryBuilder();
+        $queryBuilder
+            ->andWhere('stats = :stats')
+            ->setParameter(':stats', $data['stats'])
+        ;
+    
+        // For driver abstraction you can use the expression builder. ExpressionBuilder is a kind of query builder.
+        // $data['stats'] contains the submitted value!
+        // here is an example
+        $dataSource->restrict($dataSource->getExpressionBuilder()->equals('stats', $data['stats']));
+    }
+}
+```
+{% endcode %}
+
+And the form type:
+
+{% code title="src/Grid/Filter/SuppliersStatisticsFilterType.php" lineNumbers="true" %}
+```php
+<?php
+
+namespace App\Form\Type\Filter;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class SuppliersStatisticsFilterType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder->add(
+            'stats',
+            ChoiceType::class,
+            ['choices' => range($options['range'][0], $options['range'][1])]
+        );
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver
+            ->setDefaults([
+                'range' => [0, 10],
+            ])
+            ->setAllowedTypes('range', ['array'])
+        ;
+    }
+}
+```
+{% endcode %}
+
+Create a template for the filter, similar to the existing ones:
+
+{% code title="templates/Grid/Filter/suppliers_statistics.html.twig" lineNumbers="true" %}
+```twig
+{% form_theme form '@SyliusUi/Form/theme.html.twig' %}
+
+{{ form_row(form) }}
+```
+{% endcode %}
+
+Now you can use your new filter type in the grid configuration!
+
+{% code title="src/Grid/TournamentGrid.php" lineNumbers="true" %}
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Grid;
+
+use App\Entity\Tournament;
+use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
+use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
+use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+
+#[AsGrid('app_tournament', Tournament::class)]
+final class TournamentGrid extends AbstractGrid implements ResourceAwareGridInterface
+{
+    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    {
+        $gridBuilder
+            ->addFilter(
+                Filter::create('stats', 'suppliers_statistics')
+                    ->setFormOptions(['range' => [0, 100]])
+            )
+        ;    
+    }
+}
+```
+{% endcode %}
+
+## Legacy way
+
 {% code title="src/Grid/Filter/SuppliersStatisticsFilter.php" lineNumbers="true" %}
 ```php
 <?php
