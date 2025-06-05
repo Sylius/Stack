@@ -40,57 +40,6 @@ $ bin/console make:grid
 
 Now we can configure our first grid:
 
-{% tabs %}
-{% tab title="YAML" %}
-{% code title="config/packages/sylius_grid.yaml" lineNumbers="true" %}
-```yaml
-sylius_grid:
-    grids:
-        app_admin_supplier:
-            driver:
-                name: doctrine/orm
-                options:
-                    class: App\Entity\Supplier
-            fields:
-                name:
-                    type: string
-                    label: app.ui.name
-                enabled:
-                    type: twig
-                    label: app.ui.enabled
-                    options:
-                        template: '@SyliusBootstrapAdminUi/shared/grid/field/boolean.html.twig' # This will be a checkbox field
-```
-{% endcode %}
-
-{% endtab %}
-
-{% tab title="PHP" %}
-{% code lineNumbers="true" %}
-```php
-use App\Entity\Supplier;
-use Sylius\Bundle\GridBundle\Builder\GridBuilder;
-use Sylius\Bundle\GridBundle\Builder\Field\StringField;
-use Sylius\Bundle\GridBundle\Builder\Field\TwigField;
-use Sylius\Bundle\GridBundle\Config\GridConfig;
-
-return static function (GridConfig $grid) {
-    $grid->addGrid(GridBuilder::create('app_admin_supplier', Supplier::class)
-        ->addField(
-            StringField::create('name')
-                ->setLabel('app.ui.name')
-        )
-        ->addField(
-            TwigField::create('enabled', '@SyliusBootstrapAdminUi/shared/grid/field/boolean.html.twig')
-                ->setLabel('app.ui.enabled')
-        )
-    )
-};
-```
-{% endcode %}
-
-OR
-
 {% code title="src/Grid/AdminSupplierGrid.php" lineNumbers="true" %}
 ```php
 <?php
@@ -105,14 +54,11 @@ use Sylius\Bundle\GridBundle\Builder\Field\TwigField;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
-final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridInterface
+#[AsGrid('app_admin_supplier', Supplier::class)]
+final class AdminSupplierGrid extends AbstractGrid
 {
-    public static function getName(): string
-    {
-           return 'app_admin_supplier';
-    }
-
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
@@ -126,16 +72,9 @@ final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridI
             )
         ;
     }
-
-    public function getResourceClass(): string
-    {
-        return Supplier::class;
-    }
 }
 ```
 {% endcode %}
-{% endtab %}
-{% endtabs %}
 
 {% hint style="info" %}
 Remember that a grid is *the way objects of a desired entity are
@@ -259,14 +198,11 @@ use Sylius\Bundle\GridBundle\Builder\Filter\StringFilter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
+#[AsGrid('app_admin_supplier', Supplier::class)]
 final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridInterface
 {
-    public static function getName(): string
-    {
-           return 'app_admin_supplier';
-    }
-
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
@@ -279,11 +215,6 @@ final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridI
                     ->setLabel('Enabled')
             )
         ;
-    }
-
-    public function getResourceClass(): string
-    {
-        return Supplier::class;
     }
 }
 ```
@@ -357,24 +288,16 @@ use Sylius\Bundle\GridBundle\Builder\Filter\StringFilter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
+#[AsGrid('app_admin_supplier', Supplier::class)]
 final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridInterface
 {
-    public static function getName(): string
-    {
-           return 'app_admin_supplier';
-    }
-
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
             ->setRepositoryMethod('mySupplierGridQuery')
         ;
-    }
-
-    public function getResourceClass(): string
-    {
-        return Supplier::class;
     }
 }
 ```
@@ -451,14 +374,12 @@ use Sylius\Bundle\GridBundle\Builder\Filter\StringFilter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
+
+#[AsGrid('app_admin_supplier', Supplier::class)]
 
 final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridInterface
 {
-    public static function getName(): string
-    {
-           return 'app_admin_supplier';
-    }
-
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
@@ -467,11 +388,6 @@ final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridI
                     ->setLabel('origin')
             )
         ;
-    }
-
-    public function getResourceClass(): string
-    {
-        return Supplier::class;
     }
 }
 ```
@@ -532,24 +448,16 @@ use App\Entity\Supplier;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
+#[AsGrid('app_admin_supplier', Supplier::class)]
 final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridInterface
 {
-    public static function getName(): string
-    {
-           return 'app_admin_supplier';
-    }
-
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
             ->orderBy('name', 'asc')
         ;
-    }
-
-    public function getResourceClass(): string
-    {
-        return Supplier::class;
     }
 }
 ```
@@ -616,14 +524,11 @@ use Sylius\Bundle\GridBundle\Builder\Field\StringField;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
+#[AsGrid('app_admin_supplier', Supplier::class)]
 final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridInterface
 {
-    public static function getName(): string
-    {
-           return 'app_admin_supplier';
-    }
-
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
@@ -633,11 +538,6 @@ final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridI
                     ->setSortable(true)
             )
         ;
-    }
-
-    public function getResourceClass(): string
-    {
-        return Supplier::class;
     }
 }
 ```
@@ -710,14 +610,11 @@ use Sylius\Bundle\GridBundle\Builder\Field\TwigField;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
+#[AsGrid('app_admin_supplier', Supplier::class)]
 final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridInterface
 {
-    public static function getName(): string
-    {
-           return 'app_admin_supplier';
-    }
-
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
@@ -728,11 +625,6 @@ final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridI
                     ->setSortable(true, 'address.country')
             )
         ;
-    }
-
-    public function getResourceClass(): string
-    {
-        return Supplier::class;
     }
 }
 ```
@@ -795,24 +687,16 @@ use Sylius\Bundle\GridBundle\Builder\Field\TwigField;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
+#[AsGrid('app_admin_supplier', Supplier::class)]
 final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridInterface
 {
-    public static function getName(): string
-    {
-           return 'app_admin_supplier';
-    }
-
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
             ->setLimits([30, 12, 48])
         ;
-    }
-
-    public function getResourceClass(): string
-    {
-        return Supplier::class;
     }
 }
 ```
@@ -958,14 +842,11 @@ use Sylius\Bundle\GridBundle\Builder\ActionGroup\MainActionGroup;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
+#[AsGrid('app_admin_supplier', Supplier::class)]
 final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridInterface
 {
-    public static function getName(): string
-    {
-           return 'app_admin_supplier';
-    }
-
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
@@ -981,11 +862,6 @@ final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridI
                 )
             )
         ;
-    }
-
-    public function getResourceClass(): string
-    {
-        return Supplier::class;
     }
 }
 ```
