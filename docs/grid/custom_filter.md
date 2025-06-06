@@ -34,9 +34,9 @@ class SuppliersStatisticsFilter implements FilterInterface
             ->setParameter(':stats', $data['stats'])
         ;
     
-        // For driver abstraction you can use the expression builder. ExpressionBuilder is a kind of query builder.
+        // You can leverage the ExpressionBuilder to apply driver-agnostic filters to the data source.
+       // Combined with restrict(), it provides query builder–style functionality for grid filters.
         // $data['stats'] contains the submitted value!
-        // here is an example
         $dataSource->restrict($dataSource->getExpressionBuilder()->equals('stats', $data['stats']));
     }
 }
@@ -90,7 +90,7 @@ Create a template for the filter, similar to the existing ones:
 ```
 {% endcode %}
 
-Now you can use your new filter type in the grid configuration!
+Your custom filter is now ready to be plugged into the grid configuration using its service alias or FQCN.
 
 {% code title="src/Grid/TournamentGrid.php" lineNumbers="true" %}
 ```php
