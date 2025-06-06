@@ -28,7 +28,6 @@ class SuppliersStatisticsFilter implements FilterInterface
     {
         // Your filtering logic.
         // $data['stats'] contains the submitted value!
-        // here is an example
         $queryBuilder = $dataSource->getQueryBuilder();
         $queryBuilder
             ->andWhere('stats = :stats')
