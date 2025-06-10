@@ -20,14 +20,16 @@
                                 <div class="col-auto">
                                     {% set firstSpeaker = talk.speakers.first %}
 
-                                    {% if firstSpeaker.avatar %}
-                                        {% set avatar_path = vich_uploader_asset(firstSpeaker.avatar) %}
+                                    {% if firstSpeaker %}
+                                        {% if firstSpeaker.avatar %}
+                                            {% set avatar_path = vich_uploader_asset(firstSpeaker.avatar) %}
 
-                                        {{ avatar.default(avatar_path, 'img-thumbnail') }}
-                                    {% else %}
-                                        <span class="avatar">
-                                            {{ firstSpeaker.firstName|first }}{{ firstSpeaker.lastName|first }}
-                                        </span>
+                                            {{ avatar.default(avatar_path, 'img-thumbnail') }}
+                                        {% else %}
+                                            <span class="avatar">
+                                                {{ firstSpeaker.firstName|first }}{{ firstSpeaker.lastName|first }}
+                                            </span>
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                                 <div class="col text-truncate">
