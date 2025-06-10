@@ -20,7 +20,7 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- */*{--tblr-breadcrumb-item-active-color:var(--tblr-gray-500);--tblr-breadcrumb-divider-color:var(--tblr-gray-300)}[data-bs-theme=dark],body[data-bs-theme=dark] [data-bs-theme=light]{--tblr-bg-surface:#1e2433}@font-face{font-family:Inter;font-weight:1 999;src:url(fonts/Inter-VariableFont_slnt,wght.853e0197.ttf) format("truetype-variations")}body{--bs-body-bg:#f6f8fb;--bs-tertiary-bg:#f6f8fb;--bs-body-color:#212529;font-feature-settings:"cv03","cv04","cv11"}a{text-underline-offset:.25em}a.link-reset{text-decoration:none}.btn-collapse.collapsed .icon-chevron-right{display:inline-flex}.btn-collapse.collapsed .icon-chevron-down,.btn-collapse:not(.collapsed) .icon-chevron-right{display:none}.btn-collapse:not(.collapsed) .icon-chevron-down{display:inline-flex}.breadcrumb-item a{text-decoration:none}.breadcrumb-item a:hover{color:#22b99a}.switch-collapse,body[data-bs-theme=dark] html[data-bs-theme=light] [data-theme-switch=dark],html[data-bs-theme=dark] [data-theme-switch=dark],html[data-bs-theme=light] [data-theme-switch=light]{display:none}label:has(input:checked)~.switch-collapse{display:block}/*!
+ */*{--tblr-breadcrumb-item-active-color:var(--tblr-gray-500);--tblr-breadcrumb-divider-color:var(--tblr-gray-300);--tblr-code-color:#36393b;--tblr-blue-rgb:17,81,141;--tblr-green-rgb:0,97,16}[data-bs-theme=dark],body[data-bs-theme=dark] [data-bs-theme=light]{--tblr-bg-surface:#1e2433}@font-face{font-family:Inter;font-weight:1 999;src:url(fonts/Inter-VariableFont_slnt,wght.853e0197.ttf) format("truetype-variations")}body{--bs-body-bg:#f6f8fb;--bs-tertiary-bg:#f6f8fb;--bs-body-color:#212529;font-feature-settings:"cv03","cv04","cv11"}a{text-underline-offset:.25em}a.link-reset{text-decoration:none}.btn-collapse.collapsed .icon-chevron-right{display:inline-flex}.btn-collapse.collapsed .icon-chevron-down,.btn-collapse:not(.collapsed) .icon-chevron-right{display:none}.btn-collapse:not(.collapsed) .icon-chevron-down{display:inline-flex}.breadcrumb-item a{text-decoration:none}.breadcrumb-item a:hover{color:#22b99a}.switch-collapse,body[data-bs-theme=dark] html[data-bs-theme=light] [data-theme-switch=dark],html[data-bs-theme=dark] [data-theme-switch=dark],html[data-bs-theme=light] [data-theme-switch=light]{display:none}label:has(input:checked)~.switch-collapse{display:block}.btn:not(.btn-sm){min-height:44px;min-width:44px}/*!
  * This file is part of the Sylius package.
  *
  * (c) Sylius Sp. z o.o.
@@ -62,7 +62,7 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- */textarea.form-control{height:12rem;min-height:8rem}.accordion-item:has(.accordion-error),.list-group-item.active:has(.tab-error),.list-group-item:has(.tab-error){border-right:2px solid #ff0017}.form-select:disabled{color:var(--tblr-gray-600)}.input-group{box-shadow:none}.input-group .form-check{flex-grow:1}.input-group .input-group-text{color:var(--tblr-gray-600)}.form-control:focus{box-shadow:none}/*!
+ */textarea.form-control{height:12rem;min-height:8rem}.accordion-item:has(.accordion-error),.list-group-item.active:has(.tab-error),.list-group-item:has(.tab-error){border-right:2px solid #ff0017}.form-select:disabled{color:var(--tblr-gray-600)}.input-group{box-shadow:none}.input-group .form-check{flex-grow:1}.input-group .input-group-text{color:var(--tblr-gray-600)}.form-control,.form-select{min-height:44px}.form-control:focus{box-shadow:none}/*!
  * This file is part of the Sylius package.
  *
  * (c) Sylius Sp. z o.o.
@@ -76,7 +76,7 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- */.sylius.navbar-nav{gap:.5rem}.sylius.navbar-brand-image{height:4rem}.navbar-collapse a.dropdown-item,.navbar-collapse a.nav-link{transition:all .1s}.navbar-collapse a.dropdown-item:hover,.navbar-collapse a.nav-link:hover{background:transparent;color:var(--tblr-primary)!important}svg.icon *{stroke-width:1.5}/*!
+ */.sylius.navbar-nav{gap:.5rem}.navbar input{min-height:44px}.navbar-brand-image{height:3rem}.navbar-collapse a.dropdown-item,.navbar-collapse a.nav-link{min-height:44px;transition:all .1s}.navbar-collapse a.dropdown-item:hover,.navbar-collapse a.nav-link:hover{background:transparent;color:var(--tblr-primary)!important}.nav-button{min-height:44px;min-width:44px}.navbar-collapse .nav-link:focus-visible{outline:2px solid #99c8ff}.navbar-plus-badge{width:50px}svg.icon *{stroke-width:1.5}/*!
  * This file is part of the Sylius package.
  *
  * (c) Sylius Sp. z o.o.
