@@ -35,7 +35,7 @@ The context data from these two sources are merged and passed with the metadata 
 ```
 {% endcode %}
 
-So, as we see at `line 8` we define the `index.form` hook. But also, we pass the `form` with using the `with` keyword. Thanks to it, we are able to pass multiple data to hookables that will hook into the `index.form` hook.
+So, as we see at `line 11` we define the `index.form` hook. But also, we pass the `form` with using the `with` keyword. Thanks to it, we are able to pass multiple data to hookables that will hook into the `index.form` hook.
 
 {% hint style="info" %}
 `with { form }` is a short-hand for `with { form: form }`, so the key for our `FormView` in the context data bag will be `form.`
