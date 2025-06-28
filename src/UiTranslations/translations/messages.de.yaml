@@ -6,7 +6,7 @@ sylius:
             remember_me: 'Angemeldet bleiben'
     ui:
         actions: 'Aktionen'
-        add_new_entry: ''
+        add_new_entry: 'Neuen Eintrag hinzufügen'
         administration_panel_login: 'Administrations-Bereich Anmeldung'
         all: 'Alle'
         are_your_sure_you_want_to_perform_this_action: 'Möchten Sie diese Aktion wirklich durchführen?'
