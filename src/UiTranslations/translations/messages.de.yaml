@@ -31,7 +31,7 @@ sylius:
         new: 'Neu'
         no_label: 'Nein'
         no_results: 'Keine Ergebnisse für diese Anfrage gefunden'
-        no_results_adjust_your_search: 'Passen Sie Ihre Suche an und versuchen Sie es erneut.'
+        no_results_adjust_your_search: 'Passen Sie Ihre Anfrage an und versuchen Sie es erneut.'
         not_contains: 'Enthält nicht'
         not_empty: 'Nicht leer'
         not_equal: 'Nicht gleich'
