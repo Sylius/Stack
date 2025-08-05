@@ -447,7 +447,7 @@ use Sylius\Resource\Metadata\Update;
 #[AsResource(
     routePrefix: 'admin',
     operations: [
-        new Index(),
+        new Index(routePrefix: ''),
         new Create(),
         new Update(),
         new Delete(),
@@ -463,12 +463,54 @@ class Book implements ResourceInterface
 
 | Name                 | Method          | Path                     |
 |----------------------|-----------------|--------------------------|
-| app_book_index       | GET             | /admin/books/            |
+| app_book_index       | GET             | /books/                  |
 | app_book_create      | GET, POST       | /admin/books/new         |                     
 | app_book_update      | GET, PUT, PATCH | /admin/books/{id}/edit   |        
 | app_book_delete      | DELETE          | /admin/books/{id}        |
 | app_book_bulk_delete | DELETE          | /admin/books/bulk_delete |               
 | app_book_show        | GET             | /admin/books/{id}        |
+
+### Configure the routes' name
+
+It customizes the route name for individual operations.
+
+{% code title="src/Entity/Book.php" lineNumbers="true" %}
+```php
+namespace App\Entity;
+
+use Sylius\Resource\Model\ResourceInterface;
+use Sylius\Resource\Metadata\AsResource;
+use Sylius\Resource\Metadata\BulkDelete;
+use Sylius\Resource\Metadata\Create;
+use Sylius\Resource\Metadata\Delete;
+use Sylius\Resource\Metadata\Index;
+use Sylius\Resource\Metadata\Show;
+use Sylius\Resource\Metadata\Update;
+
+#[AsResource(
+    operations: [
+        new Index(routeName: 'library_book_list'),
+        new Create(routeName: 'library_book_add'),
+        new Update(),
+        new Delete(),
+        new BulkDelete(),
+        new Show(),
+    ],
+)
+class Book implements ResourceInterface
+{
+}
+```
+{% endcode %}
+
+| Name                 | Method          | Path                     |
+|----------------------|-----------------|--------------------------|
+| library_book_list    | GET             | /books/                  |
+| library_book_add     | GET, POST       | /books/new               |                     
+| app_book_update      | GET, PUT, PATCH | /books/{id}/edit         |        
+| app_book_delete      | DELETE          | /books/{id}              |
+| app_book_bulk_delete | DELETE          | /books/bulk_delete       |               
+| app_book_show        | GET             | /books/{id}              |
 
 ### Configure the section
 
