@@ -12,6 +12,7 @@
   * [Customizing the menu](cookbook/admin_panel/menu.md)
   * [Configuring the security access](cookbook/admin_panel/security.md)
   * [Customizing the page titles](cookbook/admin_panel/page_titles.md)
+  * [Customizing the metatags](cookbook/admin_panel/metatags.md)
 * [How to use in a DDD architecture](cookbook/ddd_architecture.md)
   * [Architecture overview](cookbook/ddd_architecture/overview.md)
   * [Resource configuration](cookbook/ddd_architecture/resource_configuration.md)
