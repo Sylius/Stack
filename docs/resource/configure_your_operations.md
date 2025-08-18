@@ -447,7 +447,7 @@ use Sylius\Resource\Metadata\Update;
 #[AsResource(
     routePrefix: 'admin',
     operations: [
-        new Index(routePrefix: ''),
+        new Index(routePrefix: ''),  // you can also customize the route prefix at the operation level too for extra flexibility
         new Create(),
         new Update(),
         new Delete(),
