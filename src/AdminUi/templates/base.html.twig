@@ -9,7 +9,10 @@
 
     <title>{% block title %}{% apply striptags %}{% hook generic_hook ~ '#base_title' %}{% endapply %}{% endblock %}</title>
 
-    {% block metatags %}{% endblock %}
+    {% block metatags %}
+        {% hook generic_hook ~ '#metatags' %}
+    {% endblock %}
+
     {% block stylesheets %}
         {% hook generic_hook ~ '#stylesheets' %}
     {% endblock %}
