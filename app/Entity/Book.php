@@ -36,6 +36,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
         new Create(),
         new Update(),
         new Index(grid: BookGrid::class),
+        new Index(
+            template: '@SyliusAdminUi/crud/index.html.twig',
+            shortName: 'withoutGrid',
+        ),
         new Delete(),
         new BulkDelete(),
         new Show(),
