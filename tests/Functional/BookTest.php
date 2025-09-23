@@ -98,6 +98,28 @@ final class BookTest extends WebTestCase
         self::assertSelectorExists('tr.item:last-child [data-bs-title=Delete]');
     }
 
+    public function testBrowsingBooksWithoutGrid(): void
+    {
+        BookFactory::new()
+            ->withTitle('The Shining')
+            ->withAuthorName('Stephen King')
+            ->create()
+        ;
+
+        BookFactory::new()
+            ->withTitle('Carrie')
+            ->withAuthorName('Stephen King')
+            ->create()
+        ;
+
+        $this->client->request('GET', '/admin/books/withoutGrid');
+
+        self::assertResponseIsSuccessful();
+
+        // Validate Header
+        self::assertSelectorTextContains('[data-test-page-title]', 'Books');
+    }
+
     public function testSortingBooks(): void
     {
         BookFactory::new()
