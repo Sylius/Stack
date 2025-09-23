@@ -28,6 +28,9 @@
         "symfony/runtime": "^6.4 || ^7.0",
         "symfony/yaml": "^6.4 || ^7.0"
     },
+    "conflict": {
+        "gedmo/doctrine-extensions": "3.21.*"
+    },
     "suggest": {
         "sylius/bootstrap-admin-ui": "^0.5"
     },

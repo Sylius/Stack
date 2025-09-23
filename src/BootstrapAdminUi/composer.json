@@ -16,7 +16,7 @@
         "symfony/security-bundle": "^6.4 || ^7.0",
         "symfony/ux-autocomplete": "^2.17",
         "symfony/ux-icons": "^2.20",
-        "symfony/ux-live-component": "^2.17"
+        "symfony/ux-live-component": "^2.17 <2.26 || ^2.30"
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "^2.12",
