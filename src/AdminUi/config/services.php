@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Sylius\AdminUi\Context\Context;
+use Sylius\AdminUi\Context\RoutingContext;
 use Sylius\AdminUi\Knp\Menu\MenuBuilder;
 use Sylius\AdminUi\Knp\Menu\MenuBuilderInterface;
 use Sylius\AdminUi\TwigHooks\Hookable\Metadata\RoutingHookableMetadataFactory;
@@ -33,6 +35,18 @@ return function (ContainerConfigurator $configurator): void {
         ->args([
             service('.inner'),
             param('sylius_admin_ui.routing'),
+        ])
+    ;
+
+    $services->set('sylius_admin_ui.routing_context', RoutingContext::class)
+        ->args([
+            param('sylius_admin_ui.routing'),
+        ])
+    ;
+
+    $services->set('sylius_admin_ui.context', Context::class)
+        ->args([
+            service('sylius_admin_ui.routing_context'),
         ])
     ;
 };

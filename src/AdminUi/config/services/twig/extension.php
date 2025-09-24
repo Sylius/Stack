@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Sylius\AdminUi\Twig\Extension\ContextExtension;
 use Sylius\AdminUi\Twig\Extension\RedirectPathExtension;
 
 return function (ContainerConfigurator $configurator): void {
@@ -22,6 +23,13 @@ return function (ContainerConfigurator $configurator): void {
         ->args([
             service('router'),
             service('sylius.grid.filter_storage')->nullOnInvalid(),
+        ])
+        ->tag(name: 'twig.extension')
+    ;
+
+    $services->set('sylius_admin_ui.twig.extension.context', ContextExtension::class)
+        ->args([
+            service('sylius_admin_ui.context'),
         ])
         ->tag(name: 'twig.extension')
     ;
