@@ -23,7 +23,7 @@ Go to your project directory and run the following command:
 
 ```bash
 composer require -W \
-  doctrine/orm "^2.16" \
+  doctrine/orm \
   doctrine/doctrine-bundle \
   pagerfanta/doctrine-orm-adapter \
   symfony/asset-mapper \
@@ -38,12 +38,6 @@ composer require -W \
 </div>
 
 Type "a" or "p" to configure the packages via Symfony Flex.
-
-### Install missing tom-select assets
-
-```bash
-symfony console importmap:require tom-select/dist/css/tom-select.default.css
-```
 
 ### Run your web server
 
