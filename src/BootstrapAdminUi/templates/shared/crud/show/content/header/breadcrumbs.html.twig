@@ -28,10 +28,8 @@
     {% set resource_show = { name: resource_show_name, active: true} %}
 {% endif %}
 
-{% set dashboard_path = hookable_metadata.context.routing.dashboard_path|default('/admin') %}
-
 {{ breadcrumbs([
-    { name: 'sylius.ui.dashboard', url: dashboard_path, active: false },
+    { name: 'sylius.ui.dashboard', url: path('sylius_admin_ui_dashboard'), active: false },
     { name: resource_index, url: index_url, active: false },
     resource_show,
     action
