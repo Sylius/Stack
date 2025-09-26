@@ -71,7 +71,7 @@ You just need to encapsulate the key with `[]`.
 ```twig
 {% raw %}
 <ul>
-{% for book in books|sort_by('[name]') %}
+{% for book in books|sylius_sort_by('[name]') %}
     <li>{{ book.name }}</li>
 {% endif %}
 </ul>
