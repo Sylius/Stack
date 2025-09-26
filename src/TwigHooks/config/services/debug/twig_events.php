@@ -22,6 +22,11 @@ use Sylius\TwigHooks\Profiler\Profile;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 return static function (ContainerBuilder $container, ContainerConfigurator $configurator): void {
+    $env = $container->getParameter('kernel.environment');
+    if ($env !== 'dev') {
+        return;
+    }
+
     $services = $configurator->services();
 
     $services->set('sylius_twig_hooks.renderer.hook.debug_comment', HookDebugCommentRenderer::class)
