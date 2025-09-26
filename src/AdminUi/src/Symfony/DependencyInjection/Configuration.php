@@ -35,6 +35,7 @@ final class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('routing')
+                ->setDeprecated('sylius/admin-ui', '0.9', 'This configuration is not used anymore, use the Admin Ui routes instead.')
                     ->useAttributeAsKey('name')
                         ->validate()
                             ->always(static function ($values): array {
