@@ -126,10 +126,8 @@ class BookRepository extends ServiceEntityRepository
 ```
 {% endcode %}
 
-The generated code is not compatible with Sylius Resource yet, so we need to make a few changes.
-
-* First, your repository should implement the `Sylius\Component\Resource\Repository\RepositoryInterface` interface
-* Then, add the `Sylius\Bundle\ResourceBundle\Doctrine\ORM\ResourceRepositoryTrait` trait
+The generated code is not fully compatible with Sylius Resource yet, so we need to make a few change.
+Please add the `createPaginator` method using the `Sylius\Bundle\ResourceBundle\Doctrine\ORM\CreatePaginatorTrait` trait
 
 Your repository should look like this:
 
@@ -142,20 +140,14 @@ namespace App\Repository;
 use App\Entity\Book;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\ResourceRepositoryTrait;
-use Sylius\Resource\Doctrine\Persistence\RepositoryInterface;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\CreatePaginatorTrait;
 
 /**
- * @extends ServiceEntityRepository<Book>
- *
- * @method Book|null find($id, $lockMode = null, $lockVersion = null)
- * @method Book|null findOneBy(array $criteria, array $orderBy = null)
- * @method Book[]    findAll()
- * @method Book[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * [...]
  */
-class BookRepository extends ServiceEntityRepository implements RepositoryInterface
+class BookRepository extends ServiceEntityRepository
 {
-    use ResourceRepositoryTrait;
+    use CreatePaginatorTrait;
 
     public function __construct(ManagerRegistry $registry)
     {
