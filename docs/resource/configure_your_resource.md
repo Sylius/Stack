@@ -59,15 +59,30 @@ $ bin/console sylius:debug:resource 'App\Entity\Book'
 ```
 
 ```
-+--------------------+------------------------------------------------------------+
-| name               | book                                                       |
-| application        | app                                                        |
-| driver             | doctrine/orm                                               |
-| classes.model      | App\Entity\Book                                            |
-| classes.controller | Sylius\Bundle\ResourceBundle\Controller\ResourceController |
-| classes.factory    | Sylius\Component\Resource\Factory\Factory                  |
-| classes.form       | Sylius\Bundle\ResourceBundle\Form\Type\DefaultResourceType |
-+--------------------+------------------------------------------------------------+
+Resource Metadata
+-----------------
+
+ ------------------------ ------------------- 
+  Option                   Value              
+ ------------------------ ------------------- 
+  alias                    "app.book"         
+  section                  null               
+  formType                 null               
+  templatesDir             null               
+  routePrefix              null               
+  name                     "book"             
+  pluralName               null               
+  applicationName          "app"              
+  identifier               null               
+  normalizationContext     null               
+  denormalizationContext   null               
+  validationContext        null               
+  class                    "App\Entity\Book"  
+  driver                   null               
+  vars                     null               
+ ------------------------ -------------------
+ 
+ [...]
 ```
 
 By default, the alias for your Sylius resource will be `app.book`, which combines the application name and the resource name
