@@ -40,7 +40,7 @@
             "require": "7.1.*"
         },
         "branch-alias": {
-            "dev-main": "0.8-dev"
+            "dev-main": "0.9-dev"
         }
     }
 }
