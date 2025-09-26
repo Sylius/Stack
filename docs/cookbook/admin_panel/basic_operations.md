@@ -1,5 +1,11 @@
 # Basic operations
 
+In this cookbook, we assume that you have already created a `Book` resource.
+
+{% hint style="info" %}
+Learn more on how to [create a Sylius resource](../../resource/create_new_resource.md).
+{% endhint %}
+
 ## List of resources
 
 <div data-full-width="false">
