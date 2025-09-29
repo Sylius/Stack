@@ -59,7 +59,7 @@ sylius_grid:
                     type: twig
                     label: app.ui.enabled
                     options:
-                        template: '@SyliusBootstrapAdminUi/shared/grid/field/boolean.html.twig' # This will be a checkbox field
+                        template: '@SyliusAdmin/shared/grid/field/boolean.html.twig' # This will be a checkbox field
 ```
 {% endcode %}
 
@@ -81,7 +81,7 @@ return static function (GridConfig $grid) {
                 ->setLabel('app.ui.name')
         )
         ->addField(
-            TwigField::create('enabled', '@SyliusBootstrapAdminUi/shared/grid/field/boolean.html.twig')
+            TwigField::create('enabled', '@SyliusAdmin/shared/grid/field/boolean.html.twig')
                 ->setLabel('app.ui.enabled')
         )
     )
@@ -121,7 +121,7 @@ final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridI
                     ->setLabel('app.ui.name')
             )
             ->addField(
-                TwigField::create('enabled', '@SyliusBootstrapAdminUi/shared/grid/field/boolean.html.twig')
+                TwigField::create('enabled', '@SyliusAdmin/shared/grid/field/boolean.html.twig')
                     ->setLabel('app.ui.enabled')
             )
         ;
@@ -160,7 +160,7 @@ use Sylius\Resource\Model\ResourceInterface;
 #[AsResource(
     section: 'admin', // This will influence the route name
     routePrefix: '/admin',
-    templatesDir: '@SyliusAdminUi/crud', // This directory contains the generic template for your list
+    templatesDir: '@SyliusAdmin/shared/crud', // This directory contains the generic template for your list
     operations: [
         // You can use either the FQCN of your grid
         new Index(grid: AdminSupplierGrid::class)
