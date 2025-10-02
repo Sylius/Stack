@@ -1,0 +1,55 @@
+sylius:
+    form:
+        login:
+            username: 'Gebruikersnaam'
+            password: 'Wachtwoord'
+            remember_me: 'Onthoud mij'
+    ui:
+        actions: Acties
+        add_new_entry: Nieuw item toevoegen
+        administration_panel_login: 'Administratiepaneel login'
+        all: Alles
+        are_your_sure_you_want_to_perform_this_action: 'Weet je zeker dat je daze actie wilt uitvoeren?'
+        cancel: Annuleren
+        contains: Bevat
+        create: Creëer
+        dashboard: Dashboard
+        date_filter: '%label% | %altLabel%'
+        delete: Verwijderen
+        details: Details
+        edit: Bewerken
+        empty: 'Leeg'
+        equal: 'Gelijk aan'
+        ends_with: 'Eindigt met'
+        error: Fout
+        filter: Filter
+        filters: Filters
+        from: Van
+        hello: Hallo
+        in: 'In'
+        info: Info
+        login: Inloggen
+        login_to_your_account: 'Inloggen op jouw account'
+        logout: Uitloggen
+        new: Nieuw
+        no_label: Nee
+        no_results: Geen resultaten gevonden
+        no_results_adjust_your_search: 'Stel je zoekopdracht bij en probeer opnieuw'
+        not_contains: 'Bevat niet'
+        not_empty: 'Niet leeg'
+        not_equal: 'Niet gelijk aan'
+        not_in: 'Niet in'
+        pagination:
+            number_of_results: 'Toont %from% tot %to% van %total% resultaten'
+        reset: Resetten
+        search: Zoeken
+        search_menu: 'Zoek in menu'
+        show: Tonen
+        starts_with: 'Begint met'
+        success: Succes
+        this_form_contains_errors: 'Dit formulier bevat fouten.'
+        to: Tot
+        update: Bijwerken
+        value: Waarde
+        warning: Waarschuwing
+        yes_label: Ja
