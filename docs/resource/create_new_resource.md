@@ -126,7 +126,7 @@ class BookRepository extends ServiceEntityRepository
 ```
 {% endcode %}
 
-The generated code is not fully compatible with Sylius Resource yet, so we need to make a few change.
+The generated code is not fully compatible with Sylius Resource yet, so we need to make a few changes.
 Please add the `createPaginator` method using the `Sylius\Bundle\ResourceBundle\Doctrine\ORM\CreatePaginatorTrait` trait
 
 Your repository should look like this:
