@@ -300,4 +300,18 @@ final class BookTest extends WebTestCase
 
         $this->assertCount(0,  BookFactory::all());
     }
+
+    public function testShowingMenu(): void
+    {
+        $this->client->request('GET', '/admin/books');
+
+        self::assertSelectorExists('#sidebar-menu');
+
+        self::assertAnySelectorTextContains('#sidebar-menu [href="#navbar-library"]', 'Library');
+        self::assertAnySelectorTextContains('#sidebar-menu [href="#navbar-library"]', 'Library');
+        self::assertAnySelectorTextContains('#sidebar-menu [href="#navbar-configuration"]', 'Configuration');
+        self::assertAnySelectorTextContains('#sidebar-menu [href="/admin/conferences"]', 'Conferences');
+        self::assertAnySelectorTextContains('#sidebar-menu [href="/admin/talks"]', 'Talks');
+        self::assertAnySelectorTextContains('#sidebar-menu [href="/admin/speakers"]', 'Speakers');
+    }
 }
