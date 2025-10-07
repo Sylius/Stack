@@ -308,7 +308,6 @@ final class BookTest extends WebTestCase
         self::assertSelectorExists('#sidebar-menu');
 
         self::assertAnySelectorTextContains('#sidebar-menu [href="#navbar-library"]', 'Library');
-        self::assertAnySelectorTextContains('#sidebar-menu [href="#navbar-library"]', 'Library');
         self::assertAnySelectorTextContains('#sidebar-menu [href="#navbar-configuration"]', 'Configuration');
         self::assertAnySelectorTextContains('#sidebar-menu [href="/admin/conferences"]', 'Conferences');
         self::assertAnySelectorTextContains('#sidebar-menu [href="/admin/talks"]', 'Talks');
