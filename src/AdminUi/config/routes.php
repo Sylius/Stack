@@ -32,4 +32,10 @@ return function (RoutingConfigurator $routes): void {
             'template' => '@SyliusAdminUi/dashboard/index.html.twig',
         ])
     ;
+
+    $routes->add('sylius_admin_ui_live_component', '/_components/{_live_component}/{_live_action}')
+        ->defaults([
+            '_live_action' => 'get',
+        ])
+    ;
 };
