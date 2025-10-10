@@ -40,6 +40,13 @@ a.link-reset {
     text-decoration: none;
 }
 
+button.link-reset {
+    border: none;
+    background-color: transparent;
+    text-transform: inherit;
+    font-weight: inherit;
+}
+
 .btn-collapse {
     &.collapsed {
         .icon-chevron-right {
