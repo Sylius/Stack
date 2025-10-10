@@ -82,8 +82,23 @@ final class SpeakerGrid extends AbstractGrid implements ResourceAwareGridInterfa
                                 ],
                             ],
                         ]),
-                    UpdateAction::create(),
-                    DeleteAction::create(),
+                    UpdateAction::create()
+                        ->setOptions([
+                            'link' => [
+                                'route' => 'app_admin_speaker_update',
+                                'parameters' => [
+                                    'id' => 'resource.id',
+                                ],
+                            ],
+                        ]),
+                    DeleteAction::create()->setOptions([
+                        'link' => [
+                            'route' => 'app_admin_speaker_delete',
+                            'parameters' => [
+                                'id' => 'resource.id',
+                            ],
+                        ],
+                    ]),
                 ),
             )
             ->addActionGroup(

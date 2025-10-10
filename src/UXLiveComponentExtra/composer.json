@@ -1,0 +1,37 @@
+{
+    "name": "sylius/ux-live-component-extra",
+    "description": "Additional Symfony UX Live components for your Symfony projects",
+    "type": "library",
+    "require": {
+        "php": "^8.1",
+        "sylius/twig-hooks": "^0.9",
+        "symfony/ux-live-component": "^2.20"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sylius\\UXLiveComponentExtra\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../**"
+        }
+    ],
+    "extra": {
+        "symfony": {
+            "require": "7.1.*"
+        },
+        "branch-alias": {
+            "dev-main": "0.9-dev"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/runtime": true
+        },
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

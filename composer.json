@@ -74,7 +74,8 @@
             "Sylius\\BootstrapAdminUi\\": "src/BootstrapAdminUi/src/",
             "Sylius\\TwigExtra\\": "src/TwigExtra/src/",
             "Sylius\\TwigHooks\\": "src/TwigHooks/src/",
-            "Sylius\\UiTranslations\\": "src/UiTranslations/src/"
+            "Sylius\\UiTranslations\\": "src/UiTranslations/src/",
+            "Sylius\\UXLiveComponentExtra\\": "src/UXLiveComponentExtra/src/"
         }
     },
     "autoload-dev": {
@@ -109,7 +110,7 @@
     },
     "extra": {
         "symfony": {
-            "require": "7.1.*"
+            "require": "7.2.*"
         }
     },
     "scripts": {

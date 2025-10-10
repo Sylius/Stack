@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Sylius\BootstrapAdminUi\Twig\Component\UserDropdownComponent;
+use Sylius\UXLiveComponentExtra\Twig\Component\Grid\DataTableComponent;
 
 return function (ContainerConfigurator $configurator): void {
     $services = $configurator->services();
