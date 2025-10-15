@@ -104,7 +104,42 @@ final class SpeakerAutocompleteType extends AbstractType
 Then, you need to create your grid filter.
 
 {% tabs %}
-{% tab title="SyliusGridBundle v1.13 (latest)" %}
+{% tab title="SyliusGridBundle v1.14" %}
+{% code title="src/Grid/Filter/SpeakerFilter.php" lineNumbers="true" %}
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Grid\Filter;
+
+use App\Form\SpeakerAutocompleteType;
+use Sylius\Component\Grid\Attribute\AsFilter;
+use Sylius\Component\Grid\Data\DataSourceInterface;
+use Sylius\Component\Grid\Filter\EntityFilter;
+use Sylius\Component\Grid\Filtering\FilterInterface;
+
+#[AsFilter(
+    formType: SpeakerAutocompleteType::class,
+    template: '@SyliusBootstrapAdminUi/shared/grid/filter/select.html.twig', // optional
+)]
+final class SpeakerFilter implements FilterInterface
+{
+    public function __construct(
+        private readonly EntityFilter $entityFilter,
+    ) {
+    }
+
+    public function apply(DataSourceInterface $dataSource, string $name, mixed $data, array $options): void
+    {
+        $this->entityFilter->apply($dataSource, $name, $data, $options);
+    }
+  }
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="SyliusGridBundle v1.13 " %}
 1\) Create your filter class.
 
 {% code title="src/Grid/Filter/SpeakerFilter.php" lineNumbers="true" %}
@@ -185,40 +220,6 @@ sylius_grid:
 ```
 {% endcode %}
 {% endtab %}
-
-{% tab title="SyliusGridBundle v1.14@alpha" %}
-{% code title="src/Grid/Filter/SpeakerFilter.php" lineNumbers="true" %}
-```php
-<?php
-
-declare(strict_types=1);
-
-namespace App\Grid\Filter;
-
-use App\Form\SpeakerAutocompleteType;
-use Sylius\Component\Grid\Data\DataSourceInterface;
-use Sylius\Component\Grid\Filter\EntityFilter;
-use Sylius\Component\Grid\Filtering\FilterInterface;
-
-#[AsFilter(
-    formType: SpeakerAutocompleteType::class,
-    template: '@SyliusBootstrapAdminUi/shared/grid/filter/select.html.twig', // optional
-)]
-final class SpeakerFilter implements FilterInterface
-{
-    public function __construct(
-        private readonly EntityFilter $entityFilter,
-    ) {
-    }
-
-    public function apply(DataSourceInterface $dataSource, string $name, mixed $data, array $options): void
-    {
-        $this->entityFilter->apply($dataSource, $name, $data, $options);
-    }
-  }
-```
-{% endcode %}
-{% endtab %}
 {% endtabs %}
 
 Now that the filter is configured, you can use it inside any grid.
@@ -236,12 +237,14 @@ use Sylius\Bundle\GridBundle\Builder\Filter\Filter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
-final class TalkGrid extends AbstractGrid implements ResourceAwareGridInterface
+#[AsGrid(resourceClass: Talk::class)]
+final class TalkGrid extends AbstractGrid
 {
     // ...
 
-    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
             // ...
