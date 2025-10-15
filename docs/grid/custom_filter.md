@@ -4,6 +4,85 @@ Sylius Grids come with built-in filters, but there are use-cases where you need 
 
 To add a new filter, we need to create an appropriate class and form type.
 
+{% tabs %}
+{% tab title="SyliusGridBundle v1.14 - using attributes" %}
+{% code title="src/Grid/Filter/SuppliersStatisticsFilter.php" lineNumbers="true" %}
+```php
+<?php
+ 
+declare(strict_types=1);
+ 
+namespace App\Grid\Filter;
+
+use App\Form\Type\Filter\SuppliersStatisticsFilterType;
+use Sylius\Bundle\GridBundle\Doctrine\DataSourceInterface;
+use Sylius\Component\Grid\Attribute\AsFilter;
+use Sylius\Component\Grid\Filtering\FilterInterface;
+  
+#[AsFilter(
+    formType: SuppliersStatisticsFilterType::class,  // (custom) Symfony FormType
+    template: '@SyliusBootstrapAdminUi/shared/grid/filter/select.html.twig',  // or you can use your own Twig template
+    type: 'suppliers_statistics',  // optional - FQCN by default
+)]
+class SuppliersStatisticsFilter implements FilterInterface
+{
+    public function apply(DataSourceInterface $dataSource, $name, $data, array $options = []): void
+    {
+        // Your filtering logic.
+        // $data['stats'] contains the submitted value!
+        $queryBuilder = $dataSource->getQueryBuilder();
+        $queryBuilder
+            ->andWhere('stats = :stats')
+            ->setParameter(':stats', $data['stats'])
+        ;
+    
+        // You can leverage the ExpressionBuilder to apply driver-agnostic filters to the data source.
+        // Combined with restrict(), it provides query builder–style functionalities for grid filters.
+        $dataSource->restrict($dataSource->getExpressionBuilder()->equals('stats', $data['stats']));
+    }
+}
+```
+{% endcode %}
+
+And the form type:
+
+{% code title="src/Form/Type/Filter/SuppliersStatisticsFilterType.php" lineNumbers="true" %}
+```php
+<?php
+
+namespace App\Form\Type\Filter;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class SuppliersStatisticsFilterType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder->add(
+            'stats',
+            ChoiceType::class,
+            ['choices' => range($options['range'][0], $options['range'][1])]
+        );
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver
+            ->setDefaults([
+                'range' => [0, 10],
+            ])
+            ->setAllowedTypes('range', ['array'])
+        ;
+    }
+}
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="SyliusGridBundle v1.13" %}
 {% code title="src/Grid/Filter/SuppliersStatisticsFilter.php" lineNumbers="true" %}
 ```php
 <?php
@@ -20,7 +99,6 @@ class SuppliersStatisticsFilter implements ConfigurableFilterInterface
     {
         // Your filtering logic.
         // $data['stats'] contains the submitted value!
-        // here is an example
         $queryBuilder = $dataSource->getQueryBuilder();
         $queryBuilder
             ->andWhere('stats = :stats')
@@ -28,8 +106,6 @@ class SuppliersStatisticsFilter implements ConfigurableFilterInterface
         ;
     
         // For driver abstraction you can use the expression builder. ExpressionBuilder is a kind of query builder.
-        // $data['stats'] contains the submitted value!
-        // here is an example
         $dataSource->restrict($dataSource->getExpressionBuilder()->equals('stats', $data['stats']));
     }
     
@@ -85,14 +161,14 @@ class SuppliersStatisticsFilterType extends AbstractType
 
 Create a template for the filter, similar to the existing ones:
 
-{% code title="templates/Grid/Filter/suppliers_statistics.html.twig" lineNumbers="true" %}
+{% code title="templates/grid/filter/suppliers_statistics.html.twig" lineNumbers="true" %}
 ```twig
-{% form_theme form '@SyliusUi/Form/theme.html.twig' %}
+
+<div data-gb-custom-block data-tag="form_theme" data-0='@SyliusUi/Form/theme.html.twig'></div>
 
 {{ form_row(form) }}
 ```
 {% endcode %}
-
 
 If you use autoconfiguration, the filter is automatically registered as a grid filter.
 
@@ -105,30 +181,12 @@ services:
         tags: ['sylius.grid_filter']
 ```
 {% endcode %}
+{% endtab %}
+{% endtabs %}
 
-Now you can use your new filter type in the grid configuration!
+Now you can use your new filter type in any grid configuration!&#x20;
 
 {% tabs %}
-{% tab title="YAML" %}
-{% code title="config/packages/sylius_grid.yaml" lineNumbers="true" %}
-```yaml
-sylius_grid:
-    grids:
-        app_tournament:
-            driver: doctrine/orm
-            resource: app.tournament
-            filters:
-                stats:
-                    type: suppliers_statistics
-                    form_options:
-                        range: [0, 100]
-    templates:
-        filter:
-            suppliers_statistics: '@App/Grid/Filter/suppliers_statistics.html.twig'
-```
-{% endcode %}
-{% endtab %}
-
 {% tab title="PHP" %}
 {% code title="config/packages/sylius_grid.php" lineNumbers="true" %}
 ```php
@@ -165,16 +223,14 @@ namespace App\Grid;
 use App\Entity\Tournament;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
-use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
 
-final class TournamentGrid extends AbstractGrid implements ResourceAwareGridInterface
+#[AsGrid(
+     name: 'app_tournament',
+     resourceClass: Tournament::class,
+)]
+final class TournamentGrid extends AbstractGrid
 {
-    public static function getName(): string
-    {
-           return 'app_tournament';
-    }
-
-    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
             ->addFilter(
@@ -183,12 +239,28 @@ final class TournamentGrid extends AbstractGrid implements ResourceAwareGridInte
             )
         ;    
     }
-    
-    public function getResourceClass(): string
-    {
-        return Tournament::class;
-    }
 }
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="YAML" %}
+{% code title="config/packages/sylius_grid.yaml" lineNumbers="true" %}
+```yaml
+sylius_grid:
+    grids:
+        app_tournament:
+            driver: doctrine/orm
+            resource: app.tournament
+            filters:
+                stats:
+                    type: suppliers_statistics
+                    form_options:
+                        range: [0, 100]
+    
+    templates:  # only needed if you didn't use AsFilter attribute
+        filter:
+            suppliers_statistics: '@App/Grid/Filter/suppliers_statistics.html.twig'
 ```
 {% endcode %}
 {% endtab %}
