@@ -1,18 +1,27 @@
 # SyliusResourceBundle
 
-There are plenty of things you need to handle for every single Resource in your web application.
+The **Sylius Resource Bundle** provides a powerful and extensible foundation for exposing your **business resources** (entities, aggregates, etc.) in a declarative way.  
+Rather than generating controllers or relying on rigid admin generators, it offers a flexible architecture that lets you focus on your domain model while the bundle handles the boilerplate.
 
-Several "Admin Generators" are available for Symfony, but we needed something really simple, that will allow us to have reusable controllers
-but preserve the performance and standard Symfony workflow. We did not want to generate any code or write "Admin" class definitions in PHP.
-The big goal was to have exactly the same workflow as with writing controllers manually but without actually creating them!
+A *Resource* is any business object you want to expose — for example, a `Product`, `Order`, or `UserProfile`.  
+You declare a resource by implementing the `ResourceInterface` and annotating it with the `#[AsResource(...)]` attribute.  
+This declarative metadata system automatically wires routes, controllers, and templates for your resource, while keeping everything fully configurable.
 
-Another idea was not to limit ourselves to a single persistence backend.
-``Resource`` component provides us with generic purpose persistence services and you can use this bundle with multiple persistence backends.
-So far we support:
+Each resource can define a set of **operations** — actions that can be performed on it.  
+Typical operations include `index`, `show`, `create`, `update`, and `delete`, but you can also define custom domain-specific ones.  
+The bundle orchestrates each operation through a well-defined lifecycle involving **providers**, **processors**, and **responders**:
 
-* Doctrine ORM
-* Doctrine MongoDB ODM
-* Doctrine PHPCR ODM
+- **Providers** are responsible for loading or creating the resource object and **validating it** (ensuring the object is consistent before any business logic is applied).
+    - Example: load from Doctrine, create a new instance, hydrate from request data, validate the object, or fetch from an external API.
+- **Processors** handle the business logic or persistence layer (e.g. saving, executing domain services, dispatching events).
+- **Responders** produce the final response (e.g. rendering a template).
+
+This architecture allows you to use the bundle in two main ways:
+
+- **Rapid Application Mode (RAD)** – perfect for quick CRUD setup with Doctrine ORM. You define your entity, mark it as a resource, and everything just works.
+- **DDD / Advanced Mode** – where you control how data is provided and processed by writing your own providers and processors. This approach fits perfectly into Domain-Driven Design applications.
+
+In short, the Sylius Resource Bundle is both **declarative** and **extensible** — define your resources and their operations, and let the framework handle the rest, while still giving you full control over the domain logic when you need it.
 
 ## Resource system for Symfony applications.
 
