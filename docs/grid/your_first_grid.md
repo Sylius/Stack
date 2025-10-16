@@ -42,7 +42,7 @@ This command will generate a grid with a field entry for each of your PHP class 
 Now we can configure our first grid:
 
 {% tabs %}
-{% tab title="PHP service" %}
+{% tab title="PHP (recommended)" %}
 {% code title="/src/Grid/AdminSupplierGrid.php" lineNumbers="true" %}
 ```php
 <?php
@@ -82,7 +82,7 @@ final class AdminSupplierGrid extends AbstractGrid
 {% endcode %}
 {% endtab %}
 
-{% tab title="PHP config file (legacy)" %}
+{% tab title="PHP config file" %}
 {% code lineNumbers="true" %}
 ```php
 <?php 
@@ -236,7 +236,7 @@ Now, your new grid should look like this when accessing the index on _/admin/sup
 To allow users to search for specific items in the grid, you can use filters.
 
 {% tabs %}
-{% tab title="PHP service" %}
+{% tab title="PHP (recommended)" %}
 {% code title="src/Grid/AdminSupplierGrid.php" lineNumbers="true" %}
 ```php
 <?php
@@ -275,7 +275,7 @@ final class AdminSupplierGrid extends AbstractGrid
 {% endcode %}
 {% endtab %}
 
-{% tab title="PHP (legacy)" %}
+{% tab title="PHP config file" %}
 {% code lineNumbers="true" %}
 ```php
 <?php
@@ -337,7 +337,7 @@ There are 2 ways you can do this :&#x20;
 #### Custom repository method (Doctrine-only)
 
 {% tabs %}
-{% tab title="PHP service" %}
+{% tab title="PHP (recommended)" %}
 {% code title="src/Grid/AdminSupplierGrid.php" lineNumbers="true" %}
 ```php
 <?php
@@ -367,7 +367,7 @@ final class AdminSupplierGrid extends AbstractGrid
 {% endcode %}
 {% endtab %}
 
-{% tab title="PHP (legacy)" %}
+{% tab title="PHP config file" %}
 {% code title="config/packages/sylius_grid.php" lineNumbers="true" %}
 ```php
 <?php
@@ -520,7 +520,7 @@ final class SupplierRepository extends DoctrineRepository
 Then you can simply insert your filter inside the grid.
 
 {% tabs %}
-{% tab title="PHP " %}
+{% tab title="PHP (recommended)" %}
 {% code title="src/Grid/AdminSupplierGrid.php" lineNumbers="true" %}
 ```php
 <?php
@@ -559,7 +559,7 @@ final class AdminSupplierGrid extends AbstractGrid
 {% endcode %}
 {% endtab %}
 
-{% tab title="PHP (legacy)" %}
+{% tab title="PHP config file" %}
 {% code title="config/packages/sylius_grid.php" lineNumbers="true" %}
 ```php
 <?php
@@ -607,7 +607,7 @@ sylius_grid:
 You can define by which field you want the grid to be sorted and how using `orderBy()` .
 
 {% tabs %}
-{% tab title="PHP service" %}
+{% tab title="PHP (recommended)" %}
 {% code title="src/Grid/AdminSupplierGrid.php" lineNumbers="true" %}
 ```php
 <?php
@@ -639,7 +639,7 @@ final class AdminSupplierGrid extends AbstractGrid
 
 {% endtab %}
 
-{% tab title="PHP (legacy)" %}
+{% tab title="PHP config file" %}
 {% code title="config/packages/sylius_grid.php" lineNumbers="true" %}
 ```php
 <?php
@@ -675,7 +675,7 @@ sylius_grid:
 Then in the fields section, indicate that the field can be used for sorting with `setSortable()`:
 
 {% tabs %}
-{% tab title="PHP" %}
+{% tab title="PHP (recommended)" %}
 {% code title="src/Grid/AdminSupplierGrid.php" lineNumbers="true" %}
 ```php
 <?php
@@ -712,7 +712,7 @@ final class AdminSupplierGrid extends AbstractGrid
 {% endcode %}
 {% endtab %}
 
-{% tab title="PHP (legacy)" %}
+{% tab title="PHP config file" %}
 {% code title="config/packages/sylius_grid.php" lineNumbers="true" %}
 ```php
 <?php
@@ -758,7 +758,7 @@ sylius_grid:
 If your field is not of a "simple" type, e.g. a Twig template with a specific path, you can enable sorting with the following definition:
 
 {% tabs %}
-{% tab title="PHP" %}
+{% tab title="PHP (recommended)" %}
 {% code title="src/Grid/AdminSupplierGrid.php" lineNumbers="true" %}
 ```php
 <?php
@@ -795,7 +795,7 @@ final class AdminSupplierGrid extends AbstractGrid
 {% endcode %}
 {% endtab %}
 
-{% tab title="PHP (legacy)" %}
+{% tab title="PHP config file" %}
 {% code title="config/packages/sylius_grid.php" lineNumbers="true" %}
 ```php
 <?php
@@ -937,7 +937,7 @@ There are two types of actions that can be added to a grid:&#x20;
 {% endhint %}
 
 {% tabs %}
-{% tab title="PHP" %}
+{% tab title="PHP (recommended)" %}
 {% code title="src/Grid/AdminSupplierGrid.php" lineNumbers="true" %}
 ```php
 <?php
@@ -983,7 +983,7 @@ final class AdminSupplierGrid extends AbstractGrid
 {% endcode %}
 {% endtab %}
 
-{% tab title="PHP (legacy)" %}
+{% tab title="PHP config file" %}
 {% code title="config/packages/sylius_grid.php" lineNumbers="true" %}
 ```php
 <?php
