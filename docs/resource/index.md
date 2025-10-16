@@ -19,6 +19,7 @@ So far we support:
 * [Installation](installation.md)
 
 # New documentation
+* [Resource lifecycle](lifecycle.md)
 * [Create a new resource](create_new_resource.md)
 * [Configure your resource](configure_your_resource.md)
 * [Configure your operations](configure_your_operations.md)
