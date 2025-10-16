@@ -1,0 +1,38 @@
+{
+    "name": "sylius/twig-component-grid",
+    "description": "Additional Symfony UX components for your Sylius Grids",
+    "type": "library",
+    "require": {
+        "php": "^8.1",
+        "sylius/grid-bundle": "^1.13",
+        "sylius/twig-hooks": "^0.9",
+        "symfony/ux-live-component": "^2.20"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sylius\\TwigComponentGrid\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../**"
+        }
+    ],
+    "extra": {
+        "symfony": {
+            "require": "7.1.*"
+        },
+        "branch-alias": {
+            "dev-main": "0.9-dev"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/runtime": true
+        },
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

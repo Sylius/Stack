@@ -1,5 +1,7 @@
-{% macro simple(paginator) %}
-    {{ pagerfanta(paginator, 'twig', options|default({'template': '@SyliusBootstrapAdminUi/shared/pagerfanta.html.twig'})) }}
+{% macro simple(paginator, live = false) %}
+    {% set template = live ? '@SyliusBootstrapAdminUi/shared/live_pagerfanta.html.twig' : '@SyliusBootstrapAdminUi/shared/pagerfanta.html.twig' %}
+
+    {{ pagerfanta(paginator, 'twig', options|default({'template': template})) }}
 {% endmacro %}
 
 {% macro results_count(paginator) %}
@@ -10,7 +12,7 @@
     {{ 'sylius.ui.pagination.number_of_results'|trans({'%from%': from, '%to%': to, '%total%': paginator.nbResults}) }}
 {% endmacro %}
 
-{% macro number_of_results_selector(paginator, pagination_limits) %}
+{% macro number_of_results_selector(paginator, pagination_limits, live) %}
     {% set other_pagination_limits = pagination_limits|filter(limit => limit != paginator.maxPerPage) %}
 
     {% if other_pagination_limits is not empty %}
@@ -21,7 +23,15 @@
             <div class="dropdown-menu dropdown-menu-end ">
                 {% for limit in other_pagination_limits %}
                     {% set path = path(app.request.attributes.get('_route'), app.request.attributes.all('_route_params')|merge(app.request.query)|merge({'limit': limit})) %}
-                    <a class="dropdown-item" href="{{ path }}">{{ limit }}</a>
+                    <{{ live ? 'button' : 'a' }}
+                        class="dropdown-item"
+                        {% if not live %}
+                            href="{{ path }}"
+                        {% endif %}
+                        data-action="live#action"
+                        data-live-action-param="updateLimit"
+                        data-live-limit-param="{{ limit }}"
+                    >{{ limit }}</{{ live ? 'button' : 'a' }}>
                 {% endfor %}
             </div>
         </div>

@@ -1,3 +1,10 @@
+{% set grid_definition = hookable_metadata.context.resources.definition|default(null) %}
+{% set grid = grid_definition.code|default(null) %}
+{% set page = app.request.query.getInt('page', 1) %}
+{% set limit = app.request.query.has('limit') ? app.request.query.getInt('limit') : grid_definition.limits|first|default(null) %}
+{% set criteria = app.request.query.has('criteria') ? app.request.query.all('criteria') : null %}
+{% set sorting = app.request.query.has('sorting') ? app.request.query.all('sorting') : null %}
+
 <div class="page-body">
     <div class="container-xl">
         {% hook 'grid' %}
