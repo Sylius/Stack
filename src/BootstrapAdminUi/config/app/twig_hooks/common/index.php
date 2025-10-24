@@ -53,6 +53,10 @@ return static function (ContainerConfigurator $container): void {
                 'grid' => [
                     'template' => '@SyliusBootstrapAdminUi/shared/crud/index/content/grid.html.twig',
                 ],
+                'footer' => [
+                    'template' => '@SyliusBootstrapAdminUi/shared/crud/common/content/footer.html.twig',
+                    'priority' => -100,
+                ],
             ],
 
             'sylius_admin.common.index.content.header' => [
