@@ -41,6 +41,10 @@ return static function (ContainerConfigurator $container): void {
                 'content' => [
                     'template' => '@SyliusBootstrapAdminUi/shared/crud/common/content.html.twig',
                 ],
+                'footer' => [
+                    'template' => '@SyliusBootstrapAdminUi/shared/crud/common/content/footer.html.twig',
+                    'priority' => -100,
+                ],
             ],
 
             'sylius_admin.common.create.content' => [
