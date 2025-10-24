@@ -95,9 +95,10 @@ final readonly class MenuBuilder implements MenuBuilderInterface
 It's possible to expand your parent menu category on page load by default. For that, you have to set the `setExtra` attribute like this:
 
 ```php
-$newSubmenu = $menu
-    ->addChild('new')
-    ->setLabel('Custom Admin Menu')
+$library = $menu
+    ->addChild('library')
+    ->setLabel('app.ui.library')
+    ->setLabelAttribute('icon', 'tabler:books')
     ->setExtra('always_open', true);
 ```
 
