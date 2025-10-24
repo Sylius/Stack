@@ -88,3 +88,19 @@ final readonly class MenuBuilder implements MenuBuilderInterface
     }
 }
 ```
+
+{% hint style="success" %}
+**🧠 Collapse your custom menu by default**
+
+It's possible to expand your parent menu category on page load by default. For that, you have to set the `setExtra` attribute like this:
+
+```php
+$library = $menu
+    ->addChild('library')
+    ->setLabel('app.ui.library')
+    ->setLabelAttribute('icon', 'tabler:books')
+    ->setExtra('always_open', true);
+```
+
+However, ensure that you set the attribute in the parent menu, not in one of the child menu items.
+{% endhint %}
