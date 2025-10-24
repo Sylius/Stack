@@ -9,14 +9,17 @@ sylius:
         add_new_entry: 'Nouvel item'
         administration_panel_login: 'Connexion à l''espace d''administration'
         all: 'Tous'
+        all_rights_reserved: Tous droits réservés
         are_your_sure_you_want_to_perform_this_action: 'Êtes-vous sûr(e) de vouloir effectuer cette action ?'
         cancel: 'Annuler'
+        copyright: Copyright
         contains: 'Contient'
         create: 'Créer'
         dashboard: 'Tableau de bord'
         date_filter: '%label% | %altLabel%'
         delete: 'Supprimer'
         details: 'Détails'
+        documentation: Documentation
         edit: 'Modifier'
         empty: 'Vide'
         ends_with: 'Se termine par'
@@ -28,6 +31,7 @@ sylius:
         hello: 'Bonjour'
         in: 'Dans'
         info: 'Info'
+        license: Licence
         login: 'Connexion'
         login_to_your_account: 'Connexion à votre compte'
         logout: 'Déconnexion'
@@ -41,10 +45,13 @@ sylius:
         not_in: 'Pas dans'
         pagination:
             number_of_results: 'Affiche de %from% à %to% sur %total% items'
+        report_it: Signalez le
         reset: 'Réinitialiser'
         search: 'Rechercher'
         search_menu: 'Recherche menu'
+        see_issue: Vous avez trouvé un bug
         show: 'Afficher'
+        source_code: Code source
         starts_with: 'Commence par'
         success: 'Succès'
         this_form_contains_errors: 'Ce formulaire contient des erreurs.'

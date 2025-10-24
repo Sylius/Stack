@@ -9,14 +9,17 @@ sylius:
         add_new_entry: Add a new entry
         administration_panel_login: 'Administration panel login'
         all: All
+        all_rights_reserved: 'All rights reserved'
         are_your_sure_you_want_to_perform_this_action: 'Are you sure you want to perform this action?'
         cancel: Cancel
+        copyright: Copyright
         contains: Contains
         create: Create
         dashboard: Dashboard
         date_filter: '%label% | %altLabel%'
         delete: Delete
         details: Details
+        documentation: 'Documentation'
         edit: Edit
         empty: 'Empty'
         equal: 'Equal'
@@ -28,6 +31,7 @@ sylius:
         hello: Hello
         in: 'In'
         info: Info
+        license: 'License'
         login: Login
         login_to_your_account: 'Login to your account'
         logout: Logout
@@ -41,10 +45,13 @@ sylius:
         not_in: 'Not in'
         pagination:
             number_of_results: 'Showing %from% to %to% of %total% entries'
+        report_it: 'Report it'
         reset: Reset
         search: Search
         search_menu: 'Search menu'
+        see_issue: 'See an issue'
         show: Show
+        source_code: 'Source code'
         starts_with: 'Starts with'
         success: Success
         this_form_contains_errors: 'This form contains errors.'
