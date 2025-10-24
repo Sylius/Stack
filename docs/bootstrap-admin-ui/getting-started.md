@@ -21,7 +21,7 @@ CRUD templates are split into configurable blocks.
 
 You can add new blocks, disable existing ones, or reorder them using the [TwigHooks package](../twig-hooks/getting-started.md).
 
-*Usage with Sylius Resource package*
+### Usage with the Sylius Resource package
 
 {% code title="src/Entity/Speaker.php" lineNumbers="true" %}
 ```php
