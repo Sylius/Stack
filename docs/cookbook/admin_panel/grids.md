@@ -320,6 +320,7 @@ final class TalkGrid extends AbstractGrid
             ->addFilter(
                 Filter::create(name: 'speaker', type: SpeakerFilter::class)
                     ->setLabel('app.ui.speaker')
+                    ->setOptions(['fields' => ['speaker.id']])
             );
             
             // ...
