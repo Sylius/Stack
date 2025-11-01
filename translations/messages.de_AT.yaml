@@ -1,0 +1,44 @@
+app:
+    ui:
+        archival: Archivierung
+        author: Autor
+        author_name: Name des Autors
+        avatar: Avatar
+        biz: Unternehmen
+        book: Buch
+        books: Bücher
+        browsing_speakers: Referenten durchsuchen
+        company_name: Firmenname
+        conference: Konferenz
+        conferences: Konferenzen
+        configuration: Konfiguration
+        edit_conference: Konferenz bearbeiten
+        ends_at: Endet am
+        first_name: Vorname
+        last_name: Nachname
+        library: Bibliothek
+        managing_your_conferences: Ihre Konferenzen verwalten
+        managing_your_speakers: Ihre Referenten verwalten
+        name: Name
+        new_conference: Neue Konferenz
+        new_speakers: Neue Referenten
+        new_talks: Neue Vorträge
+        past_event: Vergangenes Ereignis
+        show_all: Alle anzeigen
+        show_talks: Vorträge anzeigen
+        speaker: Referent
+        speakers: Referenten
+        starts_at: Beginnt am
+        statistics:
+            day: Tag
+            lifetime: Gesamtzeitraum
+            month: Monat
+            week: Woche
+            2weeks: 2 Wochen
+            year: Jahr
+        talk: Vortrag
+        talks: Vorträge
+        tech_one: Technik#1
+        tech_two: Technik#2
+        title: Titel
+        track: Themenbereich
