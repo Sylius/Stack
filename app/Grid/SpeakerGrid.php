@@ -89,6 +89,8 @@ final class SpeakerGrid extends AbstractGrid implements ResourceAwareGridInterfa
             ->addActionGroup(
                 BulkActionGroup::create(
                     DeleteAction::create(),
+                    Action::create('redirect_to_speaker_talks', 'redirect_to_speaker_talks')
+                        ->setLabel('View talks'),
                 ),
             )
         ;
