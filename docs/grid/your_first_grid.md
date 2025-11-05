@@ -168,6 +168,10 @@ class Supplier implements ResourceInterface
 ```
 {% endcode %}
 
+{% hint style="info" %}
+Note: When you are in a Sylius project, the `templatesDir` path is: `@SyliusAdmin/shared/crud`
+{% endhint %}
+
 This will generate the following path:
 
 ```shell
