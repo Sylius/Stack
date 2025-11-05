@@ -107,52 +107,6 @@ return static function (GridConfig $grid) {
 };
 ```
 {% endcode %}
-
-OR
-
-{% code title="src/Grid/AdminSupplierGrid.php" lineNumbers="true" %}
-```php
-<?php
-
-declare(strict_types=1);
-
-namespace App\Grid;
-
-use App\Entity\Supplier;
-use Sylius\Bundle\GridBundle\Builder\Field\StringField;
-use Sylius\Bundle\GridBundle\Builder\Field\TwigField;
-use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
-use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
-use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
-
-final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridInterface
-{
-    public static function getName(): string
-    {
-           return 'app_admin_supplier';
-    }
-
-    public function buildGrid(GridBuilderInterface $gridBuilder): void
-    {
-        $gridBuilder
-            ->addField(
-                StringField::create('name')
-                    ->setLabel('app.ui.name')
-            )
-            ->addField(
-                TwigField::create('enabled', '@SyliusBootstrapAdminUi/shared/grid/field/boolean.html.twig')
-                    ->setLabel('app.ui.enabled')
-            )
-        ;
-    }
-
-    public function getResourceClass(): string
-    {
-        return Supplier::class;
-    }
-}
-```
-{% endcode %}
 {% endtab %}
 
 {% tab title="YAML" %}
@@ -733,12 +687,10 @@ return static function (GridConfig $grid) {
 };
 ```
 {% endcode %}
-
-
 {% endtab %}
 
 {% tab title="YAML" %}
-{% code title="config/packages/sylius_grid.php" lineNumbers="true" %}
+{% code title="config/packages/sylius_grid.yaml" lineNumbers="true" %}
 ```yaml
 sylius_grid:
     grids:
@@ -820,7 +772,7 @@ return static function (GridConfig $grid) {
 {% endtab %}
 
 {% tab title="YAML" %}
-{% code title="config/packages/sylius_grid.php" lineNumbers="true" %}
+{% code title="config/packages/sylius_grid.yaml" lineNumbers="true" %}
 ```yaml
 sylius_grid:
     grids:
@@ -850,7 +802,7 @@ Pagination limits are set by default to 10, 25 and 50 items per page. In order t
 {% endhint %}
 
 {% tabs %}
-{% tab title="PHP" %}
+{% tab title="PHP (recommended)" %}
 {% code title="src/Grid/AdminSupplierGrid.php" lineNumbers="true" %}
 ```php
 <?php
@@ -860,7 +812,6 @@ declare(strict_types=1);
 namespace App\Grid;
 
 use App\Entity\Supplier;
-use Sylius\Bundle\GridBundle\Builder\Field\TwigField;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Component\Grid\Attribute\AsGrid;
@@ -873,9 +824,42 @@ final class AdminSupplierGrid extends AbstractGrid
 {
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
-        $gridBuilder->setLimits([30, 12, 48]);
+        $gridBuilder->setLimits([12, 24, 48]);
     }
 }
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="YAML" %}
+{% code title="config/packages/sylius_grid.yaml" %}
+```yaml
+sylius_grid:
+    grids:
+        app_admin_supplier:
+            limits: 
+                - 12
+                - 24
+                - 48
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="PHP config file" %}
+{% code title="config/packages/sylius_grid.php" %}
+```php
+<?php
+
+use App\Entity\Supplier;
+use Sylius\Bundle\GridBundle\Builder\GridBuilder;
+use Sylius\Bundle\GridBundle\Config\GridConfig;
+
+return static function (GridConfig $grid) {
+    $grid->addGrid(
+        GridBuilder::create('app_admin_supplier', Supplier::class)
+                        ->setLimits([12, 24, 48])
+    );
+};
 ```
 {% endcode %}
 {% endtab %}
