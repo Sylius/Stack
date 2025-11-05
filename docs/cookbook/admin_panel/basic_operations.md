@@ -8,11 +8,7 @@ Learn more on how to [create a Sylius resource](../../resource/create_new_resour
 
 ## List of resources
 
-<div data-full-width="false">
-
-<figure><img src="../../.gitbook/assets/list_of_books.png" alt="List of books"></figure>
-
-</div>
+<div data-full-width="false"><figure><img src="../../.gitbook/assets/list_of_books.png" alt="List of books"><figcaption></figcaption></figure></div>
 
 Create a grid for your resource using Symfony's Maker Bundle.
 
@@ -25,7 +21,7 @@ bin/console cache:clear # To refresh grid's cache
 
 Magic! Here is the generated grid.
 
-````php
+```php
 final class BookGrid extends AbstractGrid implements ResourceAwareGridInterface
 {
     public function __construct()
@@ -76,7 +72,7 @@ final class BookGrid extends AbstractGrid implements ResourceAwareGridInterface
     {
         return Book::class;
     }
-````
+```
 
 Configure the `index` operation in your resource.
 
@@ -104,6 +100,10 @@ class Book implements ResourceInterface
 }
 ```
 
+{% hint style="info" %}
+Note: When you are in a Sylius project, the `templatesDir` path is: `@SyliusAdmin/shared/crud`
+{% endhint %}
+
 Use the Symfony `debug:router` command to check the results.
 
 ```shell
@@ -121,11 +121,7 @@ Your route should look like this:
 
 ## Resource creation page
 
-<div data-full-width="false">
-
-<figure><img src="../../.gitbook/assets/book_creation.png" alt="Book creation page"></figure>
-
-</div>
+<div data-full-width="false"><figure><img src="../../.gitbook/assets/book_creation.png" alt="Book creation page"><figcaption></figcaption></figure></div>
 
 Create a form type for your resource.
 
@@ -159,6 +155,10 @@ class Book implements ResourceInterface
 }
 ```
 
+{% hint style="info" %}
+Note: When you are in a Sylius project, the `templatesDir` path is: `@SyliusAdmin/shared/crud`
+{% endhint %}
+
 Use the Symfony `debug:router` command to check the results.
 
 ```shell
@@ -176,13 +176,9 @@ Your route should look like this:
 
 ## Resource edition page
 
-<div data-full-width="false">
+<div data-full-width="false"><figure><img src="../../.gitbook/assets/book_edition.png" alt="Book edition page"><figcaption></figcaption></figure></div>
 
-<figure><img src="../../.gitbook/assets/book_edition.png" alt="Book edition page"></figure>
-
-</div>
-
-Ensure you already created the Symfony form type in the [previous section](#resource-creation-page).
+Ensure you already created the Symfony form type in the [previous section](basic_operations.md#resource-creation-page).
 
 Configure the `update` operation in your resource.
 
@@ -210,6 +206,10 @@ class Book implements ResourceInterface
 }
 ```
 
+{% hint style="info" %}
+Note: When you are in a Sylius project, the `templatesDir` path is: `@SyliusAdmin/shared/crud`
+{% endhint %}
+
 Use the Symfony `debug:router` command to check the results.
 
 ```shell
@@ -227,11 +227,7 @@ Your route should look like this:
 
 ## Resource details page
 
-<div data-full-width="false">
-
-<figure><img src="../../.gitbook/assets/book_details.png" alt="Book details page"></figure>
-
-</div>
+<div data-full-width="false"><figure><img src="../../.gitbook/assets/book_details.png" alt="Book details page"><figcaption></figcaption></figure></div>
 
 Configure the `show` operation in your resource.
 
@@ -257,6 +253,10 @@ class Book implements ResourceInterface
     //...
 }
 ```
+
+{% hint style="info" %}
+Note: When you are in a Sylius project, the `templatesDir` path is: `@SyliusAdmin/shared/crud`
+{% endhint %}
 
 Use the Symfony `debug:router` command to check the results.
 
