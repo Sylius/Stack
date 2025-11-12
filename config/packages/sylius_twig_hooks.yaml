@@ -1,6 +1,3 @@
-imports:
-    - { resource: '../sylius/twig_hooks/**/**' }
-
 sylius_twig_hooks:
     hooks:
         'app.base':
