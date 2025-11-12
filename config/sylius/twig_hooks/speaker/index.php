@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use App\Twig\Component\SpeakerDataTableComponent;
+use App\Twig\Component\SpeakerGridComponent;
+
 return static function (ContainerConfigurator $container): void {
     $container->extension('sylius_twig_hooks', [
         'hooks' => [
@@ -23,6 +26,18 @@ return static function (ContainerConfigurator $container): void {
                         'title' => 'app.ui.browsing_speakers',
                         'icon' => 'tabler:users',
                         'subheader' => 'app.ui.managing_your_speakers',
+                    ],
+                ],
+            ],
+
+            'sylius_admin.speaker.index.content.grid' => [
+                'data_table' => [
+                    'component' => SpeakerDataTableComponent::class,
+                    'props' => [
+                        'page' => '@=_context.page',
+                        'limit' => '@=_context.limit',
+                        'criteria' => '@=_context.criteria',
+                        'sorting' => '@=_context.sorting',
                     ],
                 ],
             ],

@@ -72,6 +72,7 @@
         "psr-4": {
             "Sylius\\AdminUi\\": "src/AdminUi/src/",
             "Sylius\\BootstrapAdminUi\\": "src/BootstrapAdminUi/src/",
+            "Sylius\\TwigComponentGrid\\": "src/TwigComponentGrid/src/",
             "Sylius\\TwigExtra\\": "src/TwigExtra/src/",
             "Sylius\\TwigHooks\\": "src/TwigHooks/src/",
             "Sylius\\UiTranslations\\": "src/UiTranslations/src/"
@@ -95,6 +96,7 @@
     "replace": {
         "sylius/admin-ui": "self.version",
         "sylius/bootstrap-admin-ui": "self.version",
+        "sylius/twig-component-grid": "self.version",
         "sylius/twig-extra": "self.version",
         "sylius/twig-hooks": "self.version",
         "sylius/ui-translations": "self.version"
@@ -109,7 +111,7 @@
     },
     "extra": {
         "symfony": {
-            "require": "7.1.*"
+            "require": "7.2.*"
         }
     },
     "scripts": {
