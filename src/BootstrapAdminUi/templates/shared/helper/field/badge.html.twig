@@ -1,53 +1,26 @@
+{#
+    Badge rendering macro for grid fields.
+    
+    Accepts:
+    - Objects implementing BadgeableInterface (enums with getLabel(), getColor(), getIcon(), getValue())
+    - Arrays with keys: label, color, icon, value
+    - Simple strings
+    
+    Options can override labels, colors, and icons via options.vars.labels, options.vars.colors, options.vars.icons
+#}
 {% macro default(data, options) %}
-    {% if data is not null %}
-
-        {# Set label, color, icon to null first #}
-        {% set label = null %}
-        {% set color = null %}
-        {% set icon = null %}
-        {% if data.name is defined %}
-            {% set value = data.value %}
-        {% else %}
-            {% set value = data %}
-        {% endif %}
-
-        {# Define label from enum if it exists or use the value directly if it's not an enum #}
-        {% if data.name is defined %}
-            {% if data.getLabel is defined %}
-                {% set label = data.getLabel() %}
-            {% else %}
-                {% set label = value %}
-            {% endif %}
-            {% if data.getColor is defined %}
-                {% set color = data.getColor() %}
-            {% endif %}
-            {% if data.getIcon is defined %}
-                {% set icon = data.getIcon() %}
-            {% endif %}
-        {% else %}
-            {% set label = value %}
-        {% endif %}
-
-        {# options.vars.*[value] overrides #}
-        {% if options.vars.colors[value] is defined %}
-            {% set color = options.vars.colors[value] %}
-        {% endif %}
-        {% if options.vars.labels[value] is defined %}
-            {% set label = options.vars.labels[value] %}
-        {% endif %}
-        {% if options.vars.icons[value] is defined %}
-            {% set icon = options.vars.icons[value] %}
-        {% endif %}
-        
-        <span class="badge rounded-pill text-{{ color }}" {{ sylius_test_html_attribute('badge-' ~ color) }}>
-            {% if icon %}
-                {% if ':' in icon %}
-                    {{ ux_icon(icon, {'class': 'icon icon-sm'}) }}
+    {% set badgeData = sylius_badge_data(data, options|default({})) %}
+    
+    {% if badgeData %}
+        <span class="badge rounded-pill text-{{ badgeData.color }}" {{ sylius_test_html_attribute('badge', badgeData.value ?? badgeData.label) }}>
+            {% if badgeData.icon %}
+                {% if ':' in badgeData.icon %}
+                    {{ ux_icon(badgeData.icon, {'class': 'icon icon-sm'}) }}
                 {% else %}
-                    {{ icon }}
+                    {{ badgeData.icon }}
                 {% endif %}
             {% endif %}
-            {{ label }}
+            {{ badgeData.label }}
         </span>
     {% endif %}
 {% endmacro %}
