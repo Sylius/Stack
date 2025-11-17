@@ -29,9 +29,13 @@ final class TemplatesTest extends WebTestCase
     {
         $this->client->request('GET', '/books');
 
-        self::assertResponseIsSuccessful();
-        self::assertSelectorTextContains('title', 'app.ui.books | Sylius');
-        self::assertSelectorTextContains('tr.item:first-child[data-test-resource-id]', 'The Shining');
-        self::assertSelectorTextContains('tr.item:last-child[data-test-resource-id]', 'Carrie');
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('title', 'app.ui.books | Sylius');
+        $this->assertSelectorTextContains('tr.item:first-child[data-test-resource-id]', 'The Shining');
+        $this->assertSelectorTextContains('tr.item:last-child[data-test-resource-id]', 'Carrie');
+
+        // Test the translation domain on menu
+        $this->assertAnySelectorTextSame('.nav-link-title', 'Dashboard'); // with "messages" domain
+        $this->assertAnySelectorTextSame('.nav-link-title', 'Library'); // with "menu" domain
     }
 }
