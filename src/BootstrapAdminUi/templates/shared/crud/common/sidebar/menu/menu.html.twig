@@ -1,4 +1,4 @@
-{% extends 'knp_menu.html.twig' %}
+{% extends '@KnpMenu/menu.html.twig' %}
 
 {% block root %}
     <ul class="sidebar navbar-nav">
@@ -44,13 +44,15 @@
     {%- if classes is not empty %}
         {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
     {%- endif %}
+
     {% if item.hasChildren %}
         <li class="nav-item {% if attributes.class is defined %}{{ attributes.class }}{% endif %}">
             <a class="nav-link dropdown-toggle {{ is_active ? 'show' : '' }}" href="#navbar-{{ item.name }}" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="{{ is_active ? 'true' : 'false' }}">
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                     {{ block('icon') }}
                 </span>
-                <span class="nav-link-title">{{ item.label|trans }}</span>
+
+                <span class="nav-link-title">{{ block('label') }}</span>
             </a>
             <div class="dropdown-menu {{ is_active ? 'show' : '' }}">
                 <div class="dropdown-menu-columns">
@@ -67,7 +69,7 @@
                     {{ block('icon') }}
                 </span>
                 <span class="nav-link-title">
-                    {{ item.label|trans }} {% if target == '_blank' %}{{ ux_icon('tabler:external-link', {'class': 'icon icon-sm ms-1 mb-2 opacity-75'}) }}{% endif %}
+                    {{ block('label') }} {% if target == '_blank' %}{{ ux_icon('tabler:external-link', {'class': 'icon icon-sm ms-1 mb-2 opacity-75'}) }}{% endif %}
                 </span>
             </a>
         </li>
@@ -92,7 +94,7 @@
     {%- endif %}
 
     <a class="dropdown-item {% if attributes.class is defined %}{{ attributes.class }}{% endif %}" href="{{ item.uri }}" target="{{ target }}">
-        {{ item.label|trans }}{% if target == '_blank' %}{{ ux_icon('tabler:external-link', {'class': 'icon icon-sm ms-1 mb-2 opacity-75'}) }}{% endif %}
+        {{ block('label') }}{% if target == '_blank' %}{{ ux_icon('tabler:external-link', {'class': 'icon icon-sm ms-1 mb-2 opacity-75'}) }}{% endif %}
     </a>
 {% endblock %}
 
