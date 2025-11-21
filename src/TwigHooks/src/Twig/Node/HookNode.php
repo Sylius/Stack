@@ -14,10 +14,12 @@ declare(strict_types=1);
 namespace Sylius\TwigHooks\Twig\Node;
 
 use Sylius\TwigHooks\Twig\Runtime\HooksRuntime;
+use Twig\Attribute\YieldReady;
 use Twig\Compiler;
 use Twig\Node\Expression\ArrayExpression;
 use Twig\Node\Node;
 
+#[YieldReady]
 final class HookNode extends Node
 {
     public function __construct(
@@ -25,19 +27,38 @@ final class HookNode extends Node
         ?Node $context,
         bool $only,
         int $lineno,
-        ?string $tag = null,
     ) {
-        parent::__construct(
-            [
-                'name' => $name,
-                'hook_level_context' => $context ?? new ArrayExpression([], $lineno),
-            ],
-            [
-                'only' => $only,
-            ],
-            $lineno,
-            $tag,
-        );
+        if (\func_num_args() > 4) {
+            trigger_deprecation('sylius/twig-hooks', '0.10.0', \sprintf('The "tag" constructor argument of the "%s" class is deprecated and ignored (check which TokenParser class set it to "%s"), the tag is now automatically set by the Parser when needed.', static::class, func_get_arg(4) ?: 'null'));
+        }
+
+        if (class_exists(\Twig\Node\Expression\FunctionNode\EnumCasesFunction::class)) {
+            parent::__construct(
+                [
+                    'name' => $name,
+                    'hook_level_context' => $context ?? new ArrayExpression([], $lineno),
+                ],
+                [
+                    'only' => $only,
+                ],
+                $lineno,
+            );
+        } else {
+            // Remove when twig < 3.12 support is dropped
+            $tag = func_get_arg(4);
+
+            parent::__construct(
+                [
+                    'name' => $name,
+                    'hook_level_context' => $context ?? new ArrayExpression([], $lineno),
+                ],
+                [
+                    'only' => $only,
+                ],
+                $lineno,
+                $tag,
+            );
+        }
     }
 
     public function compile(Compiler $compiler): void
@@ -49,7 +70,7 @@ final class HookNode extends Node
             HooksRuntime::class,
         ))->raw("\n");
 
-        $compiler->raw('echo $hooksRuntime->renderHook(');
+        $compiler->raw(sprintf('%s $hooksRuntime->renderHook(', class_exists(YieldReady::class) ? 'yield' : 'echo'));
         $compiler->subcompile($this->getNode('name'));
         $compiler->raw(', ');
         $compiler->subcompile($this->getNode('hook_level_context'));
