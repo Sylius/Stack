@@ -1,0 +1,23 @@
+{% extends '@SyliusAdminUi/base.html.twig' %}
+
+{% set prefixes = prefixes|default({})|merge([
+    'sylius_admin.common.layout.full',
+]) %}
+
+{% block body %}
+    {% block sidebar %}
+        {% hook '#sidebar' with {_prefixes: prefixes} %}
+    {% endblock %}
+
+    {% block navbar %}
+        {% hook '#navbar' with {_prefixes: prefixes} %}
+    {% endblock %}
+
+    {% block content %}
+        {% hook '#content' with {_prefixes: prefixes} %}
+    {% endblock %}
+
+    {% block footer %}
+        {% hook '#footer' with {_prefixes: prefixes} %}
+    {% endblock %}
+{% endblock %}
