@@ -77,7 +77,7 @@ security:
 {% endcode %}
 
 {% hint style="warning" %}  
-It's important to move the main block under the admin configuration. Otherwise the admin login functionality won't work properly:
+It's important to move the main block under the admin configuration. Otherwise the admin login functionality won't work properly.
 {% endhint %}
 
 {% hint style="info" %}
