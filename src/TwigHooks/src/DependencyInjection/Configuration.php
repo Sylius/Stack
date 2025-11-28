@@ -69,11 +69,16 @@ final class Configuration implements ConfigurationInterface
                         ->arrayPrototype()
                             ->beforeNormalization()
                                 ->always(function ($v) {
+                                    $isTypeDefined = isset($v['type']);
                                     $isComponentDefined = isset($v['component']);
                                     $isTemplateDefined = isset($v['template']);
                                     $isDisabled = isset($v['enabled']) && $v['enabled'] === false;
 
                                     if (!$isComponentDefined && !$isTemplateDefined && !$isDisabled) {
+                                        return $v;
+                                    }
+
+                                    if (true === $isTypeDefined) {
                                         return $v;
                                     }
 
@@ -89,6 +94,16 @@ final class Configuration implements ConfigurationInterface
                             ->end()
                             ->validate()
                                 ->always(static function ($v) {
+                                    $type = $v['type'] ?? null;
+                                    if ('template' === $type) {
+                                        $v['component'] = null;
+                                        $v['props'] = [];
+                                    }
+
+                                    if ('component' === $type) {
+                                        $v['template'] = null;
+                                    }
+
                                     $component = $v['component'] ?? null;
                                     $template = $v['template'] ?? null;
                                     $enabled = $v['enabled'] ?? true;
