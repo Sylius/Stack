@@ -71,8 +71,14 @@ security:
                 # These routes are provided by Sylius Admin Ui package
                 path: sylius_admin_ui_logout
                 target: sylius_admin_ui_login
+        main:
+            lazy: true
 ```
 {% endcode %}
+
+{% hint style="warning" %}  
+It's important to move the main block under the admin configuration. Otherwise the admin login functionality won't work properly.
+{% endhint %}
 
 {% hint style="info" %}
 Learn more on how to [configure the firewall on the Symfony documentation](https://symfony.com/doc/current/security.html#the-firewall)
