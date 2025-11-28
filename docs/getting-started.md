@@ -61,7 +61,7 @@ To prevent duplicate Ajax calls, disable the auto-initialized Stimulus app and S
 
 #### Disabling Stimulus app & Symfony UX stylesheets from third party package
 
-First, you need to disable the Stimulus App started by the `sylius/bootstrap-admin-ui` package.
+First, you need to disable the Stimulus App started by the `sylius/bootstrap-admin-ui` package and add a custom javascript app hook for the asset mapper.
 
 {% tabs %}
 {% tab title="YAML" %}
@@ -77,8 +77,11 @@ sylius_twig_hooks:
             symfony_ux:
                 enabled: false    
            
-        # Disabling Stimulus App        
         'sylius_admin.base#javascripts':
+            app:
+                priority: 200
+                template: 'base/javascripts/app.html.twig'
+            # Disabling Stimulus App
             symfony_ux:
                 enabled: false
 ```
@@ -103,6 +106,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ],
             
             'sylius_admin.base#javascripts' => [
+                // New hook
+                'app' => [
+                    'priority' => 200,
+                    'template' => 'base/javascripts/app.html.twig',
+                ],                
                 // Disabling Stimulus App        
                 'symfony_ux' => [
                     'enabled' => false,
@@ -115,6 +123,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 {% endcode %}
 {% endtab %}
 {% endtabs %}
+
+{% code title="base/javascripts/app.html.twig" lineNumbers="true" %}
+```twig
+{{ importmap('app') }}
+```
+{% endcode %}
 
 #### Starting Stimulus App
 
