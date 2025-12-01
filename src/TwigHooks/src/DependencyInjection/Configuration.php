@@ -78,7 +78,7 @@ final class Configuration implements ConfigurationInterface
                                         return $v;
                                     }
 
-                                    if (true === $isTypeDefined) {
+                                    if (true === $isTypeDefined && false === $isDisabled) {
                                         return $v;
                                     }
 
