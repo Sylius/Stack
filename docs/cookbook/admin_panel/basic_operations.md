@@ -319,10 +319,8 @@ return static function (ContainerConfigurator $container): void {
 {% endtab %}
 {% endtabs %}
 
+{% code title="templates/book/show/content/body.html.twig" overflow="wrap" lineNumbers="true" %}
 ```twig
-{% raw %}
-{# templates/book/show/content/body.html.twig #}
-
 {% set book = hookable_metadata.context.book %}
 
 <div class="page-body">
@@ -336,8 +334,8 @@ return static function (ContainerConfigurator $container): void {
         </div>
     </div>
 </div>
-{% endraw %}
 ```
+{% endcode %}
 
 {% hint style="info" %}
 Note that you can also [replace the default title](page_titles.md).
