@@ -7,10 +7,8 @@ Choose the YAML or the PHP version.
 
 {% tabs %}
 {% tab title="YAML" %}
-{% code lineNumbers="true" %}
+{% code title="config/packages/sylius_bootstrap_admin_ui.yaml" lineNumbers="true" %}
 ```yaml
-# config/packages/sylius_bootstrap_admin_ui.yaml
-# ...
 sylius_twig_hooks:
     hooks:
         # ...
@@ -24,15 +22,13 @@ sylius_twig_hooks:
 {% endtab %}
 
 {% tab title="PHP" %}
-{% code lineNumbers="true" %}
+{% code title="config/packages/sylius_bootstrap_admin_ui.php" lineNumbers="true" %}
 ```php
-// config/packages/sylius_bootstrap_admin_ui.php
+<?php
+
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // ...
-
-    // Add these following lines to define your own Twig template for the logo.
     $containerConfigurator->extension('sylius_twig_hooks', [
         'hooks' => [
             'sylius_admin.common.component.sidebar.logo' => [
@@ -50,14 +46,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 {% endtab %}
 {% endtabs %}
 
+{% code title="templates/shared/crud/common/sidebar/logo/image.html.twig" lineNumbers="true" %}
 ```twig
-{% raw %}
-{# templates/shared/crud/common/sidebar/logo/image.html.twig #}
-
 <img src="{{ asset('images/logo.png') }}" alt="Your Brand name" class="navbar-brand-image" />
-{% endraw %}
-  
 ```
+{% endcode %}
 
 ## How to customize the login page logo
 
@@ -66,10 +59,8 @@ Choose the YAML or the PHP version.
 
 {% tabs %}
 {% tab title="YAML" %}
-{% code lineNumbers="true" %}
+{% code title="config/packages/sylius_bootstrap_admin_ui.yaml" lineNumbers="true" %}
 ```yaml
-# config/packages/sylius_bootstrap_admin_ui.yaml
-# ...
 sylius_twig_hooks:
     hooks:
         # ...
@@ -82,15 +73,13 @@ sylius_twig_hooks:
 {% endtab %}
 
 {% tab title="PHP" %}
-{% code lineNumbers="true" %}
+{% code title="config/packages/sylius_bootstrap_admin_ui.php" lineNumbers="true" %}
 ```php
-// config/packages/sylius_bootstrap_admin_ui.php
+<?php
+
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // ...
-
-    // Add the following lines to define your own Twig template for the logo.
     $containerConfigurator->extension('sylius_twig_hooks', [
         'hooks' => [
             'sylius_admin.security.login.logo' => [
@@ -107,8 +96,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 {% endtab %}
 {% endtabs %}
 
+{% code %}
 ```twig
-{% raw %}
 <img src="{{ asset('images/logo.png') }}" alt="Your Brand name" class="sylius navbar-brand-image">
-{% endraw %}
 ```
+{% endcode %}
