@@ -19,13 +19,13 @@ use App\Entity\Talk;
 use App\Enum\Track;
 use function Zenstruck\Foundry\lazy;
 use Zenstruck\Foundry\Persistence\Exception\NotEnoughObjects;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 use Zenstruck\Foundry\Persistence\Proxy;
 
 /**
- * @extends PersistentProxyObjectFactory<Talk>
+ * @extends PersistentObjectFactory<Talk>
  */
-final class TalkFactory extends PersistentProxyObjectFactory
+final class TalkFactory extends PersistentObjectFactory
 {
     public static function class(): string
     {

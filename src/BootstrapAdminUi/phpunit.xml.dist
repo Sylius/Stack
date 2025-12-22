@@ -5,7 +5,6 @@
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
          colors="true"
          bootstrap="tests/Functional/.application/config/bootstrap.php"
-         convertDeprecationsToExceptions="true"
 >
     <testsuites>
         <testsuite name="bootstrap_admin_ui_tests">

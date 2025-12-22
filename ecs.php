@@ -11,6 +11,12 @@ return static function (ECSConfig $ecsConfig): void {
         __DIR__ . '/src',
     ]);
 
+    $ecsConfig->skip([
+        __DIR__ . '/config/reference.php',
+        __DIR__ . '/src/AdminUi/tests/Functional/.application/config/reference.php',
+        __DIR__ . '/src/BootstrapAdminUi/tests/Functional/.application/config/reference.php',
+    ]);
+
     $ecsConfig->import('vendor/sylius-labs/coding-standard/ecs.php');
 
     $ecsConfig->ruleWithConfiguration(HeaderCommentFixer::class, [
