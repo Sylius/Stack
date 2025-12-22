@@ -14,12 +14,13 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: [ "8.1", "8.2", "8.3" ]
+                php: [ "8.2", "8.3" ]
                 postgres: ["14.6"]
-                symfony: [ "^6.4", "^7.0" ]
-                exclude:
-                    - php: "8.1"
-                      symfony: "^7.0"
+                symfony: [ "^6.4", "^7.4" ]
+                include:
+                    - php: '8.4'
+                      postgres: "14.6"
+                      symfony: "^8.0"
         name: "PHP ${{ matrix.php }} / Symfony ${{ matrix.symfony }}"
         env:
             APP_ENV: test
@@ -33,7 +34,7 @@ jobs:
                 uses: shivammathur/setup-php@v2
                 with:
                     php-version: "${{ matrix.php }}"
-                    tools: symfony
+                    tools: 'symfony, composer:v2, flex'
                     coverage: none
 
             -   name: Shutdown default MySQL
@@ -46,10 +47,7 @@ jobs:
                     postgresql password: "postgres"
 
             -   name: "Restrict packages' versions"
-                run: |
-                    composer global config --no-plugins allow-plugins.symfony/flex true
-                    composer global require --no-progress --no-scripts --no-plugins "symfony/flex"
-                    composer config extra.symfony.require "${{ matrix.symfony }}"
+                run: composer config extra.symfony.require "${{ matrix.symfony }}"
 
             -   name: Get Composer cache directory
                 id: composer-cache
@@ -102,9 +100,7 @@ jobs:
 
             - name: "Restrict packages' versions (Admin Ui)"
               run: |
-                  (cd src/AdminUi/ && composer global config --no-plugins allow-plugins.symfony/flex true)
-                  (cd src/AdminUi/ && composer global config --no-plugins allow-plugins.symfony/runtime true)
-                  (cd src/AdminUi/ && composer global require --no-progress --no-scripts --no-plugins "symfony/flex")
+                  (cd src/AdminUi/ && composer config --no-plugins allow-plugins.symfony/runtime true)
                   (cd src/AdminUi/ && composer config extra.symfony.require "${{ matrix.symfony }}")
 
             -   name: "Install dependencies (Admin Ui)"
@@ -115,9 +111,7 @@ jobs:
 
             - name: "Restrict packages' versions (Bootstrap Admin Ui)"
               run: |
-                  (cd src/BootstrapAdminUi/ && composer global config --no-plugins allow-plugins.symfony/flex true)
-                  (cd src/BootstrapAdminUi/ && composer global config --no-plugins allow-plugins.symfony/runtime true)
-                  (cd src/BootstrapAdminUi/ && composer global require --no-progress --no-scripts --no-plugins "symfony/flex")
+                  (cd src/BootstrapAdminUi/ && composer config --no-plugins allow-plugins.symfony/runtime true)
                   (cd src/BootstrapAdminUi/ && composer config extra.symfony.require "${{ matrix.symfony }}")
 
             -   name: "Install dependencies (Bootstrap Admin Ui)"
@@ -128,9 +122,7 @@ jobs:
 
             - name: "Restrict packages' versions (Twig Hooks)"
               run: |
-                  (cd src/TwigHooks/ && composer global config --no-plugins allow-plugins.symfony/flex true)
-                  (cd src/TwigHooks/ && composer global config --no-plugins allow-plugins.symfony/runtime true)
-                  (cd src/TwigHooks/ && composer global require --no-progress --no-scripts --no-plugins "symfony/flex")
+                  (cd src/TwigHooks/ && composer config --no-plugins allow-plugins.symfony/runtime true)
                   (cd src/TwigHooks/ && composer config extra.symfony.require "${{ matrix.symfony }}")
 
             -   name: "Install dependencies (Twig Hooks)"
@@ -141,9 +133,7 @@ jobs:
 
             - name: "Restrict packages' versions (Twig Extra)"
               run: |
-                  (cd src/TwigExtra/ && composer global config --no-plugins allow-plugins.symfony/flex true)
-                  (cd src/TwigExtra/ && composer global config --no-plugins allow-plugins.symfony/runtime true)
-                  (cd src/TwigExtra/ && composer global require --no-progress --no-scripts --no-plugins "symfony/flex")
+                  (cd src/TwigExtra/ && composer config --no-plugins allow-plugins.symfony/runtime true)
                   (cd src/TwigExtra/ && composer config extra.symfony.require "${{ matrix.symfony }}")
 
             -   name: "Install dependencies (Twig Extra)"
@@ -154,9 +144,7 @@ jobs:
 
             - name: "Restrict packages' versions (Ui Translations)"
               run: |
-                  (cd src/UiTranslations/ && composer global config --no-plugins allow-plugins.symfony/flex true)
-                  (cd src/UiTranslations/ && composer global config --no-plugins allow-plugins.symfony/runtime true)
-                  (cd src/UiTranslations/ && composer global require --no-progress --no-scripts --no-plugins "symfony/flex")
+                  (cd src/UiTranslations/ && composer config --no-plugins allow-plugins.symfony/runtime true)
                   (cd src/UiTranslations/ && composer config extra.symfony.require "${{ matrix.symfony }}")
 
             -   name: "Install dependencies (Ui Translations)"

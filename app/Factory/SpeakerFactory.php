@@ -17,12 +17,12 @@ use App\Entity\Speaker;
 use App\Entity\SpeakerAvatar;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<Speaker>
+ * @extends PersistentObjectFactory<Speaker>
  */
-final class SpeakerFactory extends PersistentProxyObjectFactory
+final class SpeakerFactory extends PersistentObjectFactory
 {
     public static function class(): string
     {

@@ -30,7 +30,7 @@ final class BookTest extends WebTestCase
             ->create()
         ;
 
-        $this->client->loginUser($user->_real());
+        $this->client->loginUser($user);
     }
 
     public function testShowingBook(): void

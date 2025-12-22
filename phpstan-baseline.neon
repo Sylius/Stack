@@ -1,6 +1,16 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			message: "#^Call to method arrayNode\\(\\) on an unknown class Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\NodeBuilder\\<Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\ArrayNodeDefinition\\>\\.$#"
 			count: 1
-			path: src/TwigHooks/src/Hookable/AbstractHookable.php
+			path: src/TwigExtra/src/Symfony/DependencyInjection/Configuration.php
+
+		-
+			message: "#^Call to method arrayNode\\(\\) on an unknown class Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\NodeBuilder\\<Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\ArrayNodeDefinition\\>\\.$#"
+			count: 2
+			path: src/TwigHooks/src/DependencyInjection/Configuration.php
+
+		-
+			message: "#^Call to method booleanNode\\(\\) on an unknown class Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\NodeBuilder\\<Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\ArrayNodeDefinition\\>\\.$#"
+			count: 1
+			path: src/TwigHooks/src/DependencyInjection/Configuration.php

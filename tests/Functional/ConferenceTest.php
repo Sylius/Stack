@@ -28,7 +28,7 @@ final class ConferenceTest extends WebTestCase
             ->create()
         ;
 
-        $this->client->loginUser($user->_real());
+        $this->client->loginUser($user);
     }
 
     public function testBrowsingConferences(): void
