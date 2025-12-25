@@ -365,3 +365,116 @@ $field->setOptions([
 ]);
 ```
 {% endhint %}
+
+## Callable
+
+The Callable column aims to offer almost as much flexibility as the Twig column, but without requiring the creation of a template.
+You simply need to specify a callable, which allows you to transform the `data` variable on the fly.
+
+When defining callables in YAML, only string representations of callables are supported.
+When configuring grids using PHP (as opposed to service grid configuration), both string and array callables are supported. However, closures cannot be used due to restrictions in Symfony's configuration (values of type "Closure" are not permitted in service configuration files).
+By contrast, when configuring grids with service definitions, you can use both callables and closures.
+
+Here are some examples of what you can do:
+
+{% tabs %}
+{% tab title="YAML" %}
+{% code title="config/packages/sylius_grid.yaml" lineNumbers="true" %}
+```yaml
+sylius_grid:
+    grids:
+        app_user:
+            fields:
+                id:
+                    type: callable
+                    options:
+                        callable: "callable:App\\Helper\\GridHelper::addHashPrefix"
+                    label: app.ui.id
+                name:
+                    type: callable
+                    options:
+                        callable: "callable:strtoupper"
+                    label: app.ui.name
+```
+{% endcode %}
+{% endtab %}
+{% tab title="PHP" %}
+{% code title="config/packages/sylius_grid.php" lineNumbers="true" %}
+```php
+<?php
+
+use Sylius\Bundle\GridBundle\Builder\Field\CallableField;
+use Sylius\Bundle\GridBundle\Builder\GridBuilder;
+use Sylius\Bundle\GridBundle\Config\GridConfig;
+
+return static function (GridConfig $grid): void {
+    $grid->addGrid(GridBuilder::create('app_user', '%app.model.user.class%')
+        ->addField(
+            CallableField::create('id', 'App\\Helper\\GridHelper::addHashPrefix')
+                ->setLabel('app.ui.id')
+        )
+        // or
+        ->addField(
+            CallableField::create('id', ['App\\Helper\\GridHelper', 'addHashPrefix'])
+                ->setLabel('app.ui.id')
+        )
+
+        ->addField(
+            CallableField::create('name', 'strtoupper')
+                ->setLabel('app.ui.name')
+        )
+    )
+};
+```
+{% endcode %}
+
+OR
+
+{% code title="src/Grid/UserGrid.php" lineNumbers="true" %}
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Grid;
+
+use App\Entity\User;
+use Sylius\Bundle\GridBundle\Builder\Field\CallableField;
+use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
+use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
+use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+
+final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
+{
+    public static function getName(): string
+    {
+           return 'app_user';
+    }
+
+    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    {
+        $gridBuilder
+            ->addField(
+                CallableField::create('id', GridHelper::addHashPrefix(...))
+                    ->setLabel('app.ui.id')
+            )
+            ->addField(
+                CallableField::create('name', 'strtoupper')
+                    ->setLabel('app.ui.name')
+            )
+            ->addField(
+                CallableField::create('roles' fn (array $roles): string => implode(', ', $roles))
+                    ->setLabel('app.ui.roles')
+            )
+        ;
+    }
+
+    public function getResourceClass(): string
+    {
+        return User::class;
+    }
+}
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
