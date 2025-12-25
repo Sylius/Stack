@@ -12,7 +12,7 @@
     {% set badgeData = sylius_badge_data(data, options|default({})) %}
     
     {% if badgeData %}
-        <span class="badge rounded-pill text-{{ badgeData.color }}" {{ sylius_test_html_attribute('badge', badgeData.value ?? badgeData.label) }}>
+        <span class="d-inline-flex gap-1 badge bg-{{ badgeData.color }}-lt" {{ sylius_test_html_attribute('badge', badgeData.value ?? badgeData.label) }}>
             {% if badgeData.icon %}
                 {% if ':' in badgeData.icon %}
                     {{ ux_icon(badgeData.icon, {'class': 'icon icon-sm'}) }}
