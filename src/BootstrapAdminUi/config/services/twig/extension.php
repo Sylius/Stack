@@ -21,4 +21,3 @@ return function (ContainerConfigurator $configurator): void {
     $services->set('sylius_bootstrap_admin_ui.twig.extension.badge', BadgeExtension::class)
         ->tag('twig.extension');
 };
-
