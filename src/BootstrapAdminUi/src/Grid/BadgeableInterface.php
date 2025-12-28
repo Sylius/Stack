@@ -1,13 +1,22 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Sylius Sp. z o.o.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace Sylius\BootstrapAdminUi\Grid;
 
 /**
  * Interface for objects that can be rendered as badges in the grid.
- * 
- * Implement this interface on your enums or value objects to enable 
+ *
+ * Implement this interface on your enums or value objects to enable
  * automatic badge rendering with label, color, and icon.
  */
 interface BadgeableInterface
@@ -35,4 +44,3 @@ interface BadgeableInterface
      */
     public function getValue(): string;
 }
-

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Sylius Sp. z o.o.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace Sylius\BootstrapAdminUi\Twig\Extension;
@@ -20,12 +29,6 @@ final class BadgeExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * Creates BadgeData from mixed input.
-     * 
-     * @param mixed $data The data to convert (BadgeableInterface, array, string, or null)
-     * @param array $options Options containing potential overrides (labels, colors, icons)
-     */
     public function createBadgeData(mixed $data, array $options = []): ?BadgeData
     {
         $overrides = [
@@ -37,4 +40,3 @@ final class BadgeExtension extends AbstractExtension
         return BadgeData::from($data, $overrides);
     }
 }
-

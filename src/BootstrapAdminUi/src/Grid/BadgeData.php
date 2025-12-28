@@ -1,12 +1,21 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Sylius Sp. z o.o.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace Sylius\BootstrapAdminUi\Grid;
 
 /**
  * Value object representing badge display data.
- * 
+ *
  * This class normalizes badge data from various sources (BadgeableInterface, arrays, strings)
  * into a consistent format for rendering.
  */
@@ -17,7 +26,8 @@ final readonly class BadgeData
         public string $color,
         public ?string $icon = null,
         public ?string $value = null,
-    ) {}
+    ) {
+    }
 
     /**
      * Creates BadgeData from a BadgeableInterface implementation.
@@ -34,14 +44,14 @@ final readonly class BadgeData
 
     /**
      * Creates BadgeData from an array with optional overrides.
-     * 
+     *
      * @param array{label?: string, color?: string, icon?: string, value?: string} $data
      * @param array{labels?: array<string, string>, colors?: array<string, string>, icons?: array<string, string>} $overrides
      */
     public static function fromArray(array $data, array $overrides = []): self
     {
         $value = $data['value'] ?? $data['label'] ?? 'unknown';
-        
+
         return new self(
             label: $overrides['labels'][$value] ?? $data['label'] ?? $value,
             color: $overrides['colors'][$value] ?? $data['color'] ?? 'primary',
@@ -65,7 +75,7 @@ final readonly class BadgeData
 
     /**
      * Creates BadgeData from mixed input (auto-detection).
-     * 
+     *
      * @param BadgeableInterface|array|string|null $data
      * @param array{labels?: array<string, string>, colors?: array<string, string>, icons?: array<string, string>} $overrides
      */
@@ -91,4 +101,3 @@ final readonly class BadgeData
         return self::fromString((string) $data, $overrides);
     }
 }
-
