@@ -37,5 +37,5 @@ return static function (MBConfig $mbConfig): void {
     $services->set(PushTagReleaseWorker::class);
     $services->set(SetNextMutualDependenciesReleaseWorker::class);
     $services->set(UpdateBranchAliasReleaseWorker::class);
-    $services->set(PushNextDevReleaseWorker::class);
+    //$services->set(PushNextDevReleaseWorker::class);
 };
