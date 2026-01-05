@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace App\Factory;
 
 use App\Entity\Conference;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<Conference>
+ * @extends PersistentObjectFactory<Conference>
  */
-final class ConferenceFactory extends PersistentProxyObjectFactory
+final class ConferenceFactory extends PersistentObjectFactory
 {
     public static function class(): string
     {

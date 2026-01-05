@@ -27,7 +27,7 @@ final class LegacyBookTest extends WebTestCase
             ->create()
         ;
 
-        $this->client->loginUser($user->_real());
+        $this->client->loginUser($user);
     }
 
     public function testBrowsingBooks(): void
@@ -44,7 +44,7 @@ final class LegacyBookTest extends WebTestCase
             ->create()
         ;
 
-        $this->client->request('GET', '/admin/legacy/books/');
+        $this->client->request('GET', '/admin/legacy/books');
 
         self::assertResponseIsSuccessful();
     }

@@ -32,7 +32,7 @@ final class FrenchTranslatedUiTest extends WebTestCase
             ->create()
         ;
 
-        $this->client->loginUser($user->_real());
+        $this->client->loginUser($user);
     }
 
     public function testShowItem(): void
