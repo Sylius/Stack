@@ -14,5 +14,9 @@
         background: $gray-100;
       }
     }
+    .accordion-body {
+      color: var(--tblr-body-color);
+      padding: var(--tblr-accordion-body-padding-y) var(--tblr-accordion-body-padding-x);
+    }
   }
 }
