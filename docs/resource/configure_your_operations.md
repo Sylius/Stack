@@ -32,6 +32,8 @@ There are some basic CRUD operations and more.
 
 `Index` operation allows to browse all items of your resource.
 
+{% tabs %}
+{% tab title="PHP attributes" %}
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
 namespace App\Entity;
@@ -50,6 +52,28 @@ class Book implements ResourceInterface
 }
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="External PHP file" %}
+{% code title="config/sylius/resources/book.php" lineNumbers="true" %}
+```php
+use App\Entity\Book;
+use Sylius\Resource\Metadata\Index;
+use Sylius\Resource\Metadata\Operations;
+use Sylius\Resource\Metadata\ResourceMetadata;
+
+return (new ResourceMetadata())
+    ->withClass(Book::class)
+    ->withOperations(
+        new Operations([
+            new Index(),
+        ])
+    )
+;
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 It will configure this route for your `index` operation.
 
@@ -72,6 +96,8 @@ On your Twig template, these variables are available
 To use a grid for you operation, you need to install
 the [Sylius grid package](https://github.com/Sylius/SyliusGridBundle/)
 
+{% tabs %}
+{% tab title="PHP attributes" %}
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
 namespace App\Entity;
@@ -94,6 +120,31 @@ class Book implements ResourceInterface
 }
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="External PHP file" %}
+{% code title="config/sylius/resources/book.php" lineNumbers="true" %}
+```php
+use App\Entity\Book;
+use Sylius\Resource\Metadata\Index;
+use Sylius\Resource\Metadata\Operations;
+use Sylius\Resource\Metadata\ResourceMetadata;
+
+return (new ResourceMetadata())
+    ->withClass(Book::class)
+    ->withOperations(
+        new Operations([
+            // You can use either the FQCN of your grid
+            new Index(grid: BookGrid::class),
+            // Or you can use the grid name
+            new Index(grid: 'app_book'),
+        ])    
+    )
+;
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 On your Twig template, these variables are available
 
@@ -111,6 +162,8 @@ The iterator for your books will be available as `books.data` or `resources.data
 
 `Show` operation allows to view details of an item.
 
+{% tabs %}
+{% tab title="PHP attributes" %}
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
 namespace App\Entity;
@@ -129,6 +182,28 @@ class Book implements ResourceInterface
 }
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="External PHP file" %}
+{% code title="config/sylius/resources/book.php" lineNumbers="true" %}
+```php
+use App\Entity\Book;
+use Sylius\Resource\Metadata\Operations;
+use Sylius\Resource\Metadata\ResourceMetadata;
+use Sylius\Resource\Metadata\Show;
+
+return (new ResourceMetadata())
+    ->withClass(Book::class)
+    ->withOperations(
+        new Operations([
+            new Show(),
+        ])    
+    )
+;
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 It will configure this route for your `show` operation.
 
@@ -150,6 +225,8 @@ On your Twig template, these variables are available
 
 `Create` operation allows to add a new item of your resource.
 
+{% tabs %}
+{% tab title="PHP attributes" %}
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
 namespace App\Entity;
@@ -168,6 +245,28 @@ class Book implements ResourceInterface
 }
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="External PHP file" %}
+{% code title="config/sylius/resources/book.php" lineNumbers="true" %}
+```php
+use App\Entity\Book;
+use Sylius\Resource\Metadata\Create;
+use Sylius\Resource\Metadata\Operations;
+use Sylius\Resource\Metadata\ResourceMetadata;
+
+return (new ResourceMetadata())
+    ->withClass(Book::class)
+    ->withOperations(
+        new Operations([
+            new Create(),
+        ])    
+    )
+;
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 It will configure this route for your `create` operation.
 
@@ -191,6 +290,8 @@ The iterator for your books will be available as `books.data` or `resources.data
 
 `Update` operation allows to edit an existing item of your resource.
 
+{% tabs %}
+{% tab title="PHP attributes" %}
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
 namespace App\Entity;
@@ -209,6 +310,28 @@ class Book implements ResourceInterface
 }
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="External PHP file" %}
+{% code title="config/sylius/resources/book.php" lineNumbers="true" %}
+```php
+use App\Entity\Book;
+use Sylius\Resource\Metadata\Operations;
+use Sylius\Resource\Metadata\ResourceMetadata;
+use Sylius\Resource\Metadata\Update;
+
+return (new ResourceMetadata())
+    ->withClass(Book::class)
+    ->withOperations(
+        new Operations([
+            new Update(),
+        ])    
+    )
+;
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 It will configure this route for your `update` operation.
 
@@ -230,6 +353,8 @@ On your Twig template, these variables are available
 
 `Delete` operation allows to remove an existing item of your resource.
 
+{% tabs %}
+{% tab title="PHP attributes" %}
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
 namespace App\Entity;
@@ -248,6 +373,28 @@ class Book implements ResourceInterface
 }
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="External PHP file" %}
+{% code title="config/sylius/resources/book.php" lineNumbers="true" %}
+```php
+use App\Entity\Book;
+use Sylius\Resource\Metadata\Delete;
+use Sylius\Resource\Metadata\Operations;
+use Sylius\Resource\Metadata\ResourceMetadata;
+
+return (new ResourceMetadata())
+    ->withClass(Book::class)
+    ->withOperations(
+        new Operations([
+            new Delete(),
+        ])    
+    )
+;
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 It will configure this route for your `delete` operation.
 
@@ -259,6 +406,8 @@ It will configure this route for your `delete` operation.
 
 `Bulk delete` operation allows to remove several items of your resource at the same time.
 
+{% tabs %}
+{% tab title="PHP attributes" %}
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
 namespace App\Entity;
@@ -277,6 +426,28 @@ class Book implements ResourceInterface
 }
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="External PHP file" %}
+{% code title="config/sylius/resources/book.php" lineNumbers="true" %}
+```php
+use App\Entity\Book;
+use Sylius\Resource\Metadata\BulkDelete;
+use Sylius\Resource\Metadata\Operations;
+use Sylius\Resource\Metadata\ResourceMetadata;
+
+return (new ResourceMetadata())
+    ->withClass(Book::class)
+    ->withOperations(
+        new Operations([
+            new BulkDelete(),
+        ])
+    )
+;
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 It will configure this route for your `bulk_delete` operation.
 
@@ -290,6 +461,8 @@ It will configure this route for your `bulk_delete` operation.
 
 As an example, we add a `publish` operation to our book resource.
 
+{% tabs %}
+{% tab title="PHP attributes" %}
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
 namespace App\Entity;
@@ -308,6 +481,28 @@ class Book implements ResourceInterface
 }
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="External PHP file" %}
+{% code title="config/sylius/resources/book.php" lineNumbers="true" %}
+```php
+use App\Entity\Book;
+use Sylius\Resource\Metadata\ApplyStateMachineTransition;
+use Sylius\Resource\Metadata\Operations;
+use Sylius\Resource\Metadata\ResourceMetadata;
+
+return (new ResourceMetadata())
+    ->withClass(Book::class)
+    ->withOperations(
+        new Operations([
+            new ApplyStateMachineTransition(stateMachineTransition: 'publish'),
+        ])
+    )
+;
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 It will configure this route for your `apply_state_machine_transition` operation.
 
@@ -321,6 +516,7 @@ It will configure this route for your `apply_state_machine_transition` operation
 
 It customizes the path for your operations.
 
+{% tab title="PHP attributes" %}
 {% code title="src/Entity/Customer.php" lineNumbers="true" %}
 ```php
 namespace App\Entity;
@@ -341,6 +537,30 @@ class Customer implements ResourceInterface
 }
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="External PHP file" %}
+{% code title="config/sylius/resources/customer.php" lineNumbers="true" %}
+```php
+use App\Entity\Customer;
+use Sylius\Resource\Metadata\Create;
+use Sylius\Resource\Metadata\Operations;
+use Sylius\Resource\Metadata\ResourceMetadata;
+use Sylius\Resource\Metadata\Update;
+
+return (new ResourceMetadata())
+    ->withClass(Customer::class)
+    ->withOperations(
+        new Operations([
+            new Create(path: 'register'),
+            new Update(path: '{id}/edition'),
+        ])
+    )
+;
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 | Name            | Method    | Path                |
 |-----------------|-----------|---------------------|
@@ -351,6 +571,7 @@ class Customer implements ResourceInterface
 
 It customizes the path for your operations.
 
+{% tab title="PHP attributes" %}
 {% code title="src/Entity/Customer.php" lineNumbers="true" %}
 ```php
 namespace App\Entity;
@@ -369,6 +590,28 @@ class Customer implements ResourceInterface
 }
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="External PHP file" %}
+{% code title="config/sylius/resources/customer.php" lineNumbers="true" %}
+```php
+use App\Entity\Customer;
+use Sylius\Resource\Metadata\Create;
+use Sylius\Resource\Metadata\Operations;
+use Sylius\Resource\Metadata\ResourceMetadata;
+
+return (new ResourceMetadata())
+    ->withClass(Customer::class)
+    ->withOperations(
+        new Operations([
+            new Create(shortName: 'register'),
+        ])
+    )
+;
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 | Name              | Method    | Path            |
 |-------------------|-----------|-----------------|
@@ -382,6 +625,7 @@ It defines the templates directory for your operations.
 
 As an example, we defines `index`, `create`, `update` and `show` operations to our book resource.
 
+{% tab title="PHP attributes" %}
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
 namespace App\Entity;
@@ -407,6 +651,35 @@ class Book implements ResourceInterface
 }
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="External PHP file" %}
+{% code title="config/sylius/resources/book.php" lineNumbers="true" %}
+```php
+use App\Entity\Book;
+use Sylius\Resource\Metadata\Create;
+use Sylius\Resource\Metadata\Index;
+use Sylius\Resource\Metadata\Operations;
+use Sylius\Resource\Metadata\ResourceMetadata;
+use Sylius\Resource\Metadata\Show;
+use Sylius\Resource\Metadata\Update;
+
+return (new ResourceMetadata())
+    ->withClass(Book::class)
+    ->withTemplatesDir('book')
+    ->withOperations(
+        new Operations([
+            new Index(),
+            new Create(),
+            new Update(),
+            new Show(),
+        ])
+    )
+;
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 | Operation | Template Path                    |
 |-----------|----------------------------------|
@@ -431,6 +704,7 @@ You can use `@SyliusAdminUi/crud` as templates dir from the [sylius/admin-ui](..
 
 It adds a prefix to the path for each operation.
 
+{% tab title="PHP attributes" %}
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
 namespace App\Entity;
@@ -445,7 +719,7 @@ use Sylius\Resource\Metadata\Show;
 use Sylius\Resource\Metadata\Update;
 
 #[AsResource(
-    routePrefix: 'admin',
+    routePrefix: '/admin',
     operations: [
         new Index(routePrefix: ''),  // you can also customize the route prefix at the operation level too for extra flexibility
         new Create(),
@@ -460,6 +734,35 @@ class Book implements ResourceInterface
 }
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="External PHP file" %}
+{% code title="config/sylius/resources/book.php" lineNumbers="true" %}
+```php
+use App\Entity\Book;
+use Sylius\Resource\Metadata\Create;
+use Sylius\Resource\Metadata\Index;
+use Sylius\Resource\Metadata\Operations;
+use Sylius\Resource\Metadata\ResourceMetadata;
+use Sylius\Resource\Metadata\Show;
+use Sylius\Resource\Metadata\Update;
+
+return (new ResourceMetadata())
+    ->withClass(Book::class)
+    ->withRoutePrefix('/admin')
+    ->withOperations(
+        new Operations([
+            new Index(routePrefix: ''),  // you can also customize the route prefix at the operation level too for extra flexibility
+            new Create(),
+            new Update(),
+            new Show(),
+        ])
+    )
+;
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 | Name                 | Method          | Path                     |
 |----------------------|-----------------|--------------------------|
@@ -474,6 +777,7 @@ class Book implements ResourceInterface
 
 It customizes the route name for individual operations.
 
+{% tab title="PHP attributes" %}
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
 namespace App\Entity;
@@ -502,6 +806,38 @@ class Book implements ResourceInterface
 }
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="External PHP file" %}
+{% code title="config/sylius/resources/book.php" lineNumbers="true" %}
+```php
+use App\Entity\Book;
+use Sylius\Resource\Metadata\BulkDelete;
+use Sylius\Resource\Metadata\Create;
+use Sylius\Resource\Metadata\Delete;
+use Sylius\Resource\Metadata\Index;
+use Sylius\Resource\Metadata\Operations;
+use Sylius\Resource\Metadata\ResourceMetadata;
+use Sylius\Resource\Metadata\Show;
+use Sylius\Resource\Metadata\Update;
+
+return (new ResourceMetadata())
+    ->withClass(Book::class)
+    ->withOperations(
+        new Operations([
+            new Index(routeName: 'library_book_list'),
+            new Create(routeName: 'library_book_add'),
+            new Update(),
+            new Delete(),
+            new BulkDelete(),
+            new Show(),            
+        ])
+    )
+;
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 | Name                 | Method          | Path                     |
 |----------------------|-----------------|--------------------------|
@@ -516,6 +852,7 @@ class Book implements ResourceInterface
 
 It changes the route name for each operation.
 
+{% tab title="PHP attributes" %}
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
 namespace App\Entity;
@@ -531,7 +868,7 @@ use Sylius\Resource\Metadata\Update;
 
 #[AsResource(
     section: 'admin',
-    routePrefix: 'admin',
+    routePrefix: '/admin',
     operations: [
         new Index(),
         new Create(),
@@ -552,6 +889,64 @@ class Book implements ResourceInterface
 }
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="External PHP file" %}
+{% code title="config/sylius/resources/admin/book.php" lineNumbers="true" %}
+```php
+use App\Entity\Book;
+use Sylius\Resource\Metadata\BulkDelete;
+use Sylius\Resource\Metadata\Create;
+use Sylius\Resource\Metadata\Delete;
+use Sylius\Resource\Metadata\Index;
+use Sylius\Resource\Metadata\Operations;
+use Sylius\Resource\Metadata\ResourceMetadata;
+use Sylius\Resource\Metadata\Show;
+use Sylius\Resource\Metadata\Update;
+
+return (new ResourceMetadata())
+    ->withClass(Book::class)
+    ->withSection('admin')
+    ->withRoutePrefix('/admin')
+    ->withOperations(
+        new Operations([
+            new Index(),
+            new Create(),
+            new Update(),
+            new Delete(),
+            new BulkDelete(),
+        ])
+    )
+;
+```
+{% endcode %}
+
+{% code title="config/sylius/resources/shop/book.php" lineNumbers="true" %}
+```php
+use App\Entity\Book;
+use Sylius\Resource\Metadata\BulkDelete;
+use Sylius\Resource\Metadata\Create;
+use Sylius\Resource\Metadata\Delete;
+use Sylius\Resource\Metadata\Index;
+use Sylius\Resource\Metadata\Operations;
+use Sylius\Resource\Metadata\ResourceMetadata;
+use Sylius\Resource\Metadata\Show;
+use Sylius\Resource\Metadata\Update;
+
+return (new ResourceMetadata())
+    ->withClass(Book::class)
+    ->withSection('shop')
+    ->withOperations(
+        new Operations([
+            new Index(),
+            new Show(),
+        ])
+    )
+;
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 | Name                       | Method          | Path                     |
 |----------------------------|-----------------|--------------------------|
@@ -567,6 +962,7 @@ class Book implements ResourceInterface
 
 It changes the resource identifier for each operation.
 
+{% tab title="PHP attributes" %}
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
 namespace App\Entity;
@@ -594,6 +990,37 @@ class Book implements ResourceInterface
 }
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="External PHP file" %}
+{% code title="config/sylius/resources/book.php" lineNumbers="true" %}
+```php
+use App\Entity\Book;
+use Sylius\Resource\Metadata\BulkDelete;
+use Sylius\Resource\Metadata\Create;
+use Sylius\Resource\Metadata\Delete;
+use Sylius\Resource\Metadata\Index;
+use Sylius\Resource\Metadata\Operations;
+use Sylius\Resource\Metadata\ResourceMetadata;
+use Sylius\Resource\Metadata\Update;
+
+return (new ResourceMetadata())
+    ->withClass(Book::class)
+    ->withIdentifier('code')
+    ->withOperations(
+        new Operations([
+            new Index(),
+            new Create(),
+            new Update(),
+            new Delete(),
+            new BulkDelete(),          
+        ])
+    )
+;
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 | Name                 | Method          | Path                     |
 |----------------------|-----------------|--------------------------|
@@ -607,6 +1034,7 @@ class Book implements ResourceInterface
 
 It defines the simple vars that you can use on your templates.
 
+{% tab title="PHP attributes" %}
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
 namespace App\Entity;
@@ -631,6 +1059,34 @@ class Book implements ResourceInterface
 }
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="External PHP file" %}
+{% code title="config/sylius/resources/book.php" lineNumbers="true" %}
+```php
+use App\Entity\Book;
+use Sylius\Resource\Metadata\Create;
+use Sylius\Resource\Metadata\Operations;
+use Sylius\Resource\Metadata\ResourceMetadata;
+
+return (new ResourceMetadata())
+    ->withClass(Book::class)
+    ->withVars([
+        'header' => 'Library', 
+        'subheader' => 'Managing your library',
+    ])
+    ->withOperations(
+        new Operations([
+            new Create(vars: [
+                'subheader' => 'Adding a book',
+            ]),         
+        ])
+    )
+;
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 You can use these vars on your Twig templates.
 These vars will be available on any operations for this resource.
