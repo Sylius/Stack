@@ -201,7 +201,7 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid) {
     $grid->addGrid(GridBuilder::create('app_tournament', Tournament::class)
-        ->addFilter(
+        ->withFilters(
             Filter::create('stats', 'suppliers_statistics')
                 ->setFormOptions(['range' => [0, 100]])
         )
@@ -233,7 +233,7 @@ final class TournamentGrid extends AbstractGrid
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addFilter(
+            ->withFilters(
                 Filter::create('stats', 'suppliers_statistics')
                     ->setFormOptions(['range' => [0, 100]])
             )

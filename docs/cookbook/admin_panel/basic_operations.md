@@ -38,12 +38,10 @@ final class BookGrid extends AbstractGrid implements ResourceAwareGridInterface
     {
         $gridBuilder
             // see https://github.com/Sylius/SyliusGridBundle/blob/master/docs/field_types.md
-            ->addField(
+            ->withFields(
                 StringField::create('title')
                     ->setLabel('Title')
                     ->setSortable(true),
-            )
-            ->addField(
                 StringField::create('author')
                     ->setLabel('Author')
                     ->setSortable(true),
