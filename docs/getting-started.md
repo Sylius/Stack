@@ -14,7 +14,7 @@ You can set up the Sylius Stack on existing Symfony projects, but in the case yo
 composer create-project symfony/skeleton my_project
 
 # Or with Symfony CLI:
-symfony new --docker --php 8.4 my_project
+symfony new --docker --php 8.5 my_project
 ````
 
 ### Install the package using Composer and Symfony Flex
@@ -30,6 +30,21 @@ composer require -W \
   sylius/bootstrap-admin-ui \
   sylius/ui-translations
 ```
+
+> The Sylius Stack now supports Symfony 8 ! As some packages remain in alpha, if you are starting a Symfony 8 project, 
+> run the following command instead to ensure all dependencies are resolved correctly:
+> 
+> ```bash
+> composer require -W \
+> doctrine/orm \
+> doctrine/doctrine-bundle \
+> pagerfanta/doctrine-orm-adapter \
+> symfony/asset-mapper \
+> sylius/bootstrap-admin-ui \
+> sylius/ui-translations \
+> sylius/resource-bundle "^1.14@alpha" \
+> sylius/grid-bundle "^1.15@alpha"
+> ```
 
 <div data-full-width="false">
 
