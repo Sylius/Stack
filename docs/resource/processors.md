@@ -5,8 +5,8 @@ Processors process data: send an email, persist to storage, add to queue etc.
 <!-- TOC -->
 * [Default processors](#default-processors)
 * [Custom processors](#custom-processors)
-  * [Example #1: Sending an email after persisting data](#example-1-sending-an-email-after-persisting-data)
-  * [Example #2: Use a custom delete processor](#example-2-use-a-custom-delete-processor)
+    * [Example #1: Sending an email after persisting data](#example-1-sending-an-email-after-persisting-data)
+    * [Example #2: Use a custom delete processor](#example-2-use-a-custom-delete-processor)
 * [Disable processing data](#disable-processing-data)
 <!-- TOC -->
 
@@ -33,10 +33,17 @@ As an example, send an email after customer registration
 
 {% code title="src/Sylius/State/Processor/CreateCustomerProcessor.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 namespace App\Sylius\State\Processor;
 
+// ...
+use Sylius\Resource\Context\Context;
 use Sylius\Component\Customer\Model\CustomerInterface;
 use Sylius\Resource\Doctrine\Common\State\PersistProcessor;
+use Sylius\Resource\Metadata\Operation;
 use Sylius\Resource\State\ProcessorInterface;
 
 final class CreateCustomerProcessor implements ProcessorInterface
