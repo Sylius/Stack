@@ -10,6 +10,7 @@ In this example, we'll create a CSV export.
 
 First, create the responder using the [https://github.com/portphp/csv](portphp/csv) package.
 
+{% code title="src/Responder/ExportGridToCsvResponder.php" lineNumbers="true" %}
 ```php
 <?php
 
@@ -132,6 +133,7 @@ final readonly class ExportGridToCsvResponder implements ResponderInterface
     }
 }
 ```
+{% endcode %}
 
 ## Configure a new operation
 
@@ -189,7 +191,7 @@ use Sylius\Component\Grid\Attribute\AsGrid;
 final class BookGrid extends AbstractGrid
 {
     #[\Override]
-    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
             // ...
@@ -230,7 +232,7 @@ You can configure the template for the export action
 
 ## Configure the translation key
 
-In the export action Twig template, we have introduced the `app.ui.translation` translation key.
+In the export action Twig template, we have introduced the `app.ui.export` translation key.
 So we need to configure its translation.
 
 {% code title="translations/messages.en.yaml" lineNumbers="true" %}
@@ -242,9 +244,9 @@ app:
 ```
 {% endcode %}
 
-## Configure the export action template in the grid bundle globally
+## Global config template for export actions 
 
-If you do not want to repeat the `setTemplate` option in your grid configurations, you can configure it globally in the Grid bundle.
+To avoid repeating the  `setTemplate` option across grid configurations, define it globally in the Grid Bundle config.
 
 {% code title="config/packages/sylius_grid.yaml" lineNumbers="true" %}
 ```yaml
@@ -253,3 +255,4 @@ sylius_grid:
         action:
             export: 'shared/grid/action/export.html.twig'
 ```
+{% endcode %}
