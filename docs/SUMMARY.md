@@ -14,6 +14,7 @@
   * [Customizing the page titles](cookbook/admin_panel/page_titles.md)
   * [Customizing the metatags](cookbook/admin_panel/metatags.md)
   * [Using autocompletes](cookbook/admin_panel/using-autocompletes.md)
+  * [Exporting grid data](cookbook/admin_panel/grid_export.md)
 * [How to use in a DDD architecture](cookbook/ddd_architecture.md)
   * [Architecture overview](cookbook/ddd_architecture/overview.md)
   * [Resource configuration](cookbook/ddd_architecture/resource_configuration.md)

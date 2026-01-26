@@ -14,6 +14,7 @@ app:
         configuration: Configuration
         edit_conference: Modifier la conférence
         ends_at: Termine à
+        export: Export
         first_name: Prénom
         last_name: Nom de famille
         library: Bibliothèque

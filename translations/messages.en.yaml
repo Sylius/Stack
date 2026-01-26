@@ -14,6 +14,7 @@ app:
         configuration: Configuration
         edit_conference: Edit conference
         ends_at: Ends at
+        export: Export
         first_name: First name
         last_name: Last name
         library: Library

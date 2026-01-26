@@ -1,0 +1,11 @@
+{% set path = options.link.url|default(path(options.link.route|default(grid.requestConfiguration.getRouteName('export')), options.link.parameters|default([]))) %}
+
+{% set message = action.label %}
+{% if message is empty %}
+    {% set message = 'app.ui.export' %}
+{% endif %}
+
+<a href="{{ path }}?{{ app.request.query.all()|url_encode }}" class="btn">
+    {{ ux_icon(action.icon|default('iwwa:csv'), {class: 'icon dropdown-item-icon'}) }}
+    {{ message|trans }}
+</a>
