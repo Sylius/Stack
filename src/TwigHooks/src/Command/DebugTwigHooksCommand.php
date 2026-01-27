@@ -27,6 +27,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\VarExporter\VarExporter;
 
 #[AsCommand(name: 'sylius:debug:twig-hooks', description: 'Display hooks and their hookables')]
 final class DebugTwigHooksCommand extends Command
@@ -144,7 +145,7 @@ EOF
             $hookables = $this->hookablesRegistry->getAllFor($hookName);
             $enabledCount = \count(array_filter(
                 $hookables,
-                static fn (AbstractHookable $h): bool => !$h instanceof DisabledHookable,
+                static fn (AbstractHookable $hookable): bool => !$hookable instanceof DisabledHookable,
             ));
             $disabledCount = \count($hookables) - $enabledCount;
 
@@ -170,7 +171,7 @@ EOF
         if (!$showAll) {
             $hookables = array_filter(
                 $hookables,
-                static fn (AbstractHookable $h): bool => !$h instanceof DisabledHookable,
+                static fn (AbstractHookable $hookable): bool => !$hookable instanceof DisabledHookable,
             );
         }
 
@@ -230,23 +231,7 @@ EOF
 
     private function formatValue(mixed $value): string
     {
-        if (\is_array($value)) {
-            if (!array_is_list($value)) {
-                return '{...}';
-            }
-
-            return '[' . implode(', ', array_map($this->formatValue(...), $value)) . ']';
-        }
-
-        if (\is_bool($value)) {
-            return $value ? 'true' : 'false';
-        }
-
-        if (null === $value) {
-            return 'null';
-        }
-
-        return (string) $value;
+        return VarExporter::export($value);
     }
 
     private function getHookableType(AbstractHookable $hookable): string
