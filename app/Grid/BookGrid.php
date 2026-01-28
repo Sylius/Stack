@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace App\Grid;
 
 use App\Entity\Book;
+use Sylius\Bundle\GridBundle\Builder\Action\Action;
 use Sylius\Bundle\GridBundle\Builder\Action\CreateAction;
 use Sylius\Bundle\GridBundle\Builder\Action\DeleteAction;
 use Sylius\Bundle\GridBundle\Builder\Action\ShowAction;
@@ -55,6 +56,12 @@ final class BookGrid extends AbstractGrid implements ResourceAwareGridInterface
             ->addActionGroup(
                 MainActionGroup::create(
                     CreateAction::create(),
+                    Action::create(name: 'export', type: 'export')
+                        ->setOptions([
+                            'link' => [
+                                'route' => 'app_admin_book_export',
+                            ],
+                        ]),
                 ),
             )
             ->addActionGroup(

@@ -15,6 +15,7 @@ namespace App\Entity;
 
 use App\Grid\BookGrid;
 use App\Repository\BookRepository;
+use App\Responder\ExportGridToCsvResponder;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Resource\Annotation\SyliusCrudRoutes;
 use Sylius\Component\Resource\Model\ResourceInterface;
@@ -39,6 +40,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
         new Index(
             template: '@SyliusAdminUi/crud/index.html.twig',
             shortName: 'withoutGrid',
+        ),
+        new Index(
+            shortName: 'export',
+            responder: ExportGridToCsvResponder::class,
+            grid: BookGrid::class,
         ),
         new Delete(),
         new BulkDelete(),

@@ -1,4 +1,6 @@
 sylius_grid:
     templates:
+        action:
+            export: 'shared/grid/action/export.html.twig'
         filter:
             'App\Grid\Filter\SpeakerFilter': '@SyliusBootstrapAdminUi/shared/grid/filter/entity.html.twig'
