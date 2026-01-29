@@ -33,7 +33,7 @@ final class UserGrid extends AbstractGrid
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addField(
+            ->withFields(
                 StringField::create('email')
                     ->setLabel('app.ui.email') // # each field type can have a label, we suggest using translation keys instead of messages
                     ->setPath('contactDetails.email')
@@ -71,7 +71,7 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid): void {
     $grid->addGrid(GridBuilder::create('app_user', '%app.model.user.class%')
-        ->addField(
+        ->withFields(
             StringField::create('email')
                 ->setLabel('app.ui.email') // # each field type can have a label, we suggest using translation keys instead of messages
                 ->setPath('contactDetails.email')
@@ -119,7 +119,7 @@ final class UserGrid extends AbstractGrid
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addField(
+            ->withFields(
                 DateTimeField::create('birthday', 'Y:m:d H:i:s', null) // this format and timezone are the default value, but you can modify them
                     ->setLabel('app.ui.birthday')
             )
@@ -158,7 +158,7 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid): void {
     $grid->addGrid(GridBuilder::create('app_user', '%app.model.user.class%')
-        ->addField(
+        ->withFields(
             DateTimeField::create('birthday', 'Y:m:d H:i:s', null) // this format and timezone are the default value, but you can modify them
                 ->setLabel('app.ui.birthday')
         )
@@ -211,7 +211,7 @@ final class UserGrid extends AbstractGrid
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addField(
+            ->withFields(
                 TwigField::create('name', ':Grid/Column:_prettyName.html.twig')
                     ->setLabel('app.ui.name')
             )
@@ -249,7 +249,7 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid): void {
     $grid->addGrid(GridBuilder::create('app_user', '%app.model.user.class%')
-        ->addField(
+        ->withFields(
             TwigField::create('name', '@Grid/Column/_prettyName.html.twig')
                 ->setLabel('app.ui.name')
         )
@@ -297,7 +297,7 @@ final class UserGrid extends AbstractGrid
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addField(
+            ->withFields(
                 TwigField::create('name', ':Grid/Column:_prettyName.html.twig')
                     ->setLabel('app.ui.name')
                     ->setPath('.') // sets the field path to the root object
@@ -335,7 +335,7 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid): void {
     $grid->addGrid(GridBuilder::create('app_user', '%app.model.user.class%')
-        ->addField(
+        ->withFields(
             TwigField::create('name', '@Grid/Column/_prettyName.html.twig')
                 ->setLabel('app.ui.name')
                 ->setPath('.') // sets the field path to the root object

@@ -47,16 +47,20 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid): void {
     $grid->addGrid(GridBuilder::create('app_user', '%app.model.user.class%')
-        ->addFilter(Filter::create('username', 'string'))
-        ->addFilter(Filter::create('email', 'string'))
-        ->addFilter(Filter::create('firstName', 'string'))
-        ->addFilter(Filter::create('lastName', 'string'))
+        ->withFilters(
+            Filter::create('username', 'string'),
+            Filter::create('email', 'string'),
+            Filter::create('firstName', 'string'),
+            Filter::create('lastName', 'string'),
+        )
     
         // can be simplified using StringFilter
-        ->addFilter(StringFilter::create('username'))
-        ->addFilter(StringFilter::create('email'))
-        ->addFilter(StringFilter::create('firstName'))
-        ->addFilter(StringFilter::create('lastName'))
+        ->withFilters(
+            StringFilter::create('username'),
+            StringFilter::create('email'),
+            StringFilter::create('firstName'),
+            StringFilter::create('lastName'),
+        )
     )
 };
 ```
@@ -89,16 +93,20 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addFilter(Filter::create('username', 'string'))
-            ->addFilter(Filter::create('email', 'string'))
-            ->addFilter(Filter::create('firstName', 'string'))
-            ->addFilter(Filter::create('lastName', 'string'))
+            ->withFilters(
+                Filter::create('username', 'string'),
+                Filter::create('email', 'string'),
+                Filter::create('firstName', 'string'),
+                Filter::create('lastName', 'string'),
+            )
             
             // can be simplified using StringFilter
-            ->addFilter(StringFilter::create('username'))
-            ->addFilter(StringFilter::create('email'))
-            ->addFilter(StringFilter::create('firstName'))
-            ->addFilter(StringFilter::create('lastName'))
+            ->withFilters(
+                StringFilter::create('username'),
+                StringFilter::create('email'),
+                StringFilter::create('firstName'),
+                StringFilter::create('lastName'),
+            )
         ;    
     }
     
@@ -144,13 +152,13 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid): void {
     $grid->addGrid(GridBuilder::create('app_user', '%app.model.user.class%')
-        ->addFilter(
+        ->withFilters(
             Filter::create('username', 'string')
                 ->setOptions(['fields' => ['username', 'email', 'firstName', 'lastName']])
         )
     
         // can be simplified using StringFilter
-        ->addFilter(
+        ->withFilters(
             StringFilter::create('username', ['username', 'email', 'firstName', 'lastName'])
         )
     )
@@ -185,13 +193,13 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addFilter(
+            ->withFilters(
                 Filter::create('username', 'string')
                     ->setOptions(['fields' => ['username', 'email', 'firstName', 'lastName']])
             )
             
             // can be simplified using StringFilter
-            ->addFilter(
+            ->withFilters(
                 StringFilter::create('username', ['username', 'email', 'firstName', 'lastName'])
             )
         ;    
@@ -257,7 +265,7 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid): void {
     $grid->addGrid(GridBuilder::create('app_user', '%app.model.user.class%')
-        ->addFilter(
+        ->withFilters(
             Filter::create('username', 'string')
                 ->setFormOptions([
                     'type' => 'contains',
@@ -265,7 +273,7 @@ return static function (GridConfig $grid): void {
         )
         
         // can be simplified using StringFilter
-        ->addFilter(
+        ->withFilters(
             StringFilter::create('username', null, 'contains')
         )
     )
@@ -300,7 +308,7 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addFilter(
+            ->withFilters(
                 Filter::create('username', 'string')
                     ->setFormOptions([
                         'type' => 'contains',
@@ -308,7 +316,7 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
             )
             
             // can be simplified using StringFilter
-            ->addFilter(
+            ->withFilters(
                 StringFilter::create('username', null, 'contains')
             )
         ;    
@@ -360,12 +368,12 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid): void {
     $grid->addGrid(GridBuilder::create('app_user', '%app.model.user.class%')
-        ->addFilter(
+        ->withFilters(
             Filter::create('enabled', 'boolean')
         )
         
         // can be simplified using BooleanFilter
-        ->addFilter(
+        ->withFilters(
             BooleanFilter::create('enabled')
         )
     )
@@ -400,12 +408,12 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addFilter(
+            ->withFilters(
                 Filter::create('enabled', 'boolean')
             )
             
             // can be simplified using BooleanFilter
-            ->addFilter(
+            ->withFilters(
                 BooleanFilter::create('enabled')
             )
         ;    
@@ -456,12 +464,16 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid): void {
     $grid->addGrid(GridBuilder::create('app_user', '%app.model.user.class%')
-        ->addFilter(Filter::create('createdAt', 'date'))
-        ->addFilter(Filter::create('completedAt', 'date'))
+        ->withFilters(
+            Filter::create('createdAt', 'date'),
+            Filter::create('completedAt', 'date'),
+        )
         
         // can be simplified using DateFilter
-        ->addFilter(DateFilter::create('createdAt'))
-        ->addFilter(DateFilter::create('completedAt'))
+        ->withFilters(
+            DateFilter::create('createdAt'),
+            DateFilter::create('completedAt'),
+        )
     )
 };
 ```
@@ -494,12 +506,16 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addFilter(Filter::create('createdAt', 'date'))
-            ->addFilter(Filter::create('completedAt', 'date'))
+            ->withFilters(
+                Filter::create('createdAt', 'date'),
+                Filter::create('completedAt', 'date'),
+            )
             
             // can be simplified using DateFilter
-            ->addFilter(DateFilter::create('createdAt'))
-            ->addFilter(DateFilter::create('completedAt'))
+            ->withFilters(
+                DateFilter::create('createdAt'),
+                DateFilter::create('completedAt'),
+            )
         ;    
     }
     
@@ -555,27 +571,23 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid): void {
     $grid->addGrid(GridBuilder::create('app_user', '%app.model.user.class%')
-        ->addFilter(
+        ->withFilters(
             Filter::create('channel', 'entity')
                 ->setFormOptions([
                     'class' => '%app.model.channel.class%'
                     // You can pass any form options available in Entity Type
                     // See https://symfony.com/doc/current/reference/forms/types/entity.html
                     'multiple' => true,
-                ])
-        )
-        ->addFilter(
+                ]),
             Filter::create('customer', 'entity')
-                ->setFormOptions(['class' => '%app.model.customer.class%'])
+                ->setFormOptions(['class' => '%app.model.customer.class%']),    
         )
         
         // can be simplified using EntityFilter
-        ->addFilter(
+        ->withFilters(
             EntityFilter::create('channel', '%app.model.channel.class%')
-                ->addFormOption('multiple', true)
-        )
-        ->addFilter(
-            EntityFilter::create('customer', '%app.model.customer.class%')
+                ->addFormOption('multiple', true),
+            EntityFilter::create('customer', '%app.model.customer.class%'),
         )
     )
 };
@@ -609,21 +621,17 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addFilter(
+            ->withFilters(
                 Filter::create('channel', 'entity')
-                    ->setFormOptions(['class' => '%app.model.channel.class%'])
-            )
-            ->addFilter(
+                    ->setFormOptions(['class' => '%app.model.channel.class%']),
                 Filter::create('customer', 'entity')
-                    ->setFormOptions(['class' => '%app.model.customer.class%'])
+                    ->setFormOptions(['class' => '%app.model.customer.class%']),
             )
             
             // can be simplified using EntityFilter
-            ->addFilter(
-                EntityFilter::create('channel', '%app.model.channel.class%')
-            )
-            ->addFilter(
-                EntityFilter::create('customer', '%app.model.customer.class%')
+            ->withFilters(
+                EntityFilter::create('channel', '%app.model.channel.class%'),
+                EntityFilter::create('customer', '%app.model.customer.class%'),
             )
         ;    
     }
@@ -676,7 +684,7 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid): void {
     $grid->addGrid(GridBuilder::create('app_user', '%app.model.user.class%')
-        ->addFilter(
+        ->withFilters(
             Filter::create('total', 'money')
                 ->setFormOptions(['scale' => 3])
                 ->setOptions([
@@ -686,7 +694,7 @@ return static function (GridConfig $grid): void {
         )
         
         // can be simplified using MoneyFilter
-        ->addFilter(
+        ->withFilters(
             MoneyFilter::create('total', 'currencyCode', 3)
         )
     )
@@ -721,7 +729,7 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addFilter(
+            ->withFilters(
                 Filter::create('total', 'money')
                     ->setFormOptions(['scale' => 3])
                     ->setOptions([
@@ -731,7 +739,7 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
             )
             
             // can be simplified using MoneyFilter
-            ->addFilter(
+            ->withFilters(
                 MoneyFilter::create('total', 'currencyCode', 3)
             )
         ;    
@@ -787,13 +795,13 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid): void {
     $grid->addGrid(GridBuilder::create('app_user', '%app.model.user.class%')
-        ->addFilter(
+        ->withFilters(
             Filter::create('date', 'exists')
                 ->setOptions(['field' => 'completedAt'])
         )
         
         // can be simplified using ExistsFilter
-        ->addFilter(
+        ->withFilters(
             ExistsFilter::create('date', 'completedAt')
         )
     )
@@ -828,13 +836,13 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addFilter(
+            ->withFilters(
                 Filter::create('date', 'exists')
                     ->setOptions(['field' => 'completedAt'])
             )
             
             // can be simplified using ExistsFilter
-            ->addFilter(
+            ->withFilters(
                 ExistsFilter::create('date', 'completedAt')
             )
         ;    
@@ -887,7 +895,7 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid): void {
     $grid->addGrid(GridBuilder::create('app_user', '%app.model.user.class%')
-        ->addFilter(
+        ->withFilters(
             Filter::create('state', 'select')
                 ->setFormOptions([
                     'choices' => [
@@ -898,7 +906,7 @@ return static function (GridConfig $grid): void {
         )
         
         // can be simplified using SelectFilter
-        ->addFilter(
+        ->withFilters(
             SelectFilter::create('state', [
                 'sylius.ui.ready' => 'Ready',
                 'sylius.ui.shipped' => 'Shipped',
@@ -936,7 +944,7 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addFilter(
+            ->withFilters(
                 Filter::create('state', 'select')
                     ->setFormOptions([
                         'choices' => [
@@ -947,7 +955,7 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
             )
             
             // can be simplified using SelectFilter
-            ->addFilter(
+            ->withFilters(
                 SelectFilter::create('state', [
                     'sylius.ui.ready' => 'Ready',
                     'sylius.ui.shipped' => 'Shipped',

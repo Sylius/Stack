@@ -67,15 +67,14 @@ final class AdminSupplierGrid extends AbstractGrid
 
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
-         $gridBuilder->addField(
+         $gridBuilder
+            ->withFields(
                 StringField::create('name')
-                    ->setLabel('app.ui.name')
-            )
-            ->addField(
+                    ->setLabel('app.ui.name'),
                 TwigField::create('enabled', '@SyliusBootstrapAdminUi/shared/grid/field/boolean.html.twig')
-                    ->setLabel('app.ui.enabled')
+                    ->setLabel('app.ui.enabled'),
             )
-        ;
+         ;
     }
 }
 ```
@@ -95,13 +94,11 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid) {
     $grid->addGrid(GridBuilder::create('app_admin_supplier', Supplier::class)
-        ->addField(
+        ->withFields(
             StringField::create('name')
-                ->setLabel('app.ui.name')
-        )
-        ->addField(
+                ->setLabel('app.ui.name'),
             TwigField::create('enabled', '@SyliusBootstrapAdminUi/shared/grid/field/boolean.html.twig')
-                ->setLabel('app.ui.enabled')
+                ->setLabel('app.ui.enabled'),    
         )
     )
 };
@@ -218,13 +215,11 @@ final class AdminSupplierGrid extends AbstractGrid
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addFilter(
+            ->withFilters(
                 StringFilter::create('name')
-                    ->setLabel('Name')
-            )
-            ->addFilter(
+                    ->setLabel('Name'),
                 BooleanFilter::create('enabled')   
-                    ->setLabel('Enabled')
+                    ->setLabel('Enabled'),
             )
         ;
     }
@@ -246,13 +241,11 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid) {
     $grid->addGrid(GridBuilder::create('app_admin_supplier', Supplier::class)
-        ->addFilter(
+        ->withFilters(
             StringFilter::create('name')
-                ->setLabel('Name')
-        )
-        ->addFilter(
+                ->setLabel('Name'),
             BooleanFilter::create('enabled')
-               ->setLabel('Enabled')
+               ->setLabel('Enabled'),    
         )
     )
 };
@@ -504,7 +497,7 @@ final class AdminSupplierGrid extends AbstractGrid
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addFilter(
+            ->withFilters(
                 StringFilter::create('country', ['address.country'], 'contains')
                     ->setLabel('origin')
             )
@@ -529,7 +522,7 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid) {
     $grid->addGrid(GridBuilder::create('app_admin_supplier', Supplier::class)
-        ->addFilter(
+        ->withFilters(
             StringFilter::create('country', ['address.country'], 'contains')
                 ->setLabel('origin')
         )
@@ -657,7 +650,7 @@ final class AdminSupplierGrid extends AbstractGrid
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addField(
+            ->withFields(
                 StringField::create('name')
                     ->setLabel('sylius.ui.name')
                     ->setSortable(true)
@@ -682,7 +675,7 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid) {
     $grid->addGrid(GridBuilder::create('app_admin_supplier', Supplier::class)
-        ->addField(
+        ->withFields(
             StringField::create('name')
                 ->setLabel('sylius.ui.name')
                 ->setSortable(true)
@@ -738,7 +731,7 @@ final class AdminSupplierGrid extends AbstractGrid
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addField(
+            ->withFields(
                 TwigField::create('name', '@App/Grid/Fields/my_country_flags.html.twig')
                     ->setPath('address.country')
                     ->setLabel('app.ui.country')
@@ -763,7 +756,7 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid) {
     $grid->addGrid(GridBuilder::create('app_admin_supplier', Supplier::class)
-        ->addField(
+        ->withFields(
             TwigField::create('name', '@App/Grid/Fields/myCountryFlags.html.twig')
                 ->setPath('address.country')
                 ->setLabel('app.ui.country')

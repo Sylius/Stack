@@ -43,29 +43,21 @@ final class TalkGrid extends AbstractGrid
     {
         $gridBuilder
             // see https://github.com/Sylius/SyliusGridBundle/blob/master/docs/field_types.md
-            ->addField(
+            ->withFields(
                 StringField::create('title')
                     ->setLabel('Title')
-                    ->setSortable(true)
-            )
-            ->addField(
+                    ->setSortable(true),
                 StringField::create('description')
                     ->setLabel('Description')
-                    ->setSortable(true)
-            )
-            ->addField(
+                    ->setSortable(true),
                 DateTimeField::create('startsAt')
-                    ->setLabel('StartsAt')
-            )
-            ->addField(
+                    ->setLabel('StartsAt'),
                 DateTimeField::create('endsAt')
-                    ->setLabel('EndsAt')
-            )
-            ->addField(
+                    ->setLabel('EndsAt'),
                 StringField::create('track')
                     ->setLabel('Track')
                     ->setPath('track.value')
-                    ->setSortable(true)
+                    ->setSortable(true),    
             )
             ->addActionGroup(
                 MainActionGroup::create(
@@ -125,14 +117,12 @@ final class TalkGrid extends AbstractGrid
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addField(
+            ->withFields(
                 StringField::create('title')
                     ->setLabel('Title')
-                    ->setSortable(true)
-            )
-            ->addField(
+                    ->setSortable(true),
                 DateTimeField::create('startsAt')
-                    ->setLabel('StartsAt')
+                    ->setLabel('StartsAt'),
             )
             ->addActionGroup(
                 MainActionGroup::create(
@@ -189,7 +179,7 @@ final class TalkGrid extends AbstractGrid
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addField(
+            ->withFields(
                 TwigField::create('avatar', 'talk/grid/field/speaker_avatar.html.twig')
                     ->setPath('.')
                     ->setLabel('app.ui.avatar'),
@@ -317,7 +307,7 @@ final class TalkGrid extends AbstractGrid
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addFilter(
+            ->withFilters(
                 Filter::create(name: 'speaker', type: SpeakerFilter::class)
                     ->setLabel('app.ui.speaker')
                     ->setOptions(['fields' => ['speaker.id']])

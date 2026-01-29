@@ -225,10 +225,8 @@ final class BookGrid extends AbstractGrid implements ResourceAwareGridInterface
     {
         $gridBuilder
             ->setProvider(BookGridProvider::class) // The Grid provider we have just created
-            ->addField(
-                StringField::create('name')
-            )
-            ->addField(
+            ->withFields(
+                StringField::create('name'),
                 StringField::create('author'),
             )
             ->addActionGroup(

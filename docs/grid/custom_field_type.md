@@ -89,7 +89,7 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid) {
     $grid->addGrid(GridBuilder::create('app_admin_supplier', Supplier::class)
-        ->addField(
+        ->withFields(
             Field::create('name', 'custom')
                 ->setLabel('sylius.ui.name')
         )
@@ -124,7 +124,7 @@ final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridI
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addField(
+            ->withFields(
                 Field::create('name', 'custom')
                     ->setLabel('sylius.ui.name')
             )
