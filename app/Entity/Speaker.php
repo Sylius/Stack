@@ -16,6 +16,7 @@ namespace App\Entity;
 use App\Form\SpeakerType;
 use App\Grid\SpeakerGrid;
 use App\Repository\SpeakerRepository;
+use App\State\Responder\RedirectToSpeakerTalksResponder;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -38,6 +39,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
         new Create(),
         new Update(),
         new Index(grid: SpeakerGrid::class),
+        new Index(
+            shortName: 'redirect_to_speaker_talks',
+            responder: RedirectToSpeakerTalksResponder::class,
+            repositoryMethod: 'findById',
+        ),
         new Delete(),
         new BulkDelete(),
     ],
