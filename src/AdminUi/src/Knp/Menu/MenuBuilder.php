@@ -15,15 +15,28 @@ namespace Sylius\AdminUi\Knp\Menu;
 
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
+use Sylius\AdminUi\Knp\Menu\Event\MenuBuilderEvent;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class MenuBuilder implements MenuBuilderInterface
 {
-    public function __construct(private readonly FactoryInterface $factory)
-    {
+    public const EVENT_NAME = 'sylius_admin_ui.menu.event.main';
+
+    public function __construct(
+        private readonly FactoryInterface $factory,
+        private readonly EventDispatcherInterface $eventDispatcher,
+    ) {
     }
 
     public function createMenu(array $options): ItemInterface
     {
-        return $this->factory->createItem('root');
+        $root = $this->factory->createItem('root');
+
+        $this->eventDispatcher->dispatch(
+            new MenuBuilderEvent($this->factory, $root),
+            self::EVENT_NAME,
+        );
+
+        return $root;
     }
 }
