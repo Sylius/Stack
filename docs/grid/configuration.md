@@ -173,7 +173,7 @@ return static function (GridConfig $grid): void {
         ->setRepositoryMethod('myCustomMethod', ['id' => 'resource.id'])
         ->orderBy('name', 'asc')
         ->setLimits([10, 25, 50, 100])
-        ->addField(
+        ->withFields(
             Field::create('name', 'twig') // Name & Type of field
                 ->setLabel('Name') // # Label
                 ->setPath('.') // dot means a whole object
@@ -184,7 +184,7 @@ return static function (GridConfig $grid): void {
                 ])
                 ->setEnabled(true)
         )
-        ->addFilter(
+        ->withFilters(
             Filter::create('name', 'string') // Name & Type of filter
                 ->setLabel('app.ui.name')
                 ->setEnabled(true)
