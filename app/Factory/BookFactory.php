@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace App\Factory;
 
 use App\Entity\Book;
+use App\Enum\BookCategory;
 use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
@@ -36,11 +37,17 @@ final class BookFactory extends PersistentObjectFactory
         return $this->with(['authorName' => $authorName]);
     }
 
+    public function withCategory(BookCategory $category): self
+    {
+        return $this->with(['category' => $category]);
+    }
+
     protected function defaults(): array|callable
     {
         return [
             'title' => ucfirst(self::faker()->words(3, true)),
             'authorName' => self::faker()->firstName() . ' ' . self::faker()->lastName(),
+            'category' => self::faker()->randomElement(BookCategory::cases()),
         ];
     }
 }

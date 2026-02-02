@@ -4,8 +4,8 @@
     <div class="container-xl">
         <div class="card mb-3">
             <div class="card-body" {{ sylius_test_html_attribute('author-name') }}>
-                <strong>{{ 'app.ui.author'|trans }}:</strong>
-                {{ book.authorName }}
+                <p><strong>{{ 'app.ui.author'|trans }}:</strong> {{ book.authorName }}</p>
+                <p><strong>{{ 'app.ui.category'|trans }}:</strong>{{ book.category.value }}</p>
             </div>
         </div>
     </div>

@@ -8,6 +8,7 @@ app:
         book: Book
         books: Books
         browsing_speakers: Browsing speakers
+        category: Category
         company_name: Company name
         conference: Conference
         conferences: Conferences

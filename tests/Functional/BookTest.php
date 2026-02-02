@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MainTests\Sylius\Functional;
 
 use App\Entity\Book;
+use App\Enum\BookCategory;
 use App\Factory\BookFactory;
 use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -59,12 +60,14 @@ final class BookTest extends WebTestCase
         BookFactory::new()
             ->withTitle('The Shining')
             ->withAuthorName('Stephen King')
+            ->withCategory(BookCategory::HORROR)
             ->create()
         ;
 
         BookFactory::new()
             ->withTitle('Carrie')
             ->withAuthorName('Stephen King')
+            ->withCategory(BookCategory::HORROR)
             ->create()
         ;
 
@@ -82,17 +85,20 @@ final class BookTest extends WebTestCase
         // Validate Table header
         self::assertSelectorTextContains('.sylius-table-column-title', 'Title');
         self::assertSelectorTextContains('.sylius-table-column-authorName', 'Author name');
+        self::assertSelectorTextContains('.sylius-table-column-category', 'Category');
         self::assertSelectorTextContains('.sylius-table-column-actions', 'Actions');
 
         // Validate Table data
         self::assertSelectorTextContains('tr.item:first-child', 'Carrie');
         self::assertSelectorTextContains('tr.item:first-child', 'Stephen King');
+        self::assertSelectorTextContains('tr.item:first-child', 'horror');
         self::assertSelectorExists('tr.item:first-child [data-bs-title=Show]');
         self::assertSelectorExists('tr.item:first-child [data-bs-title=Edit]');
         self::assertSelectorExists('tr.item:first-child [data-bs-title=Delete]');
 
         self::assertSelectorTextContains('tr.item:last-child', 'The Shining');
         self::assertSelectorTextContains('tr.item:last-child', 'Stephen King');
+        self::assertSelectorTextContains('tr.item:last-child', 'horror');
         self::assertSelectorExists('tr.item:last-child [data-bs-title=Show]');
         self::assertSelectorExists('tr.item:last-child [data-bs-title=Edit]');
         self::assertSelectorExists('tr.item:last-child [data-bs-title=Delete]');

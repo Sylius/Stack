@@ -32,6 +32,7 @@ return static function (ContainerConfigurator $container): void {
                 'exists' => '@SyliusBootstrapAdminUi/shared/grid/filter/exists.html.twig',
                 'select' => '@SyliusBootstrapAdminUi/shared/grid/filter/select.html.twig',
                 'string' => '@SyliusBootstrapAdminUi/shared/grid/filter/string.html.twig',
+                'enum' => '@SyliusBootstrapAdminUi/shared/grid/filter/enum.html.twig',
             ],
         ],
     ]);
