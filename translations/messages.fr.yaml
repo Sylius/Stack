@@ -8,6 +8,7 @@ app:
         book: Livre
         books: Livres
         browsing_speakers: Parcourir les Conférencier-e-s
+        category: Catégorie
         company_name: Société
         conference: Conférence
         conferences: Conférences
