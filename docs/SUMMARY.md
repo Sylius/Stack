@@ -3,7 +3,7 @@
 * [Sylius Stack Documentation](README.md)
 * [Getting started](getting-started.md)
 
-## Cookbook
+## 📖 Cookbook
 
 * [How to customize your admin panel](cookbook/admin_panel.md)
   * [Basic operations](cookbook/admin_panel/basic_operations.md)
@@ -21,15 +21,7 @@
   * [Basic operations](cookbook/ddd_architecture/basic_operations.md)
   * [Operation using a grid](cookbook/ddd_architecture/grid.md)
 
-## Admin UI
-
-* [Getting started](admin-ui/getting-started.md)
-
-## Bootstrap Admin UI
-
-* [Getting started](bootstrap-admin-ui/getting-started.md)
-
-## Resource
+## 📚 Resource
 
 * [Resource Bundle documentation](resource/index.md)
   * [Installation](resource/installation.md)
@@ -56,7 +48,7 @@
     * [Configuring a state machine](resource/legacy/state_machine.md)
     * [Configuration Reference](resource/legacy/reference.md)
 
-## Grid
+## ☰ Grid
 
 * [Grid Bundle documentation](grid/index.md)
   * [Installation](grid/installation.md)
@@ -70,6 +62,14 @@
   * [Creating a custom Filter](grid/custom_filter.md)
   * [Advanced configuration](grid/advanced_configuration.md)
   * [Configuration Reference](grid/configuration.md)
+
+## 📊 Admin UI
+
+* [Getting started](admin-ui/getting-started.md)
+
+## 🎨 Bootstrap Admin UI
+
+* [Getting started](bootstrap-admin-ui/getting-started.md)
 
 ## 🍀 Twig Extra
 
