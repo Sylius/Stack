@@ -14,6 +14,7 @@ Simplest filter type. It can filter by one or multiple fields.
 {% tabs %}
 {% tab title="PHP (recommended)" %}
 {% code title="src/Grid/UserGrid.php" lineNumbers="true" %}
+
 ```php
 <?php
 
@@ -26,16 +27,15 @@ use Sylius\Bundle\GridBundle\Builder\Filter\Filter;
 use Sylius\Bundle\GridBundle\Builder\Filter\StringFilter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
-use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
-final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
+#[AsGrid(
+    resourceClass: User::class,
+    name: 'app_user',
+)]
+final class UserGrid extends AbstractGrid
 {
-    public static function getName(): string
-    {
-           return 'app_user';
-    }
-
-    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
             ->withFilters(
@@ -53,11 +53,6 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
                 StringFilter::create('lastName'),
             )
         ;    
-    }
-    
-    public function getResourceClass(): string
-    {
-        return User::class;
     }
 }
 ```
@@ -122,6 +117,7 @@ return static function (GridConfig $grid): void {
 {% tabs %}
 {% tab title="PHP (recommended)" %}
 {% code title="src/Grid/UserGrid.php" lineNumbers="true" %}
+
 ```php
 <?php
 
@@ -134,16 +130,15 @@ use Sylius\Bundle\GridBundle\Builder\Filter\Filter;
 use Sylius\Bundle\GridBundle\Builder\Filter\StringFilter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
-use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
-final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
+#[AsGrid(
+    resourceClass: User::class,
+    name: 'app_user',
+)]
+final class UserGrid extends AbstractGrid
 {
-    public static function getName(): string
-    {
-           return 'app_user';
-    }
-
-    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
             ->withFilters(
@@ -156,11 +151,6 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
                 StringFilter::create('username', ['username', 'email', 'firstName', 'lastName'])
             )
         ;    
-    }
-    
-    public function getResourceClass(): string
-    {
-        return User::class;
     }
 }
 ```
@@ -233,6 +223,7 @@ You can achieve it like this:
 {% tabs %}
 {% tab title="PHP (recommended)" %}
 {% code title="src/Grid/UserGrid.php" lineNumbers="true" %}
+
 ```php
 <?php
 
@@ -245,16 +236,15 @@ use Sylius\Bundle\GridBundle\Builder\Filter\Filter;
 use Sylius\Bundle\GridBundle\Builder\Filter\StringFilter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
-use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
-final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
+#[AsGrid(
+    resourceClass: User::class,
+    name: 'app_user',
+)]
+final class UserGrid extends AbstractGrid
 {
-    public static function getName(): string
-    {
-           return 'app_user';
-    }
-
-    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
             ->withFilters(
@@ -269,11 +259,6 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
                 StringFilter::create('username', null, 'contains')
             )
         ;    
-    }
-    
-    public function getResourceClass(): string
-    {
-        return User::class;
     }
 }
 ```
@@ -333,6 +318,7 @@ you will create an input field that filters user objects based on whether their 
 {% tabs %}
 {% tab title="PHP (recommended)" %}
 {% code title="src/Grid/UserGrid.php" lineNumbers="true" %}
+
 ```php
 <?php
 
@@ -345,16 +331,15 @@ use Sylius\Bundle\GridBundle\Builder\Filter\Filter;
 use Sylius\Bundle\GridBundle\Builder\Filter\BooleanFilter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
-use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
-final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
+#[AsGrid(
+    resourceClass: User::class,
+    name: 'app_user',
+)]
+final class UserGrid extends AbstractGrid
 {
-    public static function getName(): string
-    {
-           return 'app_user';
-    }
-
-    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
             ->withFilters(
@@ -366,11 +351,6 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
                 BooleanFilter::create('enabled')
             )
         ;    
-    }
-    
-    public function getResourceClass(): string
-    {
-        return User::class;
     }
 }
 ```
@@ -426,6 +406,7 @@ This filter checks if a chosen datetime field is between given dates.
 {% tabs %}
 {% tab title="PHP (recommended)" %}
 {% code title="src/Grid/UserGrid.php" lineNumbers="true" %}
+
 ```php
 <?php
 
@@ -438,16 +419,15 @@ use Sylius\Bundle\GridBundle\Builder\Filter\DateFilter;
 use Sylius\Bundle\GridBundle\Builder\Filter\Filter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
-use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
-final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
+#[AsGrid(
+    resourceClass: User::class,
+    name: 'app_user',
+)]
+final class UserGrid extends AbstractGrid
 {
-    public static function getName(): string
-    {
-           return 'app_user';
-    }
-
-    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
             ->withFilters(
@@ -461,11 +441,6 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
                 DateFilter::create('completedAt'),
             )
         ;    
-    }
-    
-    public function getResourceClass(): string
-    {
-        return User::class;
     }
 }
 ```
@@ -523,6 +498,7 @@ This type filters by a chosen entity.
 {% tabs %}
 {% tab title="PHP (recommended)" %}
 {% code title="src/Grid/UserGrid.php" lineNumbers="true" %}
+
 ```php
 <?php
 
@@ -535,16 +511,15 @@ use Sylius\Bundle\GridBundle\Builder\Filter\EntityFilter;
 use Sylius\Bundle\GridBundle\Builder\Filter\Filter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
-use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
-final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
+#[AsGrid(
+    resourceClass: User::class,
+    name: 'app_user',
+)]
+final class UserGrid extends AbstractGrid
 {
-    public static function getName(): string
-    {
-           return 'app_user';
-    }
-
-    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
             ->withFilters(
@@ -560,11 +535,6 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
                 EntityFilter::create('customer', '%app.model.customer.class%'),
             )
         ;    
-    }
-    
-    public function getResourceClass(): string
-    {
-        return User::class;
     }
 }
 ```
@@ -637,6 +607,7 @@ This filter checks if an amount is within the specified range and is in the sele
 {% tabs %}
 {% tab title="PHP (recommended)" %}
 {% code title="src/Grid/UserGrid.php" lineNumbers="true" %}
+
 ```php
 <?php
 
@@ -649,16 +620,15 @@ use Sylius\Bundle\GridBundle\Builder\Filter\Filter;
 use Sylius\Bundle\GridBundle\Builder\Filter\MoneyFilter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
-use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
-final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
+#[AsGrid(
+    resourceClass: User::class,
+    name: 'app_user',
+)]
+final class UserGrid extends AbstractGrid
 {
-    public static function getName(): string
-    {
-           return 'app_user';
-    }
-
-    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
             ->withFilters(
@@ -675,11 +645,6 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
                 MoneyFilter::create('total', 'currencyCode', 3)
             )
         ;    
-    }
-    
-    public function getResourceClass(): string
-    {
-        return User::class;
     }
 }
 ```
@@ -748,6 +713,7 @@ This filter checks if the specified field contains any value
 {% tabs %}
 {% tab title="PHP (recommended)" %}
 {% code title="src/Grid/UserGrid.php" lineNumbers="true" %}
+
 ```php
 <?php
 
@@ -760,16 +726,15 @@ use Sylius\Bundle\GridBundle\Builder\Filter\ExistsFilter;
 use Sylius\Bundle\GridBundle\Builder\Filter\Filter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
-use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
-final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
+#[AsGrid(
+    resourceClass: User::class,
+    name: 'app_user',
+)]
+final class UserGrid extends AbstractGrid
 {
-    public static function getName(): string
-    {
-           return 'app_user';
-    }
-
-    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
             ->withFilters(
@@ -782,11 +747,6 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
                 ExistsFilter::create('date', 'completedAt')
             )
         ;    
-    }
-    
-    public function getResourceClass(): string
-    {
-        return User::class;
     }
 }
 ```
@@ -843,6 +803,7 @@ This type filters by a value chosen from the defined list
 {% tabs %}
 {% tab title="PHP (recommended)" %}
 {% code title="src/Grid/UserGrid.php" lineNumbers="true" %}
+
 ```php
 <?php
 
@@ -855,16 +816,15 @@ use Sylius\Bundle\GridBundle\Builder\Filter\Filter;
 use Sylius\Bundle\GridBundle\Builder\Filter\SelectFilter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
-use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
-final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
+#[AsGrid(
+    resourceClass: User::class,
+    name: 'app_user',
+)]
+final class UserGrid extends AbstractGrid
 {
-    public static function getName(): string
-    {
-           return 'app_user';
-    }
-
-    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
             ->withFilters(
@@ -885,11 +845,6 @@ final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
                 ])
             )
         ;    
-    }
-    
-    public function getResourceClass(): string
-    {
-        return User::class;
     }
 }
 ```
