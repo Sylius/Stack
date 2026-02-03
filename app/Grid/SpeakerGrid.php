@@ -26,38 +26,31 @@ use Sylius\Bundle\GridBundle\Builder\Field\TwigField;
 use Sylius\Bundle\GridBundle\Builder\Filter\StringFilter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
-use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
-final class SpeakerGrid extends AbstractGrid implements ResourceAwareGridInterface
+#[AsGrid(
+    resourceClass: Speaker::class,
+    name: 'app_speaker',
+)]
+final class SpeakerGrid extends AbstractGrid
 {
-    public static function getName(): string
-    {
-        return 'app_speaker';
-    }
-
-    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addFilter(
+            ->addOrderBy('firstName', 'asc')
+            ->withFilters(
                 StringFilter::create('search', ['firstName', 'lastName', 'companyName'])
                     ->setLabel('sylius.ui.search'),
             )
-            ->addOrderBy('firstName', 'asc')
-            ->addField(
+            ->withFields(
                 TwigField::create('avatar', 'speaker/grid/field/image.html.twig')
                     ->setPath('.'),
-            )
-            ->addField(
                 StringField::create('firstName')
                     ->setLabel('app.ui.first_name')
                     ->setSortable(true),
-            )
-            ->addField(
                 StringField::create('lastName')
                     ->setLabel('app.ui.last_name')
                     ->setSortable(true),
-            )
-            ->addField(
                 StringField::create('companyName')
                     ->setLabel('app.ui.company_name')
                     ->setSortable(true),
@@ -92,10 +85,5 @@ final class SpeakerGrid extends AbstractGrid implements ResourceAwareGridInterfa
                 ),
             )
         ;
-    }
-
-    public function getResourceClass(): string
-    {
-        return Speaker::class;
     }
 }

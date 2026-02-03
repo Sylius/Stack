@@ -1,5 +1,183 @@
 # Actions
 
+## Action groups
+
+<div data-full-width="false">
+
+<figure><img src="../.gitbook/assets/action-groups.png" alt="Action groups"></figure>
+
+</div>
+
+Actions are classified into four types:
+
+- main
+- item
+- subitem
+- bulk
+
+## Built-in actions
+
+The grid package provides the following built-in actions:
+
+| Name             | Usage      |
+|------------------|------------|
+| create           | main       |
+| update           | item, bulk |
+| delete           | item, bulk |
+| show             | item       |
+| apply_transition | item, bulk |
+
+### Create
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Grid;
+
+use App\Entity\Speaker;
+use Sylius\Bundle\GridBundle\Builder\Action\CreateAction;
+use Sylius\Bundle\GridBundle\Builder\ActionGroup\MainActionGroup;
+use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
+use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
+use Sylius\Component\Grid\Attribute\AsGrid;
+
+#[AsGrid(
+    resourceClass: Speaker::class,
+    name: 'app_speaker',
+)]
+final class SpeakerGrid extends AbstractGrid
+{
+    public function __invoke(GridBuilderInterface $gridBuilder): void
+    {
+        $gridBuilder
+            ->addActionGroup(
+                MainActionGroup::create(
+                    // Add the "create" action into the "main" action group
+                    CreateAction::create(),
+                ),
+            )
+        ;
+    }
+}
+```
+
+### Update
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Grid;
+
+use App\Entity\Speaker;
+use Sylius\Bundle\GridBundle\Builder\Action\UpdateAction;
+use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
+use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
+use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
+use Sylius\Component\Grid\Attribute\AsGrid;
+
+#[AsGrid(
+    resourceClass: Speaker::class,
+    name: 'app_speaker',
+)]
+final class SpeakerGrid extends AbstractGrid
+{
+    public function __invoke(GridBuilderInterface $gridBuilder): void
+    {
+        $gridBuilder
+            ->addActionGroup(
+                ItemActionGroup::create(
+                    // Add the "update" action into the "item" action group
+                    UpdateAction::create(),
+                ),
+            )
+        ;
+    }
+}
+```
+
+### Delete
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Grid;
+
+use App\Entity\Speaker;
+use Sylius\Bundle\GridBundle\Builder\Action\DeleteAction;
+use Sylius\Bundle\GridBundle\Builder\ActionGroup\BulkActionGroup;
+use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
+use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
+use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
+use Sylius\Component\Grid\Attribute\AsGrid;
+
+#[AsGrid(
+    resourceClass: Speaker::class,
+    name: 'app_speaker',
+)]
+final class SpeakerGrid extends AbstractGrid
+{
+    public function __invoke(GridBuilderInterface $gridBuilder): void
+    {
+        $gridBuilder
+            ->addActionGroup(
+                ItemActionGroup::create(
+                    // Add the "delete" action into the "item" action group
+                    DeleteAction::create(),
+                ),
+            )
+            ->addActionGroup(
+                BulkActionGroup::create(
+                    // Add the "delete" action into the "bulk" action group
+                    DeleteAction::create(),
+                ),
+            )
+        ;
+    }
+}
+```
+
+### Show
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Grid;
+
+use App\Entity\Speaker;
+use Sylius\Bundle\GridBundle\Builder\Action\ShowAction;
+use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
+use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
+use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
+use Sylius\Component\Grid\Attribute\AsGrid;
+
+#[AsGrid(
+    resourceClass: Speaker::class,
+    name: 'app_speaker',
+)]
+final class SpeakerGrid extends AbstractGrid
+{
+    public function __invoke(GridBuilderInterface $gridBuilder): void
+    {
+        $gridBuilder
+            ->addActionGroup(
+                ItemActionGroup::create(
+                    // Add the "show" action into the "item" action group
+                    ShowAction::create(),
+                ),
+            )
+        ;
+    }
+}
+```
+
 ## Creating a custom Action
 
 There are certain cases when built-in action types are not enough.
@@ -11,6 +189,7 @@ In this example, we will specify the action button's icon to be `mail` and its
 colour to be `purple` inside the template.
 
 {% code title="@App/Grid/Action/contactSupplier.html.twig" lineNumbers="true" %}
+
 ```twig
 {% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
 
@@ -18,18 +197,21 @@ colour to be `purple` inside the template.
 
 {{ buttons.default(path, action.label, null, 'mail', 'purple') }}
 ```
+
 {% endcode %}
 
 Now configure the new action's template like below in
 `config/packages/sylius_grid.yaml`:
 
 {% code title="config/packages/sylius_grid.yaml" lineNumbers="true" %}
+
 ```yaml
 sylius_grid:
     templates:
         action:
             contactSupplier: "@App/Grid/Action/contactSupplier.html.twig"
 ```
+
 {% endcode %}
 
 From now on, you can use your new action type in the grid configuration!
@@ -40,6 +222,7 @@ suppliers, then you can configure the grid action:
 {% tabs %}
 {% tab title="YAML" %}
 {% code title="config/packages/sylius_grid.yaml" lineNumbers="true" %}
+
 ```yaml
 sylius_grid:
     grids:
@@ -59,11 +242,13 @@ sylius_grid:
                                 parameters:
                                     id: resource.id
 ```
+
 {% endcode %}
 {% endtab %}
 
 {% tab title="PHP" %}
 {% code title="config/packages/sylius_grid.php" lineNumbers="true" %}
+
 ```php
 <?php
 
@@ -92,11 +277,13 @@ return static function (GridConfig $grid): void {
     )
 };
 ```
+
 {% endcode %}
 
 OR
 
 {% code title="src/Grid/AdminSupplierGrid.php" lineNumbers="true" %}
+
 ```php
 <?php
 
@@ -144,6 +331,7 @@ final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridI
     }
 }
 ```
+
 {% endcode %}
 {% endtab %}
 {% endtabs %}
@@ -151,7 +339,8 @@ final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridI
 ## Creating a custom Bulk Action
 
 In some cases, forcing the user to click a button for each item in a grid isn't practical.
-Fortunately, you can take advantage of built-in bulk actions. However, these may not always be sufficient and might need customization.
+Fortunately, you can take advantage of built-in bulk actions. However, these may not always be sufficient and might need
+customization.
 
 To do this, simply create your own bulk action template and register it inside the `sylius_grid`.
 
@@ -159,6 +348,7 @@ In the template we will specify the button's icon to be `export` and its
 colour to be `orange`.
 
 {% code title="@App/Grid/BulkAction/export.html.twig" %}
+
 ```twig
 {% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
 
@@ -166,17 +356,20 @@ colour to be `orange`.
 
 {{ buttons.default(path, action.label, null, 'export', 'orange') }}
 ```
+
 {% endcode %}
 
 Now configure the new action's template:
 
 {% code title="config/packages/sylius_grid.yaml" lineNumbers="true" %}
+
 ```yaml
 sylius_grid:
     templates:
         bulk_action:
             export: "@App/Grid/BulkAction/export.html.twig"
 ```
+
 {% endcode %}
 
 From now on, you can use your new bulk action type in the grid configuration!
@@ -187,6 +380,7 @@ ids. Now, you can configure the grid action:
 {% tabs %}
 {% tab title="YAML" %}
 {% code title="config/packages/sylius_grid.yaml" lineNumbers="true" %}
+
 ```yaml
 sylius_grid:
     grids:
@@ -203,11 +397,13 @@ sylius_grid:
                                 parameters:
                                     format: csv
 ```
+
 {% endcode %}
 {% endtab %}
 
 {% tab title="PHP" %}
 {% code title="config/packages/sylius_grid.php" lineNumbers="true" %}
+
 ```php
 <?php
 
@@ -237,11 +433,13 @@ return static function (GridConfig $grid) {
     )
 };
 ```
+
 {% endcode %}
 
 OR
 
 {% code title="src/Grid/AdminProductGrid.php" lineNumbers="true" %}
+
 ```php
 <?php
 
@@ -289,6 +487,7 @@ final class AdminProductGrid extends AbstractGrid implements ResourceAwareGridIn
     }
 }
 ```
+
 {% endcode %}
 {% endtab %}
 {% endtabs %}
