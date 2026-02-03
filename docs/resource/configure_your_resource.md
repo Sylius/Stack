@@ -239,6 +239,10 @@ class Book implements ResourceInterface
 {% tab title="External PHP file" %}
 {% code title="config/sylius/resources/book.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 use App\Entity\Book;
 use Sylius\Resource\Metadata\ResourceMetadata;
 

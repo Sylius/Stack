@@ -57,6 +57,10 @@ class Book implements ResourceInterface
 {% tab title="External PHP file" %}
 {% code title="config/sylius/resources/book.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 use App\Entity\Book;
 use Sylius\Resource\Metadata\Index;
 use Sylius\Resource\Metadata\Operations;
@@ -125,6 +129,10 @@ class Book implements ResourceInterface
 {% tab title="External PHP file" %}
 {% code title="config/sylius/resources/book.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 use App\Entity\Book;
 use Sylius\Resource\Metadata\Index;
 use Sylius\Resource\Metadata\Operations;
@@ -187,6 +195,10 @@ class Book implements ResourceInterface
 {% tab title="External PHP file" %}
 {% code title="config/sylius/resources/book.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 use App\Entity\Book;
 use Sylius\Resource\Metadata\Operations;
 use Sylius\Resource\Metadata\ResourceMetadata;
@@ -250,6 +262,10 @@ class Book implements ResourceInterface
 {% tab title="External PHP file" %}
 {% code title="config/sylius/resources/book.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 use App\Entity\Book;
 use Sylius\Resource\Metadata\Create;
 use Sylius\Resource\Metadata\Operations;
@@ -315,6 +331,10 @@ class Book implements ResourceInterface
 {% tab title="External PHP file" %}
 {% code title="config/sylius/resources/book.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 use App\Entity\Book;
 use Sylius\Resource\Metadata\Operations;
 use Sylius\Resource\Metadata\ResourceMetadata;
@@ -357,6 +377,10 @@ On your Twig template, these variables are available
 {% tab title="PHP attributes" %}
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Sylius\Resource\Model\ResourceInterface;
@@ -378,6 +402,10 @@ class Book implements ResourceInterface
 {% tab title="External PHP file" %}
 {% code title="config/sylius/resources/book.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 use App\Entity\Book;
 use Sylius\Resource\Metadata\Delete;
 use Sylius\Resource\Metadata\Operations;
@@ -431,6 +459,10 @@ class Book implements ResourceInterface
 {% tab title="External PHP file" %}
 {% code title="config/sylius/resources/book.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 use App\Entity\Book;
 use Sylius\Resource\Metadata\BulkDelete;
 use Sylius\Resource\Metadata\Operations;
@@ -486,6 +518,10 @@ class Book implements ResourceInterface
 {% tab title="External PHP file" %}
 {% code title="config/sylius/resources/book.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 use App\Entity\Book;
 use Sylius\Resource\Metadata\ApplyStateMachineTransition;
 use Sylius\Resource\Metadata\Operations;
@@ -542,6 +578,10 @@ class Customer implements ResourceInterface
 {% tab title="External PHP file" %}
 {% code title="config/sylius/resources/customer.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 use App\Entity\Customer;
 use Sylius\Resource\Metadata\Create;
 use Sylius\Resource\Metadata\Operations;
@@ -595,6 +635,10 @@ class Customer implements ResourceInterface
 {% tab title="External PHP file" %}
 {% code title="config/sylius/resources/customer.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 use App\Entity\Customer;
 use Sylius\Resource\Metadata\Create;
 use Sylius\Resource\Metadata\Operations;
@@ -656,6 +700,10 @@ class Book implements ResourceInterface
 {% tab title="External PHP file" %}
 {% code title="config/sylius/resources/book.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 use App\Entity\Book;
 use Sylius\Resource\Metadata\Create;
 use Sylius\Resource\Metadata\Index;
@@ -739,6 +787,10 @@ class Book implements ResourceInterface
 {% tab title="External PHP file" %}
 {% code title="config/sylius/resources/book.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 use App\Entity\Book;
 use Sylius\Resource\Metadata\Create;
 use Sylius\Resource\Metadata\Index;
@@ -811,6 +863,10 @@ class Book implements ResourceInterface
 {% tab title="External PHP file" %}
 {% code title="config/sylius/resources/book.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 use App\Entity\Book;
 use Sylius\Resource\Metadata\BulkDelete;
 use Sylius\Resource\Metadata\Create;
@@ -894,6 +950,10 @@ class Book implements ResourceInterface
 {% tab title="External PHP file" %}
 {% code title="config/sylius/resources/admin/book.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 use App\Entity\Book;
 use Sylius\Resource\Metadata\BulkDelete;
 use Sylius\Resource\Metadata\Create;
@@ -995,6 +1055,10 @@ class Book implements ResourceInterface
 {% tab title="External PHP file" %}
 {% code title="config/sylius/resources/book.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 use App\Entity\Book;
 use Sylius\Resource\Metadata\BulkDelete;
 use Sylius\Resource\Metadata\Create;
@@ -1064,6 +1128,10 @@ class Book implements ResourceInterface
 {% tab title="External PHP file" %}
 {% code title="config/sylius/resources/book.php" lineNumbers="true" %}
 ```php
+<?php
+
+declare(strict_types=1);
+
 use App\Entity\Book;
 use Sylius\Resource\Metadata\Create;
 use Sylius\Resource\Metadata\Operations;
