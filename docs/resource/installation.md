@@ -21,12 +21,8 @@ You need to enable the bundle and its dependencies in the kernel:
 {% code title="config/bundles.php" %}
 ```php
 return [
-    new FOS\RestBundle\FOSRestBundle(),
-    new JMS\SerializerBundle\JMSSerializerBundle($this),
     new Sylius\Bundle\ResourceBundle\SyliusResourceBundle(),
     new BabDev\PagerfantaBundle\BabDevPagerfantaBundle(),
-    new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
-    new winzou\Bundle\StateMachineBundle\winzouStateMachineBundle(),
 ];
 ```
 {% endcode %}
@@ -44,16 +40,10 @@ sylius_resource:
 
 Configure the routing
 
-{% code title="config/routes.yaml" %}
+{% code title="config/routes/sylius_resource.yaml" %}
 ```yaml
-# [...]
-
-sylius_crud_routes:
-    resource: 'sylius.routing.loader.crud_routes_attributes'
-    type: service
-
-sylius_routes:
-    resource: 'sylius.routing.loader.routes_attributes'
+sylius_resource_routes:
+    resource: 'sylius.symfony.routing.loader.resource'
     type: service
 ```
 {% endcode %}
