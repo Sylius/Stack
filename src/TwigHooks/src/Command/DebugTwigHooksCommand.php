@@ -221,17 +221,7 @@ EOF
             return '-';
         }
 
-        $parts = [];
-        foreach ($configuration as $key => $value) {
-            $parts[] = \sprintf('%s: %s', $key, $this->formatValue($value));
-        }
-
-        return implode("\n", $parts);
-    }
-
-    private function formatValue(mixed $value): string
-    {
-        return VarExporter::export($value);
+        return VarExporter::export($configuration);
     }
 
     private function getHookableType(AbstractHookable $hookable): string
