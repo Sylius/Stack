@@ -14,9 +14,10 @@ declare(strict_types=1);
 namespace Tests\Sylius\TwigHooks\Unit\Command;
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\TwigHooks\Command\DebugTwigHooksCommand;
+use Sylius\TwigHooks\Hookable\AbstractHookable;
+use Sylius\TwigHooks\Hookable\Merger\HookableMerger;
 use Sylius\TwigHooks\Registry\HookablesRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandCompletionTester;
@@ -27,34 +28,14 @@ use Tests\Sylius\TwigHooks\Utils\MotherObject\HookableTemplateMotherObject;
 
 final class DebugTwigHooksCommandTest extends TestCase
 {
-    /** @var HookablesRegistry&MockObject */
-    private HookablesRegistry $hookablesRegistry;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->hookablesRegistry = $this->createMock(HookablesRegistry::class);
-    }
-
     public function testItDisplaysAllHooksSortedAlphabetically(): void
     {
-        $this->hookablesRegistry
-            ->method('getHookNames')
-            ->willReturn(['sylius_shop.cart.summary', 'sylius_admin.product.index']);
+        $registry = $this->createRegistry([
+            HookableTemplateMotherObject::with(['hookName' => 'sylius_shop.cart.summary', 'name' => 'items']),
+            HookableTemplateMotherObject::with(['hookName' => 'sylius_admin.product.index', 'name' => 'header']),
+        ]);
 
-        $this->hookablesRegistry
-            ->method('getAllFor')
-            ->willReturnMap([
-                ['sylius_admin.product.index', [
-                    HookableTemplateMotherObject::with(['hookName' => 'sylius_admin.product.index', 'name' => 'header']),
-                ]],
-                ['sylius_shop.cart.summary', [
-                    HookableTemplateMotherObject::with(['hookName' => 'sylius_shop.cart.summary', 'name' => 'items']),
-                ]],
-            ]);
-
-        $commandTester = $this->createCommandTester();
+        $commandTester = $this->createCommandTester($registry);
         $commandTester->execute([]);
 
         $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
@@ -69,11 +50,9 @@ final class DebugTwigHooksCommandTest extends TestCase
 
     public function testItDisplaysWarningWhenNoHooksRegistered(): void
     {
-        $this->hookablesRegistry
-            ->method('getHookNames')
-            ->willReturn([]);
+        $registry = $this->createRegistry([]);
 
-        $commandTester = $this->createCommandTester();
+        $commandTester = $this->createCommandTester($registry);
         $commandTester->execute([]);
 
         $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
@@ -82,29 +61,22 @@ final class DebugTwigHooksCommandTest extends TestCase
 
     public function testItDisplaysHookDetailsForExactMatchSortedByPriority(): void
     {
-        $this->hookablesRegistry
-            ->method('getHookNames')
-            ->willReturn(['sylius_admin.product.index']);
+        $registry = $this->createRegistry([
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.product.index',
+                'name' => 'header',
+                'template' => '@SyliusAdmin/product/header.html.twig',
+                'priority' => 100,
+            ]),
+            HookableComponentMotherObject::with([
+                'hookName' => 'sylius_admin.product.index',
+                'name' => 'grid',
+                'component' => 'sylius_admin:product:grid',
+                'priority' => 50,
+            ]),
+        ]);
 
-        $this->hookablesRegistry
-            ->method('getAllFor')
-            ->with('sylius_admin.product.index')
-            ->willReturn([
-                HookableTemplateMotherObject::with([
-                    'hookName' => 'sylius_admin.product.index',
-                    'name' => 'header',
-                    'template' => '@SyliusAdmin/product/header.html.twig',
-                    'priority' => 100,
-                ]),
-                HookableComponentMotherObject::with([
-                    'hookName' => 'sylius_admin.product.index',
-                    'name' => 'grid',
-                    'component' => 'sylius_admin:product:grid',
-                    'priority' => 50,
-                ]),
-            ]);
-
-        $commandTester = $this->createCommandTester();
+        $commandTester = $this->createCommandTester($registry);
         $commandTester->execute(['name' => 'sylius_admin.product.index']);
 
         $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
@@ -120,22 +92,13 @@ final class DebugTwigHooksCommandTest extends TestCase
 
     public function testItFiltersHooksByPartialNameCaseInsensitive(): void
     {
-        $this->hookablesRegistry
-            ->method('getHookNames')
-            ->willReturn(['sylius_admin.product.index', 'sylius_admin.order.index', 'sylius_shop.cart.summary']);
+        $registry = $this->createRegistry([
+            HookableTemplateMotherObject::with(['hookName' => 'sylius_admin.product.index', 'name' => 'header']),
+            HookableTemplateMotherObject::with(['hookName' => 'sylius_admin.order.index', 'name' => 'header']),
+            HookableTemplateMotherObject::with(['hookName' => 'sylius_shop.cart.summary', 'name' => 'items']),
+        ]);
 
-        $this->hookablesRegistry
-            ->method('getAllFor')
-            ->willReturnMap([
-                ['sylius_admin.product.index', [
-                    HookableTemplateMotherObject::with(['hookName' => 'sylius_admin.product.index', 'name' => 'header']),
-                ]],
-                ['sylius_admin.order.index', [
-                    HookableTemplateMotherObject::with(['hookName' => 'sylius_admin.order.index', 'name' => 'header']),
-                ]],
-            ]);
-
-        $commandTester = $this->createCommandTester();
+        $commandTester = $this->createCommandTester($registry);
         $commandTester->execute(['name' => 'ADMIN']);
 
         $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
@@ -148,11 +111,11 @@ final class DebugTwigHooksCommandTest extends TestCase
 
     public function testItDisplaysWarningWhenNoHooksMatchFilter(): void
     {
-        $this->hookablesRegistry
-            ->method('getHookNames')
-            ->willReturn(['sylius_admin.product.index']);
+        $registry = $this->createRegistry([
+            HookableTemplateMotherObject::with(['hookName' => 'sylius_admin.product.index', 'name' => 'header']),
+        ]);
 
-        $commandTester = $this->createCommandTester();
+        $commandTester = $this->createCommandTester($registry);
         $commandTester->execute(['name' => 'nonexistent']);
 
         $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
@@ -161,22 +124,16 @@ final class DebugTwigHooksCommandTest extends TestCase
 
     public function testItDisplaysDetailsWhenSingleHookMatchesFilter(): void
     {
-        $this->hookablesRegistry
-            ->method('getHookNames')
-            ->willReturn(['sylius_admin.product.index', 'sylius_shop.cart.summary']);
+        $registry = $this->createRegistry([
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.product.index',
+                'name' => 'header',
+                'template' => '@SyliusAdmin/product/header.html.twig',
+            ]),
+            HookableTemplateMotherObject::with(['hookName' => 'sylius_shop.cart.summary', 'name' => 'items']),
+        ]);
 
-        $this->hookablesRegistry
-            ->method('getAllFor')
-            ->with('sylius_admin.product.index')
-            ->willReturn([
-                HookableTemplateMotherObject::with([
-                    'hookName' => 'sylius_admin.product.index',
-                    'name' => 'header',
-                    'template' => '@SyliusAdmin/product/header.html.twig',
-                ]),
-            ]);
-
-        $commandTester = $this->createCommandTester();
+        $commandTester = $this->createCommandTester($registry);
         $commandTester->execute(['name' => 'product']);
 
         $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
@@ -192,25 +149,18 @@ final class DebugTwigHooksCommandTest extends TestCase
         bool $shouldShowDisabled,
         bool $shouldShowStatusColumn,
     ): void {
-        $this->hookablesRegistry
-            ->method('getHookNames')
-            ->willReturn(['sylius_admin.product.index']);
+        $registry = $this->createRegistry([
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.product.index',
+                'name' => 'header',
+            ]),
+            DisabledHookableMotherObject::with([
+                'hookName' => 'sylius_admin.product.index',
+                'name' => 'disabled_item',
+            ]),
+        ]);
 
-        $this->hookablesRegistry
-            ->method('getAllFor')
-            ->with('sylius_admin.product.index')
-            ->willReturn([
-                HookableTemplateMotherObject::with([
-                    'hookName' => 'sylius_admin.product.index',
-                    'name' => 'header',
-                ]),
-                DisabledHookableMotherObject::with([
-                    'hookName' => 'sylius_admin.product.index',
-                    'name' => 'disabled_item',
-                ]),
-            ]);
-
-        $commandTester = $this->createCommandTester();
+        $commandTester = $this->createCommandTester($registry);
         $commandTester->execute(['name' => 'sylius_admin.product.index', '--all' => $useAllOption]);
 
         $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
@@ -242,31 +192,24 @@ final class DebugTwigHooksCommandTest extends TestCase
 
     public function testItShowsConfigurationWithConfigOption(): void
     {
-        $this->hookablesRegistry
-            ->method('getHookNames')
-            ->willReturn(['sylius_admin.product.index']);
+        $registry = $this->createRegistry([
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.product.index',
+                'name' => 'header',
+                'configuration' => [
+                    'string_key' => 'value',
+                    'boolean' => true,
+                    'null_value' => null,
+                ],
+            ]),
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.product.index',
+                'name' => 'empty_config',
+                'configuration' => [],
+            ]),
+        ]);
 
-        $this->hookablesRegistry
-            ->method('getAllFor')
-            ->with('sylius_admin.product.index')
-            ->willReturn([
-                HookableTemplateMotherObject::with([
-                    'hookName' => 'sylius_admin.product.index',
-                    'name' => 'header',
-                    'configuration' => [
-                        'string_key' => 'value',
-                        'boolean' => true,
-                        'null_value' => null,
-                    ],
-                ]),
-                HookableTemplateMotherObject::with([
-                    'hookName' => 'sylius_admin.product.index',
-                    'name' => 'empty_config',
-                    'configuration' => [],
-                ]),
-            ]);
-
-        $commandTester = $this->createCommandTester();
+        $commandTester = $this->createCommandTester($registry);
         $commandTester->execute(['name' => 'sylius_admin.product.index', '--config' => true]);
 
         $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
@@ -282,20 +225,13 @@ final class DebugTwigHooksCommandTest extends TestCase
     #[DataProvider('provideHookableCountCases')]
     public function testItDisplaysCorrectHookableCountInTable(bool $useAllOption, string $expectedPattern): void
     {
-        $this->hookablesRegistry
-            ->method('getHookNames')
-            ->willReturn(['sylius_admin.product.index']);
+        $registry = $this->createRegistry([
+            HookableTemplateMotherObject::with(['hookName' => 'sylius_admin.product.index', 'name' => 'header']),
+            HookableTemplateMotherObject::with(['hookName' => 'sylius_admin.product.index', 'name' => 'content']),
+            DisabledHookableMotherObject::with(['hookName' => 'sylius_admin.product.index', 'name' => 'disabled_item']),
+        ]);
 
-        $this->hookablesRegistry
-            ->method('getAllFor')
-            ->with('sylius_admin.product.index')
-            ->willReturn([
-                HookableTemplateMotherObject::with(['hookName' => 'sylius_admin.product.index', 'name' => 'header']),
-                HookableTemplateMotherObject::with(['hookName' => 'sylius_admin.product.index', 'name' => 'content']),
-                DisabledHookableMotherObject::with(['hookName' => 'sylius_admin.product.index', 'name' => 'disabled_item']),
-            ]);
-
-        $commandTester = $this->createCommandTester();
+        $commandTester = $this->createCommandTester($registry);
         $commandTester->execute(['--all' => $useAllOption]);
 
         $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
@@ -313,18 +249,11 @@ final class DebugTwigHooksCommandTest extends TestCase
 
     public function testItDisplaysWarningWhenHookHasNoVisibleHookables(): void
     {
-        $this->hookablesRegistry
-            ->method('getHookNames')
-            ->willReturn(['sylius_admin.product.index']);
+        $registry = $this->createRegistry([
+            DisabledHookableMotherObject::with(['hookName' => 'sylius_admin.product.index', 'name' => 'disabled_item']),
+        ]);
 
-        $this->hookablesRegistry
-            ->method('getAllFor')
-            ->with('sylius_admin.product.index')
-            ->willReturn([
-                DisabledHookableMotherObject::with(['hookName' => 'sylius_admin.product.index', 'name' => 'disabled_item']),
-            ]);
-
-        $commandTester = $this->createCommandTester();
+        $commandTester = $this->createCommandTester($registry);
         $commandTester->execute(['name' => 'sylius_admin.product.index']);
 
         $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
@@ -333,21 +262,14 @@ final class DebugTwigHooksCommandTest extends TestCase
 
     public function testItDisplaysDashForUnknownHookableTypeAndTarget(): void
     {
-        $this->hookablesRegistry
-            ->method('getHookNames')
-            ->willReturn(['sylius_admin.product.index']);
+        $registry = $this->createRegistry([
+            DisabledHookableMotherObject::with([
+                'hookName' => 'sylius_admin.product.index',
+                'name' => 'unknown_type',
+            ]),
+        ]);
 
-        $this->hookablesRegistry
-            ->method('getAllFor')
-            ->with('sylius_admin.product.index')
-            ->willReturn([
-                DisabledHookableMotherObject::with([
-                    'hookName' => 'sylius_admin.product.index',
-                    'name' => 'unknown_type',
-                ]),
-            ]);
-
-        $commandTester = $this->createCommandTester();
+        $commandTester = $this->createCommandTester($registry);
         $commandTester->execute(['name' => 'sylius_admin.product.index', '--all' => true]);
 
         $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
@@ -356,11 +278,12 @@ final class DebugTwigHooksCommandTest extends TestCase
 
     public function testItProvidesAutocompletion(): void
     {
-        $this->hookablesRegistry
-            ->method('getHookNames')
-            ->willReturn(['sylius_admin.product.index', 'sylius_shop.cart.summary']);
+        $registry = $this->createRegistry([
+            HookableTemplateMotherObject::with(['hookName' => 'sylius_admin.product.index', 'name' => 'header']),
+            HookableTemplateMotherObject::with(['hookName' => 'sylius_shop.cart.summary', 'name' => 'items']),
+        ]);
 
-        $command = new DebugTwigHooksCommand($this->hookablesRegistry);
+        $command = new DebugTwigHooksCommand($registry);
         $completionTester = new CommandCompletionTester($command);
 
         $suggestions = $completionTester->complete(['']);
@@ -368,10 +291,16 @@ final class DebugTwigHooksCommandTest extends TestCase
         $this->assertSame(['sylius_admin.product.index', 'sylius_shop.cart.summary'], $suggestions);
     }
 
-    private function createCommandTester(): CommandTester
+    /**
+     * @param array<AbstractHookable> $hookables
+     */
+    private function createRegistry(array $hookables): HookablesRegistry
     {
-        $command = new DebugTwigHooksCommand($this->hookablesRegistry);
+        return new HookablesRegistry($hookables, new HookableMerger());
+    }
 
-        return new CommandTester($command);
+    private function createCommandTester(HookablesRegistry $registry): CommandTester
+    {
+        return new CommandTester(new DebugTwigHooksCommand($registry));
     }
 }
