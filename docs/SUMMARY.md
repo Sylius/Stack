@@ -54,9 +54,8 @@
   * [Installation](grid/installation.md)
   * [Creating your first grid](grid/your_first_grid.md)
   * [Fields](grid/fields.md)
-  * [Actions](grid/actions.md)
   * [Filters](grid/filters.md)
-  * [Creating a custom Filter](grid/custom_filter.md)
+  * [Actions](grid/actions.md)
   * [Advanced configuration](grid/advanced_configuration.md)
   * [Configuration Reference](grid/configuration.md)
 
