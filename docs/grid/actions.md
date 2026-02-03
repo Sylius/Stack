@@ -55,7 +55,10 @@ final class SpeakerGrid extends AbstractGrid
             ->addActionGroup(
                 MainActionGroup::create(
                     // Add the "create" action into the "main" action group
-                    CreateAction::create(),
+                    CreateAction::create()
+                        // Optional, you can configure this globally instead.
+                        ->setTemplate('path/to/your/action/template.html.twig')
+                    ,
                 ),
             )
         ;
@@ -91,7 +94,10 @@ final class SpeakerGrid extends AbstractGrid
             ->addActionGroup(
                 ItemActionGroup::create(
                     // Add the "update" action into the "item" action group
-                    UpdateAction::create(),
+                    UpdateAction::create()
+                        // Optional, you can configure this globally instead.
+                        ->setTemplate('path/to/your/action/template.html.twig')
+                    ,
                 ),
             )
         ;
@@ -128,13 +134,19 @@ final class SpeakerGrid extends AbstractGrid
             ->addActionGroup(
                 ItemActionGroup::create(
                     // Add the "delete" action into the "item" action group
-                    DeleteAction::create(),
+                    DeleteAction::create()
+                        // Optional, you can configure this globally instead.
+                        ->setTemplate('path/to/your/action/template.html.twig')
+                    ,
                 ),
             )
             ->addActionGroup(
                 BulkActionGroup::create(
                     // Add the "delete" action into the "bulk" action group
-                    DeleteAction::create(),
+                    DeleteAction::create()
+                        // Optional, you can configure this globally instead.
+                        ->setTemplate('path/to/your/action/template.html.twig')
+                    ,
                 ),
             )
         ;
@@ -170,13 +182,36 @@ final class SpeakerGrid extends AbstractGrid
             ->addActionGroup(
                 ItemActionGroup::create(
                     // Add the "show" action into the "item" action group
-                    ShowAction::create(),
+                    ShowAction::create()
+                        // Optional, you can configure this globally instead.
+                        ->setTemplate('path/to/your/action/template.html.twig')
+                    ,
                 ),
             )
         ;
     }
 }
 ```
+
+## Configuring your action templates globally
+
+```yaml
+sylius_grid:
+    templates:
+        action:
+            create: path/to/your/create.html.twig
+            delete: path/to/your/delete.html.twig
+            show: path/to/your/show.html.twig
+            update: path/to/your/update.html.twig
+        bulk_action:
+            delete: path/to/your/delete.html.twig
+```
+
+{% hint style="info" %}
+The BootstrapAdminUi package will configure that for you automatically.
+
+[BootstrapAdminUi configuration files](https://github.com/Sylius/Stack/blob/main/src/BootstrapAdminUi/config/app/grid/templates.php)
+{% endhint %}
 
 ## Creating a custom Action
 
@@ -385,7 +420,7 @@ ids. Now, you can configure the grid action:
 sylius_grid:
     grids:
         app_admin_product:
-            ...
+            # ...
             actions:
                 bulk:
                     export:
