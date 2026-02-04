@@ -11,10 +11,13 @@ You can set up the Sylius Stack on existing Symfony projects, but in the case yo
 
 ```bash
 # With Composer:
-composer create-project symfony/skeleton my_project
+composer create-project symfony/skeleton:"8.0.*" my_project_directory
+cd my_project_directory
+composer require webapp
 
 # Or with Symfony CLI:
-symfony new --docker --php 8.5 my_project
+symfony new my_project_directory --version="8.0.*" --webapp
+cd my_project_directory
 ````
 
 ### Install the package using Composer and Symfony Flex
@@ -31,21 +34,6 @@ composer require -W \
   sylius/ui-translations
 ```
 
-> The Sylius Stack now supports Symfony 8 ! As some packages remain in alpha, if you are starting a Symfony 8 project, 
-> run the following command instead to ensure all dependencies are resolved correctly:
-> 
-> ```bash
-> composer require -W \
-> doctrine/orm \
-> doctrine/doctrine-bundle \
-> pagerfanta/doctrine-orm-adapter \
-> symfony/asset-mapper \
-> sylius/bootstrap-admin-ui \
-> sylius/ui-translations \
-> sylius/resource-bundle "^1.14@alpha" \
-> sylius/grid-bundle "^1.15@alpha"
-> ```
-
 <div data-full-width="false">
 
 <figure><img src=".gitbook/assets/recipes.png" alt="Flex recipes"></figure>
@@ -53,6 +41,14 @@ composer require -W \
 </div>
 
 Type "a" or "p" to configure the packages via Symfony Flex.
+
+Do not forget to set your application secret environment variable:
+{% code title=".env" %}
+```dotenv
+# ...
+APP_SECRET=UseYourOwnSecretPlease
+```
+{% endcode %}
 
 ### Run your web server
 
