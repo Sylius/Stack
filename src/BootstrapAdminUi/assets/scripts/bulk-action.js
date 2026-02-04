@@ -9,8 +9,8 @@
 
 /* global document */
 
-function syliusBulkDelete(form) {
-    const groupName = form.getAttribute('data-bulk-delete');
+function syliusBulkAction(form) {
+    const groupName = form.getAttribute('data-bulk-action');
     const groupItems = Array.from(document.querySelectorAll(`input[data-check-all-group="${groupName}"]`));
 
     form.addEventListener('submit', (e) => {
@@ -31,5 +31,5 @@ function syliusBulkDelete(form) {
 }
 
 (function () {
-    document.querySelectorAll('[data-bulk-delete]').forEach(syliusBulkDelete);
+    document.querySelectorAll('[data-bulk-action]').forEach(syliusBulkAction);
 }());
