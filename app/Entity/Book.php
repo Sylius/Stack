@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Enum\BookCategory;
+use App\Form\BookType;
 use App\Grid\BookGrid;
 use App\Repository\BookRepository;
 use App\Responder\ExportGridToCsvResponder;
@@ -31,6 +33,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 #[AsResource(
     section: 'admin',
+    formType: BookType::class,
     templatesDir: '@SyliusAdminUi/crud',
     routePrefix: '/admin',
     operations: [
@@ -79,6 +82,9 @@ class Book implements ResourceInterface
     #[NotBlank]
     private ?string $authorName = null;
 
+    #[ORM\Column(type: 'enum', length: 255, nullable: true)]
+    private ?BookCategory $category = null;
+
     #[ORM\Column(type: 'datetime_immutable')]
     private \DateTimeImmutable $createdAt;
 
@@ -120,5 +126,15 @@ class Book implements ResourceInterface
     public function setCreatedAt(\DateTimeImmutable $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    public function getCategory(): ?BookCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?BookCategory $category): void
+    {
+        $this->category = $category;
     }
 }
