@@ -397,16 +397,21 @@ All you need to do is create your own class implementing
 **FieldTypeInterface** and register it as a service.
 
 {% code title="src/Grid/FieldType.php" lineNumbers="true" %}
+
 ```php
 <?php
 
 namespace App\Grid\FieldType;
 
+use Sylius\Component\Grid\Attribute\AsField;
 use Sylius\Component\Grid\Definition\Field;
 use Sylius\Component\Grid\FieldTypes\FieldTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CustomType implements FieldTypeInterface
+#[AsField(
+    type: 'custom', // optional - FQCN by default
+)]
+final class CustomType implements FieldTypeInterface
 {
     public function render(Field $field, $data, array $options = [])
     {
@@ -424,25 +429,11 @@ class CustomType implements FieldTypeInterface
             ])
         ;
     }
-
-    public function getName(): string
-    {
-        return 'custom';
-    }
 }
 ```
 {% endcode %}
 
-That is all. Now register your new field type as a service.
-
-{% code title="config/services.yaml" lineNumbers="true" %}
-```yaml
-app.grid_field.custom:
-    class: App\Grid\FieldType\CustomType
-    tags:
-        - { name: sylius.grid_field, type: custom }
-```
-{% endcode %}
+That is all.
 
 Now you can use your new column type in the grid configuration!
 
