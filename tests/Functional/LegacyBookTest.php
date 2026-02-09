@@ -8,14 +8,11 @@ use App\Factory\BookFactory;
 use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Zenstruck\Foundry\Test\Factories;
-use Zenstruck\Foundry\Test\ResetDatabase;
+use Zenstruck\Foundry\Attribute\ResetDatabase;
 
+#[ResetDatabase]
 final class LegacyBookTest extends WebTestCase
 {
-    use Factories;
-    use ResetDatabase;
-
     private KernelBrowser $client;
 
     protected function setUp(): void
@@ -46,14 +43,14 @@ final class LegacyBookTest extends WebTestCase
 
         $this->client->request('GET', '/admin/legacy/books');
 
-        self::assertResponseIsSuccessful();
+        $this->assertResponseIsSuccessful();
     }
 
     public function testAddingBookContent(): void
     {
         $this->client->request('GET', '/admin/legacy/books/new');
 
-        self::assertResponseIsSuccessful();
+        $this->assertResponseIsSuccessful();
     }
 
     public function testEditingBookContent(): void
@@ -65,6 +62,6 @@ final class LegacyBookTest extends WebTestCase
 
         $this->client->request('GET', sprintf('/admin/legacy/books/%s/edit', $book->getId()));
 
-        self::assertResponseIsSuccessful();
+        $this->assertResponseIsSuccessful();
     }
 }

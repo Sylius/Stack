@@ -13,13 +13,11 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Zenstruck\Foundry\Test\Factories;
-use Zenstruck\Foundry\Test\ResetDatabase;
+use Zenstruck\Foundry\Attribute\ResetDatabase;
 
+#[ResetDatabase]
 final class TalkTest extends WebTestCase
 {
-    use Factories;
-    use ResetDatabase;
-
     private KernelBrowser $client;
 
     protected function setUp(): void
@@ -54,27 +52,27 @@ final class TalkTest extends WebTestCase
 
         $this->client->request('GET', '/admin/talks');
 
-        self::assertResponseIsSuccessful();
+        $this->assertResponseIsSuccessful();
 
         // Validate Header
-        self::assertSelectorTextContains('[data-test-page-title]', 'Talks');
-        self::assertSelectorExists('a:contains("Create")');
+        $this->assertSelectorTextContains('[data-test-page-title]', 'Talks');
+        $this->assertSelectorExists('a:contains("Create")');
 
         // Validate Table header
-        self::assertSelectorTextContains('.sylius-table-column-title', 'Title');
-        self::assertSelectorTextContains('.sylius-table-column-speakers', 'Speaker');
-        self::assertSelectorTextContains('.sylius-table-column-actions', 'Actions');
+        $this->assertSelectorTextContains('.sylius-table-column-title', 'Title');
+        $this->assertSelectorTextContains('.sylius-table-column-speakers', 'Speaker');
+        $this->assertSelectorTextContains('.sylius-table-column-actions', 'Actions');
 
         // Validate Table data
-        self::assertSelectorTextContains('tr.item:first-child', 'Boost Your Sylius Frontend with Hotwire, aka Symfony UX');
-        self::assertSelectorTextContains('tr.item:first-child', 'Loïc Caillieux');
-        self::assertSelectorExists('tr.item:first-child [data-bs-title=Edit]');
-        self::assertSelectorExists('tr.item:first-child [data-bs-title=Delete]');
+        $this->assertSelectorTextContains('tr.item:first-child', 'Boost Your Sylius Frontend with Hotwire, aka Symfony UX');
+        $this->assertSelectorTextContains('tr.item:first-child', 'Loïc Caillieux');
+        $this->assertSelectorExists('tr.item:first-child [data-bs-title=Edit]');
+        $this->assertSelectorExists('tr.item:first-child [data-bs-title=Delete]');
 
-        self::assertSelectorTextContains('tr.item:last-child', 'Admin Panel (R)evolution for Your Symfony Projects');
-        self::assertSelectorTextContains('tr.item:last-child', 'Loïc Frémont');
-        self::assertSelectorExists('tr.item:last-child [data-bs-title=Edit]');
-        self::assertSelectorExists('tr.item:last-child [data-bs-title=Delete]');
+        $this->assertSelectorTextContains('tr.item:last-child', 'Admin Panel (R)evolution for Your Symfony Projects');
+        $this->assertSelectorTextContains('tr.item:last-child', 'Loïc Frémont');
+        $this->assertSelectorExists('tr.item:last-child [data-bs-title=Edit]');
+        $this->assertSelectorExists('tr.item:last-child [data-bs-title=Delete]');
     }
 
     public function testAddingTalk(): void
@@ -94,19 +92,19 @@ final class TalkTest extends WebTestCase
             'talk[track]' => Track::TECH_TWO->value,
         ]);
 
-        self::assertResponseRedirects(expectedCode: Response::HTTP_FOUND);
+        $this->assertResponseRedirects(expectedCode: Response::HTTP_FOUND);
 
         $this->client->request('GET', '/admin/talks');
 
         // Test flash message
-        self::assertSelectorTextContains('[data-test-sylius-flash-message]', 'Talk has been successfully created.');
+        $this->assertSelectorTextContains('[data-test-sylius-flash-message]', 'Talk has been successfully created.');
 
         $talk = TalkFactory::find(['title' => 'Boost Your Sylius Frontend with Hotwire, aka Symfony UX']);
 
-        self::assertSame('Boost Your Sylius Frontend with Hotwire, aka Symfony UX', $talk->getTitle());
-        self::assertSame('SyliusCon 2024', $talk->getConference()?->getName());
-        self::assertSame('2024-11-13 10:00', $talk->getStartsAt()?->format('Y-m-d H:i'));
-        self::assertSame('2024-11-13 10:45', $talk->getEndsAt()?->format('Y-m-d H:i'));
+        $this->assertSame('Boost Your Sylius Frontend with Hotwire, aka Symfony UX', $talk->getTitle());
+        $this->assertSame('SyliusCon 2024', $talk->getConference()?->getName());
+        $this->assertSame('2024-11-13 10:00', $talk->getStartsAt()?->format('Y-m-d H:i'));
+        $this->assertSame('2024-11-13 10:45', $talk->getEndsAt()?->format('Y-m-d H:i'));
     }
 
     public function testEditingTalk(): void
@@ -123,17 +121,17 @@ final class TalkTest extends WebTestCase
             'talk[track]' => Track::TECH_ONE->value,
         ]);
 
-        self::assertResponseRedirects(expectedCode: Response::HTTP_FOUND);
+        $this->assertResponseRedirects(expectedCode: Response::HTTP_FOUND);
 
         $this->client->request('GET', '/admin/books');
 
         // Test flash message
-        self::assertSelectorTextContains('[data-test-sylius-flash-message]', 'Talk has been successfully updated.');
+        $this->assertSelectorTextContains('[data-test-sylius-flash-message]', 'Talk has been successfully updated.');
 
         $talk = TalkFactory::find(['title' => 'Boost Your Sylius Frontend with Symfony UX']);
 
-        self::assertSame('Boost Your Sylius Frontend with Symfony UX', $talk->getTitle());
-        self::assertSame(Track::TECH_ONE->value, $talk->getTrack()?->value);
+        $this->assertSame('Boost Your Sylius Frontend with Symfony UX', $talk->getTitle());
+        $this->assertSame(Track::TECH_ONE->value, $talk->getTrack()?->value);
     }
 
     public function testValidationErrorsWhenEditingTalk(): void
@@ -149,13 +147,13 @@ final class TalkTest extends WebTestCase
             'talk[endsAt]' => null,
         ]);
 
-        self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
-        self::assertSelectorTextContains('[data-test-form-error-alert] .alert-title', 'Error');
-        self::assertSelectorTextContains('[data-test-form-error-alert] .text-secondary', 'This form contains errors.');
-        self::assertSelectorTextContains('#talk_title + .invalid-feedback', 'This value should not be blank.');
-        self::assertSelectorTextContains('#talk_conference + .invalid-feedback', 'This value should not be blank.');
-        self::assertSelectorTextContains('#talk_track + .invalid-feedback', 'This value should not be blank.');
-        self::assertSelectorTextContains('#talk_startsAt + .invalid-feedback', 'This value should not be blank.');
-        self::assertSelectorTextContains('#talk_endsAt + .invalid-feedback', 'This value should not be blank.');
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $this->assertSelectorTextContains('[data-test-form-error-alert] .alert-title', 'Error');
+        $this->assertSelectorTextContains('[data-test-form-error-alert] .text-secondary', 'This form contains errors.');
+        $this->assertSelectorTextContains('#talk_title + .invalid-feedback', 'This value should not be blank.');
+        $this->assertSelectorTextContains('#talk_conference + .invalid-feedback', 'This value should not be blank.');
+        $this->assertSelectorTextContains('#talk_track + .invalid-feedback', 'This value should not be blank.');
+        $this->assertSelectorTextContains('#talk_startsAt + .invalid-feedback', 'This value should not be blank.');
+        $this->assertSelectorTextContains('#talk_endsAt + .invalid-feedback', 'This value should not be blank.');
     }
 }

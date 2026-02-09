@@ -7,14 +7,11 @@ namespace MainTests\Sylius\Functional;
 use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Zenstruck\Foundry\Test\Factories;
-use Zenstruck\Foundry\Test\ResetDatabase;
+use Zenstruck\Foundry\Attribute\ResetDatabase;
 
+#[ResetDatabase]
 final class DashboardTest extends WebTestCase
 {
-    Use Factories;
-    use ResetDatabase;
-
     private KernelBrowser $client;
 
     protected function setUp(): void
@@ -33,8 +30,8 @@ final class DashboardTest extends WebTestCase
     {
         $this->client->request('GET', '/admin/');
 
-        self::assertResponseIsSuccessful();
+        $this->assertResponseIsSuccessful();
 
-        self::assertSelectorTextContains('[data-test-page-title]', 'Dashboard');
+        $this->assertSelectorTextContains('[data-test-page-title]', 'Dashboard');
     }
 }

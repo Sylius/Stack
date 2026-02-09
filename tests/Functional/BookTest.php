@@ -10,15 +10,12 @@ use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
+use Zenstruck\Foundry\Attribute\ResetDatabase;
 use Zenstruck\Foundry\Persistence\Proxy;
-use Zenstruck\Foundry\Test\Factories;
-use Zenstruck\Foundry\Test\ResetDatabase;
 
+#[ResetDatabase]
 final class BookTest extends WebTestCase
 {
-    Use Factories;
-    use ResetDatabase;
-
     private KernelBrowser $client;
 
     protected function setUp(): void
@@ -43,15 +40,15 @@ final class BookTest extends WebTestCase
 
         $this->client->request('GET', sprintf('/admin/books/%s', $book->getId()));
 
-        self::assertResponseIsSuccessful();
+        $this->assertResponseIsSuccessful();
 
         // Validate Header
-        self::assertSelectorTextContains('[data-test-page-title]', 'The Shining');
-        self::assertSelectorTextContains('[data-test-subheader]', 'Stephen King');
-        self::assertSelectorExists('[data-test-icon="tabler:book"]');
+        $this->assertSelectorTextContains('[data-test-page-title]', 'The Shining');
+        $this->assertSelectorTextContains('[data-test-subheader]', 'Stephen King');
+        $this->assertSelectorExists('[data-test-icon="tabler:book"]');
 
         // Validate page body
-        self::assertSelectorTextContains('[data-test-author-name]', 'Stephen King');
+        $this->assertSelectorTextContains('[data-test-author-name]', 'Stephen King');
     }
 
     public function testBrowsingBooks(): void
@@ -70,32 +67,32 @@ final class BookTest extends WebTestCase
 
         $this->client->request('GET', '/admin/books');
 
-        self::assertResponseIsSuccessful();
+        $this->assertResponseIsSuccessful();
 
         // Validate Header
-        self::assertSelectorTextContains('[data-test-page-title]', 'Books');
-        self::assertSelectorExists('a:contains("Create")');
+        $this->assertSelectorTextContains('[data-test-page-title]', 'Books');
+        $this->assertSelectorExists('a:contains("Create")');
 
         // Validate Custom Twig Hooks
-        self::assertSelectorTextContains('[data-test-book-grid-description]', 'Aliquam arcu ligula, aliquet vitae malesuada quis');
+        $this->assertSelectorTextContains('[data-test-book-grid-description]', 'Aliquam arcu ligula, aliquet vitae malesuada quis');
 
         // Validate Table header
-        self::assertSelectorTextContains('.sylius-table-column-title', 'Title');
-        self::assertSelectorTextContains('.sylius-table-column-authorName', 'Author name');
-        self::assertSelectorTextContains('.sylius-table-column-actions', 'Actions');
+        $this->assertSelectorTextContains('.sylius-table-column-title', 'Title');
+        $this->assertSelectorTextContains('.sylius-table-column-authorName', 'Author name');
+        $this->assertSelectorTextContains('.sylius-table-column-actions', 'Actions');
 
         // Validate Table data
-        self::assertSelectorTextContains('tr.item:first-child', 'Carrie');
-        self::assertSelectorTextContains('tr.item:first-child', 'Stephen King');
-        self::assertSelectorExists('tr.item:first-child [data-bs-title=Show]');
-        self::assertSelectorExists('tr.item:first-child [data-bs-title=Edit]');
-        self::assertSelectorExists('tr.item:first-child [data-bs-title=Delete]');
+        $this->assertSelectorTextContains('tr.item:first-child', 'Carrie');
+        $this->assertSelectorTextContains('tr.item:first-child', 'Stephen King');
+        $this->assertSelectorExists('tr.item:first-child [data-bs-title=Show]');
+        $this->assertSelectorExists('tr.item:first-child [data-bs-title=Edit]');
+        $this->assertSelectorExists('tr.item:first-child [data-bs-title=Delete]');
 
-        self::assertSelectorTextContains('tr.item:last-child', 'The Shining');
-        self::assertSelectorTextContains('tr.item:last-child', 'Stephen King');
-        self::assertSelectorExists('tr.item:last-child [data-bs-title=Show]');
-        self::assertSelectorExists('tr.item:last-child [data-bs-title=Edit]');
-        self::assertSelectorExists('tr.item:last-child [data-bs-title=Delete]');
+        $this->assertSelectorTextContains('tr.item:last-child', 'The Shining');
+        $this->assertSelectorTextContains('tr.item:last-child', 'Stephen King');
+        $this->assertSelectorExists('tr.item:last-child [data-bs-title=Show]');
+        $this->assertSelectorExists('tr.item:last-child [data-bs-title=Edit]');
+        $this->assertSelectorExists('tr.item:last-child [data-bs-title=Delete]');
     }
 
     public function testBrowsingBooksWithoutGrid(): void
@@ -114,10 +111,10 @@ final class BookTest extends WebTestCase
 
         $this->client->request('GET', '/admin/books/withoutGrid');
 
-        self::assertResponseIsSuccessful();
+        $this->assertResponseIsSuccessful();
 
         // Validate Header
-        self::assertSelectorTextContains('[data-test-page-title]', 'Books');
+        $this->assertSelectorTextContains('[data-test-page-title]', 'Books');
     }
 
     public function testSortingBooks(): void
@@ -137,11 +134,11 @@ final class BookTest extends WebTestCase
         $link = $crawler->filter('.sylius-table-column-title a')->link();
         $this->client->request('GET', $link->getUri());
 
-        self::assertResponseIsSuccessful();
+        $this->assertResponseIsSuccessful();
 
         // Validate it's sorted by title desc
-        self::assertSelectorTextContains('tr.item:first-child', 'The Shining');
-        self::assertSelectorTextContains('tr.item:last-child', 'Carrie');
+        $this->assertSelectorTextContains('tr.item:first-child', 'The Shining');
+        $this->assertSelectorTextContains('tr.item:last-child', 'Carrie');
     }
 
     public function testFilteringBooks(): void
@@ -162,20 +159,20 @@ final class BookTest extends WebTestCase
             'criteria[search][value]' => 'Shin',
         ], method: 'GET');
 
-        self::assertResponseIsSuccessful();
+        $this->assertResponseIsSuccessful();
 
-        self::assertSelectorCount(1, 'tr.item');
-        self::assertSelectorTextContains('tr.item:first-child', 'The Shining');
+        $this->assertSelectorCount(1, 'tr.item');
+        $this->assertSelectorTextContains('tr.item:first-child', 'The Shining');
     }
 
     public function testAddingBookContent(): void
     {
         $this->client->request('GET', '/admin/books/new');
 
-        self::assertResponseIsSuccessful();
+        $this->assertResponseIsSuccessful();
 
-        self::assertInputValueSame('sylius_resource[title]', '');
-        self::assertInputValueSame('sylius_resource[authorName]', '');
+        $this->assertInputValueSame('sylius_resource[title]', '');
+        $this->assertInputValueSame('sylius_resource[authorName]', '');
     }
 
     public function testAddingBook(): void
@@ -187,18 +184,18 @@ final class BookTest extends WebTestCase
             'sylius_resource[authorName]' => 'Stephen King',
         ]);
 
-        self::assertResponseRedirects(expectedCode: Response::HTTP_FOUND);
+        $this->assertResponseRedirects(expectedCode: Response::HTTP_FOUND);
 
         $this->client->request('GET', '/admin/books');
 
         // Test flash message
-        self::assertSelectorTextContains('[data-test-sylius-flash-message]', 'Book has been successfully created.');
+        $this->assertSelectorTextContains('[data-test-sylius-flash-message]', 'Book has been successfully created.');
 
         /** @var Proxy<Book> $book */
         $book = BookFactory::find(['title' => 'The Shining']);
 
-        self::assertSame('The Shining', $book->getTitle());
-        self::assertSame('Stephen King', $book->getAuthorName());
+        $this->assertSame('The Shining', $book->getTitle());
+        $this->assertSame('Stephen King', $book->getAuthorName());
     }
 
     public function testValidationErrorsWhenAddingBook(): void
@@ -209,11 +206,11 @@ final class BookTest extends WebTestCase
             'sylius_resource[authorName]' => null,
         ]);
 
-        self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
-        self::assertSelectorTextContains('[data-test-form-error-alert] .alert-title', 'Error');
-        self::assertSelectorTextContains('[data-test-form-error-alert] .text-secondary', 'This form contains errors.');
-        self::assertSelectorTextContains('#sylius_resource_title + .invalid-feedback', 'This value should not be blank.');
-        self::assertSelectorTextContains('#sylius_resource_authorName + .invalid-feedback', 'This value should not be blank.');
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $this->assertSelectorTextContains('[data-test-form-error-alert] .alert-title', 'Error');
+        $this->assertSelectorTextContains('[data-test-form-error-alert] .text-secondary', 'This form contains errors.');
+        $this->assertSelectorTextContains('#sylius_resource_title + .invalid-feedback', 'This value should not be blank.');
+        $this->assertSelectorTextContains('#sylius_resource_authorName + .invalid-feedback', 'This value should not be blank.');
     }
 
     public function testEditingBookContent(): void
@@ -225,10 +222,10 @@ final class BookTest extends WebTestCase
 
         $this->client->request('GET', sprintf('/admin/books/%s/edit', $book->getId()));
 
-        self::assertResponseIsSuccessful();
+        $this->assertResponseIsSuccessful();
 
-        self::assertInputValueSame('sylius_resource[title]', 'The Shining');
-        self::assertInputValueSame('sylius_resource[authorName]', 'Stephen King');
+        $this->assertInputValueSame('sylius_resource[title]', 'The Shining');
+        $this->assertInputValueSame('sylius_resource[authorName]', 'Stephen King');
     }
 
     public function testEditingBook(): void
@@ -272,11 +269,11 @@ final class BookTest extends WebTestCase
             'sylius_resource[authorName]' => null,
         ]);
 
-        self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
-        self::assertSelectorTextContains('[data-test-form-error-alert] .alert-title', 'Error');
-        self::assertSelectorTextContains('[data-test-form-error-alert] .text-secondary', 'This form contains errors.');
-        self::assertSelectorTextContains('#sylius_resource_title + .invalid-feedback', 'This value should not be blank.');
-        self::assertSelectorTextContains('#sylius_resource_authorName + .invalid-feedback', 'This value should not be blank.');
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $this->assertSelectorTextContains('[data-test-form-error-alert] .alert-title', 'Error');
+        $this->assertSelectorTextContains('[data-test-form-error-alert] .text-secondary', 'This form contains errors.');
+        $this->assertSelectorTextContains('#sylius_resource_title + .invalid-feedback', 'This value should not be blank.');
+        $this->assertSelectorTextContains('#sylius_resource_authorName + .invalid-feedback', 'This value should not be blank.');
     }
 
     public function testRemovingBook(): void
@@ -291,12 +288,12 @@ final class BookTest extends WebTestCase
 
         $this->client->submit($deleteButton->form());
 
-        self::assertResponseRedirects();
+        $this->assertResponseRedirects();
 
         $this->client->request('GET', '/admin/books');
 
         // Test flash message
-        self::assertSelectorTextContains('[data-test-sylius-flash-message]', 'Book has been successfully deleted.');
+        $this->assertSelectorTextContains('[data-test-sylius-flash-message]', 'Book has been successfully deleted.');
 
         $this->assertCount(0,  BookFactory::all());
     }

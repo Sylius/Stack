@@ -9,14 +9,11 @@ use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use Zenstruck\Foundry\Test\Factories;
-use Zenstruck\Foundry\Test\ResetDatabase;
+use Zenstruck\Foundry\Attribute\ResetDatabase;
 
+#[ResetDatabase]
 final class ConferenceTest extends WebTestCase
 {
-    use Factories;
-    use ResetDatabase;
-
     private KernelBrowser $client;
 
     protected function setUp(): void
@@ -49,30 +46,30 @@ final class ConferenceTest extends WebTestCase
 
         $this->client->request('GET', '/admin/conferences');
 
-        self::assertResponseIsSuccessful();
+        $this->assertResponseIsSuccessful();
 
         // Validate Header
-        self::assertSelectorTextContains('[data-test-page-title]', 'Conferences');
-        self::assertSelectorExists('a:contains("Create")');
+        $this->assertSelectorTextContains('[data-test-page-title]', 'Conferences');
+        $this->assertSelectorExists('a:contains("Create")');
 
         // Validate Table header
-        self::assertSelectorTextContains('.sylius-table-column-name', 'Name');
-        self::assertSelectorTextContains('.sylius-table-column-startsAt', 'Starts at');
-        self::assertSelectorTextContains('.sylius-table-column-endsAt', 'Ends at');
-        self::assertSelectorTextContains('.sylius-table-column-actions', 'Actions');
+        $this->assertSelectorTextContains('.sylius-table-column-name', 'Name');
+        $this->assertSelectorTextContains('.sylius-table-column-startsAt', 'Starts at');
+        $this->assertSelectorTextContains('.sylius-table-column-endsAt', 'Ends at');
+        $this->assertSelectorTextContains('.sylius-table-column-actions', 'Actions');
 
         // Validate Table data
-        self::assertSelectorTextContains('tr.item:first-child', 'SyliusCon 2024');
-        self::assertSelectorTextContains('tr.item:first-child', '2024-11-13 09:00:00');
-        self::assertSelectorTextContains('tr.item:first-child', '2024-11-13 18:00:00');
-        self::assertSelectorExists('tr.item:first-child [data-bs-title=Edit]');
-        self::assertSelectorExists('tr.item:first-child [data-bs-title=Delete]');
+        $this->assertSelectorTextContains('tr.item:first-child', 'SyliusCon 2024');
+        $this->assertSelectorTextContains('tr.item:first-child', '2024-11-13 09:00:00');
+        $this->assertSelectorTextContains('tr.item:first-child', '2024-11-13 18:00:00');
+        $this->assertSelectorExists('tr.item:first-child [data-bs-title=Edit]');
+        $this->assertSelectorExists('tr.item:first-child [data-bs-title=Delete]');
 
-        self::assertSelectorTextContains('tr.item:last-child', 'SyliusCon 2023');
-        self::assertSelectorTextContains('tr.item:last-child', '2023-11-03 09:00:00');
-        self::assertSelectorTextContains('tr.item:last-child', '2023-11-03 18:00:00');
-        self::assertSelectorExists('tr.item:last-child [data-bs-title=Edit]');
-        self::assertSelectorExists('tr.item:last-child [data-bs-title=Delete]');
+        $this->assertSelectorTextContains('tr.item:last-child', 'SyliusCon 2023');
+        $this->assertSelectorTextContains('tr.item:last-child', '2023-11-03 09:00:00');
+        $this->assertSelectorTextContains('tr.item:last-child', '2023-11-03 18:00:00');
+        $this->assertSelectorExists('tr.item:last-child [data-bs-title=Edit]');
+        $this->assertSelectorExists('tr.item:last-child [data-bs-title=Delete]');
     }
 
     public function testAddingConferenceContent(): void
@@ -80,9 +77,9 @@ final class ConferenceTest extends WebTestCase
         $this->client->request('GET', '/admin/conferences/new');
 
         // Test header
-        self::assertSelectorTextContains('[data-test-page-title]', 'New conference');
-        self::assertSelectorExists('[data-test-icon="tabler:plus"]');
-        self::assertSelectorTextContains('[data-test-subheader]', 'Managing your conferences');
+        $this->assertSelectorTextContains('[data-test-page-title]', 'New conference');
+        $this->assertSelectorExists('[data-test-icon="tabler:plus"]');
+        $this->assertSelectorTextContains('[data-test-subheader]', 'Managing your conferences');
     }
 
     public function testAddingConference(): void
@@ -95,18 +92,18 @@ final class ConferenceTest extends WebTestCase
             'conference[endsAt]' => '2024-11-13T18:00',
         ]);
 
-        self::assertResponseRedirects(expectedCode: Response::HTTP_FOUND);
+        $this->assertResponseRedirects(expectedCode: Response::HTTP_FOUND);
 
         $this->client->request('GET', '/admin/conferences');
 
         // Test flash message
-        self::assertSelectorTextContains('[data-test-sylius-flash-message]', 'Conference has been successfully created.');
+        $this->assertSelectorTextContains('[data-test-sylius-flash-message]', 'Conference has been successfully created.');
 
         $conference = ConferenceFactory::find(['name' => 'SyliusCon 2024']);
 
-        self::assertSame('SyliusCon 2024', $conference->getName());
-        self::assertSame('2024-11-13 09:00', $conference->getStartsAt()?->format('Y-m-d H:i'));
-        self::assertSame('2024-11-13 18:00', $conference->getEndsAt()?->format('Y-m-d H:i'));
+        $this->assertSame('SyliusCon 2024', $conference->getName());
+        $this->assertSame('2024-11-13 09:00', $conference->getStartsAt()?->format('Y-m-d H:i'));
+        $this->assertSame('2024-11-13 18:00', $conference->getEndsAt()?->format('Y-m-d H:i'));
     }
 
     public function testEditingConferenceContent(): void
@@ -118,9 +115,9 @@ final class ConferenceTest extends WebTestCase
         $this->client->request('GET', sprintf('/admin/conferences/%s/edit', $conference->getId()));
 
         // Test header
-        self::assertSelectorTextContains('[data-test-page-title]', 'Edit conference');
-        self::assertSelectorExists('[data-test-icon="tabler:pencil"]');
-        self::assertSelectorTextContains('[data-test-subheader]', 'Managing your conferences');
+        $this->assertSelectorTextContains('[data-test-page-title]', 'Edit conference');
+        $this->assertSelectorExists('[data-test-icon="tabler:pencil"]');
+        $this->assertSelectorTextContains('[data-test-subheader]', 'Managing your conferences');
     }
 
     public function testEditingConference(): void
@@ -137,18 +134,18 @@ final class ConferenceTest extends WebTestCase
             'conference[endsAt]' => '2024-11-13T18:00',
         ]);
 
-        self::assertResponseRedirects(expectedCode: Response::HTTP_FOUND);
+        $this->assertResponseRedirects(expectedCode: Response::HTTP_FOUND);
 
         $this->client->request('GET', '/admin/conferences');
 
         // Test flash message
-        self::assertSelectorTextContains('[data-test-sylius-flash-message]', 'Conference has been successfully updated.');
+        $this->assertSelectorTextContains('[data-test-sylius-flash-message]', 'Conference has been successfully updated.');
 
         $conference = ConferenceFactory::find(['name' => 'SyliusCon 2024']);
 
-        self::assertSame('SyliusCon 2024', $conference->getName());
-        self::assertSame('2024-11-13 09:00', $conference->getStartsAt()?->format('Y-m-d H:i'));
-        self::assertSame('2024-11-13 18:00', $conference->getEndsAt()?->format('Y-m-d H:i'));
+        $this->assertSame('SyliusCon 2024', $conference->getName());
+        $this->assertSame('2024-11-13 09:00', $conference->getStartsAt()?->format('Y-m-d H:i'));
+        $this->assertSame('2024-11-13 18:00', $conference->getEndsAt()?->format('Y-m-d H:i'));
     }
 
     public function testValidationErrorsWhenEditingConference(): void
@@ -162,11 +159,11 @@ final class ConferenceTest extends WebTestCase
             'conference[endsAt]' => null,
         ]);
 
-        self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
-        self::assertSelectorTextContains('[data-test-form-error-alert] .alert-title', 'Error');
-        self::assertSelectorTextContains('[data-test-form-error-alert] .text-secondary', 'This form contains errors.');
-        self::assertSelectorTextContains('#conference_name + .invalid-feedback', 'This value should not be blank.');
-        self::assertSelectorTextContains('#conference_startsAt + .invalid-feedback', 'This value should not be blank.');
-        self::assertSelectorTextContains('#conference_endsAt + .invalid-feedback', 'This value should not be blank.');
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $this->assertSelectorTextContains('[data-test-form-error-alert] .alert-title', 'Error');
+        $this->assertSelectorTextContains('[data-test-form-error-alert] .text-secondary', 'This form contains errors.');
+        $this->assertSelectorTextContains('#conference_name + .invalid-feedback', 'This value should not be blank.');
+        $this->assertSelectorTextContains('#conference_startsAt + .invalid-feedback', 'This value should not be blank.');
+        $this->assertSelectorTextContains('#conference_endsAt + .invalid-feedback', 'This value should not be blank.');
     }
 }
