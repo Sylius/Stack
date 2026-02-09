@@ -28,7 +28,7 @@ jobs:
             DATABASE_URL: "pgsql://postgres:postgres@127.0.0.1/sylius_stack?charset=utf8&serverVersion=${{ matrix.postgres }}"
         steps:
             -   name: "Checkout"
-                uses: actions/checkout@v3
+                uses: actions/checkout@v6
 
             -   name: "Setup PHP"
                 uses: shivammathur/setup-php@v2
