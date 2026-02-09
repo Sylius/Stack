@@ -12,13 +12,11 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Zenstruck\Foundry\Persistence\Proxy;
-use Zenstruck\Foundry\Test\Factories;
-use Zenstruck\Foundry\Test\ResetDatabase;
+use Zenstruck\Foundry\Attribute\ResetDatabase;
 
+#[ResetDatabase]
 final class FrenchTranslatedUiTest extends WebTestCase
 {
-    Use Factories;
-    use ResetDatabase;
     use MarkTestSkippedTrait;
 
     private KernelBrowser $client;
