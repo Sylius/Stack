@@ -33,7 +33,7 @@ class Book implements ResourceInterface
 ```
 {% endcode %}
 
-## Register your resource using the Resource attribute
+## Register your resource using the AsResource attribute
 
 Next, add the ```#[AsResource]``` PHP attribute to your Doctrine entity to register it as a Sylius resource.
 
