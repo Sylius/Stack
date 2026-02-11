@@ -82,6 +82,8 @@ final class SpeakerGrid extends AbstractGrid
             ->addActionGroup(
                 BulkActionGroup::create(
                     DeleteAction::create(),
+                    Action::create('redirect_to_speaker_talks', 'redirect_to_speaker_talks')
+                        ->setLabel('View talks'),
                 ),
             )
         ;
