@@ -23,7 +23,7 @@ return function (ContainerConfigurator $configurator): void {
     $services = $configurator->services();
 
     $services->set('sylius_admin_ui.knp.menu_builder', MenuBuilder::class)
-        ->args([service('knp_menu.factory')])
+        ->args([service('knp_menu.factory'), service('event_dispatcher')])
         ->tag(name: 'knp_menu.menu_builder', attributes: ['method' => 'createMenu', 'alias' => 'sylius_admin_ui.menu.sidebar'])
     ;
     $services->alias(MenuBuilderInterface::class, 'sylius_admin_ui.knp.menu_builder');

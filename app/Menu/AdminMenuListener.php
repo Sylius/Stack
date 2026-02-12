@@ -14,19 +14,16 @@ declare(strict_types=1);
 namespace App\Menu;
 
 use Knp\Menu\ItemInterface;
-use Sylius\AdminUi\Knp\Menu\MenuBuilderInterface;
-use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+use Sylius\AdminUi\Knp\Menu\Event\MenuBuilderEvent;
+use Sylius\AdminUi\Knp\Menu\MenuBuilder;
+use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
-#[AsDecorator(decorates: 'sylius_admin_ui.knp.menu_builder')]
-final class AdminMenuBuilder implements MenuBuilderInterface
+#[AsEventListener(MenuBuilder::EVENT_NAME)]
+final class AdminMenuListener
 {
-    public function __construct(private MenuBuilderInterface $menuBuilder)
+    public function __invoke(MenuBuilderEvent $event): void
     {
-    }
-
-    public function createMenu(array $options): ItemInterface
-    {
-        $menu = $this->menuBuilder->createMenu($options);
+        $menu = $event->getMenu();
 
         $menu
             ->addChild('dashboard', [
@@ -38,8 +35,6 @@ final class AdminMenuBuilder implements MenuBuilderInterface
 
         $this->addLibrarySubMenu($menu);
         $this->addConfigurationSubMenu($menu);
-
-        return $menu;
     }
 
     private function addLibrarySubMenu(ItemInterface $menu): void

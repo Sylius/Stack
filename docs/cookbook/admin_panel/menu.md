@@ -10,29 +10,25 @@
 
 </div>
 
-To customize the admin menu, you need to decorate the `sylius_admin_ui.knp.menu_builder` service.
+To customize the admin menu, you need to listen for the `sylius_admin_ui.menu.event.main` event. This way, you can implement
+multiple listeners e.g. in different bounded contexts of your application.
 
 ```php
 declare(strict_types=1);
 
 namespace App\Menu;
 
-use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
-use Sylius\AdminUi\Knp\Menu\MenuBuilderInterface;
-use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+use Sylius\AdminUi\Knp\Menu\Event\MenuBuilderEvent;
+use Sylius\AdminUi\Knp\Menu\MenuBuilder;
+use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
-#[AsDecorator(decorates: 'sylius_admin_ui.knp.menu_builder')]
-final readonly class MenuBuilder implements MenuBuilderInterface
+#[AsEventListener(MenuBuilder::EVENT_NAME)]
+final readonly class MenuListener
 {
-    public function __construct(
-        private readonly FactoryInterface $factory,
-    ) {
-    }
-
-    public function createMenu(array $options): ItemInterface
+    public function __invoke(MenuBuilderEvent $event): void
     {
-        $menu = $this->factory->createItem('root');
+        $menu = $event->getMenu();
 
         $menu
             ->addChild('dashboard', [
@@ -41,8 +37,6 @@ final readonly class MenuBuilder implements MenuBuilderInterface
             ->setLabel('sylius.ui.dashboard')
             ->setLabelAttribute('icon', 'tabler:dashboard')
         ;
-
-        return $menu;
     }
 }
 ```
@@ -59,18 +53,16 @@ Now you can add submenu items:
 
 ```php
 // ...
-#[AsDecorator(decorates: 'sylius_admin_ui.knp.menu_builder')]
-final readonly class MenuBuilder implements MenuBuilderInterface
+#[AsEventListener(MenuBuilder::EVENT_NAME)]
+final readonly class MenuListener
 {
     // ...
     
-    public function createMenu(array $options): ItemInterface
+    public function __invoke(MenuBuilderEvent $event): void
     {
-        $menu = $this->factory->createItem('root');
+        $menu = $event->getMenu();
         // ...
         $this->addLibrarySubMenu($menu);
-
-        return $menu;
     }
     
     private function addLibrarySubMenu(ItemInterface $menu): void
