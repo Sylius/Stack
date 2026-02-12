@@ -8,7 +8,7 @@ In this example, we'll create a CSV export.
 
 ## The responder
 
-First, create the responder using the [https://github.com/portphp/csv](portphp/csv) package.
+First, create the responder using the [https://github.com/thephpleague/csv](league/csv) package.
 
 {% code title="src/Responder/ExportGridToCsvResponder.php" lineNumbers="true" %}
 ```php
@@ -18,8 +18,8 @@ declare(strict_types=1);
 
 namespace App\Responder;
 
+use League\Csv\Writer;
 use Pagerfanta\PagerfantaInterface;
-use Port\Csv\CsvWriter;
 use Sylius\Component\Grid\Definition\Field;
 use Sylius\Component\Grid\Renderer\GridRendererInterface;
 use Sylius\Component\Grid\View\GridViewInterface;
@@ -54,14 +54,11 @@ final readonly class ExportGridToCsvResponder implements ResponderInterface
                 throw new \RuntimeException('Unable to open output stream.');
             }
 
-            $writer = new CsvWriter();
-            $writer->setStream($output);
+            $writer = Writer::from($output);
 
             $fields = $this->sortFields($data->getDefinition()->getFields());
             $this->writeHeaders($writer, $fields);
             $this->writeRows($writer, $fields, $data);
-
-            $writer->finish();
         });
 
         $response->headers->set('Content-Type', 'text/csv; charset=UTF-8');
@@ -73,17 +70,17 @@ final readonly class ExportGridToCsvResponder implements ResponderInterface
     /**
      * @param Field[] $fields
      */
-    private function writeHeaders(CsvWriter $writer, array $fields): void
+    private function writeHeaders(Writer $writer, array $fields): void
     {
         $labels = array_map(fn (Field $field) => $this->translator->trans($field->getLabel()), $fields);
 
-        $writer->writeItem($labels);
+        $writer->insertOne($labels);
     }
 
     /**
      * @param Field[] $fields
      */
-    private function writeRows(CsvWriter $writer, array $fields, GridViewInterface $gridView): void
+    private function writeRows(Writer $writer, array $fields, GridViewInterface $gridView): void
     {
         /** @var PagerfantaInterface $paginator */
         $paginator = $gridView->getData();
@@ -99,21 +96,21 @@ final readonly class ExportGridToCsvResponder implements ResponderInterface
      * @param Field[] $fields
      * @param iterable<object> $pageResults
      */
-    private function writePageResults(CsvWriter $writer, array $fields, GridViewInterface $gridView, iterable $pageResults): void
+    private function writePageResults(Writer $writer, array $fields, GridViewInterface $gridView, iterable $pageResults): void
     {
         foreach ($pageResults as $resource) {
             $rows = [];
             foreach ($fields as $field) {
                 $rows[] = $this->getFieldValue($gridView, $field, $resource);
             }
-            $writer->writeItem($rows);
+            $writer->insertOne($rows);
         }
     }
 
     private function getFieldValue(GridViewInterface $gridView, Field $field, object $data): string
     {
         $renderedData = $this->gridRenderer->renderField($gridView, $field, $data);
-        $renderedData = str_replace(PHP_EOL, '', $renderedData);
+        $renderedData = str_replace(\PHP_EOL, '', $renderedData);
 
         return trim(strip_tags($renderedData));
     }

@@ -20,9 +20,9 @@
         "doctrine/orm": "^3.3 || ^4.0",
         "knplabs/knp-menu-bundle": "^3.0",
         "laminas/laminas-stdlib": "^3.18",
+        "league/csv": "^9.0",
         "pagerfanta/doctrine-orm-adapter": "^4.6",
         "pagerfanta/twig": "^4.6",
-        "portphp/csv": "^2.0",
         "sylius/grid-bundle": "^1.13 || ^1.15@alpha",
         "sylius/resource-bundle": "^1.13 || ^1.14@alpha",
         "symfony/asset": "^6.4 || ^7.4 || ^8.0",
@@ -110,7 +110,7 @@
     },
     "extra": {
         "symfony": {
-            "require": "7.4.*"
+            "require": "8.0.*"
         }
     },
     "scripts": {
