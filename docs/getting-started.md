@@ -20,6 +20,14 @@ symfony new my_project_directory --version="8.0.*" --webapp
 cd my_project_directory
 ````
 
+### Allow Contrib Recipes
+
+Sylius Stack recipes are hosted in the `symfony/recipes-contrib` repository. To ensure Symfony Flex installs them automatically, enable contrib recipes before requiring the packages:
+
+```bash
+composer config extra.symfony.allow-contrib true
+```
+
 ### Install the package using Composer and Symfony Flex
 
 Go to your project directory and run the following command:
