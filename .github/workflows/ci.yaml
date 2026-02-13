@@ -15,7 +15,7 @@ jobs:
             fail-fast: false
             matrix:
                 php: [ "8.2", "8.3" ]
-                postgres: ["14.6"]
+                postgres: [ "16" ]
                 symfony: [ "^6.4", "^7.4" ]
                 include:
                     - php: '8.4'
@@ -26,6 +26,20 @@ jobs:
             APP_ENV: test
             COMPOSER_ROOT_VERSION: "dev-main"
             DATABASE_URL: "pgsql://postgres:postgres@127.0.0.1/sylius_stack?charset=utf8&serverVersion=${{ matrix.postgres }}"
+        services:
+            postgres:
+                image: postgres:${{ matrix.postgres }}
+                env:
+                    POSTGRES_DB: sylius_stack
+                    POSTGRES_USER: postgres
+                    POSTGRES_PASSWORD: postgres
+                ports:
+                    - 5432:5432
+                options: >-
+                    --health-cmd="pg_isready -U postgres"
+                    --health-interval=10s
+                    --health-timeout=5s
+                    --health-retries=5            
         steps:
             -   name: "Checkout"
                 uses: actions/checkout@v3
@@ -39,12 +53,6 @@ jobs:
 
             -   name: Shutdown default MySQL
                 run: sudo service mysql stop
-
-            -   name: Setup PostgreSQL
-                uses: harmon758/postgresql-action@v1
-                with:
-                    postgresql version: "${{ matrix.postgres }}"
-                    postgresql password: "postgres"
 
             -   name: "Restrict packages' versions"
                 run: composer config extra.symfony.require "${{ matrix.symfony }}"
