@@ -15,6 +15,7 @@ namespace Sylius\TwigHooks\Twig\TokenParser;
 
 use Sylius\TwigHooks\Twig\Node\HookNode;
 use Twig\Node\Node;
+use Twig\Node\Nodes;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 
@@ -26,11 +27,21 @@ final class HookTokenParser extends AbstractTokenParser
     {
         $lineno = $token->getLine();
         $stream = $this->parser->getStream();
-        $hooksNames = $this->parser->getExpressionParser()->parseExpression();
+        if (method_exists($this->parser, 'parseExpression')) {
+            $hooksNames = $this->parser->parseExpression();
+        } else {
+            // Remove when Twig 3.21 support is dropped
+            $hooksNames = $this->parser->getExpressionParser()->parseExpression();
+        }
 
         $hookContext = null;
         if ($stream->nextIf(Token::NAME_TYPE, 'with')) {
-            $hookContext = $this->parser->getExpressionParser()->parseMultitargetExpression();
+            if (method_exists($this->parser, 'parseExpression')) {
+                $hookContext = $this->parseMultitargetExpression();
+            } else {
+                // Remove when Twig 3.21 support is dropped
+                $hookContext = $this->parser->getExpressionParser()->parseMultitargetExpression();
+            }
         }
 
         $only = false;
@@ -40,11 +51,29 @@ final class HookTokenParser extends AbstractTokenParser
 
         $stream->expect(Token::BLOCK_END_TYPE);
 
+        if (class_exists(\Twig\Node\Expression\FunctionNode\EnumCasesFunction::class)) {
+            return new HookNode($hooksNames, $hookContext, $only, $lineno);
+        }
+
+        // Remove when twig < 3.12 support is dropped
         return new HookNode($hooksNames, $hookContext, $only, $lineno, $this->getTag());
     }
 
     public function getTag(): string
     {
         return self::TAG;
+    }
+
+    private function parseMultitargetExpression(): Nodes
+    {
+        $targets = [];
+        while (true) {
+            $targets[] = $this->parser->parseExpression();
+            if (!$this->parser->getStream()->nextIf(Token::PUNCTUATION_TYPE, ',')) {
+                break;
+            }
+        }
+
+        return new Nodes($targets);
     }
 }
