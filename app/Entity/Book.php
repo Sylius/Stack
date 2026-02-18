@@ -57,6 +57,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[SyliusCrudRoutes(
     alias: 'app.book',
     path: '/admin/legacy/books',
+    form: BookType::class,
     section: 'admin_legacy',
     redirect: 'update',
     templates: '@SyliusAdminUi/crud',

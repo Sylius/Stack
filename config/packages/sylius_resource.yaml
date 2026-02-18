@@ -10,7 +10,6 @@ sylius_resource:
 
     # Configure your resources
     resources:
-        app.book:
-            classes:
-                model: App\Entity\Book
-                form: App\Form\BookType
+        #app.book:
+            #classes:
+                #model: App\Entity\Book
