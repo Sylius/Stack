@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\TwigHooks\Unit\Command;
+namespace Tests\Sylius\TwigHooks\Unit\Console\Command;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Sylius\TwigHooks\Command\DebugTwigHooksCommand;
+use Sylius\TwigHooks\Console\Command\DebugTwigHooksCommand;
 use Sylius\TwigHooks\Hookable\AbstractHookable;
 use Sylius\TwigHooks\Hookable\Merger\HookableMerger;
 use Sylius\TwigHooks\Registry\HookablesRegistry;

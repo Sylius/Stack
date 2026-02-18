@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Sylius\TwigHooks\Command\DebugTwigHooksCommand;
+use Sylius\TwigHooks\Console\Command\DebugTwigHooksCommand;
 
 return static function (ContainerConfigurator $configurator): void {
     $services = $configurator->services();

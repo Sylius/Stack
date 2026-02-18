@@ -79,7 +79,7 @@ class HookablesRegistry
      *
      * @return array<AbstractHookable>
      */
-    public function getAllFor(string|array $hooksNames): array
+    public function getFor(string|array $hooksNames): array
     {
         $hooksNames = is_string($hooksNames) ? [$hooksNames] : $hooksNames;
         $hookables = $this->mergeHookables($hooksNames);

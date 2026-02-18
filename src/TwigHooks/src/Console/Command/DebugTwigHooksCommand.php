@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Sylius\TwigHooks\Command;
+namespace Sylius\TwigHooks\Console\Command;
 
 use Sylius\TwigHooks\Hookable\AbstractHookable;
 use Sylius\TwigHooks\Hookable\DisabledHookable;
@@ -29,7 +29,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\VarExporter\VarExporter;
 
-#[AsCommand(name: 'sylius:debug:twig-hooks', description: 'Display hooks and their hookables')]
+#[AsCommand(name: 'sylius:debug:twig-hooks', description: 'Debug twig hooks configuration.')]
 final class DebugTwigHooksCommand extends Command
 {
     public function __construct(
@@ -142,7 +142,7 @@ EOF
         $rows = [];
 
         foreach ($hookNames as $hookName) {
-            $hookables = $this->hookablesRegistry->getAllFor($hookName);
+            $hookables = $this->hookablesRegistry->getFor($hookName);
             $enabledCount = \count(array_filter(
                 $hookables,
                 static fn (AbstractHookable $hookable): bool => !$hookable instanceof DisabledHookable,
@@ -167,7 +167,7 @@ EOF
     {
         $io->title($hookName);
 
-        $hookables = $this->hookablesRegistry->getAllFor($hookName);
+        $hookables = $this->hookablesRegistry->getFor($hookName);
         if (!$showAll) {
             $hookables = array_filter(
                 $hookables,
