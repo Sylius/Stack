@@ -8,6 +8,7 @@ app:
         book: Buch
         books: Bücher
         browsing_speakers: Referenten durchsuchen
+        category: Kategorie
         company_name: Firmenname
         conference: Konferenz
         conferences: Konferenzen
