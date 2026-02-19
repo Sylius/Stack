@@ -3,3 +3,15 @@ index:
     controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
     defaults:
         template: base.html.twig
+
+admin_cms_simple_page:
+    path: /admin/cms/page/simple
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults:
+        template: 'cms/page/simple.html.twig'
+
+admin_cms_page_with_hooks:
+    path: /admin/cms/page/with_hooks
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults:
+        template: 'cms/page/with_hooks.html.twig'
