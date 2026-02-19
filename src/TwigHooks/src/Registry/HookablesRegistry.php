@@ -44,6 +44,14 @@ class HookablesRegistry
     }
 
     /**
+     * @return array<string>
+     */
+    public function getHookNames(): array
+    {
+        return array_keys($this->hookables);
+    }
+
+    /**
      * @param string|array<string> $hooksNames
      *
      * @return array<AbstractHookable>
@@ -57,6 +65,24 @@ class HookablesRegistry
                 static fn (AbstractHookable $hookable): bool => !$hookable instanceof DisabledHookable,
             ),
         );
+
+        $priorityQueue = new SplPriorityQueue();
+        foreach ($hookables as $hookable) {
+            $priorityQueue->insert($hookable, $hookable->priority());
+        }
+
+        return $priorityQueue->toArray();
+    }
+
+    /**
+     * @param string|array<string> $hooksNames
+     *
+     * @return array<AbstractHookable>
+     */
+    public function getFor(string|array $hooksNames): array
+    {
+        $hooksNames = is_string($hooksNames) ? [$hooksNames] : $hooksNames;
+        $hookables = $this->mergeHookables($hooksNames);
 
         $priorityQueue = new SplPriorityQueue();
         foreach ($hookables as $hookable) {
