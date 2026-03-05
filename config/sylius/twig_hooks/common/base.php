@@ -22,6 +22,14 @@ return static function (ContainerConfigurator $container): void {
                     'template' => 'base/javascripts/app.html.twig',
                 ],
             ],
+            'sylius_admin.base#metatags' => [
+                'favicon' => [
+                    'template' => 'base/favicon.html.twig',
+                ],
+                'seo_metatags' => [
+                    'template' => 'base/seo_metatags.html.twig',
+                ],
+            ],
         ],
     ]);
 };

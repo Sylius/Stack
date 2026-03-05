@@ -49,3 +49,15 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 {% endcode %}
 {% endtab %}
 {% endtabs %}
+
+{% code title="templates/favicon.html.twig" %}
+```twig
+<link rel="icon" type="image/x-icon" href="{{ asset('images/your_favicon.svg') }}" />
+```
+{% endcode %}
+
+{% code title="templates/seo_metatags.html.twig" %}
+```twig
+<meta name="description" content="Your custom description">
+```
+{% endcode %}
