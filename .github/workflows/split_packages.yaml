@@ -1,43 +1,47 @@
-name: Split Packages
+name: 'Packages Split'
 
 on:
-    push:
-        branches:
-            - main
-        paths:
-            - 'src/**'
-        tags:
-            - '*'
-    workflow_dispatch: ~
+    workflow_dispatch:
+        inputs:
+            branch:
+                description: 'Branch to checkout and split. Ignored if tag is specified. At least one required.'
+                required: false
+                type: string
+            tag:
+                description: 'Tag to checkout and split. Takes priority over branch. At least one required.'
+                required: false
+                type: string
 
 jobs:
-    ci:
-        name: "Continuous Integration"
-        uses: ./.github/workflows/ci.yaml
-    split_monorepo:
-        name: "Split packages"
-        #needs: ci
+    split_packages:
+        name: Split ${{ matrix.package.repository }}
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
             matrix:
                 package:
-                    - { name: 'AdminUi' }
-                    - { name: 'BootstrapAdminUi' }
-                    - { name: 'TwigExtra' }
-                    - { name: 'TwigHooks' }
-                    - { name: 'UiTranslations' }
-        steps:
-            -   uses: actions/checkout@v3
-                with:
-                    fetch-depth: 0
+                    -
+                        directory: src/AdminUi
+                        repository: AdminUi
+                    -
+                        directory: src/BootstrapAdminUi
+                        repository: BootstrapAdminUi
+                    -
+                        directory: src/TwigExtra
+                        repository: TwigExtra
+                    -
+                        directory: src/TwigHooks
+                        repository: TwigHooks
+                    -
+                        directory: src/UiTranslations
+                        repository: UiTranslations
 
-            -   name: Split of ${{ matrix.package.name }}
-                uses: alphpaca/monoplus-split-action@2022.1-beta3
+        steps:
+            -   name: Split package
+                uses: SyliusLabs/SplitPackageAction@v1.1
                 with:
-                    package_path: 'src/${{ matrix.package.name }}'
-                    personal_access_token: ${{ secrets.MONOPLUS_PAT }}
-                    git_username: 'GSadee'
-                    git_email: 'sadowskigp@gmail.com'
-                    repository_owner: "Sylius"
-                    repository_name: "${{ matrix.package.name }}"
+                    directory: ${{ matrix.package.directory }}
+                    repository: ${{ matrix.package.repository }}
+                    branch: ${{ github.event.inputs.branch }}
+                    tag: ${{ github.event.inputs.tag }}
+                    token: ${{ secrets.SPLIT_TOKEN }}
