@@ -11,7 +11,7 @@
   .accordion-item {
     .accordion-header {
       &:hover {
-        background: $gray-100;
+        background: var(--tblr-bg-surface);
       }
     }
     .accordion-body {
