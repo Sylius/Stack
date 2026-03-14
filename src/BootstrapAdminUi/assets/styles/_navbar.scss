@@ -36,7 +36,7 @@
     min-width: 44px;
 }
 .navbar-collapse .nav-link:focus-visible {
-    outline: solid 2px rgb(153, 200, 255);
+    outline: solid 2px var(--tblr-primary);
 }
 .navbar-plus-badge{
     width: 50px;

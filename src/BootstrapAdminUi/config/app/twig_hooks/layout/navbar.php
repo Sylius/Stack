@@ -26,6 +26,9 @@ return static function (ContainerConfigurator $container): void {
             ],
 
             'sylius_admin.common.component.navbar.items' => [
+                'theme_switcher' => [
+                    'template' => '@SyliusBootstrapAdminUi/shared/crud/common/navbar/items/theme_switcher.html.twig',
+                ],
                 'user' => [
                     'template' => '@SyliusBootstrapAdminUi/shared/crud/common/navbar/items/user.html.twig',
                 ],
