@@ -14,6 +14,7 @@
         "symfony/http-kernel": "^6.4 || ^7.4 || ^8.0",
         "symfony/http-client": "^6.4 || ^7.4 || ^8.0",
         "symfony/security-bundle": "^6.4 || ^7.4 || ^8.0",
+        "symfony/stimulus-bundle": "^2.17",
         "symfony/ux-autocomplete": "^2.17",
         "symfony/ux-icons": "^2.20",
         "symfony/ux-live-component": "^2.17"

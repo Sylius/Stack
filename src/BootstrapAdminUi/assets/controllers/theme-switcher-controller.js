@@ -1,10 +1,10 @@
-const toggleButton = document.querySelector('[data-theme-toggle]');
+import { Controller } from '@hotwired/stimulus';
 
-if (toggleButton) {
-    toggleButton.addEventListener('click', () => {
+export default class extends Controller {
+    toggle() {
         const current = document.documentElement.getAttribute('data-bs-theme') || 'light';
         const next = current === 'dark' ? 'light' : 'dark';
         localStorage.setItem('sylius-theme', next);
         document.documentElement.setAttribute('data-bs-theme', next);
-    });
+    }
 }

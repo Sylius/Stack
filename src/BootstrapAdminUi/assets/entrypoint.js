@@ -14,4 +14,3 @@ import './scripts/check-all';
 import './scripts/menu-search';
 
 import './scripts/bootstrap';
-import './scripts/theme-switcher';
