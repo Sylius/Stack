@@ -42,9 +42,10 @@ final class DebugTwigHooksCommand extends Command
     {
         $this
             ->setDefinition([
-                new InputArgument('name', InputArgument::OPTIONAL, 'A hook name or part of the hook name'),
+                new InputArgument('name', InputArgument::OPTIONAL | InputArgument::IS_ARRAY, 'One or more hook names'),
                 new InputOption('all', 'a', InputOption::VALUE_NONE, 'Show all hookables including disabled ones'),
-                new InputOption('config', 'c', InputOption::VALUE_NONE, 'Show hookables configuration'),
+                new InputOption('config', 'c', InputOption::VALUE_NONE, 'Show hookables context, configuration and props'),
+                new InputOption('tree', 't', InputOption::VALUE_NONE, 'Display hooks as a tree'),
             ])
             ->setHelp(
                 <<<'EOF'
@@ -62,13 +63,25 @@ To get specific information about a hook:
 
     <info>php %command.full_name% sylius_admin.product.index</info>
 
+To display the merged result of multiple hooks (as resolved at runtime):
+
+    <info>php %command.full_name% sylius_admin.dashboard.index sylius_admin.common.index</info>
+
 To include disabled hookables:
 
     <info>php %command.full_name% sylius_admin.product.index --all</info>
 
-To show hookables configuration:
+To show hookables context, configuration and props:
 
     <info>php %command.full_name% sylius_admin.product.index --config</info>
+
+To display the full hooks hierarchy as a tree:
+
+    <info>php %command.full_name% sylius_admin.common.create --tree</info>
+
+To display the merged tree of multiple hooks (as resolved at runtime):
+
+    <info>php %command.full_name% sylius_admin.dashboard.index sylius_admin.common.index --tree</info>
 EOF
             );
     }
@@ -83,37 +96,77 @@ EOF
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $name = $input->getArgument('name');
+        /** @var array<string> $names */
+        $names = array_unique((array) $input->getArgument('name'));
         /** @var bool $showAll */
         $showAll = $input->getOption('all');
         /** @var bool $showConfig */
         $showConfig = $input->getOption('config');
+        /** @var bool $showTree */
+        $showTree = $input->getOption('tree');
 
-        $hookNames = $this->hookablesRegistry->getHookNames();
-        sort($hookNames);
+        if ($showTree && $showConfig) {
+            $io->note('The --config option has no effect with --tree and will be ignored.');
+        }
 
-        if (\is_string($name)) {
-            // Exact match - show details
-            if (\in_array($name, $hookNames, true)) {
-                $this->displayHookDetails($io, $name, $showAll, $showConfig);
+        $registeredHookNames = $this->hookablesRegistry->getHookNames();
+        sort($registeredHookNames);
+
+        // Multiple hooks — direct merge
+        if (count($names) > 1) {
+            $unknownNames = array_diff($names, $registeredHookNames);
+            if (0 < count($unknownNames)) {
+                $io->warning(sprintf('Hook(s) not found: "%s".', implode('", "', $unknownNames)));
 
                 return Command::SUCCESS;
             }
 
-            // Partial match - filter and show table or details (case-insensitive)
+            $io->title(implode(', ', $names));
+            if ($showTree) {
+                $this->displayHookTree($output, $names, $showAll);
+            } else {
+                $this->displayHookDetails($io, $names, $showAll, $showConfig);
+            }
+
+            return Command::SUCCESS;
+        }
+
+        // Single hook name
+        if (1 === count($names)) {
+            $singleName = $names[0];
+
+            // Exact match
+            if (in_array($singleName, $registeredHookNames, true)) {
+                $io->title($singleName);
+                if ($showTree) {
+                    $this->displayHookTree($output, [$singleName], $showAll);
+                } else {
+                    $this->displayHookDetails($io, [$singleName], $showAll, $showConfig);
+                }
+
+                return Command::SUCCESS;
+            }
+
+            // Partial match (case-insensitive)
             $filteredHooks = array_filter(
-                $hookNames,
-                static fn (string $hookName): bool => false !== stripos($hookName, $name),
+                $registeredHookNames,
+                static fn (string $hookName): bool => false !== stripos($hookName, $singleName),
             );
 
-            if (0 === \count($filteredHooks)) {
-                $io->warning(\sprintf('No hooks found matching "%s".', $name));
+            if (0 === count($filteredHooks)) {
+                $io->warning(sprintf('No hooks found matching "%s".', $singleName));
 
                 return Command::SUCCESS;
             }
 
-            if (1 === \count($filteredHooks)) {
-                $this->displayHookDetails($io, reset($filteredHooks), $showAll, $showConfig);
+            if (1 === count($filteredHooks)) {
+                $firstHook = reset($filteredHooks);
+                $io->title($firstHook);
+                if ($showTree) {
+                    $this->displayHookTree($output, [$firstHook], $showAll);
+                } else {
+                    $this->displayHookDetails($io, [$firstHook], $showAll, $showConfig);
+                }
 
                 return Command::SUCCESS;
             }
@@ -123,13 +176,13 @@ EOF
             return Command::SUCCESS;
         }
 
-        if (0 === \count($hookNames)) {
+        if (0 === count($registeredHookNames)) {
             $io->warning('No hooks registered.');
 
             return Command::SUCCESS;
         }
 
-        $this->displayHooksTable($io, $hookNames, $showAll);
+        $this->displayHooksTable($io, $registeredHookNames, $showAll);
 
         return Command::SUCCESS;
     }
@@ -143,14 +196,14 @@ EOF
 
         foreach ($hookNames as $hookName) {
             $hookables = $this->hookablesRegistry->getFor($hookName);
-            $enabledCount = \count(array_filter(
+            $enabledCount = count(array_filter(
                 $hookables,
                 static fn (AbstractHookable $hookable): bool => !$hookable instanceof DisabledHookable,
             ));
-            $disabledCount = \count($hookables) - $enabledCount;
+            $disabledCount = count($hookables) - $enabledCount;
 
             $countDisplay = $showAll && $disabledCount > 0
-                ? \sprintf('%d (%d disabled)', \count($hookables), $disabledCount)
+                ? sprintf('%d (%d disabled)', count($hookables), $disabledCount)
                 : (string) $enabledCount;
 
             $rows[] = [
@@ -160,23 +213,24 @@ EOF
         }
 
         $io->table(['Hook', 'Hookables'], $rows);
-        $io->text(\sprintf('Total: %d hooks', \count($hookNames)));
+        $io->text(sprintf('Total: %d hooks', count($hookNames)));
     }
 
-    private function displayHookDetails(SymfonyStyle $io, string $hookName, bool $showAll, bool $showConfig): void
+    /**
+     * @param array<string> $hookNames
+     */
+    private function displayHookDetails(SymfonyStyle $io, array $hookNames, bool $showAll, bool $showConfig): void
     {
-        $io->title($hookName);
+        $hookables = $showAll
+            ? $this->hookablesRegistry->getFor($hookNames)
+            : $this->hookablesRegistry->getEnabledFor($hookNames);
 
-        $hookables = $this->hookablesRegistry->getFor($hookName);
-        if (!$showAll) {
-            $hookables = array_filter(
-                $hookables,
-                static fn (AbstractHookable $hookable): bool => !$hookable instanceof DisabledHookable,
+        if (0 === count($hookables)) {
+            $io->warning(
+                1 === count($hookNames)
+                ? 'No hookables registered for this hook.'
+                : 'No hookables registered for these hooks.',
             );
-        }
-
-        if (0 === \count($hookables)) {
-            $io->warning('No hookables registered for this hook.');
 
             return;
         }
@@ -186,7 +240,9 @@ EOF
             $headers[] = 'Status';
         }
         if ($showConfig) {
+            $headers[] = 'Context';
             $headers[] = 'Configuration';
+            $headers[] = 'Props';
         }
 
         $rows = [];
@@ -203,7 +259,11 @@ EOF
             }
 
             if ($showConfig) {
+                $row[] = $this->formatConfiguration($hookable->context);
                 $row[] = $this->formatConfiguration($hookable->configuration);
+                $row[] = $hookable instanceof HookableComponent
+                    ? $this->formatConfiguration($hookable->props)
+                    : '-';
             }
 
             $rows[] = $row;
@@ -213,11 +273,87 @@ EOF
     }
 
     /**
+     * @param array<string> $hookNames
+     */
+    private function displayHookTree(OutputInterface $output, array $hookNames, bool $showAll, string $prefix = ''): void
+    {
+        $hookables = $showAll
+            ? $this->hookablesRegistry->getFor($hookNames)
+            : $this->hookablesRegistry->getEnabledFor($hookNames);
+
+        $childGroups = $this->getDirectChildHookGroups($hookNames);
+        $hookablesList = array_values($hookables);
+        $lastHookableIndex = count($hookablesList) - 1;
+
+        foreach ($hookablesList as $index => $hookable) {
+            $isLast = $index === $lastHookableIndex && 0 === count($childGroups);
+            $connector = $isLast ? '└── ' : '├── ';
+
+            $output->writeln($prefix . $connector . $this->formatHookableLine($hookable));
+        }
+
+        $childGroupsList = array_values($childGroups);
+        foreach ($childGroupsList as $index => $childHookNames) {
+            $isLast = $index === count($childGroupsList) - 1;
+            $connector = $isLast ? '└── ' : '├── ';
+            $childPrefix = $prefix . ($isLast ? '    ' : '│   ');
+
+            $output->writeln(sprintf('%s%s<fg=cyan>(Hook)</> %s', $prefix, $connector, implode(', ', $childHookNames)));
+            $this->displayHookTree($output, $childHookNames, $showAll, $childPrefix);
+        }
+    }
+
+    private function formatHookableLine(AbstractHookable $hookable): string
+    {
+        $type = $this->getHookableType($hookable);
+        $target = $this->getHookableTarget($hookable);
+        $status = $hookable instanceof DisabledHookable ? ' <comment>[disabled]</comment>' : '';
+
+        $coloredType = $hookable instanceof HookableComponent
+            ? sprintf('<fg=yellow>(%s)</>', $type)
+            : sprintf('<fg=green>(%s)</>', $type);
+
+        return sprintf('%s [↑ %d] %s (%s)%s', $coloredType, $hookable->priority(), $hookable->name, $target, $status);
+    }
+
+    /**
+     * @param array<string> $hookNames
+     *
+     * @return array<string, array<string>>
+     */
+    private function getDirectChildHookGroups(array $hookNames): array
+    {
+        $groups = [];
+        $allHookNames = $this->hookablesRegistry->getHookNames();
+
+        foreach ($hookNames as $hookName) {
+            foreach ($allHookNames as $registeredName) {
+                foreach (['.', '#'] as $separator) {
+                    if (!str_starts_with($registeredName, $hookName . $separator)) {
+                        continue;
+                    }
+
+                    $rest = substr($registeredName, strlen($hookName) + 1);
+                    if (str_contains($rest, '.') || str_contains($rest, '#')) {
+                        continue;
+                    }
+
+                    $groups[$separator . $rest][] = $registeredName;
+                }
+            }
+        }
+
+        ksort($groups);
+
+        return $groups;
+    }
+
+    /**
      * @param array<string, mixed> $configuration
      */
     private function formatConfiguration(array $configuration): string
     {
-        if (0 === \count($configuration)) {
+        if (0 === count($configuration)) {
             return '-';
         }
 
@@ -227,8 +363,8 @@ EOF
     private function getHookableType(AbstractHookable $hookable): string
     {
         return match (true) {
-            $hookable instanceof HookableTemplate => 'template',
-            $hookable instanceof HookableComponent => 'component',
+            $hookable instanceof HookableTemplate => 'Template',
+            $hookable instanceof HookableComponent => 'Component',
             default => '-',
         };
     }
