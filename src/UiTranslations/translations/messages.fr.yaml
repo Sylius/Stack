@@ -30,6 +30,7 @@ sylius:
         from: 'De'
         hello: 'Bonjour'
         in: 'Dans'
+        index: 'Index'
         info: 'Info'
         license: Licence
         login: 'Connexion'

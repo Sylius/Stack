@@ -1,4 +1,4 @@
-{% set resources = hookable_metadata.context.resources %}
+{% set resources = resources|default(hookable_metadata.context.resources|default(null)) %}
 
 {% if resources.data is defined and resources.data|length == 0 %}
     <div class="card">
