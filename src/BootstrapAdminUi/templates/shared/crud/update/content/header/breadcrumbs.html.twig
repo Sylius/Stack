@@ -5,11 +5,11 @@
 {% set metadata = hookable_metadata.context.metadata|default(null) %}
 
 {% if metadata is not null and configuration is not null %}
-{% set resource_index = metadata.applicationName~'.ui.'~metadata.pluralName %}
-{% set index_url = path(
-    configuration.vars.index.route.name|default(configuration.getRouteName('index')),
-    configuration.vars.index.route.parameters|default(configuration.vars.route.parameters|default({}))
-) %}
+    {% set resource_index = metadata.applicationName~'.ui.'~metadata.pluralName %}
+    {% set index_url = path(
+configuration.vars.index.route.name|default(configuration.getRouteName('index')),
+configuration.vars.index.route.parameters|default(configuration.vars.route.parameters|default({}))
+    ) %}
 {% endif %}
 
 {% set rendered_field_prefix = hookable_metadata.configuration.rendered_field_prefix|default(null) %}
