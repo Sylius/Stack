@@ -30,6 +30,7 @@ sylius:
         from: From
         hello: Hello
         in: 'In'
+        index: 'Index'
         info: Info
         license: 'License'
         login: Login

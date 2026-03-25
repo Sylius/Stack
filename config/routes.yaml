@@ -3,3 +3,27 @@ index:
     controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
     defaults:
         template: base.html.twig
+
+basic_create:
+    path: /basic/create
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults:
+        template: basic/create.html.twig
+        
+basic_update:
+    path: /basic/update
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults:
+        template: basic/update.html.twig        
+
+basic_index:
+    path: /basic/index
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults:
+        template: basic/index.html.twig
+
+basic_show:
+    path: /basic/show
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults:
+        template: basic/show.html.twig
