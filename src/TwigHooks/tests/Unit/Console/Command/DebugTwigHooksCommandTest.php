@@ -82,8 +82,8 @@ final class DebugTwigHooksCommandTest extends TestCase
         $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
         $display = $commandTester->getDisplay();
 
-        $this->assertMatchesRegularExpression('/header\s+template\s+@SyliusAdmin\/product\/header\.html\.twig\s+100/', $display);
-        $this->assertMatchesRegularExpression('/grid\s+component\s+sylius_admin:product:grid\s+50/', $display);
+        $this->assertMatchesRegularExpression('/header\s+Template\s+@SyliusAdmin\/product\/header\.html\.twig\s+100/', $display);
+        $this->assertMatchesRegularExpression('/grid\s+Component\s+sylius_admin:product:grid\s+50/', $display);
 
         $headerPosition = strpos($display, 'header');
         $gridPosition = strpos($display, 'grid');
@@ -219,7 +219,60 @@ final class DebugTwigHooksCommandTest extends TestCase
         $this->assertStringContainsString('string_key', $display);
         $this->assertStringContainsString('true', $display);
         $this->assertStringContainsString('null', $display);
-        $this->assertMatchesRegularExpression('/empty_config.*-/s', $display);
+        $this->assertDoesNotMatchRegularExpression('/empty_config.*string_key/m', $display);
+    }
+
+    public function testItShowsContextWithConfigOption(): void
+    {
+        $registry = $this->createRegistry([
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.product.index',
+                'name' => 'header',
+                'context' => ['foo' => 'bar'],
+            ]),
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.product.index',
+                'name' => 'no_context',
+                'context' => [],
+            ]),
+        ]);
+
+        $commandTester = $this->createCommandTester($registry);
+        $commandTester->execute(['name' => 'sylius_admin.product.index', '--config' => true]);
+
+        $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
+        $display = $commandTester->getDisplay();
+
+        $this->assertStringContainsString('Context', $display);
+        $this->assertStringContainsString('foo', $display);
+        $this->assertDoesNotMatchRegularExpression('/no_context.*foo/m', $display);
+    }
+
+    public function testItShowsPropsForComponentsWithConfigOption(): void
+    {
+        $registry = $this->createRegistry([
+            HookableComponentMotherObject::with([
+                'hookName' => 'sylius_admin.product.index',
+                'name' => 'grid',
+                'component' => 'sylius_admin:product:grid',
+                'props' => ['limit' => 10],
+            ]),
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.product.index',
+                'name' => 'header',
+                'template' => '@SyliusAdmin/product/header.html.twig',
+            ]),
+        ]);
+
+        $commandTester = $this->createCommandTester($registry);
+        $commandTester->execute(['name' => 'sylius_admin.product.index', '--config' => true]);
+
+        $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
+        $display = $commandTester->getDisplay();
+
+        $this->assertStringContainsString('Props', $display);
+        $this->assertStringContainsString('limit', $display);
+        $this->assertDoesNotMatchRegularExpression('/header.*limit/m', $display);
     }
 
     #[DataProvider('provideHookableCountCases')]
@@ -260,6 +313,20 @@ final class DebugTwigHooksCommandTest extends TestCase
         $this->assertStringContainsString('No hookables registered for this hook', $commandTester->getDisplay());
     }
 
+    public function testItDisplaysWarningWhenMultipleHooksHaveNoVisibleHookables(): void
+    {
+        $registry = $this->createRegistry([
+            DisabledHookableMotherObject::with(['hookName' => 'sylius_admin.product.index', 'name' => 'disabled_a']),
+            DisabledHookableMotherObject::with(['hookName' => 'sylius_admin.order.index', 'name' => 'disabled_b']),
+        ]);
+
+        $commandTester = $this->createCommandTester($registry);
+        $commandTester->execute(['name' => ['sylius_admin.product.index', 'sylius_admin.order.index']]);
+
+        $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
+        $this->assertStringContainsString('No hookables registered for these hooks', $commandTester->getDisplay());
+    }
+
     public function testItDisplaysDashForUnknownHookableTypeAndTarget(): void
     {
         $registry = $this->createRegistry([
@@ -274,6 +341,155 @@ final class DebugTwigHooksCommandTest extends TestCase
 
         $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
         $this->assertMatchesRegularExpression('/unknown_type\s+-\s+-/', $commandTester->getDisplay());
+    }
+
+    public function testItDisplaysChildHooksInTree(): void
+    {
+        $registry = $this->createRegistry([
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.product.index',
+                'name' => 'content',
+                'template' => '@SyliusAdmin/product/content.html.twig',
+            ]),
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.product.index.content',
+                'name' => 'form',
+                'template' => '@SyliusAdmin/product/content/form.html.twig',
+            ]),
+        ]);
+
+        $commandTester = $this->createCommandTester($registry);
+        $commandTester->execute(['name' => 'sylius_admin.product.index', '--tree' => true]);
+
+        $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
+        $display = $commandTester->getDisplay();
+
+        $this->assertStringContainsString('sylius_admin.product.index.content', $display);
+        $this->assertStringContainsString('form', $display);
+    }
+
+    public function testItDisplaysChildHooksWithHashSeparatorInTree(): void
+    {
+        $registry = $this->createRegistry([
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.common.create',
+                'name' => 'content',
+                'template' => '@SyliusAdmin/common/create/content.html.twig',
+            ]),
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.common.create#title',
+                'name' => 'default',
+                'template' => '@SyliusAdmin/common/create/title.html.twig',
+            ]),
+        ]);
+
+        $commandTester = $this->createCommandTester($registry);
+        $commandTester->execute(['name' => 'sylius_admin.common.create', '--tree' => true]);
+
+        $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
+        $display = $commandTester->getDisplay();
+
+        $this->assertStringContainsString('sylius_admin.common.create#title', $display);
+        $this->assertStringContainsString('default', $display);
+    }
+
+    public function testItDisplaysWarningWhenUnknownHookNamePassedForMultipleHooks(): void
+    {
+        $registry = $this->createRegistry([
+            HookableTemplateMotherObject::with(['hookName' => 'sylius_admin.product.index', 'name' => 'header']),
+        ]);
+
+        $commandTester = $this->createCommandTester($registry);
+        $commandTester->execute(['name' => ['sylius_admin.product.index', 'nonexistent']]);
+
+        $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
+        $this->assertStringContainsString('Hook(s) not found: "nonexistent"', $commandTester->getDisplay());
+    }
+
+    public function testItDisplaysMergedHookablesFromMultipleHooks(): void
+    {
+        $registry = $this->createRegistry([
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.common.index.content',
+                'name' => 'header',
+                'template' => '@SyliusAdmin/common/content/header.html.twig',
+            ]),
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.common.index.content',
+                'name' => 'grid',
+                'template' => '@SyliusAdmin/common/content/grid.html.twig',
+            ]),
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.product.index.content',
+                'name' => 'grid',
+                'template' => '@SyliusAdmin/product/content/grid.html.twig',
+            ]),
+        ]);
+
+        $commandTester = $this->createCommandTester($registry);
+        $commandTester->execute(['name' => ['sylius_admin.product.index.content', 'sylius_admin.common.index.content']]);
+
+        $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
+        $display = $commandTester->getDisplay();
+
+        $this->assertStringContainsString('header', $display);
+        // grid from product overrides common
+        $this->assertStringContainsString('@SyliusAdmin/product/content/grid.html.twig', $display);
+        $this->assertStringNotContainsString('@SyliusAdmin/common/content/grid.html.twig', $display);
+    }
+
+    public function testItDisplaysMergedTreeFromMultipleHooks(): void
+    {
+        $registry = $this->createRegistry([
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.common.index.content',
+                'name' => 'header',
+                'template' => '@SyliusAdmin/common/content/header.html.twig',
+            ]),
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.common.index.content',
+                'name' => 'grid',
+                'template' => '@SyliusAdmin/common/content/grid.html.twig',
+            ]),
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.product.index.content',
+                'name' => 'grid',
+                'template' => '@SyliusAdmin/product/content/grid.html.twig',
+            ]),
+            HookableTemplateMotherObject::with([
+                'hookName' => 'sylius_admin.product.index.content.grid',
+                'name' => 'filters',
+                'template' => '@SyliusAdmin/product/content/grid/filters.html.twig',
+            ]),
+        ]);
+
+        $commandTester = $this->createCommandTester($registry);
+        $commandTester->execute(['name' => ['sylius_admin.product.index.content', 'sylius_admin.common.index.content'], '--tree' => true]);
+
+        $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
+        $display = $commandTester->getDisplay();
+
+        // merged hookables
+        $this->assertStringContainsString('header', $display);
+        // product grid overrides common grid
+        $this->assertStringContainsString('@SyliusAdmin/product/content/grid.html.twig', $display);
+        $this->assertStringNotContainsString('@SyliusAdmin/common/content/grid.html.twig', $display);
+        // child hook visible in tree
+        $this->assertStringContainsString('sylius_admin.product.index.content.grid', $display);
+        $this->assertStringContainsString('filters', $display);
+    }
+
+    public function testItDisplaysNoteWhenConfigOptionUsedWithTreeOption(): void
+    {
+        $registry = $this->createRegistry([
+            HookableTemplateMotherObject::with(['hookName' => 'sylius_admin.product.index', 'name' => 'header']),
+        ]);
+
+        $commandTester = $this->createCommandTester($registry);
+        $commandTester->execute(['name' => 'sylius_admin.product.index', '--tree' => true, '--config' => true]);
+
+        $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
+        $this->assertStringContainsString('--config option has no effect with --tree', $commandTester->getDisplay());
     }
 
     public function testItProvidesAutocompletion(): void
