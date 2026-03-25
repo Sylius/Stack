@@ -12,6 +12,7 @@
     ) %}
 {% endif %}
 
+{% set title = hookable_metadata.configuration.title|default(null) %}
 {% set rendered_field_prefix = hookable_metadata.configuration.rendered_field_prefix|default(null) %}
 {% set field_name = hookable_metadata.configuration.rendered_field|default('') %}
 {% set rendered_field = rendered_field_prefix ~ (attribute(resource, field_name) is defined ? attribute(resource, field_name) : null) %}
@@ -21,7 +22,7 @@
     : {}
 %}
 
-{% set resource_show_name = rendered_field|default(resource.translations[app.locale].name|default(resource.code|default(resource.id|default(null)))) %}
+{% set resource_show_name = title|default(rendered_field|default(resource.translations[app.locale].name|default(resource.code|default(resource.id|default(null))))) %}
 
 {% if action is defined and action.name is defined %}
     {% set show_url = path(configuration.getRouteName('show'), { id: resource.id }) %}
