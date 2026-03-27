@@ -9,10 +9,14 @@ function renderChart() {
     return;
   }
 
+  const styles = getComputedStyle(document.documentElement);
+  const labelColor = styles.getPropertyValue('--tblr-body-color').trim();
+  const primaryColor = styles.getPropertyValue('--tblr-primary').trim();
+
   const options = {
-    colors: ['#32be9f'],
+    colors: [primaryColor],
     fill: {
-      colors: ['#32be9f']
+      colors: [primaryColor]
     },
     series: [{
       name: 'talks',
@@ -38,12 +42,17 @@ function renderChart() {
       offsetY: -20,
       style: {
         fontSize: '12px',
-        colors: ['#304758']
+        colors: [labelColor]
       }
     },
     xaxis: {
       categories: JSON.parse(statisticsChart.dataset.intervals),
       position: 'top',
+      labels: {
+        style: {
+          colors: labelColor
+        }
+      },
       axisBorder: {
         show: false
       },
@@ -54,8 +63,8 @@ function renderChart() {
         fill: {
           type: 'gradient',
           gradient: {
-            colorFrom: '#32be9f',
-            colorTo: '#2a9f83',
+            colorFrom: primaryColor,
+            colorTo: primaryColor,
             stops: [0, 100],
             opacityFrom: 0.4,
             opacityTo: 0.5
@@ -83,7 +92,7 @@ function renderChart() {
       offsetY: 330,
       align: 'center',
       style: {
-        color: '#444'
+        color: labelColor
       }
     }
   };
@@ -107,6 +116,19 @@ if (element) {
   });
 
   observer.observe(element, {
+    attributes: true
+  });
+
+  const themeObserver = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.attributeName === 'data-bs-theme') {
+        chart.destroy();
+        renderChart();
+      }
+    });
+  });
+
+  themeObserver.observe(document.documentElement, {
     attributes: true
   });
 }

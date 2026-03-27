@@ -23,6 +23,10 @@ return static function (ContainerConfigurator $container): void {
             ],
 
             'sylius_admin.base#stylesheets' => [
+                'theme' => [
+                    'template' => '@SyliusBootstrapAdminUi/shared/layout/theme.html.twig',
+                    'priority' => 200,
+                ],
                 'styles' => [
                     'template' => '@SyliusBootstrapAdminUi/shared/layout/stylesheets.html.twig',
                 ],

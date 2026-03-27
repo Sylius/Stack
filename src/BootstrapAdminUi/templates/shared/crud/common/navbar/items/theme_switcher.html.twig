@@ -1,0 +1,6 @@
+<div class="nav-item" {{ stimulus_controller('theme-switcher') }}>
+    <button class="btn btn-icon btn-ghost-secondary" {{ stimulus_action('theme-switcher', 'toggle') }} aria-label="Toggle theme">
+        {{ ux_icon('tabler:sun', {'class': 'icon', 'data-theme-switch': 'light'}) }}
+        {{ ux_icon('tabler:moon', {'class': 'icon', 'data-theme-switch': 'dark'}) }}
+    </button>
+</div>

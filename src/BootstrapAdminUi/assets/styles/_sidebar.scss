@@ -96,3 +96,9 @@
         display: none;
     }
 }
+
+@include color-mode(dark) {
+    .menu-search .form-control {
+        border-color: transparent;
+    }
+}
