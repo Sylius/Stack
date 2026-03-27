@@ -32,6 +32,7 @@
 }
 
 @include color-mode(dark) {
+    --tblr-body-bg: #0F1623;
     --tblr-bg-surface: #1E2433;
 
     .btn {
