@@ -16,3 +16,7 @@ import './scripts/check-all.js';
 import './scripts/menu-search.js';
 
 import './scripts/bootstrap.js';
+
+import { startStimulusApp } from '@symfony/stimulus-bundle';
+
+const app = startStimulusApp();

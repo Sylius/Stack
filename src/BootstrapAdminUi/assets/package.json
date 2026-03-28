@@ -4,8 +4,8 @@
     "controllers": {
       "theme-switcher": {
         "main": "controllers/theme-switcher-controller.js",
-        "webpackMode": "lazy",
-        "fetch": "lazy",
+        "webpackMode": "eager",
+        "fetch": "eager",
         "enabled": true
       }
     },
