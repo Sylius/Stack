@@ -26,22 +26,13 @@ return static function (ContainerConfigurator $container): void {
                 'theme' => [
                     'template' => '@SyliusBootstrapAdminUi/shared/layout/theme.html.twig',
                     'priority' => 200,
-                ],
-                'styles' => [
-                    'template' => '@SyliusBootstrapAdminUi/shared/layout/stylesheets.html.twig',
-                ],
-                'symfony_ux' => [
-                    'template' => '@SyliusBootstrapAdminUi/shared/layout/symfony_ux_styles.html.twig',
-                ],
+                ]
             ],
 
             'sylius_admin.base#javascripts' => [
                 'javascripts' => [
                     'template' => '@SyliusBootstrapAdminUi/shared/layout/javascripts.html.twig',
-                ],
-                'symfony_ux' => [
-                    'template' => '@SyliusBootstrapAdminUi/shared/layout/symfony_ux_scripts.html.twig',
-                ],
+                ]
             ],
         ],
     ]);
