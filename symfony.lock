@@ -84,6 +84,30 @@
             "phpcs.xml.dist"
         ]
     },
+    "sylius/admin-ui": {
+        "version": "0.12",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "0.4",
+            "ref": "8c08475f21574ea82ca3cd86b30f89fc9e4cd9ba"
+        },
+        "files": [
+            "config/routes/sylius_admin_ui.yaml"
+        ]
+    },
+    "sylius/bootstrap-admin-ui": {
+        "version": "0.12",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "0.4",
+            "ref": "48198641b4c0d0d365519d74b097be53bf53e335"
+        },
+        "files": [
+            "config/packages/sylius_bootstrap_admin_ui.yaml"
+        ]
+    },
     "sylius/grid-bundle": {
         "version": "dev-symfony-7"
     },
@@ -99,6 +123,33 @@
             "config/packages/sylius_resource.yaml",
             "config/routes/sylius_resource.yaml"
         ]
+    },
+    "sylius/twig-extra": {
+        "version": "0.12",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "0.4",
+            "ref": "00e1c7f2e97de7b0d990e507e1541fd05d4cdbfe"
+        }
+    },
+    "sylius/twig-hooks": {
+        "version": "0.12",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "0.4",
+            "ref": "42a2dc11276d447efefa639b95f9c7a4edd7031a"
+        }
+    },
+    "sylius/ui-translations": {
+        "version": "0.12",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "0.4",
+            "ref": "dea908d6a4add041281c1a1a60f37cba55312f98"
+        }
     },
     "symfony/asset-mapper": {
         "version": "7.1",

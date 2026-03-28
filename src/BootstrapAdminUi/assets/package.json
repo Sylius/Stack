@@ -18,7 +18,7 @@
       "@popperjs/core": "^2.9.2",
       "@tabler/core": "^1.4.0",
       "@tabler/core/dist/css/tabler.min.css": "^1.4.0",
-      "apexcharts": "^3.41.0",
+      "apexcharts": "^4.4.0",
       "basiclightbox": "^5.0.4",
       "choices.js": "^10.2.0",
       "codemirror": "^5.65.20",
