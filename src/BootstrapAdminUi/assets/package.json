@@ -1,4 +1,19 @@
 {
+  "name": "@sylius/bootstrap-admin-ui",
+  "symfony": {
+    "controllers": {
+      "theme-switcher": {
+        "main": "controllers/theme-switcher-controller.js",
+        "webpackMode": "lazy",
+        "fetch": "lazy",
+        "enabled": true
+      }
+    },
+    "importmap": {
+      "@sylius/bootstrap-admin-ui/entrypoint": "entrypoint:%PACKAGE%/entrypoint.js",
+      "bootstrap": "^5.3.0"
+    }
+  },
   "devDependencies": {
     "@babel/core": "^7.17.0",
     "@babel/preset-env": "^7.25.8",

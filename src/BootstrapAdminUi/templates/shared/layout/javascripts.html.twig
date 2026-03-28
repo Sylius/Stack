@@ -1,1 +1,2 @@
-<script src="{{ asset('bundles/syliusbootstrapadminui/app.js') }}"></script>
+
+{% block importmap %}{{ importmap('@sylius/bootstrap-admin-ui/entrypoint') }}{% endblock %}
