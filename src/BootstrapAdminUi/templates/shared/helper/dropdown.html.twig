@@ -1,4 +1,6 @@
 {% macro default(params) %}
+    {% import '@SyliusBootstrapAdminUi/shared/helper/button.html.twig' as button %}
+
     {% set params = {
         button: {},
         class: null,
