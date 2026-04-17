@@ -26,13 +26,13 @@ use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
 final readonly class MenuBuilder implements MenuBuilderInterface
 {
     public function __construct(
-        private readonly FactoryInterface $factory,
+        private readonly MenuBuilderInterface $menuBuilder,
     ) {
     }
 
     public function createMenu(array $options): ItemInterface
     {
-        $menu = $this->factory->createItem('root');
+        $menu = $this->menuBuilder->createMenu($options);
 
         $menu
             ->addChild('dashboard', [
@@ -66,7 +66,7 @@ final readonly class MenuBuilder implements MenuBuilderInterface
     
     public function createMenu(array $options): ItemInterface
     {
-        $menu = $this->factory->createItem('root');
+        $menu = $this->menuBuilder->createMenu($options);
         // ...
         $this->addLibrarySubMenu($menu);
 
