@@ -1,0 +1,24 @@
+/*!
+ * This file is part of the Sylius package.
+ *
+ * (c) Sylius Sp. z o.o.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+@import "./variables.css";
+
+@import "./body.css";
+@import "./buttons.css";
+@import "./accordion.css";
+@import "./alert.css";
+@import "./datatable.css";
+@import "./filters.css";
+@import "./flashes.css";
+@import "./form.css";
+@import "./loader.css";
+@import "./navbar.css";
+@import "./icons.css";
+@import "./sidebar.css";
+@import "./tom-select.css";

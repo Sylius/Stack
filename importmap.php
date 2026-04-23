@@ -53,4 +53,57 @@ return [
         'version' => '2.4.3',
         'type' => 'css',
     ],
+    '@sylius/bootstrap-admin-ui/entrypoint' => [
+        'path' => './src/BootstrapAdminUi/assets/entrypoint.js',
+        'entrypoint' => true,
+    ],
+    'bootstrap' => [
+        'version' => '5.3.8',
+    ],
+    '@popperjs/core' => [
+        'version' => '2.11.8',
+    ],
+    'bootstrap/dist/css/bootstrap.min.css' => [
+        'version' => '5.3.8',
+        'type' => 'css',
+    ],
+    '@fortawesome/fontawesome-free' => [
+        'version' => '5.15.4',
+    ],
+    '@fortawesome/fontawesome-free/css/fontawesome.min.css' => [
+        'version' => '5.15.4',
+        'type' => 'css',
+    ],
+    '@tabler/core' => [
+        'version' => '1.4.0',
+    ],
+    '@tabler/core/dist/css/tabler.min.css' => [
+        'version' => '1.4.0',
+        'type' => 'css',
+    ],
+    'basiclightbox' => [
+        'version' => '5.0.4',
+    ],
+    'choices.js' => [
+        'version' => '10.2.0',
+    ],
+    'codemirror' => [
+        'version' => '5.65.21',
+    ],
+    'codemirror/lib/codemirror.min.css' => [
+        'version' => '5.65.21',
+        'type' => 'css',
+    ],
+    'dirty-form' => [
+        'version' => '0.4.0',
+    ],
+    'jquery' => [
+        'version' => '3.7.1',
+    ],
+    'mark.js' => [
+        'version' => '8.11.1',
+    ],
+    'slugify' => [
+        'version' => '1.6.8',
+    ],
 ];

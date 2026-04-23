@@ -30,10 +30,10 @@
                 padding-top: 0.3rem;
                 padding-bottom: 0.3rem;
                 background: transparent;
-                color: $gray-500;
+                color: var(--tblr-gray-500);
 
                 &.active {
-                    color: $primary;
+                    color: var(--tblr-primary);
                 }
 
                 &:active {
@@ -49,6 +49,7 @@
 }
 
 .menu-search {
+
     .btn,
     .form-control {
         border: 1px solid transparent;
@@ -65,12 +66,12 @@
         border-left: 0;
     }
 
-    > * {
+    >* {
         opacity: 0.5;
     }
 
     &:has(input[data-menu-search]:focus) {
-        > * {
+        >* {
             opacity: 0.8;
         }
 
@@ -97,7 +98,7 @@
     }
 }
 
-@include color-mode(dark) {
+[data-bs-theme="dark"] {
     .menu-search .form-control {
         border-color: transparent;
     }

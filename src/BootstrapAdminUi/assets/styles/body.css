@@ -15,15 +15,15 @@
     --tblr-pagination-border-width: 0;
 }
 
-@include color-mode(light) {
+[data-bs-theme="light"] {
     --tblr-body-color: #212529;
     --tblr-code-color: #36393B;
     --tblr-breadcrumb-link-color: #212529;
 
     body {
-        --bs-body-bg: #{$body-bg};
-        --bs-tertiary-bg: #{$body-bg};
-        --bs-body-color: #{$body-color};
+        --bs-body-bg: var(--tblr-body-bg);
+        --bs-tertiary-bg: var(--tblr-body-bg);
+        --bs-body-color: var(--tblr-body-color);
     }
 
     [data-theme-switch="light"] {
@@ -31,7 +31,7 @@
     }
 }
 
-@include color-mode(dark) {
+[data-bs-theme="dark"] {
     --tblr-body-bg: #0F1623;
     --tblr-bg-surface: #1E2433;
 
@@ -98,7 +98,7 @@ a.link-reset {
     text-decoration: none;
 
     &:hover {
-        color: $primary
+        color: var(--tblr-primary);
     }
 }
 

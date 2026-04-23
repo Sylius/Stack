@@ -13,22 +13,36 @@ textarea.form-control {
 }
 
 .tab-error {
-    @extend .float-end;
-    @extend .badge;
-    @extend .bg-danger;
-    @extend .rounded-pill;
-    @extend .text-white;
+    float: right;
+    display: inline-block;
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 50rem;
+    background-color: var(--tblr-danger);
 }
 
 .accordion-error {
-    @extend .position-absolute;
-    @extend .top-50;
-    @extend .start-0;
-    @extend .translate-middle;
-    @extend .badge;
-    @extend .rounded-pill;
-    @extend .bg-danger;
-    @extend .text-white;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-50%, -50%);
+    display: inline-block;
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 50rem;
+    background-color: var(--tblr-danger);
 }
 
 .accordion-item:has(.accordion-error),

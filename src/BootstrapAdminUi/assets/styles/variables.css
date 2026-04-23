@@ -1,0 +1,51 @@
+/*!
+ * This file is part of the Sylius package.
+ *
+ * (c) Sylius Sp. z o.o.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+:root {
+  --tblr-primary: #22B99A;
+
+  --tblr-white: #fff;
+  --tblr-gray-100: #f8f9fa;
+  --tblr-gray-200: #e9ecef;
+  --tblr-gray-300: #dee2e6;
+  --tblr-gray-400: #ced4da;
+  --tblr-gray-500: #adb5bd;
+  --tblr-gray-600: #6c757d;
+  --tblr-gray-700: #495057;
+  --tblr-gray-800: #343a40;
+  --tblr-gray-900: #212529;
+  --tblr-black: #000;
+
+  --tblr-body-color: var(--tblr-gray-900);
+
+  --tblr-text-secondary: var(--tblr-gray-600);
+  --tblr-text-secondary-light: var(--tblr-gray-500);
+  --tblr-text-secondary-dark: var(--tblr-gray-700);
+
+  --tblr-link-color: var(--tblr-body-color);
+  --tblr-link-decoration: underline;
+  --tblr-link-hover-color: var(--tblr-primary);
+
+  --tblr-disabled-color: var(--tblr-gray-600);
+  --tblr-form-secondary-color: var(--tblr-gray-600);
+
+  --tblr-input-border-color: var(--tblr-gray-400);
+  --tblr-input-focus-border-color: var(--tblr-gray-600);
+
+  --tblr-btn-border-color: var(--tblr-input-border-color);
+
+  --tblr-pagination-active-bg: var(--tblr-gray-200);
+
+  --tblr-font-family-sans-serif: 'Inter', serif;
+
+  --tblr-h1-font-size: 1.6rem;
+  --tblr-h1-line-height: 2.1rem;
+
+  --tblr-page-title-font-size: var(--tblr-font-size-h1);
+}
