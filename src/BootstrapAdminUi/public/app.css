@@ -27,7 +27,7 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- */.accordion .accordion-item .accordion-header:hover{background:var(--tblr-bg-surface)}.accordion .accordion-item .accordion-body{color:var(--tblr-body-color);padding:var(--tblr-accordion-body-padding-y) var(--tblr-accordion-body-padding-x)}/*!
+ */.accordion .accordion-item .accordion-header{line-height:28px}.accordion .accordion-item .accordion-header:hover{background:#f8f9fa}.accordion .accordion-item .accordion-header:not(.collapsed){font-weight:var(--tblr-font-weight-bold)}.accordion .accordion-item .accordion-body{color:var(--tblr-body-color);padding:var(--tblr-accordion-body-padding-y) var(--tblr-accordion-body-padding-x)}.accordion .accordion-item .accordion-button{font-size:.875rem}.accordion .accordion-item .accordion-button:not(.collapsed){font-weight:700}/*!
  * This file is part of the Sylius package.
  *
  * (c) Sylius Sp. z o.o.
