@@ -29,7 +29,7 @@
     "webpack-rtl-plugin": "^2.0.0"
   },
   "engines": {
-    "node": "^20"
+    "node": "^24"
   },
   "license": "UNLICENSED",
   "private": true,

@@ -1,3 +1,4 @@
+config/reference.php
 /src/**/.phpunit.result.cache
 /src/**/vendor
 composer.lock
