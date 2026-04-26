@@ -21,20 +21,38 @@ bin/console cache:clear # To refresh grid's cache
 
 Magic! Here is the generated grid.
 
+{% code title="src/Grid/BookGrid.php" lineNumbers="true" %}
 ```php
-final class BookGrid extends AbstractGrid implements ResourceAwareGridInterface
+<?php
+
+namespace App\Grid;
+
+use App\Entity\Book;
+use Sylius\Bundle\GridBundle\Builder\Action\CreateAction;
+use Sylius\Bundle\GridBundle\Builder\Action\DeleteAction;
+use Sylius\Bundle\GridBundle\Builder\Action\ShowAction;
+use Sylius\Bundle\GridBundle\Builder\Action\UpdateAction;
+use Sylius\Bundle\GridBundle\Builder\ActionGroup\BulkActionGroup;
+use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
+use Sylius\Bundle\GridBundle\Builder\ActionGroup\MainActionGroup;
+use Sylius\Bundle\GridBundle\Builder\Field\DateTimeField;
+use Sylius\Bundle\GridBundle\Builder\Field\StringField;
+use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
+use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
+use Sylius\Component\Grid\Attribute\AsGrid;
+
+#[AsGrid(
+    name: 'app_book',
+    resourceClass: Book::class,
+)]
+final class BookGrid extends AbstractGrid
 {
     public function __construct()
     {
         // TODO inject services if required
     }
 
-    public static function getName(): string
-    {
-        return 'app_book';
-    }
-
-    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
             // see https://github.com/Sylius/SyliusGridBundle/blob/master/docs/field_types.md
@@ -65,16 +83,47 @@ final class BookGrid extends AbstractGrid implements ResourceAwareGridInterface
             )
         ;
     }
-
-    public function getResourceClass(): string
-    {
-        return Book::class;
-    }
 ```
+{% endcode %}
 
 Configure the `index` operation in your resource.
 
+{% tabs %}
+{% tab title="Sylius" %}
+{% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
+<?php
+
+namespace App\Entity;
+
+use App\Grid\BookGrid;
+use Sylius\Resource\Metadata\AsResource;
+use Sylius\Resource\Metadata\Index;
+use Sylius\Resource\Model\ResourceInterface;
+
+#[AsResource(
+    section: 'admin', // This will influence the route name
+    routePrefix: '/admin',
+    templatesDir: '@SyliusAdmin/shared/crud', // This directory contains the generic template for your list
+    operations: [
+        new Index( // This operation will add an "index" operation for the books list
+            grid: BookGrid::class, // Use the grid class you've just generated above
+        ), 
+    ],    
+)]
+class Book implements ResourceInterface
+{
+    //...
+}
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="Sylius Stack" %}
+{% code title="src/Entity/Book.php" lineNumbers="true" %}
+```php
+<?php
+
 namespace App\Entity;
 
 use App\Grid\BookGrid;
@@ -87,8 +136,8 @@ use Sylius\Resource\Model\ResourceInterface;
     routePrefix: '/admin',
     templatesDir: '@SyliusAdminUi/crud', // This directory contains the generic template for your list
     operations: [
-        new Index( // This operation will add "index" operation for the books list
-            grid: BookGrid::class, // Use the grid class you have generated in previous step
+        new Index( // This operation will add an "index" operation for the books list
+            grid: BookGrid::class, // Use the grid class you've just generated above
         ), 
     ],    
 )]
@@ -97,10 +146,9 @@ class Book implements ResourceInterface
     //...
 }
 ```
-
-{% hint style="info" %}
-Note: When you are in a Sylius project, the `templatesDir` path is: `@SyliusAdmin/shared/crud`
-{% endhint %}
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 Use the Symfony `debug:router` command to check the results.
 
@@ -121,15 +169,89 @@ Your route should look like this:
 
 <div data-full-width="false"><figure><img src="../../.gitbook/assets/book_creation.png" alt="Book creation page"><figcaption></figcaption></figure></div>
 
-Create a form type for your resource.
+Create a form type for your resource. You can use the Symfony command to generate your form fields.
 
 ```shell
 bin/console make:form
 ```
 
+Here is a basic example of a FormType for your Book resource.
+
+{% code title="src/Form/BookType.php" lineNumbers="true" %}
+```php
+<?php
+
+namespace App\Form;
+
+use App\Entity\Publisher;
+use App\Entity\Source;
+use App\Entity\Book;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class BookType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('author', EntityType::class, [
+                'class' => Author::class,
+                'choice_label' => 'id',
+            ])
+            ->add('title', TextType::class)
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Book::class,
+        ]);
+    }
+}
+```
+{% endcode %}
+
 Configure the `create` operation in your resource.
 
+{% tabs %}
+{% tab title="Sylius" %}
+{% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
+<?php
+
+namespace App\Entity;
+
+use App\Grid\BookGrid;
+use Sylius\Resource\Metadata\AsResource;
+use Sylius\Resource\Metadata\Create;
+use Sylius\Resource\Model\ResourceInterface;
+
+#[AsResource(
+    section: 'admin', // This will influence the route name
+    routePrefix: '/admin',
+    templatesDir: '@SyliusAdmin/shared/crud', // This directory contains the generic template for your list
+    formType: BookType::class, // The form type you have generated in the previous step
+    operations: [
+      //...
+      new Create(), // This operation will add "create" operation for the book resource
+    ],    
+)]
+class Book implements ResourceInterface
+{
+    //...
+}
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="Sylius Stack" %}
+{% code title="src/Entity/Book.php" lineNumbers="true" %}
+```php
+<?php
+
 namespace App\Entity;
 
 use App\Form\BookType;
@@ -140,11 +262,11 @@ use Sylius\Resource\Model\ResourceInterface;
 #[AsResource(
     section: 'admin', // This will influence the route name
     routePrefix: '/admin',
-    templatesDir: '@SyliusAdminUi/crud', // This directory contains the generic templates
-    formType: BookType::class, // The form type you have generated in previous step
-    operations: [
-        // ...
-        new Create(), // This operation will add "create" operation for the book resource
+    templatesDir: '@SyliusAdminUi/crud', // This directory contains the generic template for your list
+    formType: BookType::class, // The form type you have generated in the previous step
+     operations: [
+      //...
+      new Create(), // This operation will add a "create" operation for the book resource
     ],    
 )]
 class Book implements ResourceInterface
@@ -152,10 +274,9 @@ class Book implements ResourceInterface
     //...
 }
 ```
-
-{% hint style="info" %}
-Note: When you are in a Sylius project, the `templatesDir` path is: `@SyliusAdmin/shared/crud`
-{% endhint %}
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 Use the Symfony `debug:router` command to check the results.
 
@@ -180,7 +301,12 @@ Ensure you already created the Symfony form type in the [previous section](basic
 
 Configure the `update` operation in your resource.
 
+{% tabs %}
+{% tab title="Sylius" %}
+{% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
+<?php 
+
 namespace App\Entity;
 
 use App\Form\BookType;
@@ -191,11 +317,11 @@ use Sylius\Resource\Model\ResourceInterface;
 #[AsResource(
     section: 'admin', // This will influence the route name
     routePrefix: '/admin',
-    templatesDir: '@SyliusAdminUi/crud', // This directory contains the generic templates
-    formType: BookType::class, // The form type you have generated in previous chapter
+    templatesDir: '@SyliusAdmin/shared/crud', // This directory contains the generic template for your list
+    formType: BookType::class, // The form type you have generated in the previous step
     operations: [
-        // ...
-        new Update(), // This operation will add "update" operation for the book resource
+      //...
+      new Update(), // This operation will add an "update" operation for the book resource
     ],    
 )]
 class Book implements ResourceInterface
@@ -203,10 +329,39 @@ class Book implements ResourceInterface
     //...
 }
 ```
+{% endcode %}
+{% endtab %}
 
-{% hint style="info" %}
-Note: When you are in a Sylius project, the `templatesDir` path is: `@SyliusAdmin/shared/crud`
-{% endhint %}
+{% tab title="Sylius Stack" %}
+{% code title="src/Entity/Book.php" lineNumbers="true" %}
+```php
+<?php
+
+namespace App\Entity;
+
+use App\Form\BookType;
+use Sylius\Resource\Metadata\AsResource;
+use Sylius\Resource\Metadata\Update;
+use Sylius\Resource\Model\ResourceInterface;
+
+#[AsResource(
+    section: 'admin', // This will influence the route name
+    routePrefix: '/admin',
+    templatesDir: '@SyliusAdminUi/crud', // This directory contains the generic template for your list
+    formType: BookType::class, // The form type you have generated in the previous step
+     operations: [
+      //...
+      new Update(), // This operation will add an "update" operation for the book resource
+    ],    
+)]
+class Book implements ResourceInterface
+{
+    //...
+}
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 Use the Symfony `debug:router` command to check the results.
 
@@ -229,10 +384,12 @@ Your route should look like this:
 
 Configure the `show` operation in your resource.
 
+{% tabs %}
+{% tab title="Sylius" %}
+{% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
 namespace App\Entity;
 
-use App\Form\BookType;
 use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Show;
 use Sylius\Resource\Model\ResourceInterface;
@@ -240,10 +397,10 @@ use Sylius\Resource\Model\ResourceInterface;
 #[AsResource(
     section: 'admin', // This will influence the route name
     routePrefix: '/admin',
-    templatesDir: '@SyliusAdminUi/crud', // This directory contains the generic templates
+    templatesDir: '@SyliusAdmin/shared/crud', // This directory contains the generic template for your list
     operations: [
-        // ...
-        new Show(), // This operation will add "show" operation for the book resource
+      //...
+       new Show(), // This operation will add a "show" operation for the book resource
     ],    
 )]
 class Book implements ResourceInterface
@@ -251,10 +408,35 @@ class Book implements ResourceInterface
     //...
 }
 ```
+{% endcode %}
+{% endtab %}
 
-{% hint style="info" %}
-Note: When you are in a Sylius project, the `templatesDir` path is: `@SyliusAdmin/shared/crud`
-{% endhint %}
+{% tab title="Sylius Stack" %}
+{% code title="src/Entity/Book.php" lineNumbers="true" %}
+```php
+namespace App\Entity;
+
+use Sylius\Resource\Metadata\AsResource;
+use Sylius\Resource\Metadata\Show;
+use Sylius\Resource\Model\ResourceInterface;
+
+#[AsResource(
+    section: 'admin', // This will influence the route name
+    routePrefix: '/admin',
+    templatesDir: '@SyliusAdminUi/crud', // This directory contains the generic template for your list
+     operations: [
+      //...
+      new Show(), // This operation will add a "show" operation for the book resource
+    ],    
+)]
+class Book implements ResourceInterface
+{
+    //...
+}
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 Use the Symfony `debug:router` command to check the results.
 
@@ -275,10 +457,8 @@ Now we need to configure the templates.
 
 {% tabs %}
 {% tab title="YAML" %}
-{% code lineNumbers="true" %}
+{% code title="config/packages/sylius_bootstrap_admin_ui.yaml" lineNumbers="true" %}
 ```yaml
-# config/packages/sylius_bootstrap_admin_ui.yaml
-# ...
 sylius_twig_hooks:
     hooks:
         # ...
@@ -286,15 +466,15 @@ sylius_twig_hooks:
         'sylius_admin.book.show.content':
             body:
                 template: 'book/show/content/body.html.twig'
-
 ```
 {% endcode %}
 {% endtab %}
 
 {% tab title="PHP" %}
-{% code lineNumbers="true" %}
+{% code title="config/packages/sylius_bootstrap_admin_ui.php" lineNumbers="true" %}
 ```php
-// config/packages/sylius_bootstrap_admin_ui.php
+<?php 
+
 declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
