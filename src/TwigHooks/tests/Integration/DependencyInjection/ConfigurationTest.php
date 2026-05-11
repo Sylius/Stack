@@ -174,6 +174,7 @@ final class ConfigurationTest extends TestCase
                             'some_hookable' => [
                                 'component' => 'MyAwesomeComponent',
                                 'template' => 'some_target.html.twig',
+                                'type' => 'disabled',
                             ],
                         ],
                     ],
@@ -193,6 +194,7 @@ final class ConfigurationTest extends TestCase
                             'some_hookable' => [
                                 'template' => 'some_target.html.twig',
                                 'props' => ['key' => 'value'],
+                                'type' => 'disabled',
                             ],
                         ],
                     ],
