@@ -1,0 +1,16 @@
+{% import '@SyliusBootstrapAdminUi/shared/helper/button.html.twig' as button %}
+
+{% set label = action.label|trans %}
+{% set path = path('app_admin_speaker_redirect_to_speaker_talks') %}
+{% set form_attr = 'data-bulk-action=index' %}
+
+<form action="{{ path }}" method="GET" {{ form_attr }}>
+    {{ button.default({
+        text: label|trans,
+        type: 'submit',
+        class: 'btn-ghost-primary',
+        disabled: true,
+        attr: 'data-check-all-action=index',
+        icon: 'tabler:list-letters'
+    }) }}
+</form>
