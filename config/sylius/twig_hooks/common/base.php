@@ -24,6 +24,15 @@ return static function (ContainerConfigurator $container): void {
                     'template' => 'base/seo_metatags.html.twig',
                 ],
             ],
+            // Demo / Docs purpose - How to extend entrypoint from BootstrapAdminUi
+            'sylius_admin.base#javascripts' => [
+                'javascripts' => [
+                    'enabled' => false,
+                ],
+                'custom_admin' => [
+                    'template' => 'base/javascripts.html.twig',
+                ],
+            ],
         ],
     ]);
 };

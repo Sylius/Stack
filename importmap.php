@@ -106,4 +106,8 @@ return [
     'slugify' => [
         'version' => '1.6.8',
     ],
+    'admin_entry' => [
+        'path' => './assets/admin_entry.js',
+        'entrypoint' => true,
+    ],
 ];
