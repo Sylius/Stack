@@ -27,21 +27,9 @@ return static function (ContainerConfigurator $container): void {
                     'template' => '@SyliusBootstrapAdminUi/shared/layout/theme.html.twig',
                     'priority' => 200,
                 ],
-                'styles' => [
-                    'template' => '@SyliusBootstrapAdminUi/shared/layout/stylesheets.html.twig',
-                ],
-                'symfony_ux' => [
-                    'template' => '@SyliusBootstrapAdminUi/shared/layout/symfony_ux_styles.html.twig',
-                ],
-            ],
-
-            'sylius_admin.base#javascripts' => [
-                'javascripts' => [
-                    'template' => '@SyliusBootstrapAdminUi/shared/layout/javascripts.html.twig',
-                ],
-                'symfony_ux' => [
-                    'template' => '@SyliusBootstrapAdminUi/shared/layout/symfony_ux_scripts.html.twig',
-                ],
+                'importmap' => [
+                    'template' => '@SyliusBootstrapAdminUi/shared/layout/importmap.html.twig',
+                ]
             ],
         ],
     ]);
