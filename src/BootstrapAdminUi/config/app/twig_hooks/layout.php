@@ -26,12 +26,9 @@ return static function (ContainerConfigurator $container): void {
                 'theme' => [
                     'template' => '@SyliusBootstrapAdminUi/shared/layout/theme.html.twig',
                     'priority' => 200,
-                ]
-            ],
-
-            'sylius_admin.base#javascripts' => [
-                'javascripts' => [
-                    'template' => '@SyliusBootstrapAdminUi/shared/layout/javascripts.html.twig',
+                ],
+                'importmap' => [
+                    'template' => '@SyliusBootstrapAdminUi/shared/layout/importmap.html.twig',
                 ]
             ],
         ],

@@ -25,12 +25,12 @@ return static function (ContainerConfigurator $container): void {
                 ],
             ],
             // Demo / Docs purpose - How to extend entrypoint from BootstrapAdminUi
-            'sylius_admin.base#javascripts' => [
-                'javascripts' => [
+            'sylius_admin.base#stylesheets' => [
+                'importmap' => [
                     'enabled' => false,
                 ],
                 'custom_admin' => [
-                    'template' => 'base/javascripts.html.twig',
+                    'template' => 'base/importmap.html.twig',
                 ],
             ],
         ],

@@ -88,11 +88,11 @@ If you want to extend the admin assets, for example to change colors or register
 ```yaml
 sylius_twig_hooks:
     hooks:
-        'sylius_admin.base#javascripts':
-            javascripts:
+        'sylius_admin.base#stylesheets':
+            importmap:
                 enabled: false
-            admin_app:
-                template: 'layout/javascript.html.twig'
+            custom_app:
+                template: 'layout/importmap.html.twig'
 ```
 {% endcode %}
 {% endtab %}
@@ -105,12 +105,12 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->extension('sylius_twig_hooks', [
         'hooks' => [
-            'sylius_admin.base#javascripts' => [
-                'javascripts' => [
+            'sylius_admin.base#stylesheets' => [
+                'importmap' => [
                     'enabled' => false,
                 ],
                 'custom_app' => [
-                    'template' => 'layout/javascript.html.twig',
+                    'template' => 'layout/importmap.html.twig',
                 ],
             ],
         ],
@@ -121,7 +121,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 {% endtab %}
 {% endtabs %}
 
-{% code title="templates/layout/javascripts.html.twig" lineNumbers="true" %}
+{% code title="templates/layout/importmap.html.twig" lineNumbers="true" %}
 ```twig
 {{ importmap('admin_entry') }}
 ```
@@ -131,9 +131,10 @@ Then create your custom entrypoint:
 
 {% code title="assets/admin_entry.js" lineNumbers="true" %}
 ```js
-// assets/admin_entry.js
-import '@sylius/bootstrap-admin-ui/entrypoint';
+// Import the default entrypoint to keep the default styles and scripts
+import '@sylius/bootstrap-admin-ui/entrypoint'; 
 
+// Import your custom styles or scripts
 import './styles/admin.css';
 ```
 {% endcode %}
@@ -143,7 +144,7 @@ import './styles/admin.css';
 ```css
 /* assets/styles/admin.css */
 :root {
-    --tblr-primary: #22B99A;
+    --tblr-primary: red !important;
 }
 ```
 {% endcode %}
@@ -151,6 +152,6 @@ import './styles/admin.css';
 And make sure to reference your custom entrypoint in the `importmap.php` file:
 
 ```bash
-php bin/console importmap:require "admin_entry.js" --path=assets/admin_entry.js --entrypoint
+php bin/console importmap:require "admin_entry" --path=assets/admin_entry.js --entrypoint
 ```
 
