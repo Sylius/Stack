@@ -49,3 +49,19 @@
 
   --tblr-page-title-font-size: var(--tblr-font-size-h1);
 }
+
+[data-bs-theme="dark"] {
+  --tblr-body-color: #e9ecef;
+
+  --tblr-text-secondary: #adb5bd;
+  --tblr-text-secondary-light: #ced4da;
+  --tblr-text-secondary-dark: #6c757d;
+
+  --tblr-link-color: var(--tblr-body-color);
+
+  --tblr-disabled-color: #6c757d;
+  --tblr-form-secondary-color: #adb5bd;
+
+  --tblr-input-border-color: #495057;
+  --tblr-input-focus-border-color: #6c757d;
+}
