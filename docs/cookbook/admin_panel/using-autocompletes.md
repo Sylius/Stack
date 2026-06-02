@@ -19,7 +19,7 @@ public function getParent(): string
 
 ```
 
-&#x20;However, if your autocomplete filter requires fetching data from another entity, you will need to use a `BaseEntityAutocompleteType` in order to fetch your options via AJAX.
+However, if your autocomplete filter requires fetching data from another entity, you will need to use a `BaseEntityAutocompleteType` in order to fetch your options via AJAX.
 
 All you need to start leveraging this functionality is a bit of routing config.
 
@@ -101,10 +101,10 @@ final class SpeakerAutocompleteType extends AbstractType
 ```
 {% endcode %}
 
-Then, you need to create your grid filter.
+Then, you need to create your custom grid filter.
 
 {% tabs %}
-{% tab title="SyliusGridBundle v1.14" %}
+{% tab title="AsFilter attribute - SyliusGridBundle v1.14+" %}
 {% code title="src/Grid/Filter/SpeakerFilter.php" lineNumbers="true" %}
 ```php
 <?php
@@ -139,8 +139,9 @@ final class SpeakerFilter implements FilterInterface
 {% endcode %}
 {% endtab %}
 
-{% tab title="SyliusGridBundle v1.13 " %}
-1\) Create your filter class.
+{% tab title="SyliusGridBundle v1.13 (legacy)" %}
+
+First, create your custom filter class.
 
 {% code title="src/Grid/Filter/SpeakerFilter.php" lineNumbers="true" %}
 ```php
@@ -181,12 +182,11 @@ final class SpeakerFilter implements ConfigurableFilterInterface
 ```
 {% endcode %}
 
-2\) then configure the Twig template this filter will use.
+Then, configure the Twig template this filter will use.
 
-PHP config :&#x20;
+If you use PHP config files (which we recommend you do!), here is how you configure a filter template : 
 
-{% code title="config/packages/sylius_grid.php
-" %}
+{% code title="config/packages/sylius_grid.php" %}
 ```php
 <?php
 
@@ -208,7 +208,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 ```
 {% endcode %}
 
-YAML config:
+Otherwise, if you're using YAML config files, here is the config for the filter template:
 
 {% code title="config/packages/sylius_grid.yaml" %}
 ```yaml
