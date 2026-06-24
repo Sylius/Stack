@@ -184,7 +184,7 @@ final class SpeakerFilter implements ConfigurableFilterInterface
 
 Then, configure the Twig template this filter will use.
 
-If you use PHP config files (which we recommend you do!), here is how you configure a filter template : 
+If you use PHP config files (which we recommend you do!), here is how you configure a filter template: 
 
 {% code title="config/packages/sylius_grid.php" %}
 ```php
