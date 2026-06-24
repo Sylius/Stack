@@ -8,6 +8,7 @@ sylius:
         actions: 'Acciones'
         administration_panel_login: 'Panel de administración'
         all: 'Todos'
+        apply_transition: 'Aplicar'
         are_your_sure_you_want_to_perform_this_action: '\¿Está seguro que quiere realizar esta acción?'
         cancel: 'Cancelar'
         contains: 'Contiene'

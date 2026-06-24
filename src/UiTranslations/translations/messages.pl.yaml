@@ -9,6 +9,7 @@ sylius:
         administration_panel_login: 'Logowanie do panelu administracyjnego'
         all: 'Wszystko'
         all_rights_reserved: 'Wszystkie prawa zastrzeżone'
+        apply_transition: 'Wykonaj'
         are_your_sure_you_want_to_perform_this_action: 'Czy na pewno chcesz wykonać tę akcję?'
         cancel: 'Anuluj'
         copyright: 'Prawa autorskie'

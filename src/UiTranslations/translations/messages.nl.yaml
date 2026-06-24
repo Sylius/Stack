@@ -10,6 +10,7 @@ sylius:
         administration_panel_login: 'Administratiepaneel login'
         all: Alles
         all_rights_reserved: 'Alle rechten voorbehouden'
+        apply_transition: Uitvoeren
         are_your_sure_you_want_to_perform_this_action: 'Weet je zeker dat je daze actie wilt uitvoeren?'
         cancel: Annuleren
         contains: Bevat
