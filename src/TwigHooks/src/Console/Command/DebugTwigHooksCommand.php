@@ -89,7 +89,7 @@ EOF
     public function complete(CompletionInput $input, CompletionSuggestions $suggestions): void
     {
         if ($input->mustSuggestArgumentValuesFor('name')) {
-            $suggestions->suggestValues($this->hookablesRegistry->getHookNames());
+            $suggestions->suggestValues(array_values($this->hookablesRegistry->getHookNames()));
         }
     }
 
