@@ -931,8 +931,6 @@ use App\Entity\Supplier;
 use Sylius\Bundle\GridBundle\Builder\Action\CreateAction;
 use Sylius\Bundle\GridBundle\Builder\Action\DeleteAction;
 use Sylius\Bundle\GridBundle\Builder\Action\UpdateAction;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\MainActionGroup;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Component\Grid\Attribute\AsGrid;
@@ -946,16 +944,12 @@ final class AdminSupplierGrid extends AbstractGrid
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addActionGroup(
-                MainActionGroup::create(
-                    CreateAction::create()
-                )
+            ->withMainActions(
+                CreateAction::create(),
             )
-            ->addActionGroup(
-                ItemActionGroup::create(
-                    UpdateAction::create(),
-                    DeleteAction::create()
-                )
+            ->withItemActions(
+                UpdateAction::create(),
+                DeleteAction::create(),
             )
         ;
     }
@@ -973,23 +967,17 @@ use App\Entity\Supplier;
 use Sylius\Bundle\GridBundle\Builder\Action\CreateAction;
 use Sylius\Bundle\GridBundle\Builder\Action\DeleteAction;
 use Sylius\Bundle\GridBundle\Builder\Action\UpdateAction;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\MainActionGroup;
 use Sylius\Bundle\GridBundle\Builder\GridBuilder;
 use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid) {
     $grid->addGrid(GridBuilder::create('app_admin_supplier', Supplier::class)
-        ->addActionGroup(
-            MainActionGroup::create(
-                CreateAction::create()
-            )
+        ->withMainActions(
+            CreateAction::create(),
         )
-        ->addActionGroup(
-            ItemActionGroup::create(
-                UpdateAction::create(),
-                DeleteAction::create()
-            )
+        ->withItemActions(
+            UpdateAction::create(),
+            DeleteAction::create(),
         )
     )
 };
