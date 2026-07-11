@@ -1,6 +1,6 @@
 {% set path = options.link.url|default(path(options.link.route|default(grid.requestConfiguration.getRouteName('bulk_delete')), options.link.parameters|default({}))) %}
 
-{% component 'sylius_bootstrap_admin_ui:delete_modal' with {id: 'bulk_delete', path: path, type: 'bulk-delete', form_attr: 'data-bulk-delete=index'} %}
+{% component 'sylius_bootstrap_admin_ui:delete_modal' with {id: 'bulk_delete', path: path, type: 'bulk-delete', form_attr: 'data-bulk-action=index'} %}
     {% import '@SyliusBootstrapAdminUi/shared/helper/button.html.twig' as button %}
 
     {% block trigger %}
