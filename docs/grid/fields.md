@@ -396,7 +396,7 @@ Grids make it easy to define new types.
 All you need to do is create your own class implementing
 **FieldTypeInterface** and register it as a service.
 
-{% code title="src/Grid/FieldType.php" lineNumbers="true" %}
+{% code title="src/Grid/FieldType/CustomType.php" lineNumbers="true" %}
 
 ```php
 <?php
