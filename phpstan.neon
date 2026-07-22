@@ -9,3 +9,13 @@ parameters:
     paths:
         - 'src/TwigExtra/src'
         - 'src/TwigHooks/src'
+
+    ignoreErrors:
+        # Symfony Config component relies on magic methods in NodeBuilder.
+        # PHPStan struggles to resolve these methods on the builder class when complex generics are involved,
+        # resulting in false positive "unknown class" errors.
+        -
+            message: '#Call to method \w+Node\(\) on an unknown class .*NodeBuilder.*#'
+            paths:
+                - 'src/TwigHooks/src/DependencyInjection/Configuration.php'
+                - 'src/TwigExtra/src/Symfony/DependencyInjection/Configuration.php'
