@@ -20,22 +20,18 @@ use Sylius\Bundle\GridBundle\Builder\Action\CreateAction;
 use Sylius\Bundle\GridBundle\Builder\Action\DeleteAction;
 use Sylius\Bundle\GridBundle\Builder\Action\ShowAction;
 use Sylius\Bundle\GridBundle\Builder\Action\UpdateAction;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\BulkActionGroup;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\MainActionGroup;
 use Sylius\Bundle\GridBundle\Builder\Field\EnumField;
 use Sylius\Bundle\GridBundle\Builder\Field\StringField;
 use Sylius\Bundle\GridBundle\Builder\Filter\EnumFilter;
 use Sylius\Bundle\GridBundle\Builder\Filter\StringFilter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
-use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Component\Grid\Attribute\AsGrid;
 
 #[AsGrid(
     resourceClass: Book::class,
     name: 'app_book',
 )]
-final class BookGrid extends AbstractGrid
+final class BookGrid
 {
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
@@ -60,28 +56,22 @@ final class BookGrid extends AbstractGrid
                     ->setLabel('app.ui.category')
                     ->setSortable(true),
             )
-            ->addActionGroup(
-                MainActionGroup::create(
-                    CreateAction::create(),
-                    Action::create(name: 'export', type: 'export')
-                        ->setOptions([
-                            'link' => [
-                                'route' => 'app_admin_book_export',
-                            ],
-                        ]),
-                ),
+            ->withMainActions(
+                CreateAction::create(),
+                Action::create(name: 'export', type: 'export')
+                    ->setOptions([
+                        'link' => [
+                            'route' => 'app_admin_book_export',
+                        ],
+                    ]),
             )
-            ->addActionGroup(
-                ItemActionGroup::create(
-                    ShowAction::create(),
-                    UpdateAction::create(),
-                    DeleteAction::create(),
-                ),
+            ->withItemActions(
+                ShowAction::create(),
+                UpdateAction::create(),
+                DeleteAction::create(),
             )
-            ->addActionGroup(
-                BulkActionGroup::create(
-                    DeleteAction::create(),
-                ),
+            ->withBulkActions(
+                DeleteAction::create(),
             )
         ;
     }

@@ -18,26 +18,21 @@ use Sylius\Bundle\GridBundle\Builder\Action\Action;
 use Sylius\Bundle\GridBundle\Builder\Action\CreateAction;
 use Sylius\Bundle\GridBundle\Builder\Action\DeleteAction;
 use Sylius\Bundle\GridBundle\Builder\Action\UpdateAction;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\BulkActionGroup;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\MainActionGroup;
 use Sylius\Bundle\GridBundle\Builder\Field\DateTimeField;
 use Sylius\Bundle\GridBundle\Builder\Field\StringField;
 use Sylius\Bundle\GridBundle\Builder\Filter\BooleanFilter;
 use Sylius\Bundle\GridBundle\Builder\Filter\DateFilter;
 use Sylius\Bundle\GridBundle\Builder\Filter\ExistsFilter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
-use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
-use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
-final class ConferenceGrid extends AbstractGrid implements ResourceAwareGridInterface
+#[AsGrid(
+    resourceClass: Conference::class,
+    name: 'app_admin_conference',
+)]
+final class ConferenceGrid
 {
-    public static function getName(): string
-    {
-        return 'app_admin_conference';
-    }
-
-    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
             ->addOrderBy('startsAt', 'desc')
@@ -69,40 +64,29 @@ final class ConferenceGrid extends AbstractGrid implements ResourceAwareGridInte
                     ->setLabel('app.ui.ends_at')
                     ->setSortable(true),
             )
-            ->addActionGroup(
-                MainActionGroup::create(
-                    CreateAction::create(),
-                ),
+            ->withMainActions(
+                CreateAction::create(),
             )
-            ->addActionGroup(
-                ItemActionGroup::create(
-                    Action::create('show_talks', 'show')
-                        ->setIcon('tabler:list-letters')
-                        ->setLabel('app.ui.show_talks')
-                        ->setOptions([
-                            'link' => [
-                                'route' => 'app_admin_talk_index',
-                                'parameters' => [
-                                    'criteria' => [
-                                        'conference' => 'resource.id',
-                                    ],
+            ->withItemActions(
+                Action::create('show_talks', 'show')
+                    ->setIcon('tabler:list-letters')
+                    ->setLabel('app.ui.show_talks')
+                    ->setOptions([
+                        'link' => [
+                            'route' => 'app_admin_talk_index',
+                            'parameters' => [
+                                'criteria' => [
+                                    'conference' => 'resource.id',
                                 ],
                             ],
-                        ]),
-                    UpdateAction::create(),
-                    DeleteAction::create(),
-                ),
+                        ],
+                    ]),
+                UpdateAction::create(),
+                DeleteAction::create(),
             )
-            ->addActionGroup(
-                BulkActionGroup::create(
-                    DeleteAction::create(),
-                ),
+            ->withBulkActions(
+                DeleteAction::create(),
             )
         ;
-    }
-
-    public function getResourceClass(): string
-    {
-        return Conference::class;
     }
 }
