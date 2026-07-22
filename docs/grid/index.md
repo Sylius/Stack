@@ -23,5 +23,6 @@ Menu
 * [Fields](fields.md)
 * [Filters](filters.md)
 * [Actions](actions.md)
+* [Mutators](mutators.md)
 * [Advanced configuration](advanced_configuration.md)
 * [Configuration Reference](configuration.md)

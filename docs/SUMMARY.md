@@ -56,6 +56,7 @@
   * [Fields](grid/fields.md)
   * [Filters](grid/filters.md)
   * [Actions](grid/actions.md)
+  * [Mutators](grid/mutators.md)
   * [Advanced configuration](grid/advanced_configuration.md)
   * [Configuration Reference](grid/configuration.md)
 
