@@ -46,22 +46,16 @@ final class BookGrid extends AbstractGrid implements ResourceAwareGridInterface
                     ->setLabel('Author')
                     ->setSortable(true),
             )
-            ->addActionGroup(
-                MainActionGroup::create(
-                    CreateAction::create(),
-                ),
+            ->withMainActions(
+                CreateAction::create(),
             )
-            ->addActionGroup(
-                ItemActionGroup::create(
-                    // ShowAction::create(),
-                    UpdateAction::create(),
-                    DeleteAction::create(),
-                ),
+            ->withItemActions(
+                // ShowAction::create(),
+                UpdateAction::create(),
+                DeleteAction::create(),
             )
-            ->addActionGroup(
-                BulkActionGroup::create(
-                    DeleteAction::create(),
-                ),
+            ->withBulkActions(
+                DeleteAction::create(),
             )
         ;
     }

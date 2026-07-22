@@ -38,7 +38,6 @@ namespace App\Grid;
 
 use App\Entity\Speaker;
 use Sylius\Bundle\GridBundle\Builder\Action\CreateAction;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\MainActionGroup;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Component\Grid\Attribute\AsGrid;
@@ -52,14 +51,12 @@ final class SpeakerGrid extends AbstractGrid
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addActionGroup(
-                MainActionGroup::create(
-                    // Add the "create" action into the "main" action group
-                    CreateAction::create()
-                        // Optional, you can configure this globally instead.
-                        ->setTemplate('path/to/your/action/template.html.twig')
-                    ,
-                ),
+            ->withMainActions(
+                // Add the "create" action into the "main" action group
+                CreateAction::create()
+                    // Optional, you can configure this globally instead.
+                    ->setTemplate('path/to/your/action/template.html.twig')
+                ,
             )
         ;
     }
@@ -77,7 +74,6 @@ namespace App\Grid;
 
 use App\Entity\Speaker;
 use Sylius\Bundle\GridBundle\Builder\Action\UpdateAction;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Component\Grid\Attribute\AsGrid;
@@ -91,14 +87,12 @@ final class SpeakerGrid extends AbstractGrid
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addActionGroup(
-                ItemActionGroup::create(
-                    // Add the "update" action into the "item" action group
-                    UpdateAction::create()
-                        // Optional, you can configure this globally instead.
-                        ->setTemplate('path/to/your/action/template.html.twig')
-                    ,
-                ),
+            ->withItemActions(
+                // Add the "update" action into the "item" action group
+                UpdateAction::create()
+                    // Optional, you can configure this globally instead.
+                    ->setTemplate('path/to/your/action/template.html.twig')
+                ,
             )
         ;
     }
@@ -116,8 +110,6 @@ namespace App\Grid;
 
 use App\Entity\Speaker;
 use Sylius\Bundle\GridBundle\Builder\Action\DeleteAction;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\BulkActionGroup;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Component\Grid\Attribute\AsGrid;
@@ -131,23 +123,19 @@ final class SpeakerGrid extends AbstractGrid
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addActionGroup(
-                ItemActionGroup::create(
-                    // Add the "delete" action into the "item" action group
-                    DeleteAction::create()
-                        // Optional, you can configure this globally instead.
-                        ->setTemplate('path/to/your/action/template.html.twig')
-                    ,
-                ),
+            ->withItemActions(
+                // Add the "delete" action into the "item" action group
+                DeleteAction::create()
+                    // Optional, you can configure this globally instead.
+                    ->setTemplate('path/to/your/action/template.html.twig')
+                ,
             )
-            ->addActionGroup(
-                BulkActionGroup::create(
-                    // Add the "delete" action into the "bulk" action group
-                    DeleteAction::create()
-                        // Optional, you can configure this globally instead.
-                        ->setTemplate('path/to/your/action/template.html.twig')
-                    ,
-                ),
+            ->withBulkActions(
+                // Add the "delete" action into the "bulk" action group
+                DeleteAction::create()
+                    // Optional, you can configure this globally instead.
+                    ->setTemplate('path/to/your/action/template.html.twig')
+                ,
             )
         ;
     }
@@ -165,7 +153,6 @@ namespace App\Grid;
 
 use App\Entity\Speaker;
 use Sylius\Bundle\GridBundle\Builder\Action\ShowAction;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Component\Grid\Attribute\AsGrid;
@@ -179,14 +166,12 @@ final class SpeakerGrid extends AbstractGrid
     public function __invoke(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addActionGroup(
-                ItemActionGroup::create(
-                    // Add the "show" action into the "item" action group
-                    ShowAction::create()
-                        // Optional, you can configure this globally instead.
-                        ->setTemplate('path/to/your/action/template.html.twig')
-                    ,
-                ),
+            ->withItemActions(
+                // Add the "show" action into the "item" action group
+                ShowAction::create()
+                    // Optional, you can configure this globally instead.
+                    ->setTemplate('path/to/your/action/template.html.twig')
+                ,
             )
         ;
     }
@@ -289,25 +274,22 @@ sylius_grid:
 
 use App\Entity\Supplier;
 use Sylius\Bundle\GridBundle\Builder\Action\Action;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
 use Sylius\Bundle\GridBundle\Builder\GridBuilder;
 use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid): void {
     $grid->addGrid(GridBuilder::create('app_admin_supplier', Supplier::class)
-        ->addActionGroup(
-            ItemActionGroup::create(
-                Action::create('contactSupplier', 'contactSupplier')
-                    ->setLabel('Contact Supplier')
-                    ->setOptions([
-                        'link' => [
-                            'route' => 'app_admin_contact_supplier',
-                            'parameters' => [
-                                'id' => 'resource.id',
-                            ],
+        ->withItemActions(
+            Action::create('contactSupplier', 'contactSupplier')
+                ->setLabel('Contact Supplier')
+                ->setOptions([
+                    'link' => [
+                        'route' => 'app_admin_contact_supplier',
+                        'parameters' => [
+                            'id' => 'resource.id',
                         ],
-                    ])
-            )
+                    ],
+                ]),
         ])
     )
 };
@@ -328,7 +310,6 @@ namespace App\Grid;
 
 use App\Entity\Supplier;
 use Sylius\Bundle\GridBundle\Builder\Action\Action;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
@@ -343,19 +324,17 @@ final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridI
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addActionGroup(
-                ItemActionGroup::create(
-                    Action::create('contactSupplier', 'contactSupplier')
-                        ->setLabel('Contact Supplier')
-                        ->setOptions([
-                            'link' => [
-                                'route' => 'app_admin_contact_supplier',
-                                'parameters' => [
-                                    'id' => 'resource.id',
-                                ],
+            ->withItemActions(
+                Action::create('contactSupplier', 'contactSupplier')
+                    ->setLabel('Contact Supplier')
+                    ->setOptions([
+                        'link' => [
+                            'route' => 'app_admin_contact_supplier',
+                            'parameters' => [
+                                'id' => 'resource.id',
                             ],
-                        ])
-                )
+                        ],
+                    ]),
             ])
         ;    
     }
@@ -444,26 +423,23 @@ sylius_grid:
 
 use App\Entity\Product;
 use Sylius\Bundle\GridBundle\Builder\Action\Action;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\BulkActionGroup;
 use Sylius\Bundle\GridBundle\Builder\GridBuilder;
 use Sylius\Bundle\GridBundle\Builder\Field\Field;
 use Sylius\Bundle\GridBundle\Config\GridConfig;
 
 return static function (GridConfig $grid) {
     $grid->addGrid(GridBuilder::create('app_admin_product', Product::class)
-        ->addActionGroup(
-            BulkActionGroup::create(
-                Action::create('export', 'export')
-                    ->setLabel('Export Data')
-                    ->setOptions([
-                        'link' => [
-                            'route' => 'app_admin_product_export',
-                            'parameters' => [
-                                'format' => 'csv',
-                            ],
-                        ]
-                    ])
-            )
+        ->withBulkActions(
+            Action::create('export', 'export')
+                ->setLabel('Export Data')
+                ->setOptions([
+                    'link' => [
+                        'route' => 'app_admin_product_export',
+                        'parameters' => [
+                            'format' => 'csv',
+                        ],
+                    ]
+                ]),
         )
     )
 };
@@ -484,7 +460,6 @@ namespace App\Grid;
 
 use App\Entity\Product;
 use Sylius\Bundle\GridBundle\Builder\Action\Action;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\BulkActionGroup;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
@@ -499,19 +474,17 @@ final class AdminProductGrid extends AbstractGrid implements ResourceAwareGridIn
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            ->addActionGroup(
-                BulkActionGroup::create(
-                    Action::create('export', 'export')
-                        ->setLabel('Export Data')
-                        ->setOptions([
-                            'link' => [
-                                'route' => 'app_admin_product_export',
-                                'parameters' => [
-                                    'format' => 'csv',
-                                ],
-                            ]
-                        ])
-                )
+            ->withBulkActions(
+                Action::create('export', 'export')
+                    ->setLabel('Export Data')
+                    ->setOptions([
+                        'link' => [
+                            'route' => 'app_admin_product_export',
+                            'parameters' => [
+                                'format' => 'csv',
+                            ],
+                        ]
+                    ]),
             )
         ;    
     }

@@ -177,7 +177,6 @@ declare(strict_types=1);
 namespace App\Grid;
 
 use Sylius\Bundle\GridBundle\Builder\Action\Action;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\MainActionGroup;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Component\Grid\Attribute\AsGrid;
@@ -192,14 +191,12 @@ final class BookGrid extends AbstractGrid
     {
         $gridBuilder
             // ...
-            ->addActionGroup(
-                MainActionGroup::create(
-                    // ...
-                    Action::create('export', 'export')
-                        // Optional, you can configure it globally instead.
-                        ->setTemplate('shared/grid/action/export.html.twig')
-                    ,
-                )
+            ->withMainActions(
+                // ...
+                Action::create('export', 'export')
+                    // Optional, you can configure it globally instead.
+                    ->setTemplate('shared/grid/action/export.html.twig')
+                ,
             )
         ;
     }

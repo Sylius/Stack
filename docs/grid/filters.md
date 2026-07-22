@@ -1099,8 +1099,6 @@ Now you can use your new filter type in any grid configuration!&#x20;
 <?php
 
 use App\Entity\Tournament;
-use Sylius\Bundle\GridBundle\Builder\Action\Action;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
 use Sylius\Bundle\GridBundle\Builder\GridBuilder;
 use Sylius\Bundle\GridBundle\Builder\Filter\Filter;
 use Sylius\Bundle\GridBundle\Config\GridConfig;

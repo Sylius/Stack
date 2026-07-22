@@ -158,10 +158,6 @@ sylius_grid:
 <?php
 
 use Sylius\Bundle\GridBundle\Builder\Action\Action;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\BulkActionGroup;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\MainActionGroup;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\SubItemActionGroup;
 use Sylius\Bundle\GridBundle\Builder\Field\Field;
 use Sylius\Bundle\GridBundle\Builder\Filter\Filter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilder;
@@ -191,88 +187,82 @@ return static function (GridConfig $grid): void {
                 ->setOptions(['fields' => []])
                 ->setFormOptions(['type' => 'contains']) // type of string filtering option, if you only want to have one
         )
-        ->addActionGroup(MainActionGroup::create(
+        ->withMainActions(
             Action::create('create', 'create')
                 ->setLabel('sylius.ui.create')
                 ->setEnabled(true)
                 ->setIcon('plus')
                 ->setPosition(100)
                 ->setOptions([]),
-        ))
-        ->addActionGroup(
-            ItemActionGroup::create(
-                Action::create('update', 'update')
-                    ->setLabel('sylius.ui.edit')
-                    ->setEnabled(true)
-                    ->setIcon('pencil')
-                    ->setPosition(100)
-                    ->setOptions([]),
-                Action::create('delete', 'delete')
-                    ->setLabel('sylius.ui.delete')
-                    ->setEnabled(true)
-                    ->setIcon('trash')
-                    ->setPosition(100)
-                    ->setOptions([]),
-                Action::create('show', 'show')
-                    ->setLabel('sylius.ui.show')
-                    ->setEnabled(true)
-                    ->setIcon('search')
-                    ->setPosition(100)
-                    ->setOptions([
-                        'link' => [
-                            'route' => 'app_user_show',
-                            'parameters' => [
-                                'id' => 'resource.id',
-                            ],          
+        )
+        ->withItemActions(
+            Action::create('update', 'update')
+                ->setLabel('sylius.ui.edit')
+                ->setEnabled(true)
+                ->setIcon('pencil')
+                ->setPosition(100)
+                ->setOptions([]),
+            Action::create('delete', 'delete')
+                ->setLabel('sylius.ui.delete')
+                ->setEnabled(true)
+                ->setIcon('trash')
+                ->setPosition(100)
+                ->setOptions([]),
+            Action::create('show', 'show')
+                ->setLabel('sylius.ui.show')
+                ->setEnabled(true)
+                ->setIcon('search')
+                ->setPosition(100)
+                ->setOptions([
+                    'link' => [
+                        'route' => 'app_user_show',
+                        'parameters' => [
+                            'id' => 'resource.id',
                         ],          
-                    ]),
-                Action::create('archive', 'archive')
-                    ->setLabel('sylius.ui.archive')
-                    ->setEnabled(true)
-                    ->setIcon('search')
-                    ->setPosition(100)
-                    ->setOptions([
-                        'restore_label' => 'sylius.ui.restore',          
-                    ]),
-            )
+                    ],          
+                ]),
+            Action::create('archive', 'archive')
+                ->setLabel('sylius.ui.archive')
+                ->setEnabled(true)
+                ->setIcon('search')
+                ->setPosition(100)
+                ->setOptions([
+                    'restore_label' => 'sylius.ui.restore',          
+                ]),
         )
-        ->addActionGroup(
-            BulkActionGroup::create(
-                Action::create('delete', 'delete')
-                    ->setLabel('sylius.ui.delete')
-                    ->setEnabled(true)
-                    ->setIcon('trash')
-                    ->setPosition(100)
-                    ->setOptions([]),
-            )
+        ->withBulkActions(
+            Action::create('delete', 'delete')
+                ->setLabel('sylius.ui.delete')
+                ->setEnabled(true)
+                ->setIcon('trash')
+                ->setPosition(100)
+                ->setOptions([]),
         )
-        ->addActionGroup(
-            SubItemActionGroup::create(
-                Action::create('addresses', 'links')
-                    ->setLabel('sylius.ui.manage_addresses')
-                    ->setOptions([
-                        'icon' => 'cubes',
-                        'links' => [
-                            'index' => [
-                                'label' => 'sylius.ui.list_addresses',
-                                'icon' => 'list',
-                                'route' => 'app_admin_user_address_index',
-                                'visible' => 'resource.hasAddress',
-                                'parameters' => [
-                                    'userId' => 'resource.id',
-                                ],
-                            ],
-                            'create' => [
-                                'label' => 'sylius.ui.generate',
-                                'icon' => 'random',
-                                'route' => 'app_admin_user_address_create',
-                                'parameters' => [
-                                    'userId' => 'resource.id',
-                                ],
+        ->withSubItemActions(
+            Action::create('addresses', 'links')
+                ->setLabel('sylius.ui.manage_addresses')
+                ->setOptions([
+                    'icon' => 'cubes',
+                    'links' => [
+                        'index' => [
+                            'label' => 'sylius.ui.list_addresses',
+                            'icon' => 'list',
+                            'route' => 'app_admin_user_address_index',
+                            'visible' => 'resource.hasAddress',
+                            'parameters' => [
+                                'userId' => 'resource.id',
                             ],
                         ],
-                    ]),
-            )
+                        'create' => [
+                            'label' => 'sylius.ui.generate',
+                            'icon' => 'random',
+                            'route' => 'app_admin_user_address_create',
+                            'parameters' => [
+                                'userId' => 'resource.id',
+                            ],
+                        ],
+                    ],
+                ]),
         )
     );
 };
