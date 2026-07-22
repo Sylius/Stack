@@ -7,7 +7,6 @@
  * file that was distributed with this source code.
  */
 
-@import "tom-select/dist/css/tom-select.bootstrap5.css";
 
 .ts-control {
     padding: 0.5625rem 2.3rem 0.5625rem 0.8rem;
@@ -22,7 +21,7 @@
     }
 }
 
-@include color-mode(dark) {
+[data-bs-theme="dark"] {
     .ts-control .item {
         color: var(--tblr-body-color);
     }
@@ -33,7 +32,9 @@
     box-shadow: 0 0 0 1px var(--tblr-focus-ring-color);
 }
 
-.ts-dropdown, .ts-dropdown.form-control, .ts-dropdown.form-select {
+.ts-dropdown,
+.ts-dropdown.form-control,
+.ts-dropdown.form-select {
     padding: 5px;
     background: var(--tblr-bg-surface) !important;
     border: 1px solid var(--tblr-border-color);
@@ -51,7 +52,8 @@
     }
 }
 
-.ts-wrapper.single .ts-control, .ts-wrapper.single .ts-control input {
+.ts-wrapper.single .ts-control,
+.ts-wrapper.single .ts-control input {
     cursor: unset;
 }
 

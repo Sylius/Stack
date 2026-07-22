@@ -2,6 +2,9 @@
     "name": "sylius/bootstrap-admin-ui",
     "description": "Build your Bootstrap admin panels with Sylius and Symfony UX",
     "type": "library",
+    "keywords": [
+        "symfony-ux"
+    ],
     "require": {
         "php": "^8.1",
         "pagerfanta/twig": "^4.6",
