@@ -74,4 +74,17 @@ final class TestHtmlAttributeExtensionTest extends TestCase
 
         $this->assertEquals(['html'], $twigFunction->getSafe(new Node()));
     }
+
+    public function testItsTwigFunctionEscapesHtmlSpecialChars(): void
+    {
+        $twigFunction = (new TestHtmlAttributeExtension('test', false))->getFunctions()[0];
+        $callable = $twigFunction->getCallable();
+
+        $this->assertIsCallable($callable);
+
+        $input = '"><img src=x onerror=alert(1)';
+        $expectedEscaped = 'data-test-comment="&quot;&gt;&lt;img src=x onerror=alert(1)"';
+
+        $this->assertEquals($expectedEscaped, ($callable)('comment', $input));
+    }
 }
