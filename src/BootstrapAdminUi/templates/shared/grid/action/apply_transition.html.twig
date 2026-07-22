@@ -1,0 +1,22 @@
+{% if workflow_can(data, action.name) %}
+    {% if options.link.url is defined %}
+        {% set path = options.link.url %}
+    {% else %}
+        {% set path = path(options.link.route, options.link.parameters|default({id: data.id})) %}
+    {% endif %}
+
+    {% set message = action.label|default('sylius.ui.apply_transition') %}
+
+    <form method="post" action="{{ path }}" style="display: inline;">
+        <input type="hidden" name="_method" value="PATCH">
+        <input type="hidden" name="_token" value="{{ csrf_token('apply_transition') }}">
+        <button
+            type="submit"
+            class="btn btn-icon {% if options.class is defined %}btn-{{ options.class }}{% endif %}"
+            data-bs-toggle="tooltip"
+            data-bs-title="{{ message|trans }}"
+        >
+            {{ ux_icon(action.icon|default('tabler:transfer')) }}
+        </button>
+    </form>
+{% endif %}

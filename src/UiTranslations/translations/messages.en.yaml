@@ -10,6 +10,7 @@ sylius:
         administration_panel_login: 'Administration panel login'
         all: All
         all_rights_reserved: 'All rights reserved'
+        apply_transition: Apply
         are_your_sure_you_want_to_perform_this_action: 'Are you sure you want to perform this action?'
         cancel: Cancel
         copyright: Copyright

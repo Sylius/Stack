@@ -17,6 +17,7 @@ return static function (ContainerConfigurator $container): void {
     $container->extension('sylius_grid', [
         'templates' => [
             'action' => [
+                'apply_transition' => '@SyliusBootstrapAdminUi/shared/grid/action/apply_transition.html.twig',
                 'create' => '@SyliusBootstrapAdminUi/shared/grid/action/create.html.twig',
                 'delete' => '@SyliusBootstrapAdminUi/shared/grid/action/delete.html.twig',
                 'show' => '@SyliusBootstrapAdminUi/shared/grid/action/show.html.twig',
