@@ -20,6 +20,7 @@
   * [Resource configuration](cookbook/ddd_architecture/resource_configuration.md)
   * [Basic operations](cookbook/ddd_architecture/basic_operations.md)
   * [Operation using a grid](cookbook/ddd_architecture/grid.md)
+* [How to add login with Google and Facebook](cookbook/how-to-add-login-with-google-and-facebook.md)
 
 ## 📚 Resource
 
