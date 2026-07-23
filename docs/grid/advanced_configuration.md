@@ -1,9 +1,10 @@
-Advanced Configuration
-======================
+# Advanced configuration
 
 By default, Doctrine options `fetchJoinCollection` and `useOutputWalkers` are enabled in all grids, but you can simply disable them with this config:
 
-<details open><summary>Yaml</summary>
+<details>
+
+<summary>Yaml</summary>
 
 {% code title="config/packages/sylius_grid.yaml" lineNumbers="true" %}
 ```yaml
@@ -20,7 +21,9 @@ sylius_grid:
 
 </details>
 
-<details open><summary>PHP</summary>
+<details>
+
+<summary>PHP</summary>
 
 {% code title="config/packages/sylius_grid.php" lineNumbers="true" %}
 ```php

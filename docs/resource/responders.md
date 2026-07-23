@@ -2,12 +2,10 @@
 
 Responders respond data: transform data to a Symfony response, return a success in a CLI operation.
 
-<!-- TOC -->
-* [Default responders](#default-responders)
-* [Twig Responder](#twig-responder)
-  * [Customize Twig template variables](#customize-twig-template-variables)
-* [API Responder](#api-responder)
-<!-- TOC -->
+* [Default responders](responders.md#default-responders)
+* [Twig Responder](responders.md#twig-responder)
+  * [Customize Twig template variables](responders.md#customize-twig-template-variables)
+* [API Responder](responders.md#api-responder)
 
 ## Default responders
 
@@ -16,15 +14,14 @@ When your operation is an instance of `Sylius\Component\Resource\Metadata\HttpOp
 The responder will automatically choose the responder depending on the request format:
 
 | Request format | Responder                                                     |
-|----------------|---------------------------------------------------------------|
+| -------------- | ------------------------------------------------------------- |
 | html           | Sylius\Component\Resource\Symfony\Request\State\TwigResponder |
 | json           | Sylius\Component\Resource\Symfony\Request\State\ApiResponder  |
 | xml            | Sylius\Component\Resource\Doctrine\Common\State\ApiResponder  |
 
-
 ## Twig Responder
 
-The Twig responder is used to render data into a Symfony response.
+The Twig responder is used to render data into a Symfony response.\
 It's used for HTML responses.
 
 The variables that are passed to the Twig templates depends on the operation (See [Configure your operations](configure_your_operations.md) chapter).
@@ -87,5 +84,5 @@ class Subscription implements ResourceInterface
 
 ## API Responder
 
-The API responder is used to render serialized data into a Symfony response.
+The API responder is used to render serialized data into a Symfony response.\
 It's used for JSON/XML responses.

@@ -8,9 +8,11 @@ Your newly created controller service supports basic CRUD operations and is conf
 
 The simplest action is **showAction**. It is used to display a single resource. To use it, the only thing you need to do is register a proper route.
 
-Let's assume that you have a ``app.book`` resource registered. To display a single Book, define the following routing:
+Let's assume that you have a `app.book` resource registered. To display a single Book, define the following routing:
 
-<details open><summary>Yaml</summary>
+<details>
+
+<summary>Yaml</summary>
 
 {% code title="config/routes.yaml" lineNumbers="true" %}
 ```yaml
@@ -24,7 +26,9 @@ app_book_show:
 
 </details>
 
-<details open><summary>PHP</summary>
+<details>
+
+<summary>PHP</summary>
 
 {% code title="rc/Entity/Book.php" lineNumbers="true" %}
 ```php
@@ -41,17 +45,17 @@ use Sylius\Resource\Annotation\SyliusRoute;
 
 </details>
 
-Done! Now when you go to ``/books/3``, ResourceController will use the repository (``app.repository.book``) to find a Book with the given id (``3``).
-If the requested book resource does not exist, it will throw a ``404 Not Found`` exception.
+Done! Now when you go to `/books/3`, ResourceController will use the repository (`app.repository.book`) to find a Book with the given id (`3`). If the requested book resource does not exist, it will throw a `404 Not Found` exception.
 
-When a Book is found, the default template will be rendered - ``App:Book:show.html.twig`` (like you configured it in the ``config.yml``)
-with the Book result as the ``book`` variable. That's the most basic usage of the simple ``showAction``.
+When a Book is found, the default template will be rendered - `App:Book:show.html.twig` (like you configured it in the `config.yml`) with the Book result as the `book` variable. That's the most basic usage of the simple `showAction`.
 
 ## Using a Custom Template
 
 Okay, but what if you want to display the same Book resource, but with a different representation in a view?
 
-<details open><summary>Yaml</summary>
+<details>
+
+<summary>Yaml</summary>
 
 {% code title="config/routes.yaml" lineNumbers="true" %}
 ```yaml
@@ -67,7 +71,9 @@ app_admin_book_show:
 
 </details>
 
-<details open><summary>PHP</summary>
+<details>
+
+<summary>PHP</summary>
 
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
@@ -86,14 +92,15 @@ use Sylius\Resource\Annotation\SyliusRoute;
 
 </details>
 
-Nothing more to do here, when you go to ``/admin/books/3``, the controller will try to find the Book and render
-it using the custom template you specified under the route configuration. Simple, isn't it?
+Nothing more to do here, when you go to `/admin/books/3`, the controller will try to find the Book and render it using the custom template you specified under the route configuration. Simple, isn't it?
 
 ## Overriding Default Criteria
 
 Displaying books by id can be boring... and let's say we do not want to allow viewing disabled books. There is a solution for that!
 
-<details open><summary>Yaml</summary>
+<details>
+
+<summary>Yaml</summary>
 
 {% code title="config/routes.yaml" lineNumbers="true" %}
 ```yaml
@@ -111,7 +118,9 @@ app_book_show:
 
 </details>
 
-<details open><summary>PHP</summary>
+<details>
+
+<summary>PHP</summary>
 
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
@@ -133,15 +142,15 @@ use Sylius\Resource\Annotation\SyliusRoute;
 
 </details>
 
-With this configuration, the controller will look for a book with the given title and exclude disabled books.
-Internally, it simply uses the ``$repository->findOneBy(array $criteria)`` method to look for the resource.
+With this configuration, the controller will look for a book with the given title and exclude disabled books. Internally, it simply uses the `$repository->findOneBy(array $criteria)` method to look for the resource.
 
 ## Using Custom Repository Methods
 
-By default, resource repository uses **findOneBy(array $criteria)**, but in some cases it's not enough - for example - you want to do proper joins or use a custom query.
-Creating yet another action to change the method called could be a solution but there is a better way. The configuration below will use a custom repository method to get the resource.
+By default, resource repository uses **findOneBy(array $criteria)**, but in some cases it's not enough - for example - you want to do proper joins or use a custom query. Creating yet another action to change the method called could be a solution but there is a better way. The configuration below will use a custom repository method to get the resource.
 
-<details open><summary>Yaml</summary>
+<details>
+
+<summary>Yaml</summary>
 
 {% code title="config/routes.yaml" lineNumbers="true" %}
 ```yaml
@@ -159,7 +168,9 @@ app_book_show:
 
 </details>
 
-<details open><summary>PHP</summary>
+<details>
+
+<summary>PHP</summary>
 
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
@@ -180,13 +191,15 @@ use Sylius\Resource\Annotation\SyliusRoute;
 
 </details>
 
-Internally, it simply uses the ``$repository->findOneNewestByAuthor($author)`` method, where ``author`` is taken from the current request.
+Internally, it simply uses the `$repository->findOneNewestByAuthor($author)` method, where `author` is taken from the current request.
 
 ## Using Custom Repository Service
 
 If you would like to use your own service to get the resource, then try the following configuration:
 
-<details open><summary>Yaml</summary>
+<details>
+
+<summary>Yaml</summary>
 
 {% code title="config/routes.yaml" lineNumbers="true" %}
 ```yaml
@@ -204,7 +217,9 @@ app_book_show:
 
 </details>
 
-<details open><summary>PHP</summary>
+<details>
+
+<summary>PHP</summary>
 
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
@@ -225,11 +240,13 @@ use Sylius\Resource\Annotation\SyliusRoute;
 
 </details>
 
-With this configuration, method ``findOneNewestByAuthor`` from service with ID ``app.repository.custom_book_repository`` will be called to get the resource.
+With this configuration, method `findOneNewestByAuthor` from service with ID `app.repository.custom_book_repository` will be called to get the resource.
 
 ## Configuration Reference
 
-<details open><summary>Yaml</summary>
+<details>
+
+<summary>Yaml</summary>
 
 {% code title="config/routes.yaml" lineNumbers="true" %}
 ```yaml
@@ -252,7 +269,9 @@ app_book_show:
 
 </details>
 
-<details open><summary>PHP</summary>
+<details>
+
+<summary>PHP</summary>
 
 {% code title="src/Entity/Book.php" lineNumbers="true" %}
 ```php
@@ -278,6 +297,6 @@ use Sylius\Resource\Annotation\SyliusRoute;
 
 </details>
 
-Remember that you can use controller's Fully Qualified Class Name (``App\Controller\BookController``) instead of id ``app.controller.book`` 
+Remember that you can use controller's Fully Qualified Class Name (`App\Controller\BookController`) instead of id `app.controller.book`
 
-**[Go back to the documentation's index](index.md)**
+[**Go back to the documentation's index**](index.md)

@@ -57,9 +57,7 @@ From now, only the value of `_prefixes` will be taken into account.
 
 {% code title="index.html.twig" lineNumbers="true" %}
 ```twig
-{% raw %}
 {% hook 'app.index' %}
-{% endraw %}
 
 {# index.html.twig is an entry template, so it is not an hookable #}
 ```

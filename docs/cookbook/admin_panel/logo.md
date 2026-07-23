@@ -2,8 +2,7 @@
 
 ## How to customize the sidebar logo
 
-To customize the sidebar logo, you need to set new logo template at `sylius_admin.common.component.sidebar.logo` twig hook.
-Choose the YAML or the PHP version.
+To customize the sidebar logo, you need to set new logo template at `sylius_admin.common.component.sidebar.logo` twig hook. Choose the YAML or the PHP version.
 
 {% tabs %}
 {% tab title="YAML" %}
@@ -51,18 +50,17 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 {% endtabs %}
 
 ```twig
-{% raw %}
 {# templates/shared/crud/common/sidebar/logo/image.html.twig #}
 
 <img src="{{ asset('images/logo.png') }}" alt="Your Brand name" class="navbar-brand-image" />
-{% endraw %}
+
+
   
 ```
 
 ## How to customize the login page logo
 
-To customize the login page logo,you need to set new logo template at `sylius_admin.security.login.logo` twig hook.
-Choose the YAML or the PHP version.
+To customize the login page logo,you need to set new logo template at `sylius_admin.security.login.logo` twig hook. Choose the YAML or the PHP version.
 
 {% tabs %}
 {% tab title="YAML" %}
@@ -108,7 +106,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 {% endtabs %}
 
 ```twig
-{% raw %}
 <img src="{{ asset('images/logo.png') }}" alt="Your Brand name" class="sylius navbar-brand-image">
-{% endraw %}
 ```

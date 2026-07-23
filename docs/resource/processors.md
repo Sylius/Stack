@@ -2,13 +2,11 @@
 
 Processors process data: send an email, persist to storage, add to queue etc.
 
-<!-- TOC -->
-* [Default processors](#default-processors)
-* [Custom processors](#custom-processors)
-  * [Example #1: Sending an email after persisting data](#example-1-sending-an-email-after-persisting-data)
-  * [Example #2: Use a custom delete processor](#example-2-use-a-custom-delete-processor)
-* [Disable processing data](#disable-processing-data)
-<!-- TOC -->
+* [Default processors](processors.md#default-processors)
+* [Custom processors](processors.md#custom-processors)
+  * [Example #1: Sending an email after persisting data](processors.md#example-1-sending-an-email-after-persisting-data)
+  * [Example #2: Use a custom delete processor](processors.md#example-2-use-a-custom-delete-processor)
+* [Disable processing data](processors.md#disable-processing-data)
 
 ## Default processors
 
@@ -17,7 +15,7 @@ When your resource is a Doctrine entity, there are default processors which are 
 As it uses the Doctrine repository configured on your resource, it will automatically flush data for you.
 
 | Operation   | Processor                                              |
-|-------------|--------------------------------------------------------|
+| ----------- | ------------------------------------------------------ |
 | create      | Sylius\Resource\Doctrine\Common\State\PersistProcessor |
 | update      | Sylius\Resource\Doctrine\Common\State\PersistProcessor |
 | delete      | Sylius\Resource\Doctrine\Common\State\RemoveProcessor  |
@@ -139,7 +137,7 @@ final class BoardGameResource implements ResourceInterface
 ```
 {% endcode %}
 
-Note that in a delete operation, you can disable providing data.
+Note that in a delete operation, you can disable providing data.\
 See [Disable providing data](providers.md#disable-providing-data) chapter.
 
 ## Disable processing data

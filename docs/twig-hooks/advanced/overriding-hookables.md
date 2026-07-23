@@ -3,9 +3,7 @@
 While designing more complex systems, you might want to provide more than one hook name while defining a hook.
 
 ```twig
-{% raw %}
 {% hook ['app.course.create', 'app.common.create'] %}
-{% endraw %}
 ```
 
 {% hint style="info" %}
@@ -17,9 +15,7 @@ You can use this mechanism for creating set of hookables for "generic" use-cases
 Moreover, there is no limit for number of hook names you can define. So, you can create the following hook:
 
 ```twig
-{% raw %}
 {% hook ['app.course.create.form', 'app.common.create.form', 'app.common.component.form'] %}
-{% endraw %}
 ```
 
 A hookable **with the same name** from `app.common.create.form` will override a hookable with the same name from `app.common.component.form`. As same as a hookable with the same name from `app.course.create.form` will override a hookable with the same name from `app.common.create.form` and `app.common.component.form`.
@@ -27,9 +23,7 @@ A hookable **with the same name** from `app.common.create.form` will override a 
 Of course, this mechanism is scoped to a given hook definiton. In other template you can still define:
 
 ```twig
-{% raw %}
 {% hook ['app.common.create.form', 'app.common.component.form'] %}
-{% endraw %}
 ```
 
 and in this case only hookables with the same name from `app.common.create.form` will override the ones from `app.common.component.form`.
@@ -59,17 +53,13 @@ with the following templates:
 
 {% code title="templates/course/create.html.twig" %}
 ```twig
-{% raw %}
 {% hook ['app.course.create', 'app.common.create'] %}
-{% endraw %}
 ```
 {% endcode %}
 
 {% code title="templates/course_category/create.html.twig" %}
 ```twig
-{% raw %}
 {% hook ['app.course_category.create', 'app.common.create'] %}
-{% endraw %}
 ```
 {% endcode %}
 
