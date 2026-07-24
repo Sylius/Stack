@@ -54,6 +54,12 @@ return static function (ContainerConfigurator $container): void {
                 'header' => [
                     'template' => '@SyliusBootstrapAdminUi/shared/crud/common/content/header.html.twig',
                 ],
+                'body' => [
+                    'template' => '@SyliusBootstrapAdminUi/shared/crud/common/content/body.html.twig',
+                ],
+            ],
+
+            'sylius_admin.common.create.content.body' => [
                 'form_error_alert' => [
                     'template' => '@SyliusBootstrapAdminUi/shared/crud/common/content/form_error_alert.html.twig',
                 ],
@@ -89,19 +95,19 @@ return static function (ContainerConfigurator $container): void {
                 ],
             ],
 
-            'sylius_admin.common.create.content.form' => [
+            'sylius_admin.common.create.content.body.form' => [
                 'sections' => [
                     'template' => '@SyliusBootstrapAdminUi/shared/crud/common/content/form/sections.html.twig',
                 ],
             ],
 
-            'sylius_admin.common.create.content.form.sections' => [
+            'sylius_admin.common.create.content.body.form.sections' => [
                 'general' => [
                     'template' => '@SyliusBootstrapAdminUi/shared/crud/common/content/form/sections/general.html.twig',
                 ],
             ],
 
-            'sylius_admin.common.create.content.form.sections.general' => [
+            'sylius_admin.common.create.content.body.form.sections.general' => [
                 'default' => [
                     'template' => '@SyliusBootstrapAdminUi/shared/crud/common/content/form/sections/general/default.html.twig',
                 ],
