@@ -38,4 +38,17 @@ final class TemplatesTest extends WebTestCase
         $this->assertAnySelectorTextSame('.nav-link-title', 'Dashboard'); // with "messages" domain
         $this->assertAnySelectorTextSame('.nav-link-title', 'Library'); // with "menu" domain
     }
+
+    public function testCreateTemplatePageStructure(): void
+    {
+        $this->client->request('GET', '/books/new');
+
+        $this->assertResponseIsSuccessful();
+        // Tabler layout: .page-body must be the .page-header's sibling — its
+        // top margin provides the header-to-content spacing.
+        $this->assertSelectorExists('.page-wrapper > .page-header');
+        $this->assertSelectorExists('.page-header + .page-body');
+        $this->assertSelectorExists('.page-body form');
+        $this->assertSelectorExists('.page-body form input[name="book_resource[name]"]');
+    }
 }
