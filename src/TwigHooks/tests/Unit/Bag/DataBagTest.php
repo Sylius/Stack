@@ -34,9 +34,10 @@ final class DataBagTest extends TestCase
 
     public function testItReturnsWhetherGivenOffsetExists(): void
     {
-        $dataBag = new DataBag(['foo' => 'bar']);
+        $dataBag = new DataBag(['foo' => 'bar', 'null_value' => null]);
 
         $this->assertTrue(isset($dataBag['foo']));
+        $this->assertTrue(isset($dataBag['null_value']));
         $this->assertFalse(isset($dataBag['bar']));
     }
 
@@ -96,9 +97,19 @@ final class DataBagTest extends TestCase
 
     public function testItReturnsWhetherGivenPropertyExists(): void
     {
-        $dataBag = new DataBag(['foo' => 'bar']);
+        $dataBag = new DataBag(['foo' => 'bar', 'null_value' => null]);
 
         $this->assertTrue($dataBag->has('foo'));
+        $this->assertTrue($dataBag->has('null_value'));
         $this->assertFalse($dataBag->has('bar'));
+    }
+
+    public function testItReturnsWhetherGivenPropertyIsSet(): void
+    {
+        $dataBag = new DataBag(['foo' => 'bar', 'null_value' => null]);
+
+        $this->assertTrue(isset($dataBag->foo));
+        $this->assertTrue(isset($dataBag->null_value));
+        $this->assertFalse(isset($dataBag->baz));
     }
 }

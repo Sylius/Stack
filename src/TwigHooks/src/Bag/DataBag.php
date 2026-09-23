@@ -29,7 +29,7 @@ class DataBag implements DataBagInterface
 
     public function offsetExists(mixed $offset): bool
     {
-        return isset($this->container[$offset]);
+        return array_key_exists($offset, $this->container);
     }
 
     public function offsetGet(mixed $offset): mixed
@@ -53,6 +53,11 @@ class DataBag implements DataBagInterface
     public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
+    }
+
+    public function __isset(string $name): bool
+    {
+        return array_key_exists($name, $this->container);
     }
 
     public function __get(string $name): mixed
