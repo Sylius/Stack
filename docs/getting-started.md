@@ -76,33 +76,23 @@ Now, it's your turn!
 
 ### Using AssetMapper
 
-To prevent duplicate Ajax calls, disable the auto-initialized Stimulus app and Symfony UX stylesheets from the `sylius/bootstrap-admin-ui` package, so you can take control of Stimulus initialization in your own code.
+The `sylius/bootstrap-admin-ui` package loads its own AssetMapper entrypoint by default. Any new stimulus controller in `assets/controllers` will be added automatically.
 
-#### Disabling Stimulus app & Symfony UX stylesheets from third party package
+If you want to extend the admin assets, for example to change colors or register extra javascript scripts, disable the bundle entrypoint and load your own entrypoint instead.
 
-First, you need to disable the Stimulus App started by the `sylius/bootstrap-admin-ui` package and add a custom javascript app hook for the asset mapper.
+#### Replacing the bundle entrypoint
 
 {% tabs %}
 {% tab title="YAML" %}
-{% code lineNumbers="true" %}
+{% code title="config/packages/sylius_bootstrap_admin_ui.yaml" lineNumbers="true" %}
 ```yaml
-# config/packages/sylius_bootstrap_admin_ui.yaml
-# ...
 sylius_twig_hooks:
     hooks:
-        # ...
-        # Disabling Symfony UX stylesheets
         'sylius_admin.base#stylesheets':
-            symfony_ux:
-                enabled: false    
-           
-        'sylius_admin.base#javascripts':
-            app:
-                priority: 200
-                template: 'base/javascripts/app.html.twig'
-            # Disabling Stimulus App
-            symfony_ux:
+            importmap:
                 enabled: false
+            custom_app:
+                template: 'layout/importmap.html.twig'
 ```
 {% endcode %}
 {% endtab %}
@@ -113,29 +103,17 @@ sylius_twig_hooks:
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // ...
-
     $containerConfigurator->extension('sylius_twig_hooks', [
         'hooks' => [
             'sylius_admin.base#stylesheets' => [
-                // Disabling Symfony UX stylesheets
-                'symfony_ux' => [
+                'importmap' => [
                     'enabled' => false,
                 ],
-            ],
-            
-            'sylius_admin.base#javascripts' => [
-                // New hook
-                'app' => [
-                    'priority' => 200,
-                    'template' => 'base/javascripts/app.html.twig',
-                ],                
-                // Disabling Stimulus App        
-                'symfony_ux' => [
-                    'enabled' => false,
+                'custom_app' => [
+                    'template' => 'layout/importmap.html.twig',
                 ],
             ],
-        ],    
+        ],
     ]);
 };
 ```
@@ -143,25 +121,37 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 {% endtab %}
 {% endtabs %}
 
-{% code title="base/javascripts/app.html.twig" lineNumbers="true" %}
+{% code title="templates/layout/importmap.html.twig" lineNumbers="true" %}
 ```twig
-{{ importmap('app') }}
+{{ importmap('admin_entry') }}
 ```
 {% endcode %}
 
-#### Starting Stimulus App
+Then create your custom entrypoint:
 
+{% code title="assets/admin_entry.js" lineNumbers="true" %}
 ```js
-// assets/bootstrap.js
-import { startStimulusApp } from '@symfony/stimulus-bundle';
+// Import the default entrypoint to keep the default styles and scripts
+import '@sylius/bootstrap-admin-ui/entrypoint'; 
 
-const app = startStimulusApp();
-// register any custom, 3rd party controllers here
-// app.register('some_controller_name', SomeImportedController);
+// Import your custom styles or scripts
+import './styles/admin.css';
+```
+{% endcode %}
+
+
+{% code title="assets/styles/admin.css" lineNumbers="true" %}
+```css
+/* assets/styles/admin.css */
+:root {
+    --tblr-primary: red !important;
+}
+```
+{% endcode %}
+
+And make sure to reference your custom entrypoint in the `importmap.php` file:
+
+```bash
+php bin/console importmap:require "admin_entry" --path=assets/admin_entry.js --entrypoint
 ```
 
-```js
-// assets/app.js
-import './bootstrap.js';
-// ...
-```

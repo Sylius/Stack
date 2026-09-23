@@ -23,8 +23,13 @@
         "league/csv": "^9.0",
         "pagerfanta/doctrine-orm-adapter": "^4.6",
         "pagerfanta/twig": "^4.6",
+        "sylius/admin-ui": "@dev",
+        "sylius/bootstrap-admin-ui": "@dev",
         "sylius/grid-bundle": "^1.13 || ^1.15@alpha",
         "sylius/resource-bundle": "^1.13 || ^1.14@alpha",
+        "sylius/twig-extra": "@dev",
+        "sylius/twig-hooks": "@dev",
+        "sylius/ui-translations": "@dev",
         "symfony/asset": "^6.4 || ^7.4 || ^8.0",
         "symfony/asset-mapper": "^6.4 || ^7.4 || ^8.0",
         "symfony/config": "^6.4 || ^7.4 || ^8.0",
@@ -69,15 +74,7 @@
         "vich/uploader-bundle": "^2.4",
         "zenstruck/foundry": "^2.0"
     },
-    "autoload": {
-        "psr-4": {
-            "Sylius\\AdminUi\\": "src/AdminUi/src/",
-            "Sylius\\BootstrapAdminUi\\": "src/BootstrapAdminUi/src/",
-            "Sylius\\TwigExtra\\": "src/TwigExtra/src/",
-            "Sylius\\TwigHooks\\": "src/TwigHooks/src/",
-            "Sylius\\UiTranslations\\": "src/UiTranslations/src/"
-        }
-    },
+    "autoload": {},
     "autoload-dev": {
         "psr-4": {
             "App\\": "app/",
@@ -93,13 +90,15 @@
             "Tests\\Sylius\\UiTranslations\\": "src/UiTranslations/tests/"
         }
     },
-    "replace": {
-        "sylius/admin-ui": "self.version",
-        "sylius/bootstrap-admin-ui": "self.version",
-        "sylius/twig-extra": "self.version",
-        "sylius/twig-hooks": "self.version",
-        "sylius/ui-translations": "self.version"
-    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./src/*/",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "config": {
         "allow-plugins": {
             "symfony/flex": true,

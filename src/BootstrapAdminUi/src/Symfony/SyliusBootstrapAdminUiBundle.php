@@ -42,6 +42,15 @@ final class SyliusBootstrapAdminUiBundle extends AbstractBundle
 
         $loader->load('services.php');
 
+        $container->extension('framework', [
+            'asset_mapper' => [
+                'paths' => [
+                    __DIR__ . '/../../assets/' => '@sylius/bootstrap-admin-ui',
+                ],
+            ],
+        ]);
+
+
         if (!isset($bundles['SyliusAdminUiBundle'])) {
             return;
         }

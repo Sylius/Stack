@@ -1,4 +1,35 @@
 {
+  "name": "@sylius/bootstrap-admin-ui",
+  "symfony": {
+    "controllers": {
+      "theme-switcher": {
+        "main": "controllers/theme-switcher-controller.js",
+        "webpackMode": "eager",
+        "fetch": "eager",
+        "enabled": true
+      }
+    },
+    "importmap": {
+      "@sylius/bootstrap-admin-ui/entrypoint": "entrypoint:%PACKAGE%/entrypoint.js",
+      "bootstrap": "^5.3.0",
+      "bootstrap/dist/css/bootstrap.min.css": "^5.3.0",
+      "@fortawesome/fontawesome-free": "^5.8.1",
+      "@hotwired/stimulus": "^3.0.0",
+      "@popperjs/core": "^2.9.2",
+      "@tabler/core": "^1.4.0",
+      "@tabler/core/dist/css/tabler.min.css": "^1.4.0",
+      "apexcharts": "^4.4.0",
+      "basiclightbox": "^5.0.4",
+      "choices.js": "^10.2.0",
+      "codemirror": "^5.65.20",
+      "dirty-form": "^0.4.0",
+      "jquery": "^3.5.0",
+      "mark.js": "^8.11.1",
+      "slugify": "^1.4.0",
+      "tom-select": "^2.2.2",
+      "tom-select/dist/css/tom-select.bootstrap5.css": "^2.2.2"
+    }
+  },
   "devDependencies": {
     "@babel/core": "^7.17.0",
     "@babel/preset-env": "^7.25.8",
@@ -20,8 +51,6 @@
     "jquery": "^3.5.0",
     "mark.js": "^8.11.1",
     "postcss": "^8.2.10",
-    "sass": "~1.64.2",
-    "sass-loader": "~16.0.1",
     "slugify": "^1.4.0",
     "tom-select": "^2.2.2",
     "webpack": "^5.72",

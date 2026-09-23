@@ -16,18 +16,21 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 return static function (ContainerConfigurator $container): void {
     $container->extension('sylius_twig_hooks', [
         'hooks' => [
-            'sylius_admin.base#javascripts' => [
-                'app' => [
-                    'priority' => 200,
-                    'template' => 'base/javascripts/app.html.twig',
-                ],
-            ],
             'sylius_admin.base#metatags' => [
                 'favicon' => [
                     'template' => 'base/favicon.html.twig',
                 ],
                 'seo_metatags' => [
                     'template' => 'base/seo_metatags.html.twig',
+                ],
+            ],
+            // Demo / Docs purpose - How to extend entrypoint from BootstrapAdminUi
+            'sylius_admin.base#stylesheets' => [
+                'importmap' => [
+                    'enabled' => false,
+                ],
+                'custom_admin' => [
+                    'template' => 'base/importmap.html.twig',
                 ],
             ],
         ],
