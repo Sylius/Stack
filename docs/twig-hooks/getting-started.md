@@ -128,7 +128,16 @@ condition: '@=user != null'
 condition: '@=_context.user != null'
 ```
 
-Because the expression is evaluated with the whole hook context and the `_context` variable, this behaves like [Twig's `defined`](https://twig.symfony.com/doc/3.x/tests/defined.html)-style checks: `@=_context.product` returns `null` when the variable is absent from the context, so the hookable is simply not rendered. Referencing a missing variable directly (e.g. `@=product ...`) throws a clear `InvalidExpressionException` instead, which makes invalid conditions fail fast during development.
+The `user` variable is provided from Symfony's current security token, as in Symfony security expressions. To refer to a `user` value passed explicitly in the hook context, use `_context.user`. For context keys, `_context` behaves like [Twig's `defined`](https://twig.symfony.com/doc/3.x/tests/defined.html)-style check: `@=_context.product` returns `null` when the variable is absent from the context. Referencing a missing variable directly (e.g. `@=product ...`) throws a clear `InvalidExpressionException` instead, which makes invalid conditions fail fast during development.
+
+Conditions can also use Symfony's `is_granted()` authorization check. Pass the required role or attribute, and optionally a subject:
+
+```yaml
+condition: '@=is_granted("ROLE_ADMIN")'
+condition: '@=is_granted("EDIT", _context.product)'
+```
+
+The check uses Symfony's authorization checker, so voters and access decision rules apply as they do in Twig templates.
 
 {% hint style="info" %}
 On Symfony 7.1 and newer, conditions are validated at the application boot: an invalid expression is reported as soon as the container is compiled. On older versions, errors are only reported at runtime, when the hook is rendered.
