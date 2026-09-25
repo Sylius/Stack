@@ -32,7 +32,9 @@ final class TestHtmlAttributeExtension extends AbstractExtension
                 'sylius_test_html_attribute',
                 function (string $name, ?string $value = null): string {
                     if (str_starts_with($this->environment, 'test') || $this->isDebugEnabled) {
-                        return sprintf('data-test-%s="%s"', $name, (string) $value);
+                        $escapedValue = htmlspecialchars((string) $value, \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
+
+                        return sprintf('data-test-%s="%s"', $name, $escapedValue);
                     }
 
                     return '';
