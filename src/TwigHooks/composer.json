@@ -20,6 +20,7 @@
         "symfony/dependency-injection": "^6.4 || ^7.4 || ^8.0",
         "symfony/expression-language": "^6.4 || ^7.4 || ^8.0",
         "symfony/http-kernel": "^6.4 || ^7.4 || ^8.0",
+        "symfony/security-core": "^6.4 || ^7.4 || ^8.0",
         "symfony/stopwatch": "^6.4 || ^7.4 || ^8.0",
         "symfony/ux-live-component": "^2.17 || ^3.0",
         "symfony/ux-twig-component": "^2.17 || ^3.0",

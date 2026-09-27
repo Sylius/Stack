@@ -50,6 +50,7 @@ final class SyliusTwigHooksExtension extends Extension
     private function registerHooks(ContainerBuilder $container, array $hooks, array $supportedHookableTypes): void
     {
         $expressionLanguage = new ExpressionLanguage();
+        $expressionLanguage->register('is_granted', static fn (string ...$arguments): string => sprintf('is_granted(%s)', implode(', ', $arguments)), static fn (): bool => false);
 
         foreach ($hooks as $hookName => $hookables) {
             foreach ($hookables as $hookableName => $hookable) {
