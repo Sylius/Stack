@@ -142,4 +142,17 @@ final class TestFormAttributeExtensionTest extends TestCase
 
         $this->assertEquals(['html'], $twigFunction->getSafe(new Node()));
     }
+
+    public function testItsTestFormAttributeEscapesHtmlSpecialCharacters(): void
+    {
+        $twigFunction = (new TestFormAttributeExtension('test', false))->getFunctions()[0];
+        $callable = $twigFunction->getCallable();
+
+        $this->assertIsCallable($callable);
+
+        $input = '\'" onmouseover="alert(1)';
+        $expected = ['attr' => ['data-test-comment' => '&#039;&quot; onmouseover=&quot;alert(1)']];
+
+        $this->assertEquals($expected, ($callable)('comment', $input));
+    }
 }
