@@ -13,7 +13,7 @@
             line-height: 28px;
 
             &:hover {
-                background: $gray-100;
+                background: var(--tblr-tertiary-bg);
             }
 
             &:not(.collapsed) {
