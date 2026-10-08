@@ -2,6 +2,6 @@
 
 {% if last_error is not null %}
     <div class="alert alert-danger" {{ sylius_test_html_attribute('invalid-credentials-message') }}>
-        {{ last_error.messageKey|trans }}
+        {{ last_error.messageKey|trans(last_error.messageData, 'security') }}
     </div>
 {% endif %}
