@@ -70,6 +70,7 @@
 * [Getting started](bootstrap-admin-ui/getting-started.md)
 * Components
   * [Copy to clipboard](bootstrap-admin-ui/components/copy-to-clipboard.md)
+  * [Tooltips](bootstrap-admin-ui/components/tooltips.md)
 
 ## 🌑 Shadcn Admin UI
 
