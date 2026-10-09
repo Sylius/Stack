@@ -28,7 +28,7 @@ use TestApplication\Sylius\BootstrapAdminUi\State\Provider\BookItemProvider;
     driver: false,
     operations: [
         new Index(grid: BookGrid::class),
-        new Create(),
+        new Create(factory: [self::class, 'withGeneratedId']),
         new Update(provider: BookItemProvider::class),
     ],
 )]
@@ -38,6 +38,11 @@ final class BookResource implements ResourceInterface
         public ?string $id = null,
         public ?string $name = null,
     ) {
+    }
+
+    public static function withGeneratedId(): self
+    {
+        return new self(bin2hex(random_bytes(8)));
     }
 
     public function getId(): ?string

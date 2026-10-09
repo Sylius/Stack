@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block body %}
-    {% hook 'update' with { _prefixes: prefixes, resource, metadata, configuration, form } %}
+    {% hook 'update' with { _prefixes: prefixes, resource, metadata, configuration, form, form_method: 'PUT' } %}
 {% endblock %}
 
 {% block stylesheets %}
