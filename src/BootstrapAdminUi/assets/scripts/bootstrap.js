@@ -1,5 +1,6 @@
 /* eslint-env browser */
 import * as bootstrap from 'bootstrap';
+import { initTooltips, initTooltipsOnLiveRender } from './tooltips';
 
 // Fix dropdowns
 (() => {
@@ -16,10 +17,7 @@ import * as bootstrap from 'bootstrap';
 })();
 
 // Initialize tooltips
-(() => {
-    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach((tooltipTriggerEl) => {
-        let tooltip = new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-})();
+initTooltips(document, bootstrap.Tooltip);
+initTooltipsOnLiveRender(document, bootstrap.Tooltip);
 
 window.bootstrap = bootstrap;
