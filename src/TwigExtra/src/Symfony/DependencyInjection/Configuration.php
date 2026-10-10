@@ -14,15 +14,23 @@ declare(strict_types=1);
 namespace Sylius\TwigExtra\Symfony\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeParentInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 final class Configuration implements ConfigurationInterface
 {
+    /**
+     * @phpstan-return TreeBuilder<'array'>
+     */
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('sylius_twig_extra');
 
+        /**
+         * @var ArrayNodeDefinition $rootNode
+         * @phpstan-var ArrayNodeDefinition<NodeParentInterface|null> $rootNode
+         */
         $rootNode = $treeBuilder->getRootNode();
 
         $this->addTwigUxConfiguration($rootNode);
@@ -30,6 +38,9 @@ final class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
+    /**
+     * @phpstan-param ArrayNodeDefinition<NodeParentInterface|null> $rootNode
+     */
     private function addTwigUxConfiguration(ArrayNodeDefinition $rootNode): void
     {
         $rootNode
