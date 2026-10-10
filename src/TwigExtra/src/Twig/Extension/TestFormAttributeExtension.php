@@ -43,7 +43,9 @@ final class TestFormAttributeExtension extends AbstractExtension
                     $result = [];
 
                     foreach ($attributes as $name => $value) {
-                        $result[sprintf('data-test-%s', $name)] = (string) $value;
+                        $escapedValue = htmlspecialchars((string) $value, \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
+
+                        $result[sprintf('data-test-%s', $name)] = $escapedValue;
                     }
 
                     return ['attr' => $result];
@@ -59,7 +61,9 @@ final class TestFormAttributeExtension extends AbstractExtension
     public function getTestFormAttribute(string $name, ?string $value = null): array
     {
         if (str_starts_with($this->environment, 'test') || $this->isDebugEnabled) {
-            return ['attr' => ['data-test-' . $name => (string) $value]];
+            $escapedValue = htmlspecialchars((string) $value, \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
+
+            return ['attr' => ['data-test-' . $name => $escapedValue]];
         }
 
         return [];
