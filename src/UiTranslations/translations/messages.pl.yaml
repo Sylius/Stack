@@ -12,6 +12,7 @@ sylius:
         apply_transition: 'Wykonaj'
         are_your_sure_you_want_to_perform_this_action: 'Czy na pewno chcesz wykonać tę akcję?'
         cancel: 'Anuluj'
+        columns: 'Kolumny'
         copyright: 'Prawa autorskie'
         contains: 'Zawiera'
         copied_to_clipboard: 'Skopiowano do schowka'

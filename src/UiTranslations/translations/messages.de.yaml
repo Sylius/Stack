@@ -12,6 +12,7 @@ sylius:
         apply_transition: 'Anwenden'
         are_your_sure_you_want_to_perform_this_action: 'Möchten Sie diese Aktion wirklich durchführen?'
         cancel: 'Abbrechen'
+        columns: 'Spalten'
         contains: 'Enthält'
         copied_to_clipboard: 'In die Zwischenablage kopiert'
         copy_to_clipboard: 'In die Zwischenablage kopieren'

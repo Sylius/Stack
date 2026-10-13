@@ -89,6 +89,12 @@ return static function (ContainerConfigurator $container): void {
                 ],
             ],
 
+            'sylius_admin.common.index.content.grid.data_table#toolbar' => [
+                'column_selector' => [
+                    'template' => '@SyliusBootstrapAdminUi/shared/crud/index/content/grid/data_table/column_selector.html.twig',
+                ],
+            ],
+
             'sylius_admin.common.index.content.grid.no_results' => [
                 'image' => [
                     'template' => '@SyliusBootstrapAdminUi/shared/crud/index/content/grid/no_results/image.html.twig',

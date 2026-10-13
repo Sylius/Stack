@@ -11,6 +11,8 @@ more suitable to your grid requirements.
 | label    | string | Label displayed in the field header. By default, it is field name.                                  |
 | path     | string | Path to property displayed in field (can be property of resource or one of its referenced objects). |
 | position | int    | Position of field in the grid index view.                                                           |
+| enabled  | bool   | Whether the field is part of the grid. Disabled fields are never displayed. Defaults to `true`.     |
+| visible  | bool   | Whether the field is displayed by default (see "Hiding fields by default"). Defaults to `true`.     |
 | options  | array  | Array of field options (see below).                                                                 |
 
 The `options` field can itself contain the following fields:
@@ -19,6 +21,89 @@ The `options` field can itself contain the following fields:
   |----------|--------|-------------------------------------------------------------------------------------------------------------|-------------|
 | template | string | Available (and required) only for *twig* column type. Path to template that is used to render column value. |             |
 | format   | string | Available only for *datetime* field type.                                                                   | `Y:m:d` `H:i:s` |
+
+### Hiding fields by default
+
+Fields with `visible: false` are not displayed by default. It only sets the default visibility:
+users can still display them, either with the columns selector of the Bootstrap Admin UI or with the `visibility` query parameter
+(e.g. `/admin/users?visibility[phoneNumber]=visible&visibility[email]=hidden`).
+To remove a field from the grid, use `enabled: false` instead.
+
+{% tabs %}
+{% tab title="PHP (recommended)" %}
+{% code title="src/Grid/UserGrid.php" lineNumbers="true" %}
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Grid;
+
+use App\Entity\User;
+use Sylius\Bundle\GridBundle\Builder\Field\StringField;
+use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
+use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
+use Sylius\Component\Grid\Attribute\AsGrid;
+
+#[AsGrid(
+    name: 'app_user',
+    resourceClass: User::class
+)]
+final class UserGrid extends AbstractGrid
+{
+    public function __invoke(GridBuilderInterface $gridBuilder): void
+    {
+        $gridBuilder
+            ->withFields(
+                StringField::create('email'),
+                StringField::create('phoneNumber')
+                    ->setVisible(false)
+            )
+        ;
+    }
+}
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="YAML" %}
+{% code title="config/packages/sylius_grid.yaml" lineNumbers="true" %}
+```yaml
+sylius_grid:
+    grids:
+        app_user:
+            fields:
+                email:
+                    type: string
+                phoneNumber:
+                    type: string
+                    visible: false
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="PHP config file" %}
+{% code title="config/packages/sylius_grid.php" lineNumbers="true" %}
+```php
+<?php
+
+use Sylius\Bundle\GridBundle\Builder\Field\StringField;
+use Sylius\Bundle\GridBundle\Builder\GridBuilder;
+use Sylius\Bundle\GridBundle\Config\GridConfig;
+
+return static function (GridConfig $grid): void {
+    $grid->addGrid(GridBuilder::create('app_user', '%app.model.user.class%')
+        ->withFields(
+            StringField::create('email'),
+            StringField::create('phoneNumber')
+                ->setVisible(false)
+        )
+    )
+};
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 ## Field types
 

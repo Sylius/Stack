@@ -38,4 +38,34 @@ final class TemplatesTest extends WebTestCase
         $this->assertAnySelectorTextSame('.nav-link-title', 'Dashboard'); // with "messages" domain
         $this->assertAnySelectorTextSame('.nav-link-title', 'Library'); // with "menu" domain
     }
+
+    public function testIndexTemplateHidesFieldsThatAreNotVisibleByDefault(): void
+    {
+        $this->client->request('GET', '/books');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('[data-test-column-selector]');
+        $this->assertSelectorExists('th.sylius-table-column-name');
+        $this->assertSelectorNotExists('th.sylius-table-column-id');
+        $this->assertSelectorExists('[data-test-column-selector-item="id"][aria-checked="false"]');
+        $this->assertSelectorExists('[data-test-column-selector-item="name"].disabled[aria-disabled="true"]');
+        $this->assertSelectorNotExists('[data-test-filters-form] input[name^="visibility"]');
+    }
+
+    public function testIndexTemplateShowsAndHidesFieldsFromTheVisibilityParameter(): void
+    {
+        $crawler = $this->client->request('GET', '/books?visibility[id]=visible&visibility[name]=hidden');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorNotExists('th.sylius-table-column-name');
+        $this->assertSelectorExists('th.sylius-table-column-id');
+        $this->assertSelectorTextContains('tr.item:first-child[data-test-resource-id]', 'the-shining');
+        $this->assertSelectorExists('[data-test-filters-form] input[type="hidden"][name="visibility[id]"][value="visible"]');
+        $this->assertSelectorExists('[data-test-filters-form] input[type="hidden"][name="visibility[name]"][value="hidden"]');
+        $this->assertSelectorExists('[data-test-column-selector-item="id"].disabled[aria-disabled="true"]');
+        $this->assertSame(
+            '/books?visibility%5Bid%5D=visible',
+            $crawler->filter('[data-test-column-selector-item="name"]')->attr('href'),
+        );
+    }
 }

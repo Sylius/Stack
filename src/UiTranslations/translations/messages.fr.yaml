@@ -13,6 +13,7 @@ sylius:
         apply_transition: Appliquer
         are_your_sure_you_want_to_perform_this_action: 'Êtes-vous sûr(e) de vouloir effectuer cette action ?'
         cancel: 'Annuler'
+        columns: 'Colonnes'
         copyright: Copyright
         contains: 'Contient'
         copied_to_clipboard: 'Copié dans le presse-papiers'

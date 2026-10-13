@@ -18,6 +18,7 @@ use Sylius\Bundle\GridBundle\Builder\Action\UpdateAction;
 use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
 use Sylius\Bundle\GridBundle\Builder\ActionGroup\MainActionGroup;
 use Sylius\Bundle\GridBundle\Builder\Field\StringField;
+use Sylius\Bundle\GridBundle\Builder\Filter\StringFilter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
@@ -38,6 +39,14 @@ final class BookGrid extends AbstractGrid implements ResourceAwareGridInterface
             ->addField(
                 StringField::create('name')
                     ->setLabel('Name'),
+            )
+            ->addField(
+                StringField::create('id')
+                    ->setLabel('Identifier')
+                    ->setVisible(false),
+            )
+            ->addFilter(
+                StringFilter::create('name'),
             )
             ->addActionGroup(
                 MainActionGroup::create(

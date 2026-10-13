@@ -11,6 +11,7 @@ sylius:
         apply_transition: 'Aplicar'
         are_your_sure_you_want_to_perform_this_action: '\¿Está seguro que quiere realizar esta acción?'
         cancel: 'Cancelar'
+        columns: 'Columnas'
         contains: 'Contiene'
         copied_to_clipboard: 'Copiado al portapapeles'
         copy_to_clipboard: 'Copiar al portapapeles'
