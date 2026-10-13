@@ -6,6 +6,7 @@ Processors process data: send an email, persist to storage, add to queue etc.
 * [Custom processors](processors.md#custom-processors)
   * [Example #1: Sending an email after persisting data](processors.md#example-1-sending-an-email-after-persisting-data)
   * [Example #2: Use a custom delete processor](processors.md#example-2-use-a-custom-delete-processor)
+  * [Example #3: Prevent an operation and display an error](processors.md#example-3-prevent-an-operation-and-display-an-error)
 * [Disable processing data](processors.md#disable-processing-data)
 
 ## Default processors
@@ -146,6 +147,98 @@ final class BoardGameResource implements ResourceInterface
 
 Note that in a delete operation, you can disable providing data.\
 See [Disable providing data](providers.md#disable-providing-data) chapter.
+
+### Example #3: Prevent an operation and display an error
+
+A processor can refuse to write data by throwing a `Sylius\Resource\Exception\WriteResourceException`.
+Nothing is written and, on an HTML request, an error flash message is displayed.
+
+As an example, an accepted subscription cannot be deleted.
+
+{% code title="src/Sylius/State/Processor/DeleteSubscriptionProcessor.php" lineNumbers="true" %}
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Sylius\State\Processor;
+
+use App\Entity\Subscription;
+use Sylius\Resource\Context\Context;
+use Sylius\Resource\Doctrine\Common\State\RemoveProcessor;
+use Sylius\Resource\Exception\WriteResourceException;
+use Sylius\Resource\Metadata\Operation;
+use Sylius\Resource\State\ProcessorInterface;
+use Webmozart\Assert\Assert;
+
+final class DeleteSubscriptionProcessor implements ProcessorInterface
+{
+    public function __construct(
+        private RemoveProcessor $removeProcessor,
+    ) {
+    }
+
+    public function process(mixed $data, Operation $operation, Context $context): mixed
+    {
+        Assert::isInstanceOf($data, Subscription::class);
+
+        if ('accepted' === $data->getState()) {
+            throw new WriteResourceException(message: 'app.subscription.delete_error_accepted');
+        }
+
+        return $this->removeProcessor->process($data, $operation, $context);
+    }
+}
+```
+{% endcode %}
+
+Use this processor on your operation.
+
+{% code title="src/Entity/Subscription.php" lineNumbers="true" %}
+```php
+
+namespace App\Entity;
+
+use App\Sylius\State\Processor\DeleteSubscriptionProcessor;
+use Sylius\Resource\Metadata\AsResource;
+use Sylius\Resource\Metadata\Delete;
+use Sylius\Resource\Model\ResourceInterface;
+
+#[AsResource(
+    operations: [
+        new Delete(
+            processor: DeleteSubscriptionProcessor::class,
+        ),
+    ],
+)]
+class Subscription implements ResourceInterface
+```
+{% endcode %}
+
+The error message is translated from the `flashes` domain. The first defined key is used:
+
+1. the message of the exception, when it is a translation key (`app.subscription.delete_error_accepted`)
+2. `app.subscription.<operation>_error` (`app.subscription.delete_error`)
+3. `app.subscription.<operation type>_error`, for a custom operation name (`app.subscription.delete_error` for a `bulk_delete` operation)
+4. `sylius.resource.<operation>_error`, then `sylius.resource.<operation type>_error`
+
+The `%resource%` parameter contains the humanized name of the resource.
+
+{% code title="translations/flashes.en.yaml" lineNumbers="true" %}
+```yaml
+app:
+    subscription:
+        delete_error_accepted: 'Cannot delete an accepted subscription.'
+```
+{% endcode %}
+
+{% hint style="info" %}
+The message of the exception is used since SyliusResourceBundle 1.15. Before, only the conventional keys are used.
+{% endhint %}
+
+{% hint style="warning" %}
+The first argument of the `WriteResourceException` constructor is the resource name: pass the translation key as the named argument `message`.
+{% endhint %}
 
 ## Disable processing data
 
