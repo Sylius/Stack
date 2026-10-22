@@ -41,7 +41,7 @@ sylius:
         not_equal: 'Nicht gleich'
         not_in: 'Nicht in'
         pagination:
-            number_of_results: 'Zeigt %from% - %to% von %total% Einträgen'
+            number_of_results: 'Zeigt %from% - %to% von %total% Eintrag|Zeigt %from% - %to% von %total% Einträgen'
         report_it: 'Hier melden'
         reset: 'Zurücksetzen'
         search: 'Suche'
