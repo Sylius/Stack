@@ -48,7 +48,7 @@ sylius:
         not_equal: 'Différent de'
         not_in: 'Pas dans'
         pagination:
-            number_of_results: 'Affiche de %from% à %to% sur %total% items'
+            number_of_results: 'Affichage de %from% à %to% sur %total% élément|Affichage de %from% à %to% sur %total% éléments'
         report_it: Signalez le
         reset: 'Réinitialiser'
         search: 'Rechercher'

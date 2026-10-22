@@ -7,7 +7,7 @@
     {% set to = paginator.maxPerPage + (paginator.currentPage - 1) * paginator.maxPerPage %}
     {% set to = to < paginator.nbResults ? to : paginator.nbResults %}
 
-    {{ 'sylius.ui.pagination.number_of_results'|trans({'%from%': from, '%to%': to, '%total%': paginator.nbResults}) }}
+    {{ 'sylius.ui.pagination.number_of_results'|trans({'%from%': from, '%to%': to, '%total%': paginator.nbResults, '%count%': paginator.nbResults}) }}
 {% endmacro %}
 
 {% macro number_of_results_selector(paginator, pagination_limits) %}
