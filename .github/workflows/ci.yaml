@@ -96,8 +96,9 @@ jobs:
                     
             -   name: "Install & compile assets"
                 run: |
-                    bin/console importmap:install      
-                    bin/console asset-map:compile      
+                    bin/console importmap:install
+                    bin/console tailwind:build
+                    bin/console asset-map:compile
 
             -   name: Run PHPUnit
                 run: vendor/bin/phpunit
