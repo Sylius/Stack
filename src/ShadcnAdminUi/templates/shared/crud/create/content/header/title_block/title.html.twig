@@ -1,0 +1,17 @@
+{% import '@SyliusShadcnAdminUi/shared/helper/header.html.twig' as header %}
+
+{% if hookable_metadata.context.metadata is defined and hookable_metadata.context.configuration is defined %}
+    {% set metadata = hookable_metadata.context.metadata %}
+    {% set singular_name = hookable_metadata.configuration.resource_name|default(metadata.applicationName ~ '.ui.' ~ metadata.name) %}
+{% else %}
+    {% set singular_name = hookable_metadata.configuration.resource_name|default(null) %}
+{% endif %}
+{% set header = hookable_metadata.configuration.title|default(hookable_metadata.configuration.header|default(null)) %}
+
+{% set icon = hookable_metadata.configuration.icon|default(null) %}
+{% set subheader = hookable_metadata.configuration.subheader|default(null) %}
+{% set test_attribute = hookable_metadata.configuration.sylius_test_html_attribute is defined ? sylius_test_html_attribute(hookable_metadata.configuration.sylius_test_html_attribute) : null %}
+
+<div class="min-w-0 flex-1" {{ test_attribute }}>
+    {{ header.h1(header is not null ? header|trans : 'sylius.ui.new'|trans ~ ' ' ~ singular_name|trans, icon, subheader|trans) }}
+</div>

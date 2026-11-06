@@ -1,0 +1,11 @@
+{% form_theme form '@SyliusShadcnAdminUi/shared/form_theme.html.twig' %}
+
+<fieldset class="flex min-w-0 flex-col gap-2" data-slot="field">
+    <legend class="mb-2 text-sm leading-snug font-medium">{{ filter.label|trans }}</legend>
+    {% for bound in [form.from, form.to] %}
+        <div class="flex items-center gap-2">
+            <span class="w-10 shrink-0 text-xs text-muted-foreground">{{ bound.vars.label|trans }}</span>
+            <div class="min-w-0 flex-1">{{ form_widget(bound) }}</div>
+        </div>
+    {% endfor %}
+</fieldset>

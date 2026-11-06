@@ -1,0 +1,8 @@
+{% set last_error = hookable_metadata.context.last_error|default(null) %}
+
+{% if last_error is not null %}
+    <div data-slot="alert" role="alert" class="relative grid w-full grid-cols-[auto_1fr] gap-x-2 rounded-lg border border-destructive/30 bg-destructive/5 px-2.5 py-2 text-sm text-destructive *:[svg]:size-4 *:[svg]:translate-y-0.5" {{ sylius_test_html_attribute('invalid-credentials-message') }}>
+        {{ ux_icon('lucide:circle-alert', {'aria-hidden': 'true'}) }}
+        <div class="col-start-2">{{ last_error.messageKey|trans(last_error.messageData, 'security') }}</div>
+    </div>
+{% endif %}

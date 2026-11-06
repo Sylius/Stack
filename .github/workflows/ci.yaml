@@ -141,6 +141,22 @@ jobs:
                     yarn install --frozen-lockfile --non-interactive
                     yarn test
 
+            - name: "Restrict packages' versions (Shadcn Admin Ui)"
+              run: |
+                  (cd src/ShadcnAdminUi/ && composer config --no-plugins allow-plugins.symfony/runtime true)
+                  (cd src/ShadcnAdminUi/ && composer config extra.symfony.require "${{ matrix.symfony }}")
+
+            -   name: "Install dependencies (Shadcn Admin Ui)"
+                run: (cd src/ShadcnAdminUi/ && composer update --no-interaction --no-scripts)
+
+            -   name: "Build the assets (Shadcn Admin Ui)"
+                run: |
+                    (cd src/ShadcnAdminUi/ && APP_ENV=test php tests/Functional/.application/bin/console importmap:install)
+                    (cd src/ShadcnAdminUi/ && APP_ENV=test php tests/Functional/.application/bin/console tailwind:build)
+
+            -   name: Run PHPUnit (Shadcn Admin Ui)
+                run: (cd src/ShadcnAdminUi/ && vendor/bin/phpunit)
+
             - name: "Restrict packages' versions (Twig Hooks)"
               run: |
                   (cd src/TwigHooks/ && composer config --no-plugins allow-plugins.symfony/runtime true)

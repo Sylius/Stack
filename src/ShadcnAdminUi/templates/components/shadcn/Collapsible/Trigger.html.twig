@@ -1,0 +1,10 @@
+{%- set _collapsible_open = inject('collapsible.open', false) -%}
+{%- set collapsible_trigger_attrs = {
+    'data-slot': 'collapsible-trigger',
+    'data-shadcn--collapsible-target': 'trigger',
+    'data-action': 'click->shadcn--collapsible#toggle'|html_attr_type('sst'),
+    'aria-expanded': _collapsible_open ? 'true' : 'false',
+    'data-state': _collapsible_open ? 'open' : 'closed',
+} -%}
+{##- The clickable element that toggles the collapsible (e.g., a `Button`). -#}
+{%- block content %}{% endblock -%}

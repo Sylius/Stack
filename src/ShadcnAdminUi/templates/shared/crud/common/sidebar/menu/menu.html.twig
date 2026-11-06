@@ -1,0 +1,142 @@
+{#
+ # KnpMenu template rendering the sylius_admin_ui sidebar menu with the shadcn Sidebar look.
+ # Plain HTML (copy of the Sidebar:Menu* classes) because KnpMenu relies on Twig blocks recursion,
+ # which does not mix well with component blocks.
+ #
+ # Layout of the sidebar-08 block: root children carrying the extra 'section' start a new
+ # sidebar group labelled with their label; children before the first section go in an unlabelled group.
+ # Inside a collapsible item, children carrying the extra 'header' are rendered as sub-section titles.
+ #
+ # Supported item options: labelAttribute('icon'), linkAttributes target="_blank",
+ # extra 'section' (root level), extra 'header' (second level),
+ # extra 'always_open' (keeps a collapsible item expanded), extra 'translation_domain'.
+ #}
+{% extends '@KnpMenu/menu.html.twig' %}
+
+{% block root %}
+    {%- set group_open = false -%}
+    {% for item in item.children|filter(child => child.displayed) %}
+        {% if item.getExtra('section', false) %}
+            {% if group_open %}</ul></div>{% endif %}
+            <div data-slot="sidebar-group" class="relative flex w-full min-w-0 flex-col p-2" data-admin--menu-search-target="group">
+                <div data-slot="sidebar-group-label" class="flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-sidebar-foreground/70 outline-hidden ring-sidebar-ring transition-[margin,opacity] duration-200 ease-linear group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0">
+                    <span class="truncate">{{ block('label') }}</span>
+                </div>
+                <ul data-slot="sidebar-menu" class="flex w-full min-w-0 flex-col gap-1">
+            {% set group_open = true %}
+        {% else %}
+            {% if not group_open %}
+                <div data-slot="sidebar-group" class="relative flex w-full min-w-0 flex-col p-2" data-admin--menu-search-target="group">
+                    <ul data-slot="sidebar-menu" class="flex w-full min-w-0 flex-col gap-1">
+                {% set group_open = true %}
+            {% endif %}
+            {{ block('item') }}
+        {% endif %}
+    {% endfor %}
+    {% if group_open %}</ul></div>{% endif %}
+{% endblock %}
+
+{% block item %}
+    {% if item.displayed %}
+        {%- set button_class = 'peer/menu-button flex h-8 w-full items-center gap-2 overflow-hidden rounded-md p-2 text-start text-sm outline-none ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0! group-data-[collapsible=icon]:[&>:not(:first-child)]:hidden [&>span:last-child]:truncate [&_svg]:size-4 [&_svg]:shrink-0' -%}
+        {%- set is_current = matcher.isCurrent(item) -%}
+        {%- set is_open = is_current or matcher.isAncestor(item, options.matchingDepth) or item.getExtra('always_open', false) -%}
+        {%- set target = item.linkAttributes and item.linkAttributes['target'] is defined ? item.linkAttributes['target'] : '_self' -%}
+        {%- set has_children = item.hasChildren and item.displayChildren and options.depth is not same as(0) -%}
+
+        <li data-slot="sidebar-menu-item" class="group/menu-item relative {{ item.attribute('class') }}" data-admin--menu-search-target="item">
+            {% if has_children %}
+                <div
+                    data-slot="collapsible"
+                    data-controller="shadcn--collapsible"
+                    data-shadcn--collapsible-open-value="{{ is_open ? 'true' : 'false' }}"
+                    data-state="{{ is_open ? 'open' : 'closed' }}"
+                    class="group/collapsible"
+                >
+                    <button
+                        type="button"
+                        data-slot="sidebar-menu-button"
+                        data-size="default"
+                        data-active="false"
+                        data-menu-search-label
+                        title="{{ block('label')|striptags|trim }}"
+                        class="{{ button_class }}"
+                        data-shadcn--collapsible-target="trigger"
+                        aria-expanded="{{ is_open ? 'true' : 'false' }}"
+                        data-action="click->shadcn--collapsible#toggle click->admin--menu-search#expandSidebar"
+                    >
+                        {{ block('icon') }}
+                        <span>{{ block('label') }}</span>
+                        {{ ux_icon('lucide:chevron-right', {class: 'ms-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 rtl:rotate-180', 'aria-hidden': 'true'}) }}
+                    </button>
+                    <div data-slot="collapsible-content" data-shadcn--collapsible-target="content" {{ is_open ? '' : 'hidden' }}>
+                        <ul data-slot="sidebar-menu-sub" class="mx-3.5 mt-1 flex min-w-0 translate-x-px flex-col gap-1 border-s border-sidebar-border px-2.5 py-0.5 group-data-[collapsible=icon]:hidden">
+                            {% set parent = item %}
+                            {# Children after a header are indented under it as a tree branch. #}
+                            {% set in_sub_section = false %}
+                            {% for item in parent.children %}
+                                {% if item.displayed and item.getExtra('header', false) %}{% set in_sub_section = true %}{% endif %}
+                                {{ block('child_item') }}
+                            {% endfor %}
+                            {% set item = parent %}
+                        </ul>
+                    </div>
+                </div>
+            {% else %}
+                <a
+                    href="{{ item.uri }}"
+                    target="{{ target }}"
+                    {% if target == '_blank' %}rel="noopener"{% endif %}
+                    data-slot="sidebar-menu-button"
+                    data-size="default"
+                    data-active="{{ is_current ? 'true' : 'false' }}"
+                    {% if is_current %}aria-current="page"{% endif %}
+                    title="{{ block('label')|striptags|trim }}"
+                    class="{{ button_class }}"
+                >
+                    {{ block('icon') }}
+                    <span>{{ block('label') }}</span>
+                    {% if target == '_blank' %}{{ ux_icon('lucide:external-link', {class: 'ms-auto size-3.5! opacity-60', 'aria-hidden': 'true'}) }}{% endif %}
+                </a>
+            {% endif %}
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block child_item %}
+    {% if item.displayed and item.getExtra('header', false) %}
+        {# Sub-section title drawn as a node on the sub menu vertical line (border-s of sidebar-menu-sub, px-2.5 away). #}
+        <li data-slot="sidebar-menu-sub-header" class="relative mt-2 flex h-6 items-center px-2 text-xs font-medium text-sidebar-foreground/70 first:mt-0" data-menu-search-header>
+            <span aria-hidden="true" class="absolute -start-[15px] top-1/2 size-[9px] -translate-y-1/2 rounded-full border-2 border-sidebar-foreground/35 bg-sidebar"></span>
+            <span class="truncate">{{ block('label') }}</span>
+        </li>
+    {% elseif item.displayed %}
+        {%- set is_current = matcher.isCurrent(item) or matcher.isAncestor(item, options.matchingDepth) -%}
+        {%- set target = item.linkAttributes and item.linkAttributes['target'] is defined ? item.linkAttributes['target'] : '_self' -%}
+        {# The branch line starts under the header label (px-2) and covers the gap-1 above to stay continuous. #}
+        <li data-slot="sidebar-menu-sub-item" class="group/menu-sub-item relative {{ in_sub_section|default(false) ? 'ps-4 before:absolute before:-top-1 before:bottom-0 before:start-2.5 before:w-px before:bg-sidebar-border' }} {{ item.attribute('class') }}" data-menu-search-child>
+            <a
+                href="{{ item.uri }}"
+                target="{{ target }}"
+                {% if target == '_blank' %}rel="noopener"{% endif %}
+                data-slot="sidebar-menu-sub-button"
+                data-size="md"
+                data-active="{{ is_current ? 'true' : 'false' }}"
+                {% if is_current %}aria-current="page"{% endif %}
+                class="flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sm text-sidebar-foreground outline-hidden ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0"
+            >
+                <span>{{ block('label') }}</span>
+            </a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block icon %}
+    {%- set icon_name = item.labelAttribute('icon') -%}
+    {%- if icon_name -%}
+        {{ ux_icon(icon_name, {'aria-hidden': 'true'}) }}
+    {%- elseif item.level == 1 -%}
+        {# Keeps something visible when the sidebar is collapsed to icons. #}
+        <span aria-hidden="true" class="flex size-4 shrink-0 items-center justify-center rounded-sm bg-sidebar-accent text-[0.625rem] font-semibold uppercase">{{ block('label')|striptags|trim|first }}</span>
+    {%- endif -%}
+{% endblock %}

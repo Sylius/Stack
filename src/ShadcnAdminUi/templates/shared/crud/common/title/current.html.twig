@@ -1,0 +1,4 @@
+{% set metadata = hookable_metadata.context.metadata %}
+{% set header = hookable_metadata.configuration.header|default(metadata.applicationName ~ '.ui.' ~ metadata.pluralName) %}
+
+{{ header|trans }}

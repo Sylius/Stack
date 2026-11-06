@@ -1,0 +1,43 @@
+{% macro simple(paginator, options = {}) %}
+    {{ pagerfanta(paginator, 'twig', {template: '@SyliusShadcnAdminUi/shared/pagerfanta.html.twig'}|merge(options)) }}
+{% endmacro %}
+
+{% macro results_count(paginator) %}
+    {% set from = paginator.nbResults == 0 ? 0 : 1 + (paginator.currentPage - 1) * paginator.maxPerPage %}
+    {% set to = paginator.maxPerPage + (paginator.currentPage - 1) * paginator.maxPerPage %}
+    {% set to = to < paginator.nbResults ? to : paginator.nbResults %}
+
+    {{ 'sylius.ui.pagination.number_of_results'|trans({'%from%': from, '%to%': to, '%total%': paginator.nbResults}) }}
+{% endmacro %}
+
+{% macro number_of_results_selector(paginator, pagination_limits) %}
+    {% import '@SyliusShadcnAdminUi/shared/helper/dropdown.html.twig' as dropdown %}
+    {% from '@SyliusShadcnAdminUi/shared/helper/ui.html.twig' import button_class %}
+
+    {% set other_pagination_limits = pagination_limits|filter(limit => limit != paginator.maxPerPage) %}
+
+    {% if other_pagination_limits is not empty %}
+        {% set content %}
+            {% for limit in pagination_limits %}
+                {% set path = path(app.request.attributes.get('_route'), app.request.attributes.all('_route_params')|merge(app.request.query.all)|merge({limit: limit, page: 1})) %}
+                {% set label %}
+                    <span class="flex-1">{{ limit }}</span>
+                    {% if limit == paginator.maxPerPage %}{{ ux_icon('lucide:check', {'aria-hidden': 'true'}) }}{% endif %}
+                {% endset %}
+                {{ dropdown.item({href: path}, label) }}
+            {% endfor %}
+        {% endset %}
+
+        {{ dropdown.default({
+            id: 'grid-limit',
+            button: {text: 'sylius.ui.show'|trans ~ ' ' ~ paginator.maxPerPage, class: 'h-7 text-[0.8rem]'},
+            content: content,
+            direction: 'down-end',
+            class: 'w-28',
+        }) }}
+    {% else %}
+        <button type="button" class="{{ button_class('ghost', 'sm') }}" disabled>
+            {{ 'sylius.ui.show'|trans }} {{ paginator.maxPerPage }}
+        </button>
+    {% endif %}
+{% endmacro %}

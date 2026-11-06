@@ -1,6 +1,7 @@
 config/reference.php
 /src/**/.phpunit.result.cache
 /src/**/vendor
+!/src/ShadcnAdminUi/assets/styles/vendor
 composer.lock
 
 ###> symfony/framework-bundle ###

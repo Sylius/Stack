@@ -1,0 +1,9 @@
+{% import '@SyliusShadcnAdminUi/shared/helper/button.html.twig' as button %}
+
+{{ button.primary({
+    text: 'sylius.ui.update'|trans,
+    type: 'submit',
+    icon: 'lucide:save',
+    form: hookable_metadata.context.form.vars.id|default(null),
+    attr: sylius_test_form_attribute('update-changes-button').attr|default({}),
+}) }}

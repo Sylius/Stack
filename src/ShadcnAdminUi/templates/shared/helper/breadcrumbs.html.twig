@@ -1,0 +1,22 @@
+{# Same signature as the BootstrapAdminUi macro: items = [{name, url?, active?}, ...] #}
+{% macro breadcrumbs(items) %}
+    {% set items = items|filter(item => item is not empty) %}
+    <nav aria-label="breadcrumb" data-slot="breadcrumb">
+        <ol data-slot="breadcrumb-list" class="flex flex-wrap items-center gap-1.5 text-sm wrap-break-word text-muted-foreground">
+            {% for item in items %}
+                {% if not loop.first %}
+                    <li data-slot="breadcrumb-separator" role="presentation" aria-hidden="true" class="[&>svg]:size-3.5">
+                        {{ ux_icon('lucide:chevron-right', {class: 'rtl:rotate-180'}) }}
+                    </li>
+                {% endif %}
+                <li data-slot="breadcrumb-item" class="inline-flex items-center gap-1">
+                    {% if item.url is defined and item.url and not (item.active|default(false)) %}
+                        <a data-slot="breadcrumb-link" href="{{ item.url }}" class="transition-colors hover:text-foreground">{{ item.name|trans }}</a>
+                    {% else %}
+                        <span data-slot="breadcrumb-page" role="link" aria-disabled="true" {% if loop.last %}aria-current="page"{% endif %} class="font-normal text-foreground">{{ item.name|trans }}</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ol>
+    </nav>
+{% endmacro %}

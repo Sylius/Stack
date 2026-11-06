@@ -1,0 +1,22 @@
+{#
+ # Configure it from your app:
+ #   sylius_twig_hooks:
+ #       hooks:
+ #           'sylius_admin.common.component.sidebar.logo':
+ #               image:
+ #                   configuration: { name: 'Camalo', subtitle: 'WMS', icon: 'lucide:warehouse' }   # or image: 'images/logo.svg'
+ #}
+{% set configuration = hookable_metadata.configuration %}
+<div class="flex aspect-square size-8 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+    {% if configuration.image|default(null) %}
+        <img src="{{ asset(configuration.image) }}" alt="" class="size-full object-contain">
+    {% else %}
+        {{ ux_icon(configuration.icon|default('lucide:layout-grid'), {class: 'size-4', 'aria-hidden': 'true'}) }}
+    {% endif %}
+</div>
+<div class="grid flex-1 text-start text-sm leading-tight">
+    <span class="truncate font-semibold">{{ configuration.name|default('Sylius')|trans }}</span>
+    {% if configuration.subtitle|default(null) %}
+        <span class="truncate text-xs text-sidebar-foreground/70">{{ configuration.subtitle|trans }}</span>
+    {% endif %}
+</div>

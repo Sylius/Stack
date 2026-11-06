@@ -1,0 +1,8 @@
+# Configuration of the theme (hooks, grid templates, component prefixes).
+# Loaded before sylius_twig_hooks.yaml (alphabetical order): the hooks of the application win.
+imports:
+    - { resource: '@SyliusShadcnAdminUiBundle/config/app.php' }
+
+sylius_shadcn_admin_ui:
+    sidebar:
+        variant: floating

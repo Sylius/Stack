@@ -1,0 +1,16 @@
+{%- props
+    ## boolean Whether the collapsible is open by default.
+    open = false
+-%}
+{%- do provide('collapsible.open', open) -%}
+<div
+    data-slot="collapsible"
+    data-shadcn--collapsible-open-value="{{ open ? 'true' : 'false' }}"
+    data-state="{{ open ? 'open' : 'closed' }}"
+    {{ attributes.defaults({
+        'data-controller': 'shadcn--collapsible',
+    }) }}
+>
+    {##- The collapsible content, typically a `Collapsible:Trigger` and a `Collapsible:Content`. -#}
+    {%- block content %}{% endblock -%}
+</div>

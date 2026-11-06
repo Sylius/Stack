@@ -1,0 +1,29 @@
+{% macro table_header(grid, field, attributes) %}
+    {% set sorting_order = grid.getSortingOrder(field.name)|default('asc') %}
+    {% set is_sorted = grid.isSortedBy(field.name) %}
+    {% set next_order = is_sorted ? (sorting_order == 'desc' ? 'asc' : 'desc') : sorting_order %}
+
+    <th
+        data-slot="table-head"
+        {% if is_sorted %}aria-sort="{{ sorting_order == 'desc' ? 'descending' : 'ascending' }}"{% endif %}
+        class="{{ ('h-10 px-2 text-start align-middle font-medium whitespace-nowrap text-foreground sylius-table-column-' ~ field.name ~ ' ' ~ field.options.vars.th_class|default(''))|tailwind_classes }}"
+    >
+        <a
+            href="{{ _self.link(field.name, attributes, next_order, grid.parameters.all) }}"
+            class="-ms-2 inline-flex h-8 items-center gap-1 rounded-md px-2 transition-colors hover:bg-muted {{ is_sorted ? 'text-foreground' : 'text-muted-foreground hover:text-foreground' }}"
+        >
+            {{ field.label|trans }}
+            {% if is_sorted %}
+                {{ ux_icon(sorting_order == 'desc' ? 'lucide:arrow-down' : 'lucide:arrow-up', {class: 'size-3.5', 'aria-hidden': 'true'}) }}
+            {% else %}
+                {{ ux_icon('lucide:chevrons-up-down', {class: 'size-3.5 opacity-60', 'aria-hidden': 'true'}) }}
+            {% endif %}
+        </a>
+    </th>
+{% endmacro %}
+
+{% macro link(field_name, attributes, sorting_order, parameters) %}
+    {%- set params = attributes.all('_route_params')|merge(parameters) -%}
+    {%- set sorting = {sorting: {(field_name): (sorting_order)}} -%}
+    {{- path(attributes.get('_route'), params|merge(sorting)|merge({page: 1})) -}}
+{% endmacro %}

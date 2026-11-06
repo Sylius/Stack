@@ -1,0 +1,48 @@
+{%- set _dropdownMenu_open = inject('dropdownMenu.open', false) -%}
+{%- set _dropdownMenu_side = inject('dropdownMenu.side', 'bottom') -%}
+{%- set _dropdownMenu_align = inject('dropdownMenu.align', 'start') -%}
+{%- set _dropdownMenu_contentId = inject('dropdownMenu.contentId', null) -%}
+{%- set _dropdownMenu_triggerId = inject('dropdownMenu.triggerId', null) -%}
+{%- set style = html_cva(
+    base: 'invisible scale-95 opacity-0 transition-[opacity,scale,visibility] duration-100 ease-out group-data-[state=open]/dropdown-menu:transition-[opacity,scale] group-data-[state=open]/dropdown-menu:visible group-data-[state=open]/dropdown-menu:scale-100 group-data-[state=open]/dropdown-menu:opacity-100 absolute z-50 min-w-32 rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden',
+    variants: {
+        side: {
+            top: 'bottom-full mb-2',
+            bottom: 'top-full mt-2',
+            left: 'right-full mr-2',
+            right: 'left-full ml-2',
+        },
+    },
+    compound_variants: [
+        {side: ['top'], align: ['start'], class: 'start-0 ltr:origin-bottom-left rtl:origin-bottom-right'},
+        {side: ['top'], align: ['center'], class: 'start-1/2 -translate-x-1/2 rtl:translate-x-1/2 origin-bottom'},
+        {side: ['top'], align: ['end'], class: 'end-0 ltr:origin-bottom-right rtl:origin-bottom-left'},
+        {side: ['bottom'], align: ['start'], class: 'start-0 ltr:origin-top-left rtl:origin-top-right'},
+        {side: ['bottom'], align: ['center'], class: 'start-1/2 -translate-x-1/2 rtl:translate-x-1/2 origin-top'},
+        {side: ['bottom'], align: ['end'], class: 'end-0 ltr:origin-top-right rtl:origin-top-left'},
+        {side: ['left'], align: ['start'], class: 'top-0 origin-top-right'},
+        {side: ['left'], align: ['center'], class: 'top-1/2 -translate-y-1/2 origin-right'},
+        {side: ['left'], align: ['end'], class: 'bottom-0 origin-bottom-right'},
+        {side: ['right'], align: ['start'], class: 'top-0 origin-top-left'},
+        {side: ['right'], align: ['center'], class: 'top-1/2 -translate-y-1/2 origin-left'},
+        {side: ['right'], align: ['end'], class: 'bottom-0 origin-bottom-left'},
+    ],
+) -%}
+<div
+    id="{{ _dropdownMenu_contentId }}"
+    role="menu"
+    tabindex="-1"
+    aria-labelledby="{{ _dropdownMenu_triggerId }}"
+    data-slot="dropdown-menu-content"
+    data-shadcn--dropdown-menu-target="content"
+    data-state="{{ _dropdownMenu_open ? 'open' : 'closed' }}"
+    data-side="{{ _dropdownMenu_side }}"
+    data-align="{{ _dropdownMenu_align }}"
+    data-action="keydown->shadcn--dropdown-menu#onContentKeydown"
+    {{ attributes.defaults({
+        class: style.apply({side: _dropdownMenu_side, align: _dropdownMenu_align})|tailwind_classes,
+    }) }}
+>
+    {##- The menu items, e.g. `DropdownMenu:Item`, `DropdownMenu:Separator`. -#}
+    {%- block content %}{% endblock -%}
+</div>

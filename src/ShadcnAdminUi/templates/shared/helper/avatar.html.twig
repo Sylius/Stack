@@ -1,0 +1,15 @@
+{% macro default(img, class, initials) %}
+    <span data-slot="avatar" class="group/avatar relative flex size-8 shrink-0 overflow-hidden rounded-full select-none {{ class }}">
+        {% if img %}
+            <img data-slot="avatar-image" src="{{ img }}" alt="" class="aspect-square size-full object-cover">
+        {% else %}
+            <span data-slot="avatar-fallback" class="flex size-full items-center justify-center rounded-full bg-muted text-xs text-muted-foreground uppercase">
+                {% if initials %}{{ initials }}{% else %}{{ ux_icon('lucide:user', {class: 'size-4'}) }}{% endif %}
+            </span>
+        {% endif %}
+    </span>
+{% endmacro %}
+
+{% macro small(img, class, initials) %}
+    {{ _self.default(img, 'size-6 ' ~ class, initials) }}
+{% endmacro %}

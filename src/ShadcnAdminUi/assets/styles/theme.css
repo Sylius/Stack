@@ -1,0 +1,479 @@
+/*
+ * Sylius Shadcn Admin UI - theme layer for the Sylius Stack admin panel.
+ *
+ * Import this file from your Tailwind entry (e.g. assets/styles/admin.css), right after the
+ * Tailwind import itself: see the README of the bundle (Installation > Stylesheet).
+ * (No CSS import statement in this comment: AssetMapper would try to resolve it.)
+ *
+ * Then override any design token below (colors, radius, fonts) in your own file.
+ * Tokens follow the shadcn/ui naming, so themes generated with https://ui.shadcn.com/themes
+ * or https://tweakcn.com can be pasted as-is.
+ */
+@import "./vendor/tw-animate.css";
+@import "./vendor/shadcn.css";
+
+/* Tailwind ignores vendor/ during automatic content detection: scan the bundle templates explicitly. */
+@source "../../templates";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-success: var(--success);
+    --color-warning: var(--warning);
+    --color-info: var(--info);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --success: oklch(0.6 0.13 155);
+    --warning: oklch(0.7 0.15 70);
+    --info: oklch(0.55 0.15 250);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --chart-1: oklch(0.646 0.222 41.116);
+    --chart-2: oklch(0.6 0.118 184.704);
+    --chart-3: oklch(0.398 0.07 227.392);
+    --chart-4: oklch(0.828 0.189 84.429);
+    --chart-5: oklch(0.769 0.188 70.08);
+    --radius: 0.625rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --success: oklch(0.72 0.15 155);
+    --warning: oklch(0.8 0.15 75);
+    --info: oklch(0.7 0.14 250);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --chart-1: oklch(0.488 0.243 264.376);
+    --chart-2: oklch(0.696 0.17 162.48);
+    --chart-3: oklch(0.769 0.188 70.08);
+    --chart-4: oklch(0.627 0.265 303.9);
+    --chart-5: oklch(0.645 0.246 16.439);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+}
+
+/*
+ * Tones of the business palette (statuses, categories): the color names returned by the
+ * application enums (blue, green...) are turned into classes by the tone() macro of
+ * templates/shared/helper/palette.html.twig. 600/700 shades in light mode (text contrast on
+ * a tinted background), 400 in dark mode. Override the --tone-* variables to retheme them.
+ */
+@theme inline {
+    --color-tone-blue: var(--tone-blue);
+    --color-tone-azure: var(--tone-azure);
+    --color-tone-indigo: var(--tone-indigo);
+    --color-tone-purple: var(--tone-purple);
+    --color-tone-pink: var(--tone-pink);
+    --color-tone-red: var(--tone-red);
+    --color-tone-orange: var(--tone-orange);
+    --color-tone-yellow: var(--tone-yellow);
+    --color-tone-lime: var(--tone-lime);
+    --color-tone-green: var(--tone-green);
+    --color-tone-teal: var(--tone-teal);
+    --color-tone-cyan: var(--tone-cyan);
+}
+
+:root {
+    --tone-blue: oklch(0.546 0.245 262.881);
+    --tone-azure: oklch(0.588 0.158 241.966);
+    --tone-indigo: oklch(0.511 0.262 276.966);
+    --tone-purple: oklch(0.558 0.288 302.321);
+    --tone-pink: oklch(0.592 0.249 0.584);
+    --tone-red: oklch(0.577 0.245 27.325);
+    --tone-orange: oklch(0.553 0.195 38.402);
+    --tone-yellow: oklch(0.555 0.163 48.998);
+    --tone-lime: oklch(0.532 0.157 131.589);
+    --tone-green: oklch(0.527 0.154 150.069);
+    --tone-teal: oklch(0.511 0.096 186.391);
+    --tone-cyan: oklch(0.52 0.105 223.128);
+}
+
+.dark {
+    --tone-blue: oklch(0.707 0.165 254.624);
+    --tone-azure: oklch(0.746 0.16 232.661);
+    --tone-indigo: oklch(0.673 0.182 276.935);
+    --tone-purple: oklch(0.714 0.203 305.504);
+    --tone-pink: oklch(0.718 0.202 349.761);
+    --tone-red: oklch(0.704 0.191 22.216);
+    --tone-orange: oklch(0.75 0.183 55.934);
+    --tone-yellow: oklch(0.828 0.189 84.429);
+    --tone-lime: oklch(0.841 0.238 128.85);
+    --tone-green: oklch(0.792 0.209 151.711);
+    --tone-teal: oklch(0.777 0.152 181.912);
+    --tone-cyan: oklch(0.789 0.154 211.53);
+}
+
+/*
+ * Layout glue.
+ *
+ * sylius/admin-ui renders the sidebar, the navbar and the page content as siblings
+ * (one hookable each). The shadcn sidebar is fixed, so the navbar and the content are
+ * shifted by --admin-sidebar-offset, which follows the sidebar state (expanded / icons only).
+ *
+ * --admin-sidebar-width is the room taken by the sidebar: the "floating" and "inset" variants
+ * add a padding around it, which shows when it is collapsed to icons.
+ */
+:root {
+    --sidebar-width: 16rem;
+    --sidebar-width-icon: 3rem;
+    --sidebar-width-mobile: 18rem;
+    --admin-sidebar-width: var(--sidebar-width);
+    --admin-sidebar-offset: var(--admin-sidebar-width);
+}
+
+:root:has([data-slot="sidebar-provider"][data-state="collapsed"]) {
+    --admin-sidebar-width: var(--sidebar-width-icon);
+}
+
+:root:has([data-slot="sidebar-provider"][data-state="collapsed"] [data-slot="sidebar"]:is([data-variant="floating"], [data-variant="inset"])) {
+    --admin-sidebar-width: calc(var(--sidebar-width-icon) + var(--spacing) * 4);
+}
+
+/*
+ * The sidebar body scrolls on its own: once at its end, the wheel must not scroll the page behind it.
+ * Set here rather than in Sidebar/Content.html.twig, which app:shadcn:update overwrites with the recipe.
+ */
+[data-slot="sidebar-content"] {
+    overscroll-behavior: contain;
+}
+
+/*
+ * "inset" variant: the navbar, the content and the footer form a rounded panel next to the sidebar.
+ * The panel (.page) takes the sidebar room as its margin, so its children are no longer shifted.
+ */
+@media screen and (width >= 48rem) {
+    :root:has([data-slot="sidebar"][data-variant="inset"]) {
+        body {
+            background-color: var(--sidebar);
+        }
+
+        .page {
+            --admin-sidebar-offset: 0px;
+            min-height: calc(100svh - var(--spacing) * 4);
+            margin: calc(var(--spacing) * 2);
+            margin-inline-start: var(--admin-sidebar-width);
+            border-radius: var(--radius-xl);
+            background-color: var(--background);
+            box-shadow: var(--shadow-sm);
+            transition: margin-inline-start 200ms linear;
+        }
+
+        [data-slot="admin-navbar"] {
+            border-start-start-radius: var(--radius-xl);
+            border-start-end-radius: var(--radius-xl);
+        }
+    }
+
+    :root:has([data-slot="sidebar-provider"][data-state="collapsed"] [data-slot="sidebar"][data-variant="inset"]) .page {
+        margin-inline-start: calc(var(--admin-sidebar-width) + var(--spacing) * 2);
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    html {
+        color-scheme: light;
+    }
+
+    html.dark {
+        color-scheme: dark;
+    }
+
+    body {
+        @apply min-h-svh bg-background text-foreground antialiased;
+    }
+
+    /* Page wrapper of sylius/admin-ui (base.html.twig): column filling the viewport, so the footer sticks to the bottom. */
+    .page {
+        @apply flex min-h-svh flex-col;
+    }
+
+    /* Tailwind v4 resets buttons to cursor: default. */
+    button:not(:disabled),
+    [role="button"]:not(:disabled) {
+        cursor: pointer;
+    }
+}
+
+/*
+ * Symfony UX Autocomplete (Tom Select), drawn as a shadcn combobox.
+ * Self-contained: it replaces tom-select.default.css, which must not be loaded (assets/controllers.json:
+ * every "autoimport" of @symfony/ux-autocomplete set to false). Unlayered, that stylesheet would win over
+ * these rules.
+ */
+@layer components {
+    .ts-wrapper {
+        @apply relative w-full min-w-0;
+    }
+
+    .ts-control {
+        @apply relative z-1 flex min-h-8 w-full flex-wrap items-center gap-1 overflow-hidden rounded-lg border border-input bg-transparent py-1 ps-2.5 pe-8 text-sm text-foreground transition-colors dark:bg-input/30;
+        cursor: text;
+    }
+
+    .ts-wrapper.single .ts-control,
+    .ts-wrapper.single .ts-control input {
+        cursor: pointer;
+    }
+
+    .ts-wrapper.single.input-active .ts-control,
+    .ts-wrapper.single.input-active .ts-control input {
+        cursor: text;
+    }
+
+    .ts-wrapper:not(.disabled):hover .ts-control {
+        @apply dark:bg-input/50;
+    }
+
+    .ts-wrapper.focus .ts-control {
+        @apply border-ring ring-3 ring-ring/50;
+    }
+
+    .ts-wrapper.disabled .ts-control {
+        @apply cursor-not-allowed opacity-50;
+    }
+
+    .ts-wrapper.plugin-clear_button.has-items .ts-control {
+        @apply pe-14;
+    }
+
+    .ts-wrapper.multi.has-items .ts-control {
+        @apply ps-1;
+    }
+
+    /* Chevron (lucide chevron-down), like the native shadcn select. */
+    .ts-wrapper.single .ts-control::after,
+    .ts-wrapper.multi .ts-control::after {
+        @apply pointer-events-none absolute end-2.5 top-1/2 size-4 -translate-y-1/2 bg-muted-foreground transition-transform;
+        content: "";
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat center / contain;
+    }
+
+    .ts-wrapper.dropdown-active .ts-control::after {
+        @apply rotate-180;
+    }
+
+    .ts-control > * {
+        @apply inline-block;
+    }
+
+    .ts-control > input {
+        @apply m-0! inline-block! max-w-full! min-w-16 flex-1 border-0! bg-transparent! p-0! text-sm text-foreground shadow-none! outline-none! select-auto! placeholder:text-muted-foreground;
+        min-height: 0 !important;
+        line-height: inherit !important;
+    }
+
+    .ts-wrapper.single.has-items .ts-control > input {
+        @apply min-w-0;
+    }
+
+    .ts-wrapper.input-hidden .ts-control > input {
+        @apply absolute -start-[10000px] opacity-0;
+    }
+
+    .ts-wrapper.single .ts-control > .item {
+        @apply truncate;
+    }
+
+    .ts-wrapper.multi .ts-control > .item {
+        @apply inline-flex h-5.5 cursor-pointer items-center gap-0.5 rounded-md bg-secondary px-1.5 text-xs font-medium text-secondary-foreground;
+    }
+
+    .ts-wrapper.multi .ts-control > .item.active {
+        @apply bg-primary text-primary-foreground;
+    }
+
+    .ts-wrapper.plugin-remove_button .item .remove {
+        @apply -me-1 inline-flex size-4 items-center justify-center rounded-sm text-sm leading-none text-muted-foreground no-underline hover:bg-foreground/10 hover:text-foreground;
+    }
+
+    .ts-wrapper.plugin-remove_button .item.active .remove {
+        @apply text-primary-foreground/80 hover:bg-primary-foreground/20 hover:text-primary-foreground;
+    }
+
+    .ts-wrapper.plugin-clear_button .clear-button {
+        @apply absolute end-8 top-1/2 z-2 flex size-5 -translate-y-1/2 cursor-pointer items-center justify-center rounded-sm text-base leading-none text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-foreground;
+    }
+
+    .ts-wrapper.plugin-clear_button.has-items:is(.focus, :not(.disabled):hover) .clear-button {
+        @apply opacity-100;
+    }
+
+    .ts-dropdown {
+        @apply absolute start-0 top-full z-50 mt-1 w-full overflow-hidden rounded-lg bg-popover p-1 text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10;
+    }
+
+    .ts-dropdown-content {
+        @apply max-h-60 overflow-x-hidden overflow-y-auto overscroll-contain;
+    }
+
+    .ts-dropdown .option,
+    .ts-dropdown .create,
+    .ts-dropdown .no-results,
+    .ts-dropdown .no-more-results {
+        @apply rounded-md px-2 py-1.5;
+    }
+
+    .ts-dropdown .no-results,
+    .ts-dropdown .no-more-results {
+        @apply text-center text-muted-foreground;
+    }
+
+    .ts-dropdown .optgroup-header {
+        @apply px-2 py-1.5 text-xs font-medium text-muted-foreground;
+    }
+
+    .ts-dropdown [data-selectable] {
+        @apply cursor-pointer truncate;
+    }
+
+    .ts-dropdown .option:not([data-selectable]),
+    .ts-dropdown [data-disabled] {
+        @apply pointer-events-none opacity-50;
+    }
+
+    .ts-dropdown .active {
+        @apply bg-accent text-accent-foreground;
+    }
+
+    .ts-dropdown .option.selected {
+        @apply font-medium;
+    }
+
+    .ts-dropdown .create {
+        @apply text-muted-foreground;
+    }
+
+    .ts-dropdown [data-selectable] .highlight {
+        @apply rounded-xs bg-primary/15 text-foreground;
+    }
+
+    .ts-dropdown .spinner {
+        @apply mx-auto my-1 block size-5 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground;
+    }
+
+    .ts-dropdown .dropdown-input {
+        @apply mb-1 block h-8 w-full rounded-md border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50;
+    }
+
+    /* Original select, kept for forms and screen readers. Important: its own utilities (w-full...) must not win. */
+    .ts-hidden-accessible {
+        @apply sr-only!;
+    }
+}
+
+/*
+ * Cards (overflow-hidden), table containers (overflow-x-auto) and dialogs (native <dialog>: overflow auto)
+ * clip their content: let an open Tom Select dropdown overflow them. The container scroll position is lost
+ * while the dropdown is open.
+ * Unlayered on purpose, to win over the utilities layer.
+ */
+:is(
+    [data-slot="card"],
+    [data-slot="table-container"],
+    [data-slot="dialog-content"],
+    [data-slot="alert-dialog-content"]
+):has(.ts-wrapper.dropdown-active) {
+    overflow: visible;
+}
+
+/*
+ * overflow-x: auto forces overflow-y: auto, so the closed (invisible but still laid out) dropdown menu of the
+ * last rows made the table container scroll vertically. Take the closed menus out of the layout, and let an
+ * open one overflow the table container and its card, like Tom Select above.
+ */
+[data-slot="table-container"] [data-slot="dropdown-menu-content"][data-state="closed"] {
+    display: none;
+}
+
+[data-slot="table-container"]:has([data-slot="dropdown-menu"][data-state="open"]),
+[data-slot="card"]:has([data-slot="table-container"] [data-slot="dropdown-menu"][data-state="open"]) {
+    overflow: visible;
+}

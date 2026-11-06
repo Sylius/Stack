@@ -1,0 +1,21 @@
+{#
+ # This hookable lives inside the content for index pages, and next to it (at the page level)
+ # for create / update / show pages: the "[.page>&]" variants only apply in the second case.
+ #}
+<footer
+    data-slot="admin-footer"
+    class="mt-auto text-xs text-muted-foreground transition-[padding] duration-200 ease-linear print:hidden [.page>&]:px-4 [.page>&]:pb-6 md:[.page>&]:ps-[calc(var(--admin-sidebar-offset)+1.5rem)] md:[.page>&]:pe-6 lg:[.page>&]:ps-[calc(var(--admin-sidebar-offset)+2rem)] lg:[.page>&]:pe-8"
+>
+    <div class="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-2 border-t pt-4 sm:flex-row">
+        <p>
+            {{ 'sylius.ui.copyright'|trans }} © {{ 'now'|date('Y') }}
+            <a href="https://sylius.com/" target="_blank" rel="noopener" class="font-medium underline-offset-4 hover:text-foreground hover:underline">Sylius</a>.
+            {{ 'sylius.ui.all_rights_reserved'|trans }}.
+        </p>
+        <ul class="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <li><a href="https://stack.sylius.com" target="_blank" rel="noopener" class="underline-offset-4 hover:text-foreground hover:underline">{{ 'sylius.ui.documentation'|trans }}</a></li>
+            <li><a href="https://github.com/Sylius/Stack?tab=MIT-1-ov-file#readme" target="_blank" rel="noopener" class="underline-offset-4 hover:text-foreground hover:underline">{{ 'sylius.ui.license'|trans }}</a></li>
+            <li><a href="https://github.com/Sylius/Stack" target="_blank" rel="noopener" class="underline-offset-4 hover:text-foreground hover:underline">{{ 'sylius.ui.source_code'|trans }}</a></li>
+        </ul>
+    </div>
+</footer>

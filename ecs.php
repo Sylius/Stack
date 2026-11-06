@@ -15,6 +15,7 @@ return static function (ECSConfig $ecsConfig): void {
         __DIR__ . '/config/reference.php',
         __DIR__ . '/src/AdminUi/tests/Functional/.application/config/reference.php',
         __DIR__ . '/src/BootstrapAdminUi/tests/Functional/.application/config/reference.php',
+        __DIR__ . '/src/ShadcnAdminUi/tests/Functional/.application/config/reference.php',
     ]);
 
     $ecsConfig->import('vendor/sylius-labs/coding-standard/ecs.php');

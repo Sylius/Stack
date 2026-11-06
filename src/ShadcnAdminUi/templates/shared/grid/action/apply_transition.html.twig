@@ -1,0 +1,21 @@
+{% from '@SyliusShadcnAdminUi/shared/helper/ui.html.twig' import button_class %}
+
+{% if workflow_can(data, action.name) %}
+    {% if options.link.url is defined %}
+        {% set path = options.link.url %}
+    {% else %}
+        {% set path = path(options.link.route, options.link.parameters|default({id: data.id})) %}
+    {% endif %}
+
+    {% set message = action.label|default('sylius.ui.apply_transition') %}
+    {% set variants = {danger: 'destructive', red: 'destructive', primary: 'default', green: 'secondary', success: 'secondary'} %}
+
+    <form method="post" action="{{ path }}" class="inline-flex">
+        <input type="hidden" name="_method" value="PATCH">
+        <input type="hidden" name="_token" value="{{ csrf_token('apply_transition') }}">
+        <button type="submit" class="{{ button_class(variants[options.class|default('')]|default('ghost'), 'icon-sm') }}" title="{{ message|trans }}">
+            {{ ux_icon(action.icon|default('lucide:arrow-right-left'), {'aria-hidden': 'true'}) }}
+            <span class="sr-only">{{ message|trans }}</span>
+        </button>
+    </form>
+{% endif %}

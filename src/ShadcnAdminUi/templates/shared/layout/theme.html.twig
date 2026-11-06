@@ -1,0 +1,10 @@
+{# Applied before the stylesheet: no flash of the wrong theme. Same storage key as BootstrapAdminUi. #}
+<script>
+    (function () {
+        var stored = null;
+        try { stored = localStorage.getItem('sylius-theme'); } catch (e) {}
+        var theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+        document.documentElement.dataset.theme = theme;
+    })();
+</script>

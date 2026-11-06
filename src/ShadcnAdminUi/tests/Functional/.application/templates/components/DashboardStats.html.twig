@@ -1,0 +1,88 @@
+{# Data is read here: inside a nested component, "this" is the child component. #}
+{% set total = this.total %}
+{% set available = this.available %}
+{% set by_category = this.byCategory %}
+{% set latest = this.latest %}
+{# Full class names: Tailwind does not detect dynamically built classes. #}
+{% set bar_colors = ['bg-chart-1', 'bg-chart-2', 'bg-chart-3', 'bg-chart-4', 'bg-chart-5'] %}
+
+<div {{ attributes.defaults({class: 'flex flex-col gap-6'}) }}>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {% for stat in [
+            {label: 'app.ui.total_books', value: total, icon: 'lucide:book-copy'},
+            {label: 'app.ui.available_books', value: available, icon: 'lucide:circle-check', class: 'text-success'},
+            {label: 'app.ui.unavailable_books', value: total - available, icon: 'lucide:circle-x', class: 'text-muted-foreground'},
+            {label: 'app.ui.categories', value: by_category|length, icon: 'lucide:tags'},
+        ] %}
+            <twig:shadcn:Card>
+                <twig:shadcn:Card:Header>
+                    <twig:shadcn:Card:Description>{{ stat.label|trans }}</twig:shadcn:Card:Description>
+                    <twig:shadcn:Card:Title class="text-3xl font-semibold tabular-nums">{{ stat.value }}</twig:shadcn:Card:Title>
+                    <twig:shadcn:Card:Action>
+                        <twig:ux:icon name="{{ stat.icon }}" class="size-5 {{ stat.class|default('text-muted-foreground') }}" />
+                    </twig:shadcn:Card:Action>
+                </twig:shadcn:Card:Header>
+            </twig:shadcn:Card>
+        {% endfor %}
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <twig:shadcn:Card class="lg:col-span-2">
+            <twig:shadcn:Card:Header>
+                <twig:shadcn:Card:Title>{{ 'app.ui.latest_books'|trans }}</twig:shadcn:Card:Title>
+                <twig:shadcn:Card:Description>{{ 'app.ui.latest_books_description'|trans }}</twig:shadcn:Card:Description>
+                <twig:shadcn:Card:Action>
+                    <twig:shadcn:Button as="a" variant="outline" size="sm" href="{{ path('app_admin_book_index') }}">
+                        {{ 'app.ui.see_all'|trans }}
+                        <twig:ux:icon name="lucide:arrow-right" data-icon="inline-end" />
+                    </twig:shadcn:Button>
+                </twig:shadcn:Card:Action>
+            </twig:shadcn:Card:Header>
+            <twig:shadcn:Card:Content>
+                <twig:shadcn:Table>
+                    <twig:shadcn:Table:Header>
+                        <twig:shadcn:Table:Row>
+                            <twig:shadcn:Table:Head>{{ 'app.ui.title'|trans }}</twig:shadcn:Table:Head>
+                            <twig:shadcn:Table:Head>{{ 'app.ui.category'|trans }}</twig:shadcn:Table:Head>
+                            <twig:shadcn:Table:Head class="text-end">{{ 'app.ui.created_at'|trans }}</twig:shadcn:Table:Head>
+                        </twig:shadcn:Table:Row>
+                    </twig:shadcn:Table:Header>
+                    <twig:shadcn:Table:Body>
+                        {% for book in latest %}
+                            <twig:shadcn:Table:Row>
+                                <twig:shadcn:Table:Cell>
+                                    <a href="{{ path('app_admin_book_show', {id: book.id}) }}" class="font-medium hover:underline">{{ book.title }}</a>
+                                    <div class="text-xs text-muted-foreground">{{ book.authorName }}</div>
+                                </twig:shadcn:Table:Cell>
+                                <twig:shadcn:Table:Cell>
+                                    {% if book.category %}<twig:shadcn:Badge variant="secondary">{{ book.category.value|capitalize }}</twig:shadcn:Badge>{% endif %}
+                                </twig:shadcn:Table:Cell>
+                                <twig:shadcn:Table:Cell class="text-end text-muted-foreground tabular-nums">{{ book.createdAt|date('d/m/Y') }}</twig:shadcn:Table:Cell>
+                            </twig:shadcn:Table:Row>
+                        {% endfor %}
+                    </twig:shadcn:Table:Body>
+                </twig:shadcn:Table>
+            </twig:shadcn:Card:Content>
+        </twig:shadcn:Card>
+
+        <twig:shadcn:Card>
+            <twig:shadcn:Card:Header>
+                <twig:shadcn:Card:Title>{{ 'app.ui.by_category'|trans }}</twig:shadcn:Card:Title>
+            </twig:shadcn:Card:Header>
+            <twig:shadcn:Card:Content class="flex flex-col gap-3">
+                {% for row in by_category %}
+                    {% set percent = total > 0 ? (row.total / total * 100)|round : 0 %}
+                    <div class="flex flex-col gap-1.5">
+                        <div class="flex items-center justify-between text-sm">
+                            <span>{{ row.category ? row.category.value|capitalize : '—' }}</span>
+                            <span class="text-muted-foreground tabular-nums">{{ row.total }}</span>
+                        </div>
+                        <div class="h-2 overflow-hidden rounded-full bg-muted" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100">
+                            <div class="h-full rounded-full {{ bar_colors[loop.index0 % 5] }}" style="width: {{ percent }}%"></div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </twig:shadcn:Card:Content>
+        </twig:shadcn:Card>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+{% set form = hookable_metadata.context.form|default(null) %}
+
+{% if form is not null and form.vars.submitted and form.vars.valid == false %}
+    <div data-slot="alert" role="alert" class="relative grid w-full grid-cols-[auto_1fr] gap-x-2 gap-y-0.5 rounded-lg border border-destructive/30 bg-destructive/5 px-2.5 py-2 text-start text-sm text-destructive *:[svg]:row-span-2 *:[svg]:size-4 *:[svg]:translate-y-0.5" {{ sylius_test_html_attribute('form-error-alert') }}>
+        {{ ux_icon('lucide:circle-alert', {'aria-hidden': 'true'}) }}
+        <div data-slot="alert-title" class="col-start-2 font-medium">{{ 'sylius.ui.error'|trans }}</div>
+        <div data-slot="alert-description" class="col-start-2 text-destructive/90">{{ 'sylius.ui.this_form_contains_errors'|trans }}</div>
+    </div>
+{% endif %}

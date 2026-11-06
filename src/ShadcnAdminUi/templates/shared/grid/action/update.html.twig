@@ -1,0 +1,16 @@
+{% from '@SyliusShadcnAdminUi/shared/helper/ui.html.twig' import button_class %}
+
+{% if options.link.url is defined %}
+    {% set path = options.link.url %}
+{% else %}
+    {% set default_route = options.link.route|default(grid.requestConfiguration is defined ? grid.requestConfiguration.getRouteName('update') : null) %}
+    {% set path = default_route ? path(default_route, options.link.parameters|default({id: data.id})) : null %}
+{% endif %}
+
+{% set message = action.label|default('sylius.ui.edit') %}
+{% set disabled = path is empty %}
+
+<a href="{{ path }}" class="{{ button_class('ghost', 'icon-sm', 'text-muted-foreground hover:text-foreground') }}" title="{{ message|trans }}" {% if disabled %}aria-disabled="true" tabindex="-1"{% endif %} {{ sylius_test_html_attribute('update-action', message|trans) }}>
+    {{ ux_icon(action.icon|default('lucide:pencil'), {'aria-hidden': 'true'}) }}
+    <span class="sr-only">{{ message|trans }}</span>
+</a>

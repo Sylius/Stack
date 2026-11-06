@@ -1,0 +1,21 @@
+{% macro default(level, header, icon, subheader) %}
+    <div class="flex min-w-0 items-center gap-3">
+        {% if icon %}
+            <div class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-muted text-foreground" {{ sylius_test_html_attribute('icon', icon) }}>
+                {{ ux_icon(icon, {class: 'size-5', 'aria-hidden': 'true'}) }}
+            </div>
+        {% endif %}
+        <div class="flex min-w-0 flex-col gap-1">
+            <h{{ level }} class="truncate text-2xl font-semibold tracking-tight" {{ sylius_test_html_attribute('page-title') }}>
+                {{ header }}
+            </h{{ level }}>
+            {% if subheader %}
+                <p class="text-sm text-muted-foreground" {{ sylius_test_html_attribute('subheader') }}>{{ subheader }}</p>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro h1(header, icon, subheader) %}
+    {{ _self.default(1, header, icon, subheader) }}
+{% endmacro %}

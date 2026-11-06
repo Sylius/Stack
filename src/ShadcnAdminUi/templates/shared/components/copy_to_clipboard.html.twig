@@ -1,0 +1,37 @@
+{% props
+    value = null,
+    hookableMetadata = null,
+    disabled = false,
+    button_class = null,
+    copy_label = 'sylius.ui.copy_to_clipboard',
+    copied_label = 'sylius.ui.copied_to_clipboard',
+    error_label = 'sylius.ui.unable_to_copy_to_clipboard'
+%}
+{% from '@SyliusShadcnAdminUi/shared/helper/ui.html.twig' import button_class as ui_button_class %}
+
+<span class="inline-flex items-center" {{ stimulus_controller('admin--copy-to-clipboard', {
+    value: value,
+    copiedLabel: copied_label|trans,
+    errorLabel: error_label|trans,
+}) }}>
+    <button
+        {{ attributes
+            .defaults(stimulus_action('admin--copy-to-clipboard', 'copy'))
+            .defaults({
+                type: 'button',
+                class: button_class ?? ui_button_class('ghost', 'icon-xs', 'text-muted-foreground'),
+                disabled: disabled or value is null or value is same as(''),
+                'aria-label': copy_label|trans,
+                title: copy_label|trans,
+                'data-admin--copy-to-clipboard-target': 'button',
+            })
+        }}
+        {{ sylius_test_html_attribute('copy-to-clipboard') }}
+    >
+        {{ ux_icon('lucide:copy', {'aria-hidden': 'true', 'data-admin--copy-to-clipboard-target': 'copyIcon'}) }}
+        {{ ux_icon('lucide:check', {class: 'hidden text-success', 'aria-hidden': 'true', 'data-admin--copy-to-clipboard-target': 'successIcon'}) }}
+        {{ ux_icon('lucide:circle-alert', {class: 'hidden text-destructive', 'aria-hidden': 'true', 'data-admin--copy-to-clipboard-target': 'errorIcon'}) }}
+    </button>
+
+    <span class="sr-only ms-1 text-xs text-destructive" role="status" aria-live="polite" aria-atomic="true" data-admin--copy-to-clipboard-target="status"></span>
+</span>

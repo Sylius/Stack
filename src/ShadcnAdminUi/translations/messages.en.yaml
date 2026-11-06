@@ -1,0 +1,8 @@
+sylius_shadcn_admin_ui:
+    ui:
+        close: Close
+        menu: Menu
+        more: More actions
+        toggle_sidebar: Toggle sidebar
+        toggle_theme: Toggle theme
+        irreversible_action: 'This action cannot be undone.'

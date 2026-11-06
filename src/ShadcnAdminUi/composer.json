@@ -1,0 +1,88 @@
+{
+    "name": "sylius/shadcn-admin-ui",
+    "description": "Build your Tailwind CSS and shadcn/ui admin panels with Sylius and Symfony UX",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "require": {
+        "php": "^8.1",
+        "knplabs/knp-menu-bundle": "^3.0",
+        "pagerfanta/twig": "^4.6",
+        "sylius/admin-ui": "^0.14",
+        "sylius/grid-bundle": "^1.13 || ^1.15@alpha",
+        "sylius/resource-bundle": "^1.13 || ^1.14@alpha",
+        "sylius/twig-extra": "^0.14",
+        "sylius/twig-hooks": "^0.14",
+        "symfony/asset": "^6.4 || ^7.4 || ^8.0",
+        "symfony/asset-mapper": "^6.4 || ^7.4 || ^8.0",
+        "symfony/form": "^6.4 || ^7.4 || ^8.0",
+        "symfony/framework-bundle": "^6.4 || ^7.4 || ^8.0",
+        "symfony/security-bundle": "^6.4 || ^7.4 || ^8.0",
+        "symfony/stimulus-bundle": "^2.17 || ^3.0",
+        "symfony/ux-icons": "^2.20 || ^3.0",
+        "symfony/ux-twig-component": "^2.17 || ^3.0",
+        "symfonycasts/tailwind-bundle": "^0.13 || ^1.0",
+        "tales-from-a-dev/twig-tailwind-extra": "^1.3",
+        "twig/extra-bundle": "^3.24",
+        "twig/html-extra": "^3.24"
+    },
+    "require-dev": {
+        "doctrine/doctrine-bundle": "^2.13 || ^3.0 || ^4.0",
+        "doctrine/orm": "^3.3 || ^4.0",
+        "pagerfanta/doctrine-orm-adapter": "^4.6",
+        "phpunit/phpunit": "^10.5",
+        "sylius/ui-translations": "^0.14",
+        "symfony/browser-kit": "^6.4 || ^7.4 || ^8.0",
+        "symfony/console": "^6.4 || ^7.4 || ^8.0",
+        "symfony/css-selector": "^6.4 || ^7.4 || ^8.0",
+        "symfony/dotenv": "^6.4 || ^7.4 || ^8.0",
+        "symfony/runtime": "^6.4 || ^7.4 || ^8.0",
+        "symfony/translation": "^6.4 || ^7.4 || ^8.0",
+        "symfony/twig-bundle": "^6.4 || ^7.4 || ^8.0",
+        "symfony/validator": "^6.4 || ^7.4 || ^8.0",
+        "symfony/yaml": "^6.4 || ^7.4 || ^8.0"
+    },
+    "conflict": {
+        "behat/transliterator": "<1.5",
+        "symfony/ux-twig-component": "<2.36 || >=3.0 <3.5",
+        "twig/twig": "3.29.0"
+    },
+    "suggest": {
+        "symfony/ux-live-component": "For Live Component based forms",
+        "symfony/ux-autocomplete": "For autocomplete form fields",
+        "symfony/workflow": "For the apply_transition grid action",
+        "pagerfanta/doctrine-orm-adapter": "For grids backed by Doctrine ORM"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sylius\\ShadcnAdminUi\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TestApplication\\Sylius\\ShadcnAdminUi\\": "tests/Functional/.application/src/",
+            "Tests\\Sylius\\ShadcnAdminUi\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/runtime": true
+        },
+        "sort-packages": true
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../**"
+        }
+    ],
+    "extra": {
+        "symfony": {
+            "require": "7.1.*"
+        },
+        "branch-alias": {
+            "dev-main": "0.14-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

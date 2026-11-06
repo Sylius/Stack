@@ -1,0 +1,12 @@
+{%- set _collapsible_open = inject('collapsible.open', false) -%}
+<div
+    data-slot="collapsible-content"
+    data-shadcn--collapsible-target="content"
+    aria-hidden="{{ not _collapsible_open ? 'true' : 'false' }}"
+    data-state="{{ _collapsible_open ? 'open' : 'closed' }}"
+    {{ not _collapsible_open ? 'hidden' }}
+    {{ attributes }}
+>
+    {##- The content revealed when the collapsible is open. -#}
+    {%- block content %}{% endblock -%}
+</div>

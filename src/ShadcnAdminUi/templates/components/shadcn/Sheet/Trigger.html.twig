@@ -1,0 +1,8 @@
+{%- set sheet_trigger_attrs = {
+    'data-slot': 'sheet-trigger',
+    'data-action': 'click->shadcn--dialog#open'|html_attr_type('sst'),
+    'data-shadcn--dialog-target': 'trigger',
+    'aria-haspopup': 'dialog',
+} -%}
+{##- The trigger element (e.g., a `Button`) that opens the sheet when clicked. -#}
+{%- block content %}{% endblock -%}

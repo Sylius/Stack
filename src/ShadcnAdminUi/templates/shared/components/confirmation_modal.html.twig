@@ -1,0 +1,44 @@
+{#
+ # Confirmation dialog based on the shadcn AlertDialog (same markup and controller), with
+ # overridable blocks: trigger, media, header, description, footer.
+ # In your trigger, print {{ trigger_attributes }} on the element that opens the dialog.
+ #}
+{% props modal_id = null, type = null, title = null, description = null, size = 'default' %}
+{% from '@SyliusShadcnAdminUi/shared/helper/ui.html.twig' import button_class %}
+
+{% set modal_id = modal_id ?? ('confirmation-modal-' ~ random()) %}
+{% set trigger_attributes %}data-shadcn--alert-dialog-target="trigger" data-action="click->shadcn--alert-dialog#open" aria-haspopup="dialog" aria-expanded="false" aria-controls="{{ modal_id }}"{% endset %}
+
+<div {{ attributes.defaults({class: 'inline-flex', 'data-controller': 'shadcn--alert-dialog'}) }} {{ sylius_test_html_attribute('modal', type) }}>
+    {% block trigger %}{% endblock %}
+
+    <dialog
+        id="{{ modal_id }}"
+        aria-labelledby="{{ modal_id }}-title"
+        data-size="{{ size }}"
+        data-slot="alert-dialog-content"
+        data-shadcn--alert-dialog-target="dialog"
+        data-action="keydown.esc->shadcn--alert-dialog#close:prevent"
+        class="group/alert-dialog-content fixed whitespace-normal top-1/2 left-1/2 z-50 w-full -translate-x-1/2 -translate-y-1/2 scale-95 gap-4 rounded-xl bg-popover p-4 text-start text-popover-foreground opacity-0 ring-1 ring-foreground/10 outline-none transition-all transition-discrete duration-100 backdrop:transition-discrete backdrop:duration-100 data-[size=default]:max-w-xs data-[size=sm]:max-w-xs data-[size=default]:sm:max-w-sm open:grid open:scale-100 open:opacity-100 open:backdrop:bg-black/10 open:backdrop:backdrop-blur-xs starting:open:scale-95 starting:open:opacity-0"
+    >
+        {% block content %}
+            <div data-slot="alert-dialog-header" class="grid grid-rows-[auto_1fr] place-items-center gap-1.5 text-center has-data-[slot=alert-dialog-media]:grid-rows-[auto_auto_1fr] has-data-[slot=alert-dialog-media]:gap-x-4 sm:group-data-[size=default]/alert-dialog-content:place-items-start sm:group-data-[size=default]/alert-dialog-content:text-start sm:group-data-[size=default]/alert-dialog-content:has-data-[slot=alert-dialog-media]:grid-rows-[auto_1fr]">
+                {% set media %}{% block media %}{% endblock %}{% endset %}
+                {% if media|trim is not empty %}
+                    <div data-slot="alert-dialog-media" class="mb-2 inline-flex size-10 items-center justify-center rounded-md bg-muted sm:group-data-[size=default]/alert-dialog-content:row-span-2 *:[svg:not([class*='size-'])]:size-6">{{ media }}</div>
+                {% endif %}
+                <h2 id="{{ modal_id }}-title" data-slot="alert-dialog-title" class="text-base font-medium sm:group-data-[size=default]/alert-dialog-content:group-has-data-[slot=alert-dialog-media]/alert-dialog-content:col-start-2">
+                    {% block header %}{{ title|default('sylius.ui.are_your_sure_you_want_to_perform_this_action')|trans }}{% endblock %}
+                </h2>
+                <p data-slot="alert-dialog-description" class="text-sm text-balance text-muted-foreground md:text-pretty">
+                    {% block description %}{{ description ? description|trans }}{% endblock %}
+                </p>
+            </div>
+            <div data-slot="alert-dialog-footer" class="-mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t bg-muted/50 p-4 sm:flex-row sm:justify-end">
+                {% block footer %}
+                    <button type="button" class="{{ button_class('outline') }}" data-action="shadcn--alert-dialog#close">{{ 'sylius.ui.cancel'|trans }}</button>
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </dialog>
+</div>

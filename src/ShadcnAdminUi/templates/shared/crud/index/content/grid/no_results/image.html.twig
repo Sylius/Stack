@@ -1,0 +1,9 @@
+{% if _context.hidden is not defined or _context.hidden == false %}
+    <div data-slot="empty-icon" class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-muted text-foreground">
+        {% if _context.image is defined %}
+            <img src="{{ asset(_context.image) }}" alt="" class="size-full object-contain">
+        {% else %}
+            {{ ux_icon(_context.icon|default('lucide:inbox'), {class: 'size-5', 'aria-hidden': 'true'}) }}
+        {% endif %}
+    </div>
+{% endif %}
