@@ -1,0 +1,4 @@
+symfonycasts_tailwind:
+    binary_version: 'v4.3.3'
+    input_css:
+        - '%kernel.project_dir%/assets/styles/admin.css'
