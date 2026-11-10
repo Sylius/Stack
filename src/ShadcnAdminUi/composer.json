@@ -38,6 +38,7 @@
         "symfony/runtime": "^6.4 || ^7.4 || ^8.0",
         "symfony/translation": "^6.4 || ^7.4 || ^8.0",
         "symfony/twig-bundle": "^6.4 || ^7.4 || ^8.0",
+        "symfony/ux-toolkit": "v2.36.1 || ^3.7",
         "symfony/validator": "^6.4 || ^7.4 || ^8.0",
         "symfony/yaml": "^6.4 || ^7.4 || ^8.0"
     },

@@ -144,7 +144,9 @@ the [shadcn kit of Symfony UX Toolkit](https://ux.symfony.com/toolkit/kits/shadc
 `app:shadcn:update`, a command of the test application, installs them again from `symfony/ux-toolkit` and applies the renaming.
 
 {% hint style="warning" %}
-`symfony/ux-toolkit` requires PHP 8.4 and is not a dependency of the package: run this procedure on PHP 8.4+, with `symfony/ux-toolkit` installed and `Symfony\UX\Toolkit\UXToolkitBundle` enabled in the `dev` environment of the test application. Do not commit these two changes.
+`symfony/ux-toolkit` is a development dependency of the package, enabled in the test application. Its 3.x versions
+require PHP 8.4: on an older PHP version, Composer installs v2.36.1, whose kit is outdated. Run this procedure on
+PHP 8.4+.
 {% endhint %}
 
 | Recipe                                   | Bundle                                            |

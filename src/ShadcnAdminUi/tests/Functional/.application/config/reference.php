@@ -1479,6 +1479,20 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     },
  *     themes?: list<scalar|Param|null>,
  * }
+ * @psalm-type UxToolkitConfig = array{
+ *     components?: array{ // Where "ux:install" installs the Twig components of recipes.
+ *         dir?: scalar|Param|null, // The directory TwigComponent loads anonymous components from, relative to the project directory. It must match your configuration: the Twig "default_path" followed by the TwigComponent "anonymous_template_directory". // Default: "templates/components"
+ *         subdirectory?: scalar|Param|null, // A subdirectory of "dir" to install the components in. Their names get it as a prefix, which the installer adds to the copied files, e.g. "<twig:ui:Button>" for "ui". // Default: null
+ *     },
+ *     controllers?: array{ // Where "ux:install" installs the Stimulus controllers of recipes.
+ *         dir?: scalar|Param|null, // The directory your Stimulus setup loads controllers from, relative to the project directory. It must match your configuration: an entry of "stimulus.controller_paths" with AssetMapper, the "controllersDir" option with Reprise, or the directory passed to "require.context()" with Webpack Encore. // Default: "assets/controllers"
+ *         subdirectory?: scalar|Param|null, // A subdirectory of "dir" to install the controllers in. Their identifiers get it as a prefix, which the installer adds to the copied files, e.g. "ui--dialog" for "ui". // Default: null
+ *     },
+ *     preview?: bool|array{ // Wires the preview assets of kits into AssetMapper, Tailwind and the importmap.
+ *         enabled?: bool|Param, // Default: false
+ *         kits?: list<scalar|Param|null>,
+ *     },
+ * }
  * @psalm-type WhiteOctoberPagerfantaConfig = array{ // Deprecated: The "white_october_pagerfanta" configuration node is deprecated, migrate your configuration to the "babdev_pagerfanta" configuration node.
  *     exceptions_strategy?: array{
  *         out_of_range_page?: scalar|Param|null, // Default: "to_http_not_found"
@@ -1508,6 +1522,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     symfonycasts_tailwind?: SymfonycastsTailwindConfig,
  *     tales_from_a_dev_twig_extra_tailwind?: TalesFromADevTwigExtraTailwindConfig,
  *     sylius_shadcn_admin_ui?: SyliusShadcnAdminUiConfig,
+ *     ux_toolkit?: UxToolkitConfig,
  *     white_october_pagerfanta?: WhiteOctoberPagerfantaConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
@@ -1531,6 +1546,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         symfonycasts_tailwind?: SymfonycastsTailwindConfig,
  *         tales_from_a_dev_twig_extra_tailwind?: TalesFromADevTwigExtraTailwindConfig,
  *         sylius_shadcn_admin_ui?: SyliusShadcnAdminUiConfig,
+ *         ux_toolkit?: UxToolkitConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1554,6 +1570,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         symfonycasts_tailwind?: SymfonycastsTailwindConfig,
  *         tales_from_a_dev_twig_extra_tailwind?: TalesFromADevTwigExtraTailwindConfig,
  *         sylius_shadcn_admin_ui?: SyliusShadcnAdminUiConfig,
+ *         ux_toolkit?: UxToolkitConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1577,6 +1594,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         symfonycasts_tailwind?: SymfonycastsTailwindConfig,
  *         tales_from_a_dev_twig_extra_tailwind?: TalesFromADevTwigExtraTailwindConfig,
  *         sylius_shadcn_admin_ui?: SyliusShadcnAdminUiConfig,
+ *         ux_toolkit?: UxToolkitConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

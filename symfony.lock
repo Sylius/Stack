@@ -296,6 +296,9 @@
             "config/routes/ux_live_component.yaml"
         ]
     },
+    "symfony/ux-toolkit": {
+        "version": "v3.7.1"
+    },
     "symfony/ux-twig-component": {
         "version": "v2.12.0"
     },
