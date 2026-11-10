@@ -52,6 +52,17 @@ final class DemoApplicationTest extends WebTestCase
         self::assertStringContainsString('<script type="importmap"', (string) $this->client->getResponse()->getContent());
     }
 
+    public function testTheColorThemesAreLoadedInOrderBeforeTheTailwindEntry(): void
+    {
+        $this->client->request('GET', '/admin/login');
+        $stylesheets = $this->client->getCrawler()->filter('link[rel="stylesheet"]')->extract(['href']);
+
+        self::assertCount(3, $stylesheets);
+        self::assertMatchesRegularExpression('#/assets/@sylius/shadcn-admin-ui/styles/themes/zinc-[\w-]+\.css$#', $stylesheets[0]);
+        self::assertMatchesRegularExpression('#/assets/@sylius/shadcn-admin-ui/styles/themes/blue-[\w-]+\.css$#', $stylesheets[1]);
+        self::assertMatchesRegularExpression('#/assets/styles/admin-[\w-]+\.css$#', $stylesheets[2]);
+    }
+
     public function testTheAdminPanelRequiresALogin(): void
     {
         $this->client->request('GET', '/admin/');

@@ -41,6 +41,9 @@ final class SyliusShadcnAdminUiBundle extends AbstractBundle
         'sylius_admin.dashboard.index',
     ];
 
+    /** Color themes shipped in assets/styles/themes/: base colors first, then accents. */
+    public const THEMES = ['stone', 'zinc', 'slate', 'blue', 'green', 'orange', 'rose', 'violet'];
+
     public function getPath(): string
     {
         return \dirname(__DIR__, 2);
@@ -57,6 +60,16 @@ final class SyliusShadcnAdminUiBundle extends AbstractBundle
                             ->info('Default variant of the sidebar on every admin page, overridable per page hook.')
                             ->values(['sidebar', 'floating', 'inset'])
                             ->defaultValue('sidebar')
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('themes')
+                    ->info(sprintf('Color themes loaded in this order, before the Tailwind entry: %s, or the asset path of your own ".css" file.', implode(', ', self::THEMES)))
+                    ->example(['zinc', 'blue'])
+                    ->scalarPrototype()
+                        ->validate()
+                            ->ifTrue(static fn (mixed $theme): bool => !\is_string($theme) || (!\in_array($theme, self::THEMES, true) && !str_ends_with($theme, '.css')))
+                            ->thenInvalid(sprintf('Unknown theme %%s: use one of %s, or the asset path of a ".css" file.', implode(', ', self::THEMES)))
                         ->end()
                     ->end()
                 ->end()
@@ -79,12 +92,22 @@ final class SyliusShadcnAdminUiBundle extends AbstractBundle
                 'hook_name_section_separator' => '#',
             ]);
 
+            $config = $this->processConfiguration($builder);
+
             // Prepended, so a "sidebar" hookable configured on one page hook by the application still wins.
-            $variant = $this->processConfiguration($builder)['sidebar']['variant'];
+            $variant = $config['sidebar']['variant'];
             $builder->prependExtensionConfig('sylius_twig_hooks', [
                 'hooks' => array_fill_keys(self::SIDEBAR_HOOKS, [
                     'sidebar' => ['configuration' => ['variant' => $variant]],
                 ]),
+            ]);
+
+            $builder->prependExtensionConfig('sylius_twig_hooks', [
+                'hooks' => [
+                    'sylius_admin.base#stylesheets' => [
+                        'themes' => ['configuration' => ['themes' => $config['themes']]],
+                    ],
+                ],
             ]);
         }
 
@@ -124,7 +147,7 @@ final class SyliusShadcnAdminUiBundle extends AbstractBundle
     }
 
     /**
-     * @return array{sidebar: array{variant: string}}
+     * @return array{sidebar: array{variant: string}, themes: list<string>}
      */
     private function processConfiguration(ContainerBuilder $builder): array
     {

@@ -1,5 +1,66 @@
 # Theming
 
+## Color themes
+
+The bundle ships interchangeable color themes in `assets/styles/themes/`. They are plain CSS files (tokens only), so
+switching from one to another needs no Tailwind rebuild.
+
+| Kind       | Themes                                       | Changes                                                    |
+|------------|----------------------------------------------|------------------------------------------------------------|
+| Base color | `stone`, `zinc`, `slate`                     | The grays: backgrounds, borders, texts                     |
+| Accent     | `blue`, `green`, `orange`, `rose`, `violet`  | Primary actions, focus rings, active sidebar items         |
+
+Without any theme, the panel uses the neutral grays and a black/white primary.
+
+Enable them in the bundle configuration, a base color first, then an accent:
+
+{% code title="config/packages/sylius_shadcn_admin_ui.yaml" lineNumbers="true" %}
+```yaml
+sylius_shadcn_admin_ui:
+    themes: [zinc, blue]
+```
+{% endcode %}
+
+The themes are loaded in this order, before your Tailwind entry: your own token overrides in `admin.css` still win.
+
+Light and dark modes of a few combinations:
+
+**No theme (neutral)**
+
+![Neutral theme](../.gitbook/assets/shadcn-admin-ui-theme-default.png)
+
+**`[zinc, blue]`**
+
+![zinc and blue themes](../.gitbook/assets/shadcn-admin-ui-theme-zinc-blue.png)
+
+**`[stone, orange]`**
+
+![stone and orange themes](../.gitbook/assets/shadcn-admin-ui-theme-stone-orange.png)
+
+**`[slate, violet]`**
+
+![slate and violet themes](../.gitbook/assets/shadcn-admin-ui-theme-slate-violet.png)
+
+**`[green]`**
+
+![green theme](../.gitbook/assets/shadcn-admin-ui-theme-green.png)
+
+**`[rose]`**
+
+![rose theme](../.gitbook/assets/shadcn-admin-ui-theme-rose.png)
+
+Your own theme can be listed too, as the asset path of a CSS file defining the tokens for `:root` and `.dark`:
+
+```yaml
+sylius_shadcn_admin_ui:
+    themes: [slate, 'styles/themes/brand.css']
+```
+
+{% hint style="info" %}
+Prefer a single stylesheet? Import a theme in your Tailwind entry instead, after `theme.css`:
+`@import "../../vendor/sylius/shadcn-admin-ui/assets/styles/themes/blue.css";`
+{% endhint %}
+
 ## Design tokens
 
 Every token follows the shadcn naming: `--background`, `--foreground`, `--primary`, `--sidebar`, `--radius`…

@@ -33,6 +33,10 @@ return static function (ContainerConfigurator $container): void {
                     'template' => '@SyliusShadcnAdminUi/shared/layout/theme.html.twig',
                     'priority' => 200,
                 ],
+                'themes' => [
+                    'template' => '@SyliusShadcnAdminUi/shared/layout/themes.html.twig',
+                    'priority' => 100,
+                ],
                 'styles' => [
                     'template' => '@SyliusShadcnAdminUi/shared/layout/stylesheets.html.twig',
                     'configuration' => [

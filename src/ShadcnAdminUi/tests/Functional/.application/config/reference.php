@@ -1477,6 +1477,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     sidebar?: array{
  *         variant?: "sidebar"|"floating"|"inset"|Param, // Default variant of the sidebar on every admin page, overridable per page hook. // Default: "sidebar"
  *     },
+ *     themes?: list<scalar|Param|null>,
  * }
  * @psalm-type WhiteOctoberPagerfantaConfig = array{ // Deprecated: The "white_october_pagerfanta" configuration node is deprecated, migrate your configuration to the "babdev_pagerfanta" configuration node.
  *     exceptions_strategy?: array{

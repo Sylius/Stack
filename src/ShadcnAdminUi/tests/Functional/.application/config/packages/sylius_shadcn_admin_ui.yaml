@@ -6,3 +6,4 @@ imports:
 sylius_shadcn_admin_ui:
     sidebar:
         variant: floating
+    themes: [zinc, blue]
