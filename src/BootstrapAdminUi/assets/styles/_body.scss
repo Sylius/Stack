@@ -10,6 +10,7 @@
 * {
     --tblr-breadcrumb-item-active-color: var(--tblr-gray-500);
     --tblr-breadcrumb-divider-color: var(--tblr-gray-300);
+    --tblr-breadcrumb-link-color: var(--tblr-body-color);
     --tblr-blue-rgb: 17, 81, 141;
     --tblr-green-rgb: 0, 97, 16;
     --tblr-pagination-border-width: 0;
@@ -18,7 +19,6 @@
 @include color-mode(light) {
     --tblr-body-color: #212529;
     --tblr-code-color: #36393B;
-    --tblr-breadcrumb-link-color: #212529;
 
     body {
         --bs-body-bg: #{$body-bg};
@@ -32,16 +32,32 @@
 }
 
 @include color-mode(dark) {
-    --tblr-body-bg: #0F1623;
-    --tblr-bg-surface: #1E2433;
+    --tblr-body-bg: #{$dark-body-bg};
+    --tblr-body-bg-rgb: #{red($dark-body-bg)}, #{green($dark-body-bg)}, #{blue($dark-body-bg)};
+    --tblr-bg-surface: #{$dark-bg-surface};
+    --tblr-bg-surface-tertiary: #{$dark-body-bg};
 
-    .btn {
+    .btn:where(:not([class*="btn-ghost"])) {
         --tblr-btn-border-color: var(--tblr-border-color);
     }
 
-    .form-control,
-    .form-select,
-    .form-check-input {
+    .btn-ghost-dark {
+        --tblr-btn-color: var(--tblr-body-color);
+        --tblr-btn-disabled-color: var(--tblr-body-color);
+    }
+
+    .btn-secondary {
+        --tblr-btn-bg: var(--tblr-bg-surface);
+        --tblr-btn-border-color: var(--tblr-border-color);
+        --tblr-btn-hover-bg: var(--tblr-border-color);
+        --tblr-btn-color: var(--tblr-body-color);
+        --tblr-btn-hover-color: var(--tblr-body-color);
+    }
+
+    .form-control:where(:not(.is-invalid):not(.is-valid):not(:focus)),
+    .form-select:where(:not(.is-invalid):not(.is-valid):not(:focus)),
+    .form-check-input:where(:not(.is-invalid):not(.is-valid):not(:focus)),
+    .input-group-text {
         border-color: var(--tblr-border-color);
     }
 
@@ -54,16 +70,10 @@
     [data-theme-switch="dark"] {
         display: none;
     }
-}
 
-@font-face {
-    font-family: 'Inter';
-    src: url('../fonts/Inter-VariableFont_slnt,wght.ttf') format('truetype-variations');
-    font-weight: 1 999;
-}
-
-body {
-    font-feature-settings: "cv03", "cv04", "cv11";
+    .empty-img img {
+        filter: invert(0.9) hue-rotate(180deg);
+    }
 }
 
 a {
@@ -92,6 +102,10 @@ a.link-reset {
             display: inline-flex;
         }
     }
+}
+
+.breadcrumb-item {
+    @include text-truncate-ellipsis(min(300px, 30vw));
 }
 
 .breadcrumb-item a {
