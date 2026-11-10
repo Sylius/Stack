@@ -41,6 +41,22 @@ When working on the shadcn templates, keep the Tailwind watcher running:
 symfony console tailwind:build --watch
 ```
 
+### Switching the color themes and the sidebar
+
+With ShadcnAdminUi, try the [color themes](docs/shadcn-admin-ui/theming.md#color-themes) and the sidebar variants on
+the demo application:
+
+```bash
+bin/switch-admin-theme zinc blue            # a base color, then an accent
+bin/switch-admin-theme --sidebar=floating   # sidebar, floating or inset
+bin/switch-admin-theme --sidebar=inset rose
+bin/switch-admin-theme none                 # back to the neutral theme
+bin/switch-admin-theme                      # shows the current settings and the available themes
+```
+
+A setting left out keeps its current value. The script enables ShadcnAdminUi if needed; switching back to Bootstrap
+resets both settings.
+
 🤝 Community
 ------------
 

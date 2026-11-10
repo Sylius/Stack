@@ -1,0 +1,106 @@
+#!/usr/bin/env bash
+#
+# Switches the color themes and the sidebar variant of the demo application (ShadcnAdminUi only).
+#
+# Usage: bin/switch-admin-theme [--sidebar=sidebar|floating|inset] [theme ...|none]
+# A setting left out keeps its current value; with no argument at all, prints the current settings.
+#
+# Examples:
+#   bin/switch-admin-theme zinc blue
+#   bin/switch-admin-theme --sidebar=floating
+#   bin/switch-admin-theme --sidebar=inset slate violet
+#   bin/switch-admin-theme none
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+themes_dir=src/ShadcnAdminUi/assets/styles/themes
+available=$(find "$themes_dir" -name '*.css' -exec basename {} .css \; | sort | tr '\n' ' ')
+variants='sidebar floating inset'
+config=config/packages/sylius_shadcn_admin_ui.yaml
+
+usage() {
+    echo "Usage: $0 [--sidebar=sidebar|floating|inset] [theme ...|none]"
+    echo "Available themes: $available"
+    echo "Combine a base color (stone, zinc, slate) with an accent, e.g.: $0 zinc blue"
+    echo "A setting left out keeps its current value; \"none\" goes back to the neutral theme."
+}
+
+# Current settings, read from the configuration written by this script.
+current_themes=''
+current_variant=sidebar
+if [[ -f "$config" ]]; then
+    current_themes=$(sed -n 's/^ *themes: \[\(.*\)\]$/\1/p' "$config" | tr -d ',')
+    current_variant=$(sed -n 's/^ *variant: *\([a-z]*\)$/\1/p' "$config")
+    current_variant=${current_variant:-sidebar}
+fi
+
+if [[ $# -eq 0 ]]; then
+    if grep -q 'SyliusShadcnAdminUiBundle' config/bundles.php; then
+        echo "Admin themes: ${current_themes:-none (neutral)}. Sidebar: $current_variant."
+    else
+        echo "The demo application runs BootstrapAdminUi: no theme."
+    fi
+    echo
+    usage
+    exit 0
+fi
+
+variant=$current_variant
+themes=()
+themes_given=false
+for arg in "$@"; do
+    case "$arg" in
+        -h|--help) usage; exit 0 ;;
+        --sidebar=*)
+            variant=${arg#--sidebar=}
+            if [[ " $variants " != *" $variant "* ]]; then
+                echo "Unknown sidebar variant \"$variant\": use one of $variants." >&2
+                exit 1
+            fi
+            ;;
+        none) themes_given=true ;;
+        -*) echo "Unknown option \"$arg\"." >&2; usage >&2; exit 1 ;;
+        *)
+            if [[ ! -f "$themes_dir/$arg.css" ]]; then
+                echo "Unknown theme \"$arg\". Available themes: $available" >&2
+                exit 1
+            fi
+            themes+=("$arg")
+            themes_given=true
+            ;;
+    esac
+done
+
+if [[ "$themes_given" == false && -n "$current_themes" ]]; then
+    read -r -a themes <<< "$current_themes"
+fi
+
+# The themes belong to ShadcnAdminUi: enable it first if needed.
+if ! grep -q 'SyliusShadcnAdminUiBundle' config/bundles.php; then
+    bin/switch-admin-ui shadcn
+fi
+
+cat > "$config" <<EOF
+imports:
+    - { resource: '../../src/ShadcnAdminUi/config/app.php' }
+EOF
+
+if [[ "$variant" != sidebar || ${#themes[@]} -gt 0 ]]; then
+    printf '\nsylius_shadcn_admin_ui:\n' >> "$config"
+fi
+if [[ "$variant" != sidebar ]]; then
+    printf '    sidebar:\n        variant: %s\n' "$variant" >> "$config"
+fi
+if [[ ${#themes[@]} -gt 0 ]]; then
+    list=$(printf '%s, ' "${themes[@]}")
+    printf '    themes: [%s]\n' "${list%, }" >> "$config"
+fi
+
+php bin/console cache:clear --quiet
+
+# PHP-FPM only revalidates the cached PHP files every 2 seconds (opcache.revalidate_freq): wait for the new container.
+sleep 2
+
+echo "Admin themes: ${themes[*]:-none (neutral)}. Sidebar: $variant."
