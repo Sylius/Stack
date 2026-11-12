@@ -8,6 +8,7 @@
  */
 
 @import "variables";
+@import "mixins/text-truncate";
 
 @import "@tabler/core/scss/tabler.scss";
 
@@ -18,8 +19,10 @@
 @import "datatable";
 @import "filters";
 @import "flashes";
+@import "fonts";
 @import "form";
 @import "loader";
+@import "modal";
 @import "navbar";
 @import "icons";
 @import "sidebar";

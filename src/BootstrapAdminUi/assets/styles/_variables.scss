@@ -71,10 +71,14 @@ $btn-border-color: $input-border-color;
 $pagination-active-color: inherit;
 $pagination-active-bg: $gray-200;
 
-$font-family-sans-serif: 'Inter', serif;
+$font-family-sans-serif: 'InterVariable', 'Arial', sans-serif;
 
 $h1-font-size: 1.6rem;
 $h1-line-height: 2.1rem;
 
 // Page
 $page-title-font-size: var(--#{$prefix}font-size-h1);
+
+// Dark mode
+$dark-body-bg: #0F1623 !default;
+$dark-bg-surface: #1E2433 !default;
