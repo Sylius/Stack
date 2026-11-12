@@ -90,7 +90,7 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- */.sylius.navbar-nav{gap:.5rem}.navbar input{min-height:44px}.navbar-brand-image{height:3rem}.navbar-collapse a.dropdown-item,.navbar-collapse a.nav-link{min-height:44px;transition:all .1s}.navbar-collapse a.dropdown-item:hover,.navbar-collapse a.nav-link:hover{background:transparent;color:var(--tblr-primary)!important}.nav-button{min-height:44px;min-width:44px}.navbar-collapse .nav-link:focus-visible{outline:solid 2px var(--tblr-primary)}.navbar-plus-badge{width:50px}svg.icon *{stroke-width:1.5}/*!
+ */.sylius.navbar-nav{gap:.5rem}.navbar input{min-height:44px}.navbar-brand-image{height:3rem}.navbar-collapse a.dropdown-item,.navbar-collapse a.nav-link{transition:all .1s}.navbar-collapse a.dropdown-item:hover,.navbar-collapse a.nav-link:hover{background:transparent;color:var(--tblr-primary)!important}.nav-button{min-height:44px;min-width:44px}.navbar-collapse .nav-link:focus-visible{outline:solid 2px var(--tblr-primary)}.navbar-plus-badge{width:50px}svg.icon *{stroke-width:1.5}/*!
  * This file is part of the Sylius package.
  *
  * (c) Sylius Sp. z o.o.
