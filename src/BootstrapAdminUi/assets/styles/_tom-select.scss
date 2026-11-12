@@ -18,7 +18,7 @@
     box-shadow: var(--tblr-box-shadow-input);
 
     input {
-        color: var(--tblr-body-color) !important;
+        color: var(--tblr-body-color);
     }
 }
 
@@ -50,7 +50,7 @@
 
 .ts-dropdown, .ts-dropdown.form-control, .ts-dropdown.form-select {
     padding: 5px;
-    background: var(--tblr-bg-surface) !important;
+    background: var(--tblr-bg-surface);
     border: 1px solid var(--tblr-border-color);
     border-radius: 0.175rem;
     box-shadow: 0 2px 5px rgba(var(--tblr-body-color-rgb), 0.075);
