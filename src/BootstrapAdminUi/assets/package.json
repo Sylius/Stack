@@ -1,0 +1,24 @@
+{
+    "name": "@sylius/bootstrap-admin-ui",
+    "description": "Stimulus controllers of the Sylius Bootstrap Admin UI package.",
+    "license": "MIT",
+    "private": true,
+    "symfony": {
+        "controllers": {
+            "copy-to-clipboard": {
+                "main": "controllers/copy-to-clipboard-controller.js",
+                "name": "copy-to-clipboard",
+                "webpackMode": "eager",
+                "fetch": "eager",
+                "enabled": true
+            },
+            "theme-switcher": {
+                "main": "controllers/theme-switcher-controller.js",
+                "name": "theme-switcher",
+                "webpackMode": "eager",
+                "fetch": "eager",
+                "enabled": true
+            }
+        }
+    }
+}

@@ -15,6 +15,8 @@ Install the package using Composer and Symfony Flex:
 composer require sylius/bootstrap-admin-ui
 ```
 
+The package works out of the box with its prebuilt assets. If your application starts its own Stimulus application (for instance with AssetMapper), read the [Assets](assets.md) page.
+
 ## Configuring the CRUD templates
 
 CRUD templates are split into configurable blocks.

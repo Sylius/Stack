@@ -132,33 +132,26 @@ Register the controller **once in the application's existing Stimulus applicatio
 
 ### AssetMapper
 
-Follow the [AssetMapper setup](../../getting-started.md#using-assetmapper) to disable the package's `symfony_ux` entrypoint when starting your own Stimulus application. Expose the controller source directory to AssetMapper:
+Follow the [AssetMapper setup](../../getting-started.md#using-assetmapper) to disable the package's `symfony_ux` entrypoint when starting your own Stimulus application.
 
-```yaml
-# config/packages/asset_mapper.yaml
-framework:
-    asset_mapper:
-        paths:
-            '%kernel.project_dir%/vendor/sylius/bootstrap-admin-ui/assets/controllers': 'sylius/bootstrap-admin-ui/controllers'
+The package exposes its controllers to AssetMapper. Enable the controller in your `assets/controllers.json` file, StimulusBundle then registers it with the `copy-to-clipboard` identifier:
+
+{% code title="assets/controllers.json" lineNumbers="true" %}
+```json
+{
+    "controllers": {
+        "@sylius/bootstrap-admin-ui": {
+            "copy-to-clipboard": {
+                "enabled": true,
+                "fetch": "eager"
+            }
+        }
+    }
+}
 ```
+{% endcode %}
 
-Add a local importmap entry (this does not install another JavaScript package):
-
-```bash
-php bin/console importmap:require '@sylius/bootstrap-admin-ui/copy-to-clipboard' --path=./vendor/sylius/bootstrap-admin-ui/assets/controllers/copy-to-clipboard-controller.js
-```
-
-In the module where your application already starts Stimulus:
-
-```js
-import { startStimulusApp } from '@symfony/stimulus-bundle';
-import CopyToClipboardController from '@sylius/bootstrap-admin-ui/copy-to-clipboard';
-
-const app = startStimulusApp();
-app.register('copy-to-clipboard', CopyToClipboardController);
-```
-
-If `app` is already exported by another module, import and reuse it instead of calling `startStimulusApp()` again. The application's importmap must also provide `@hotwired/stimulus`, as in a normal Symfony Stimulus installation.
+See the [Assets](../assets.md#stimulus-controllers) page for the other controllers of the package. The application's importmap must also provide `@hotwired/stimulus`, as in a normal Symfony Stimulus installation.
 
 ### Webpack Encore / an existing Sylius Stimulus application
 
