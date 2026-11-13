@@ -1,0 +1,9 @@
+{% set configuration = hookable_metadata.configuration %}
+<div class="flex size-7 items-center justify-center overflow-hidden rounded-md bg-primary text-primary-foreground">
+    {% if configuration.image|default(null) %}
+        <img src="{{ asset(configuration.image) }}" alt="" class="size-full object-contain">
+    {% else %}
+        {{ ux_icon(configuration.icon|default('lucide:layout-grid'), {class: 'size-4', 'aria-hidden': 'true'}) }}
+    {% endif %}
+</div>
+<span class="text-base">{{ configuration.name|default('Sylius')|trans }}</span>

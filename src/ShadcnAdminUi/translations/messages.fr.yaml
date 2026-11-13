@@ -1,0 +1,8 @@
+sylius_shadcn_admin_ui:
+    ui:
+        close: Fermer
+        menu: Menu
+        more: Plus d'actions
+        toggle_sidebar: Afficher / masquer le menu
+        toggle_theme: Changer de thème
+        irreversible_action: 'Cette action est irréversible.'

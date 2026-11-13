@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+#
+# Switches the demo application between BootstrapAdminUi and ShadcnAdminUi.
+#
+# Usage: bin/switch-admin-ui [bootstrap|shadcn]   (no argument: toggles)
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+current() {
+    if grep -q 'SyliusShadcnAdminUiBundle' config/bundles.php; then echo shadcn; else echo bootstrap; fi
+}
+
+from=$(current)
+to=${1:-}
+if [[ -z "$to" ]]; then
+    [[ "$from" == shadcn ]] && to=bootstrap || to=shadcn
+fi
+
+case "$to" in
+    bootstrap) Ns=Bootstrap; prefix=bootstrap; tom_select=true ;;
+    shadcn)    Ns=Shadcn;    prefix=shadcn;    tom_select=false ;;
+    *) echo "Usage: $0 [bootstrap|shadcn]" >&2; exit 1 ;;
+esac
+
+if [[ "$from" == "$to" ]]; then
+    echo "Admin UI is already \"$to\"."
+    exit 0
+fi
+
+[[ "$from" == shadcn ]] && OldNs=Shadcn || OldNs=Bootstrap
+old_prefix=$(echo "$OldNs" | tr '[:upper:]' '[:lower:]')
+
+# Kernel: only one of the two bundles can be enabled.
+perl -pi -e "s/Sylius\\\\${OldNs}AdminUi\\\\Symfony\\\\Sylius${OldNs}AdminUiBundle/Sylius\\\\${Ns}AdminUi\\\\Symfony\\\\Sylius${Ns}AdminUiBundle/" config/bundles.php
+
+# Theme configuration (hooks, grid templates, component prefixes).
+rm -f "config/packages/sylius_${old_prefix}_admin_ui.yaml"
+cat > "config/packages/sylius_${prefix}_admin_ui.yaml" <<EOF
+imports:
+    - { resource: '../../src/${Ns}AdminUi/config/app.php' }
+EOF
+
+# Template namespace and component prefix used by the application.
+grep -rlE "@Sylius${OldNs}AdminUi|sylius_${old_prefix}_admin_ui:" app templates config 2>/dev/null \
+    | xargs -r perl -pi -e "s/\@Sylius${OldNs}AdminUi/\@Sylius${Ns}AdminUi/g; s/sylius_${old_prefix}_admin_ui:/sylius_${prefix}_admin_ui:/g"
+
+# The shadcn theme fully replaces the Tom Select stylesheet.
+perl -pi -e "s#(\"tom-select/dist/css/tom-select.default.css\": )(true|false)#\${1}${tom_select}#" assets/controllers.json
+
+php bin/console cache:clear --quiet
+
+# PHP-FPM only revalidates the cached PHP files every 2 seconds (opcache.revalidate_freq): wait for the new container.
+sleep 2
+
+if [[ "$to" == shadcn ]]; then
+    php bin/console tailwind:build
+fi
+
+echo "Admin UI switched from \"$from\" to \"$to\"."

@@ -1,0 +1,10 @@
+@import "tailwindcss";
+/* Theme of the bundle, from its sources (an application imports it from vendor/sylius/shadcn-admin-ui). */
+@import "../../../../../assets/styles/theme.css";
+
+/* Templates of the demo (the theme already scans the bundle templates). */
+@source "../../templates";
+
+/* Your own tokens / overrides go here, e.g.:
+:root { --primary: oklch(0.55 0.2 260); --radius: 0.5rem; }
+*/

@@ -1,0 +1,37 @@
+{#
+ # Adaptation of the shadcn Sidebar:Provider to the sylius/admin-ui layout.
+ #
+ # The navbar and the content are siblings of the sidebar (not children), so:
+ # - the wrapper uses "display: contents" and the offset is handled in CSS (--admin-sidebar-offset),
+ # - the initial state is read from the cookie on the server: no layout shift on page load,
+ # - the navbar trigger reaches the controller through the "admin-sidebar:*" window events.
+ #}
+{%- props
+    id = 'admin-sidebar',
+    defaultOpen = true,
+    cookieName = 'sidebar_state',
+    cookieMaxAge = 604800,
+    mobileBreakpoint = 768,
+    keyboardShortcut = 'b'
+-%}
+{%- set _cookie_state = app.request ? app.request.cookies.get(cookieName) : null -%}
+{%- set _open = _cookie_state is null ? defaultOpen : _cookie_state != 'collapsed' -%}
+{%- do provide('sidebar.id', id) -%}
+{%- do provide('sidebar.defaultOpen', _open) -%}
+<div
+    id="{{ id }}"
+    data-slot="sidebar-provider"
+    data-shadcn--sidebar-default-open-value="{{ _open ? 'true' : 'false' }}"
+    data-shadcn--sidebar-cookie-name-value="{{ cookieName }}"
+    data-shadcn--sidebar-cookie-max-age-value="{{ cookieMaxAge }}"
+    data-shadcn--sidebar-mobile-breakpoint-value="{{ mobileBreakpoint }}"
+    data-shadcn--sidebar-keyboard-shortcut-value="{{ keyboardShortcut }}"
+    data-state="{{ _open ? 'expanded' : 'collapsed' }}"
+    {{ attributes.defaults({
+        class: 'contents',
+        'data-controller': 'shadcn--sidebar',
+        'data-action': 'keydown@window->shadcn--sidebar#handleKeydown admin-sidebar:toggle@window->shadcn--sidebar#toggle admin-sidebar:open@window->shadcn--sidebar#open',
+    }) }}
+>
+    {%- block content %}{% endblock -%}
+</div>

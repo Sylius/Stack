@@ -1,0 +1,68 @@
+{#
+ # Collapsible filters panel. Hookable configuration:
+ #   open:      true / false, open on load when criteria are set by default
+ #   indicator: false hides the dot of the trigger shown when criteria are set
+ # Inner hooks: "filters#trigger" (inside the trigger, after its title) and "filters#summary" (between the trigger
+ # and the form, visible when the panel is collapsed).
+ #}
+{% from '@SyliusShadcnAdminUi/shared/helper/ui.html.twig' import button_class %}
+
+{% set resources = resources|default(hookable_metadata.context.resources|default(null)) %}
+{% set path = path(app.request.attributes.get('_route'), app.request.attributes.all('_route_params')) %}
+{% set criteria = app.request.query.all('criteria') %}
+{% set configuration = hookable_metadata.configuration|default({}) %}
+{% set open = configuration.open ?? (criteria is not empty) %}
+{% set enabled_filters = resources.definition.enabledFilters|default([])|filter(filter => filter.enabled) %}
+
+{% if enabled_filters is not empty %}
+    <div
+        data-slot="card"
+        data-controller="shadcn--collapsible"
+        data-shadcn--collapsible-open-value="{{ open ? 'true' : 'false' }}"
+        data-state="{{ open ? 'open' : 'closed' }}"
+        class="group/collapsible rounded-xl bg-card text-sm text-card-foreground ring-1 ring-foreground/10"
+    >
+        <button
+            type="button"
+            class="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-start font-medium transition-colors hover:bg-muted/50 group-data-[state=open]/collapsible:rounded-b-none"
+            data-shadcn--collapsible-target="trigger"
+            data-action="shadcn--collapsible#toggle"
+            aria-expanded="{{ open ? 'true' : 'false' }}"
+        >
+            {{ ux_icon('lucide:sliders-horizontal', {class: 'size-4 text-muted-foreground', 'aria-hidden': 'true'}) }}
+            <span>{{ 'sylius.ui.filters'|trans }}</span>
+            {% if criteria is not empty and (configuration.indicator ?? true) %}
+                <span class="size-1.5 rounded-full bg-primary" aria-hidden="true"></span>
+            {% endif %}
+            {% hook 'filters#trigger' %}
+            {{ ux_icon('lucide:chevron-down', {class: 'ms-auto size-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]/collapsible:rotate-180', 'aria-hidden': 'true'}) }}
+        </button>
+
+        {% hook 'filters#summary' %}
+
+        <div data-shadcn--collapsible-target="content" class="border-t" {{ open ? '' : 'hidden' }}>
+            <form method="get" action="{{ path }}" novalidate class="flex flex-col gap-4 p-4" {{ sylius_test_html_attribute('filters-form') }}>
+                {% if app.request.query.has('limit') %}
+                    <input type="hidden" name="limit" value="{{ app.request.query.get('limit') }}">
+                {% endif %}
+                <div class="grid grid-cols-1 items-start gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+                    {% for filter in enabled_filters|sylius_sort_by('position') %}
+                        <div class="sylius-filters__item min-w-0">
+                            {{ sylius_grid_render_filter(resources, filter) }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <button type="submit" class="{{ button_class('default') }}" {{ sylius_test_html_attribute('filter') }}>
+                        {{ ux_icon('lucide:filter', {'data-icon': 'inline-start', 'aria-hidden': 'true'}) }}
+                        {{ 'sylius.ui.filter'|trans }}
+                    </button>
+                    <a href="{{ path }}" class="{{ button_class('ghost') }}" {{ sylius_test_html_attribute('reset') }}>
+                        {{ ux_icon('lucide:rotate-ccw', {'data-icon': 'inline-start', 'aria-hidden': 'true'}) }}
+                        {{ 'sylius.ui.reset'|trans }}
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endif %}

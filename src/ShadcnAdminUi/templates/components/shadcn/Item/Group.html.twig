@@ -1,0 +1,10 @@
+<div
+    role="list"
+    data-slot="item-group"
+    {{ attributes.defaults({
+        class: 'group/item-group flex w-full flex-col gap-4 has-data-[size=sm]:gap-2.5 has-data-[size=xs]:gap-2'|tailwind_classes,
+    }) }}
+>
+    {##- The grouped items, typically multiple `Item` components. -#}
+    {%- block content %}{% endblock -%}
+</div>

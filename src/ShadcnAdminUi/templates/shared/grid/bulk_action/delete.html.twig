@@ -1,0 +1,24 @@
+{% set path = options.link.url|default(path(options.link.route|default(grid.requestConfiguration.getRouteName('bulk_delete')), options.link.parameters|default({}))) %}
+
+<twig:sylius_shadcn_admin_ui:delete_modal
+    id="bulk_delete"
+    :path="path"
+    type="bulk-delete"
+    :label="action.label|default('sylius.ui.delete')"
+    :form_attr="{'data-action': 'submit->admin--grid-selection#submit'}"
+>
+    <twig:block name="trigger">
+        {% from '@SyliusShadcnAdminUi/shared/helper/ui.html.twig' import button_class %}
+        <button
+            type="button"
+            class="{{ button_class('destructive', 'sm') }}"
+            disabled
+            data-admin--grid-selection-target="action"
+            {{ trigger_attributes }}
+        >
+            {{ ux_icon('lucide:trash-2', {'data-icon': 'inline-start', 'aria-hidden': 'true'}) }}
+            {{ label|trans }}
+            <span class="rounded-4xl bg-destructive/15 px-1.5 text-xs tabular-nums" data-admin--grid-selection-target="count" hidden>0</span>
+        </button>
+    </twig:block>
+</twig:sylius_shadcn_admin_ui:delete_modal>

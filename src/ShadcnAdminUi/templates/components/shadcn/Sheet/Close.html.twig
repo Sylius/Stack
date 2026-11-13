@@ -1,0 +1,6 @@
+{%- set sheet_close_attrs = {
+    'data-slot': 'sheet-close',
+    'data-action': 'click->shadcn--dialog#close'|html_attr_type('sst'),
+} -%}
+{##- The close trigger element (e.g., a `Button`) that closes the sheet when clicked. -#}
+{%- block content %}{% endblock -%}

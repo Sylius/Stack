@@ -1,0 +1,13 @@
+{% macro default(data) %}
+    {% if true == data %}
+        <span class="inline-flex items-center gap-1 text-success" {{ sylius_test_html_attribute('status-enabled') }}>
+            {{ ux_icon('lucide:circle-check', {class: 'size-4', 'aria-hidden': 'true'}) }}
+            <span class="sr-only">{{ 'sylius.ui.yes_label'|trans }}</span>
+        </span>
+    {% else %}
+        <span class="inline-flex items-center gap-1 text-muted-foreground" {{ sylius_test_html_attribute('status-disabled') }}>
+            {{ ux_icon('lucide:circle-x', {class: 'size-4', 'aria-hidden': 'true'}) }}
+            <span class="sr-only">{{ 'sylius.ui.no_label'|trans }}</span>
+        </span>
+    {% endif %}
+{% endmacro %}

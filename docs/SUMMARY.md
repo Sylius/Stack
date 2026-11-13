@@ -71,6 +71,16 @@
 * Components
   * [Copy to clipboard](bootstrap-admin-ui/components/copy-to-clipboard.md)
 
+## 🌑 Shadcn Admin UI
+
+* [Getting started](shadcn-admin-ui/getting-started.md)
+* [Configuration](shadcn-admin-ui/configuration.md)
+* [Theming](shadcn-admin-ui/theming.md)
+* [Grids](shadcn-admin-ui/grids.md)
+* [Menu](shadcn-admin-ui/menu.md)
+* [Components](shadcn-admin-ui/components.md)
+* [Migrating from Bootstrap Admin UI](shadcn-admin-ui/migration.md)
+
 ## 🍀 Twig Extra
 
 * [Getting started](twig-extra/getting-started.md)

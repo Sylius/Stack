@@ -41,6 +41,9 @@
         "symfony/ux-icons": "^2.20 || ^3.0",
         "symfony/ux-live-component": "^2.17 || ^3.0",
         "symfony/ux-twig-component": "^2.17 || ^3.0",
+        "symfonycasts/tailwind-bundle": "^0.13 || ^1.0",
+        "tales-from-a-dev/twig-tailwind-extra": "^1.3",
+        "twig/extra-bundle": "^3.24",
         "twig/twig": "^2.15 || ^3.0",
         "webmozart/assert": "^1.9"
     },
@@ -63,6 +66,7 @@
         "symfony/maker-bundle": "^1.61",
         "symfony/runtime": "^6.4 || ^7.4 || ^8.0",
         "symfony/translation": "^6.4 || ^7.4 || ^8.0",
+        "symfony/ux-toolkit": "v2.36.1 || ^3.7",
         "symfony/web-profiler-bundle": "^6.4 || ^7.4 || ^8.0",
         "symfony/workflow": "^6.4 || ^7.4 || ^8.0",
         "symfony/yaml": "^6.4 || ^7.4 || ^8.0",
@@ -74,6 +78,7 @@
         "psr-4": {
             "Sylius\\AdminUi\\": "src/AdminUi/src/",
             "Sylius\\BootstrapAdminUi\\": "src/BootstrapAdminUi/src/",
+            "Sylius\\ShadcnAdminUi\\": "src/ShadcnAdminUi/src/",
             "Sylius\\TwigExtra\\": "src/TwigExtra/src/",
             "Sylius\\TwigHooks\\": "src/TwigHooks/src/",
             "Sylius\\UiTranslations\\": "src/UiTranslations/src/"
@@ -85,10 +90,12 @@
             "MainTests\\Sylius\\": "tests/",
             "TestApplication\\Sylius\\AdminUi\\": "src/AdminUi/tests/Functional/.application/src/",
             "TestApplication\\Sylius\\BootstrapAdminUi\\": "src/BootstrapAdminUi/tests/Functional/.application/src/",
+            "TestApplication\\Sylius\\ShadcnAdminUi\\": "src/ShadcnAdminUi/tests/Functional/.application/src/",
             "TestApplication\\Sylius\\TwigExtra\\": "src/TwigExtra/tests/Functional/.application/src/",
             "TestApplication\\Sylius\\TwigHooks\\": "src/TwigHooks/tests/Functional/.application/src/",
             "TestApplication\\Sylius\\UiTranslations\\": "src/UiTranslations/tests/Functional/.application/src/",
             "Tests\\Sylius\\AdminUi\\": "src/AdminUi/tests/",
+            "Tests\\Sylius\\ShadcnAdminUi\\": "src/ShadcnAdminUi/tests/",
             "Tests\\Sylius\\TwigExtra\\": "src/TwigExtra/tests/",
             "Tests\\Sylius\\TwigHooks\\": "src/TwigHooks/tests/",
             "Tests\\Sylius\\UiTranslations\\": "src/UiTranslations/tests/"
@@ -97,6 +104,7 @@
     "replace": {
         "sylius/admin-ui": "self.version",
         "sylius/bootstrap-admin-ui": "self.version",
+        "sylius/shadcn-admin-ui": "self.version",
         "sylius/twig-extra": "self.version",
         "sylius/twig-hooks": "self.version",
         "sylius/ui-translations": "self.version"

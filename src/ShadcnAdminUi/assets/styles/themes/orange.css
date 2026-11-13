@@ -1,0 +1,25 @@
+/*
+ * Sylius Shadcn Admin UI - "orange" accent theme.
+ *
+ * Colors the primary actions, the focus rings and the active sidebar items in "orange". Combine it with a base color theme.
+ * Enable it with "sylius_shadcn_admin_ui.themes", or import it in your Tailwind entry.
+ * Plain CSS (no Tailwind directive): switching themes needs no rebuild.
+ */
+
+:root {
+    --primary: oklch(0.646 0.222 41.116);
+    --primary-foreground: oklch(0.98 0.016 73.684);
+    --ring: oklch(0.75 0.183 55.934);
+    --sidebar-primary: oklch(0.646 0.222 41.116);
+    --sidebar-primary-foreground: oklch(0.98 0.016 73.684);
+    --sidebar-ring: oklch(0.75 0.183 55.934);
+}
+
+.dark {
+    --primary: oklch(0.705 0.213 47.604);
+    --primary-foreground: oklch(0.266 0.079 36.259);
+    --ring: oklch(0.553 0.195 38.402);
+    --sidebar-primary: oklch(0.705 0.213 47.604);
+    --sidebar-primary-foreground: oklch(0.266 0.079 36.259);
+    --sidebar-ring: oklch(0.553 0.195 38.402);
+}

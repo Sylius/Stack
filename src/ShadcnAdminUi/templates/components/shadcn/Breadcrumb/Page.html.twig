@@ -1,0 +1,12 @@
+<span
+    data-slot="breadcrumb-page"
+    role="link"
+    aria-disabled="true"
+    aria-current="page"
+    {{ attributes.defaults({
+        class: 'font-normal text-foreground'|tailwind_classes,
+    }) }}
+>
+    {##- The current page text (non-clickable). -#}
+    {%- block content %}{% endblock -%}
+</span>

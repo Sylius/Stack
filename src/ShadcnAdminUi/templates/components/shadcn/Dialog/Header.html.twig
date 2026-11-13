@@ -1,0 +1,9 @@
+<header
+    data-slot="dialog-header"
+    {{ attributes.defaults({
+        class: 'flex flex-col gap-2'|tailwind_classes,
+    }) }}
+>
+    {##- The header area, typically contains `Dialog:Title` and `Dialog:Description`. -#}
+    {%- block content %}{% endblock -%}
+</header>

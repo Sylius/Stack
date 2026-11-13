@@ -1,0 +1,38 @@
+{% set session = _context.app.session|default(null) %}
+
+{% if session is not null and session.started and session.flashbag.peekAll|length > 0 %}
+    {% set styles = {
+        success: {icon: 'lucide:circle-check', class: 'border-success/30 bg-success/5 *:[svg]:text-success'},
+        error: {icon: 'lucide:circle-alert', class: 'border-destructive/30 bg-destructive/5 text-destructive *:data-[slot=alert-description]:text-destructive/90'},
+        info: {icon: 'lucide:info', class: 'border-info/30 bg-info/5 *:[svg]:text-info'},
+        warning: {icon: 'lucide:triangle-alert', class: 'border-warning/40 bg-warning/5 *:[svg]:text-warning'},
+    } %}
+
+    <div class="flex flex-col gap-3" {{ sylius_test_html_attribute('sylius-flashes-container') }}>
+        {% for type in ['success', 'error', 'info', 'warning'] %}
+            {% for flash in session.flashbag.get(type) %}
+                <div
+                    data-slot="alert"
+                    role="alert"
+                    data-controller="admin--dismissible"
+                    class="group/alert relative grid w-full grid-cols-[auto_1fr] gap-x-2 gap-y-0.5 rounded-lg border px-2.5 py-2 pe-10 text-start text-sm *:[svg]:row-span-2 *:[svg]:size-4 *:[svg]:translate-y-0.5 {{ styles[type].class }}"
+                    {{ sylius_test_html_attribute('sylius-flash-message') }}
+                    {{ sylius_test_html_attribute('sylius-flash-message-type', type) }}
+                >
+                    {{ ux_icon(styles[type].icon, {'aria-hidden': 'true'}) }}
+                    <div data-slot="alert-title" class="col-start-2 font-medium">{{ ('sylius.ui.' ~ type)|trans }}</div>
+                    <div data-slot="alert-description" class="col-start-2 text-sm text-muted-foreground">
+                        {% if flash is iterable %}
+                            {{ flash.message|trans(flash.parameters, 'flashes') }}
+                        {% else %}
+                            {{ flash|trans({}, 'flashes') }}
+                        {% endif %}
+                    </div>
+                    <button type="button" class="absolute end-2 top-2 inline-flex size-6 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground" data-action="admin--dismissible#close" aria-label="{{ 'sylius_shadcn_admin_ui.ui.close'|trans }}">
+                        {{ ux_icon('lucide:x', {class: 'size-3.5', 'aria-hidden': 'true'}) }}
+                    </button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endif %}

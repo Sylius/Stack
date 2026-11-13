@@ -1,0 +1,27 @@
+app:
+    ui:
+        book: Livre
+        books: Livres
+        new_book: Nouveau livre
+        library: Bibliothèque
+        title: Titre
+        title_help: Le titre tel qu'imprimé sur la couverture.
+        author_name: Auteur
+        category: Catégorie
+        choose_category: Choisir une catégorie
+        summary: Résumé
+        available: Disponible
+        created_at: Ajouté le
+        dashboard_subtitle: Vue d'ensemble de la bibliothèque
+        total_books: Livres au catalogue
+        available_books: Disponibles
+        unavailable_books: Indisponibles
+        categories: Catégories
+        latest_books: Derniers ajouts
+        latest_books_description: Les 5 livres ajoutés le plus récemment
+        see_all: Tout voir
+        by_category: Répartition par catégorie
+        section: Section
+        submenu: Sous-menu
+        section_1: Section 1
+        item_1: Élément 1

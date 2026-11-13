@@ -1,0 +1,3 @@
+{% import '@SyliusShadcnAdminUi/shared/helper/button.html.twig' as button %}
+
+{{ button.primary({text: 'sylius.ui.login'|trans, type: 'submit', class: 'w-full', size: 'large', attr: sylius_test_form_attribute('login-button').attr|default({})}) }}

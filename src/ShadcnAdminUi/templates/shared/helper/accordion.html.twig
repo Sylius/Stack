@@ -1,0 +1,18 @@
+{# Same signature as the BootstrapAdminUi macro, based on the shadcn Collapsible controller. #}
+{% macro accordion(items, open = false, auto_close = null, flush = false) %}
+    <div class="flex flex-col divide-y rounded-xl bg-card text-card-foreground ring-1 ring-foreground/10 {{ flush ? 'rounded-none ring-0' : '' }}">
+        {% for item in items %}
+            {% set item = {open: open, icon: null}|merge(item) %}
+            <div data-controller="shadcn--collapsible" data-shadcn--collapsible-open-value="{{ item.open ? 'true' : 'false' }}" data-state="{{ item.open ? 'open' : 'closed' }}" class="group/collapsible">
+                <button type="button" class="flex w-full items-center gap-2 px-4 py-3 text-start text-sm font-medium hover:bg-muted/50" data-shadcn--collapsible-target="trigger" data-action="shadcn--collapsible#toggle" aria-expanded="{{ item.open ? 'true' : 'false' }}">
+                    {% if item.icon %}{{ ux_icon(item.icon, {class: 'size-4 text-muted-foreground', 'aria-hidden': 'true'}) }}{% endif %}
+                    <span class="flex-1">{{ item.title|default('Title') }}</span>
+                    {{ ux_icon('lucide:chevron-down', {class: 'size-4 text-muted-foreground transition-transform group-data-[state=open]/collapsible:rotate-180', 'aria-hidden': 'true'}) }}
+                </button>
+                <div data-shadcn--collapsible-target="content" class="px-4 pb-4" {{ item.open ? '' : 'hidden' }}>
+                    {{ item.content|default('Content') }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endmacro %}

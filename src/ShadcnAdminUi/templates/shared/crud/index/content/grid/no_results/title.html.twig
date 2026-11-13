@@ -1,0 +1,3 @@
+{% if _context.hidden is not defined or _context.hidden == false %}
+    <p data-slot="empty-title" class="text-base font-medium tracking-tight">{{ _context.translation_key|default('sylius.ui.no_results')|trans }}</p>
+{% endif %}

@@ -1,0 +1,8 @@
+{%- set dialog_trigger_attrs = {
+    'data-slot': 'dialog-trigger',
+    'data-action': 'click->shadcn--dialog#open'|html_attr_type('sst'),
+    'data-shadcn--dialog-target': 'trigger',
+    'aria-haspopup': 'dialog',
+} -%}
+{##- The trigger element (e.g., a `Button`) that opens the dialog when clicked. -#}
+{%- block content %}{% endblock -%}

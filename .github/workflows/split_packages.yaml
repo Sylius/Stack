@@ -27,6 +27,9 @@ jobs:
                         directory: src/BootstrapAdminUi
                         repository: BootstrapAdminUi
                     -
+                        directory: src/ShadcnAdminUi
+                        repository: ShadcnAdminUi
+                    -
                         directory: src/TwigExtra
                         repository: TwigExtra
                     -

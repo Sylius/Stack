@@ -1,0 +1,48 @@
+{% set book = hookable_metadata.context.resource %}
+
+<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+    <twig:shadcn:Card class="lg:col-span-2">
+        <twig:shadcn:Card:Header>
+            <twig:shadcn:Card:Title>{{ book.title }}</twig:shadcn:Card:Title>
+            <twig:shadcn:Card:Description>{{ book.authorName }}</twig:shadcn:Card:Description>
+            <twig:shadcn:Card:Action>
+                <twig:shadcn:Button as="a" variant="outline" size="sm" href="{{ path('app_admin_book_update', {id: book.id}) }}">
+                    <twig:ux:icon name="lucide:pencil" data-icon="inline-start" />
+                    {{ 'sylius.ui.edit'|trans }}
+                </twig:shadcn:Button>
+            </twig:shadcn:Card:Action>
+        </twig:shadcn:Card:Header>
+        <twig:shadcn:Card:Content>
+            <p class="text-sm leading-relaxed {{ book.summary ? '' : 'text-muted-foreground italic' }}">
+                {{ book.summary ?: 'Aucun résumé.' }}
+            </p>
+        </twig:shadcn:Card:Content>
+    </twig:shadcn:Card>
+
+    <twig:shadcn:Card>
+        <twig:shadcn:Card:Header>
+            <twig:shadcn:Card:Title>{{ 'sylius.ui.details'|trans }}</twig:shadcn:Card:Title>
+        </twig:shadcn:Card:Header>
+        <twig:shadcn:Card:Content>
+            <dl class="grid grid-cols-[auto_1fr] gap-x-6 gap-y-3 text-sm">
+                <dt class="text-muted-foreground">{{ 'app.ui.category'|trans }}</dt>
+                <dd>{% if book.category %}<twig:shadcn:Badge variant="secondary">{{ book.category.value|capitalize }}</twig:shadcn:Badge>{% else %}—{% endif %}</dd>
+
+                <dt class="text-muted-foreground">{{ 'app.ui.available'|trans }}</dt>
+                <dd>
+                    {% if book.available %}
+                        <twig:shadcn:Badge variant="outline" class="border-success/40 text-success">{{ 'sylius.ui.yes_label'|trans }}</twig:shadcn:Badge>
+                    {% else %}
+                        <twig:shadcn:Badge variant="outline">{{ 'sylius.ui.no_label'|trans }}</twig:shadcn:Badge>
+                    {% endif %}
+                </dd>
+
+                <dt class="text-muted-foreground">{{ 'app.ui.created_at'|trans }}</dt>
+                <dd class="tabular-nums">{{ book.createdAt|date('d/m/Y') }}</dd>
+
+                <dt class="text-muted-foreground">ID</dt>
+                <dd><twig:sylius_shadcn_admin_ui:copyable value="{{ book.id }}" /></dd>
+            </dl>
+        </twig:shadcn:Card:Content>
+    </twig:shadcn:Card>
+</div>
