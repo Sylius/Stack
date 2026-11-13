@@ -55,8 +55,12 @@ sylius:
         show: Tonen
         starts_with: 'Begint met'
         success: Succes
+        theme_auto: 'Automatisch'
+        theme_dark: 'Donker'
+        theme_light: 'Licht'
         this_form_contains_errors: 'Dit formulier bevat fouten.'
         to: Tot
+        toggle_theme: 'Thema wisselen'
         update: Bijwerken
         value: Waarde
         warning: Waarschuwing

@@ -58,8 +58,12 @@ sylius:
         source_code: Code source
         starts_with: 'Commence par'
         success: 'Succès'
+        theme_auto: 'Auto'
+        theme_dark: 'Sombre'
+        theme_light: 'Clair'
         this_form_contains_errors: 'Ce formulaire contient des erreurs.'
         to: 'À'
+        toggle_theme: 'Changer de thème'
         unable_to_copy_to_clipboard: 'Impossible de copier dans le presse-papiers'
         update: 'Mise à jour'
         value: 'Valeur'
