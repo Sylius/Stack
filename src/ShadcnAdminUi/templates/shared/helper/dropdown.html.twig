@@ -17,12 +17,9 @@
             {% if params.customTrigger %}
                 <div role="button" tabindex="0" {{ html_attr(dropdown_menu_trigger_attrs, {'data-action': 'keydown.enter->shadcn--dropdown-menu#toggle keydown.space->shadcn--dropdown-menu#onTriggerKeydown:prevent keyup.space->shadcn--dropdown-menu#toggle'|html_attr_type('sst')}) }}>{{ params.customTrigger }}</div>
             {% else %}
-                {% set button = {text: 'Menu', icon: null, class: null}|merge(params.button) %}
-                <twig:shadcn:Button variant="outline" class="{{ button.class }}" {{ ...dropdown_menu_trigger_attrs }}>
-                    {% if button.icon %}{{ ux_icon(button.icon, {'data-icon': 'inline-start'}) }}{% endif %}
-                    {{ button.text }}
-                    {{ ux_icon('lucide:chevron-down', {'data-icon': 'inline-end', class: 'opacity-60'}) }}
-                </twig:shadcn:Button>
+                {# Every button.default() option works here (disabled, icon_only, size, variant...), as in BootstrapAdminUi. #}
+                {% import '@SyliusShadcnAdminUi/shared/helper/button.html.twig' as button %}
+                {{ button.default({text: 'Menu'}|merge(params.button)|merge({dropdown: dropdown_menu_trigger_attrs})) }}
             {% endif %}
         </twig:shadcn:DropdownMenu:Trigger>
         <twig:shadcn:DropdownMenu:Content class="{{ params.class }}">

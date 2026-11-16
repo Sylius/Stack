@@ -56,6 +56,39 @@ final class DropdownMacroTest extends KernelTestCase
         self::assertNotContains('h-8', $classes);
     }
 
+    public function testTheButtonTriggerTakesTheButtonMacroOptions(): void
+    {
+        $crawler = $this->crawl(<<<'TWIG'
+            {% import '@SyliusShadcnAdminUi/shared/helper/dropdown.html.twig' as dropdown %}
+            {{ dropdown.default({id: 'opts', button: {text: 'Actions', icon_only: true, icon: 'lucide:ellipsis', size: 'small', variant: 'ghost', disabled: true, attr: {'data-test': 'opts', 'data-action': 'click->other#run'}}, content: ''}) }}
+            TWIG);
+
+        $trigger = $crawler->filter('button#dropdown-menu-opts-trigger');
+        self::assertCount(1, $trigger);
+        self::assertNotNull($trigger->attr('disabled'));
+        self::assertSame('Actions', $trigger->attr('title'));
+        self::assertSame('Actions', trim($trigger->filter('.sr-only')->text()));
+        self::assertSame('opts', $trigger->attr('data-test'));
+        self::assertSame('menu', $trigger->attr('aria-haspopup'));
+        // The trigger action is rendered first, so the browser keeps it over the duplicate from attr.
+        self::assertStringContainsString('shadcn--dropdown-menu#toggle', (string) $trigger->attr('data-action'));
+        $classes = explode(' ', (string) $trigger->attr('class'));
+        self::assertContains('size-7', $classes);
+        self::assertNotContains('bg-background', $classes);
+        // icon_only: no chevron, the button stays square.
+        self::assertCount(1, $trigger->filter('svg'));
+    }
+
+    public function testTheButtonTriggerShowsAChevron(): void
+    {
+        $crawler = $this->crawl(<<<'TWIG'
+            {% import '@SyliusShadcnAdminUi/shared/helper/dropdown.html.twig' as dropdown %}
+            {{ dropdown.default({id: 'chevron', button: {text: 'Menu'}, content: ''}) }}
+            TWIG);
+
+        self::assertCount(1, $crawler->filter('#dropdown-menu-chevron-trigger svg[data-icon="inline-end"]'));
+    }
+
     public function testAListItemWithoutUrlIsAButton(): void
     {
         $crawler = $this->crawl(<<<'TWIG'
