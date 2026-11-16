@@ -108,7 +108,7 @@ final class UxTwoCompatibilityExtension extends AbstractExtension
 
     /**
      * ComponentAttributes::defaults() casts values to strings to concatenate them under Symfony UX 2,
-     * which SeparatedTokenList does not support: space-separated lists stay plain strings.
+     * which SeparatedTokenList does not support: space-separated lists use a stringable equivalent.
      */
     public function attributeType(mixed $value, string $type = 'sst'): mixed
     {
@@ -116,7 +116,7 @@ final class UxTwoCompatibilityExtension extends AbstractExtension
             return HtmlExtension::htmlAttrType($value, $type);
         }
 
-        return is_iterable($value) ? implode(' ', [...$value]) : $value;
+        return new SpaceSeparatedTokens(is_iterable($value) ? $value : [$value]);
     }
 
     /**
