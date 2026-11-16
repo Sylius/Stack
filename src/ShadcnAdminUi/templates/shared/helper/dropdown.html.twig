@@ -33,8 +33,8 @@
 
 {# content is printed raw: escape user data before passing it. #}
 {% macro item(attributes = {}, content = '', variant = 'default') %}
-    {% set href = attributes.href|default(null) %}
-    <twig:shadcn:DropdownMenu:Item :as="href ? 'a' : 'button'" :variant="variant" {{ ...attributes|merge({href: href}) }}>{{ content|raw }}</twig:shadcn:DropdownMenu:Item>
+    {% set attributes = attributes|filter((value, key) => 'href' != key or value) %}
+    <twig:shadcn:DropdownMenu:Item :as="attributes.href is defined ? 'a' : 'button'" :variant="variant" {{ ...attributes }}>{{ content|raw }}</twig:shadcn:DropdownMenu:Item>
 {% endmacro %}
 
 {% macro list(params, items) %}
