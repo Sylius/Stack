@@ -94,6 +94,7 @@ final class DemoApplicationTest extends WebTestCase
         self::assertStringContainsString('data-controller="admin--grid-selection"', $html);
         self::assertStringContainsString('data-slot="badge"', $html);
         self::assertStringContainsString('Science-fiction', $html);
+        self::assertSelectorExists('[data-slot="dropdown-menu-content"] [data-controller="admin--grid-row-menu"] [title]');
     }
 
     public function testTheBookShowPageRendersTheDetailsHook(): void
