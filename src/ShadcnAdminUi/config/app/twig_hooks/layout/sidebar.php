@@ -30,7 +30,7 @@ return static function (ContainerConfigurator $container): void {
                     'template' => '@SyliusShadcnAdminUi/shared/crud/common/sidebar/logo/image.html.twig',
                     'configuration' => [
                         'name' => 'Sylius',
-                        'subtitle' => 'Admin panel',
+                        'subtitle' => 'sylius.ui.admin_panel',
                     ],
                 ],
             ],

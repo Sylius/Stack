@@ -7,6 +7,7 @@ sylius:
     ui:
         actions: 'Aktionen'
         add_new_entry: 'Neuen Eintrag hinzufügen'
+        admin_panel: 'Administrationsbereich'
         administration_panel_login: 'Administrations-Bereich Anmeldung'
         all: 'Alle'
         apply_transition: 'Anwenden'

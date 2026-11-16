@@ -6,6 +6,7 @@ sylius:
             remember_me: 'Recordarme'
     ui:
         actions: 'Acciones'
+        admin_panel: 'Panel de administración'
         administration_panel_login: 'Panel de administración'
         all: 'Todos'
         apply_transition: 'Aplicar'
