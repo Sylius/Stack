@@ -1,0 +1,32 @@
+{% set book = hookable_metadata.context.resource %}
+
+<twig:shadcn:Card>
+    <twig:shadcn:Card:Content>
+        <dl class="grid grid-cols-[auto_1fr] items-center gap-x-6 gap-y-3 text-sm">
+            <div class="contents">
+                <dt><strong class="font-medium text-muted-foreground">{{ 'app.ui.title'|trans }}</strong></dt>
+                <dd>
+                    <twig:sylius_shadcn_admin_ui:copyable :value="book.title">
+                        <span>{{ book.title }}</span>
+                    </twig:sylius_shadcn_admin_ui:copyable>
+                </dd>
+            </div>
+            <div class="contents" {{ sylius_test_html_attribute('author-name') }}>
+                <dt><strong class="font-medium text-muted-foreground">{{ 'app.ui.author'|trans }}</strong></dt>
+                <dd>
+                    <twig:sylius_shadcn_admin_ui:copyable :value="book.authorName">
+                        <span>{{ book.authorName }}</span>
+                    </twig:sylius_shadcn_admin_ui:copyable>
+                </dd>
+            </div>
+            <div class="contents">
+                <dt><strong class="font-medium text-muted-foreground">{{ 'app.ui.category'|trans }}</strong></dt>
+                <dd>
+                    <twig:sylius_shadcn_admin_ui:copyable :value="book.category.value">
+                        <span>{{ book.category.value }}</span>
+                    </twig:sylius_shadcn_admin_ui:copyable>
+                </dd>
+            </div>
+        </dl>
+    </twig:shadcn:Card:Content>
+</twig:shadcn:Card>

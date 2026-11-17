@@ -1,0 +1,9 @@
+<div
+    data-slot="sidebar-footer"
+    {{ attributes.defaults({
+        class: 'flex flex-col gap-2 p-2'|tailwind_classes,
+    }) }}
+>
+    {##- The sidebar footer content. -#}
+    {%- block content %}{% endblock -%}
+</div>

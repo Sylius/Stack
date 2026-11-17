@@ -1,0 +1,51 @@
+# Customization of the theme by the application.
+# Hook names are the Sylius Stack ones: php tests/Application/bin/console sylius:debug:twig-hooks
+sylius_twig_hooks:
+    hooks:
+        # Title of the browser tab
+        'sylius_admin.base#base_title':
+            default:
+                configuration:
+                    title: 'Bibliothèque'
+
+        # Sidebar logo
+        'sylius_admin.common.component.sidebar.logo':
+            image:
+                configuration:
+                    name: 'Bibliothèque'
+                    subtitle: 'Démo Sylius Stack'
+                    icon: 'lucide:library'
+
+        # Login page logo
+        'sylius_admin.security.login.page.logo':
+            image:
+                configuration:
+                    name: 'Bibliothèque'
+                    icon: 'lucide:library'
+
+        # Dashboard: subtitle + statistics cards (TestApplication\Sylius\ShadcnAdminUi\Twig\Components\DashboardStats component)
+        'sylius_admin.dashboard.index.content.header.title_block':
+            title:
+                configuration:
+                    subheader: 'app.ui.dashboard_subtitle'
+        'sylius_admin.dashboard.index.content':
+            stats:
+                template: 'admin/dashboard/stats.html.twig'
+                priority: -10
+
+        # "book" resource: the sylius_admin.book.* hooks complete or override
+        # the common sylius_admin.common.* hooks provided by the theme.
+        # To override an existing hookable, reuse its template (see sylius:debug:twig-hooks).
+        'sylius_admin.book.show.content':
+            details:
+                template: 'admin/book/show/details.html.twig'
+        'sylius_admin.book.show.content.header':
+            breadcrumbs:
+                template: '@SyliusShadcnAdminUi/shared/crud/show/content/header/breadcrumbs.html.twig'
+                configuration:
+                    rendered_field: title
+        'sylius_admin.book.update.content.header':
+            breadcrumbs:
+                template: '@SyliusShadcnAdminUi/shared/crud/update/content/header/breadcrumbs.html.twig'
+                configuration:
+                    rendered_field: title

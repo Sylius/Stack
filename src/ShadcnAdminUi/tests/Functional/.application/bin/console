@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use TestApplication\Sylius\ShadcnAdminUi\Kernel;
+
+$_SERVER['APP_RUNTIME_OPTIONS'] = [
+    'project_dir' => dirname(__DIR__),
+];
+
+if (file_exists(dirname(__DIR__, 4).'/vendor/autoload_runtime.php')) {
+    require_once dirname(__DIR__, 4).'/vendor/autoload_runtime.php';
+} else {
+    require_once dirname(__DIR__, 6).'/vendor/autoload_runtime.php';
+}
+
+return function (array $context) {
+    $kernel = new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
+
+    return new Application($kernel);
+};

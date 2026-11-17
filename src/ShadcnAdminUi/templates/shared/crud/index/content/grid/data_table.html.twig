@@ -1,0 +1,49 @@
+{% set resources = resources|default(hookable_metadata.context.resources|default(null)) %}
+{% set data = resources.data|default([]) %}
+{% set definition = resources.definition|default(null) %}
+{% set has_bulk_actions = definition.actionGroups.bulk is defined and definition.getEnabledActions('bulk')|length > 0 %}
+
+{% if data|length > 0 %}
+    <twig:shadcn:Card class="gap-0 py-0" data-controller="admin--grid-selection">
+        {% import '@SyliusShadcnAdminUi/shared/helper/table.html.twig' as table %}
+        {% import '@SyliusShadcnAdminUi/shared/helper/pagination.html.twig' as pagination %}
+
+        {% set headers %}{{ table.headers(resources, definition, app.request.attributes) }}{% endset %}
+        {% set rows %}
+            {% for row in data %}
+                {{ table.row(resources, definition, row) }}
+            {% endfor %}
+        {% endset %}
+
+        <div class="flex flex-wrap items-center gap-2 border-b px-4 py-2.5">
+            {% if has_bulk_actions %}
+                <div class="flex flex-wrap items-center gap-2">
+                    {% for action in definition.getEnabledActions('bulk')|sylius_sort_by('position') %}
+                        {{ sylius_grid_render_bulk_action(resources, action, null) }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="ms-auto">
+                {{ pagination.number_of_results_selector(data, definition.limits) }}
+            </div>
+        </div>
+
+        <twig:shadcn:Table class="max-md:block" {{ ...sylius_test_form_attribute('grid-table').attr|default({}) }}>
+            <twig:shadcn:Table:Header class="bg-muted/30 max-md:hidden">
+                <twig:shadcn:Table:Row>{{ headers }}</twig:shadcn:Table:Row>
+            </twig:shadcn:Table:Header>
+            <twig:shadcn:Table:Body class="max-md:block" {{ ...sylius_test_form_attribute('grid-table-body').attr|default({}) }}>
+                {{ rows }}
+            </twig:shadcn:Table:Body>
+        </twig:shadcn:Table>
+
+        <div class="flex flex-wrap items-center gap-2 border-t bg-muted/30 px-4 py-2.5">
+            <div class="text-muted-foreground">
+                {{ pagination.results_count(data) }}
+            </div>
+            <div class="ms-auto">
+                {{ pagination.simple(data) }}
+            </div>
+        </div>
+    </twig:shadcn:Card>
+{% endif %}

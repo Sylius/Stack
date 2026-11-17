@@ -1,0 +1,57 @@
+{#
+ # Same signature as the BootstrapAdminUi macros (default / list), rendered with the shadcn
+ # DropdownMenu components. params.id makes the generated ids stable (random otherwise).
+ #}
+{% macro default(params) %}
+    {% set params = {
+        id: 'dropdown-' ~ random(),
+        button: {},
+        class: null,
+        content: null,
+        customTrigger: null,
+        direction: 'down',
+    }|merge(params) %}
+
+    <twig:shadcn:DropdownMenu :id="params.id" :align="params.direction == 'down-end' ? 'end' : 'start'">
+        <twig:shadcn:DropdownMenu:Trigger>
+            {% if params.customTrigger %}
+                <div role="button" tabindex="0" {{ html_attr(dropdown_menu_trigger_attrs, {'data-action': 'keydown.enter->shadcn--dropdown-menu#toggle keydown.space->shadcn--dropdown-menu#onTriggerKeydown:prevent keyup.space->shadcn--dropdown-menu#toggle'|html_attr_type('sst')}) }}>{{ params.customTrigger }}</div>
+            {% else %}
+                {% set button = {text: 'Menu', icon: null, class: null}|merge(params.button) %}
+                <twig:shadcn:Button variant="outline" class="{{ button.class }}" {{ ...dropdown_menu_trigger_attrs }}>
+                    {% if button.icon %}{{ ux_icon(button.icon, {'data-icon': 'inline-start'}) }}{% endif %}
+                    {{ button.text }}
+                    {{ ux_icon('lucide:chevron-down', {'data-icon': 'inline-end', class: 'opacity-60'}) }}
+                </twig:shadcn:Button>
+            {% endif %}
+        </twig:shadcn:DropdownMenu:Trigger>
+        <twig:shadcn:DropdownMenu:Content class="{{ params.class }}">
+            {{ params.content }}
+        </twig:shadcn:DropdownMenu:Content>
+    </twig:shadcn:DropdownMenu>
+{% endmacro %}
+
+{# content is printed raw: escape user data before passing it. #}
+{% macro item(attributes = {}, content = '', variant = 'default') %}
+    {% set attributes = attributes|filter((value, key) => 'href' != key or value) %}
+    <twig:shadcn:DropdownMenu:Item :as="attributes.href is defined ? 'a' : 'button'" :variant="variant" {{ ...attributes }}>{{ content|raw }}</twig:shadcn:DropdownMenu:Item>
+{% endmacro %}
+
+{% macro list(params, items) %}
+    {% set content %}
+        {% for item in items %}
+            {% set item = {type: null, class: null, icon: null}|merge(item) %}
+            {% if item.type == 'header' %}
+                <twig:shadcn:DropdownMenu:Label>{{ item.title|trans }}</twig:shadcn:DropdownMenu:Label>
+            {% elseif item.type == 'divider' %}
+                <twig:shadcn:DropdownMenu:Separator />
+            {% else %}
+                {% set title = item.title|trans %}
+                {% set icon = item.icon ? ux_icon(item.icon, {'aria-hidden': 'true'}) : '' %}
+                {{ _self.item({href: item.url|default(null), class: item.class}|merge(sylius_test_form_attribute('user-dropdown-item', title).attr|default({})), icon ~ (title|e)) }}
+            {% endif %}
+        {% endfor %}
+    {% endset %}
+
+    {{ _self.default(params|merge({content: content})) }}
+{% endmacro %}

@@ -1,0 +1,15 @@
+{#- Status dot, animated when "pulse". -#}
+{%- props
+    ## string|null Palette color (see shared/helper/palette.html.twig).
+    color = 'secondary',
+    ## boolean Animated halo (disabled when the user reduces motion).
+    pulse = false
+-%}
+{%- from '@SyliusShadcnAdminUi/shared/helper/palette.html.twig' import tone -%}
+
+<span aria-hidden="true" {{ attributes.defaults({class: 'relative inline-flex size-2 shrink-0'|tailwind_classes}) }}>
+    {%- if pulse -%}
+        <span class="absolute inline-flex size-full animate-ping rounded-full opacity-75 motion-reduce:animate-none {{ tone(color, 'dot')|trim }}"></span>
+    {%- endif -%}
+    <span class="relative inline-flex size-full rounded-full {{ tone(color, 'dot')|trim }}"></span>
+</span>

@@ -1,0 +1,38 @@
+<twig:shadcn:Card>
+    <twig:shadcn:Card:Header>
+        <twig:shadcn:Card:Title>{{ 'app.ui.new_talks'|trans }}</twig:shadcn:Card:Title>
+        <twig:shadcn:Card:Action>
+            <twig:shadcn:Button as="a" variant="outline" size="sm" href="{{ path('app_admin_talk_index') }}">
+                {{ 'app.ui.show_all'|trans }}
+                <twig:ux:icon name="lucide:arrow-right" data-icon="inline-end" />
+            </twig:shadcn:Button>
+        </twig:shadcn:Card:Action>
+    </twig:shadcn:Card:Header>
+    <twig:shadcn:Card:Content>
+        <twig:shadcn:Item:Group>
+            {% for talk in new_talks|default([]) %}
+                {% set first_speaker = talk.speakers.first %}
+                <twig:shadcn:Item size="sm">
+                    {% if first_speaker %}
+                        <twig:shadcn:Item:Media>
+                            <twig:shadcn:Avatar>
+                                {% if first_speaker.avatar %}
+                                    <twig:shadcn:Avatar:Image src="{{ vich_uploader_asset(first_speaker.avatar) }}" />
+                                {% endif %}
+                                <twig:shadcn:Avatar:Fallback>{{ first_speaker.firstName|first }}{{ first_speaker.lastName|first }}</twig:shadcn:Avatar:Fallback>
+                            </twig:shadcn:Avatar>
+                        </twig:shadcn:Item:Media>
+                    {% endif %}
+                    <twig:shadcn:Item:Content>
+                        <twig:shadcn:Item:Title>{{ talk.title }}</twig:shadcn:Item:Title>
+                        <twig:shadcn:Item:Description>
+                            {%- for speaker in talk.speakers -%}
+                                {% if not loop.first %}, {% endif %}{{ speaker.fullName }}
+                            {%- endfor -%}
+                        </twig:shadcn:Item:Description>
+                    </twig:shadcn:Item:Content>
+                </twig:shadcn:Item>
+            {% endfor %}
+        </twig:shadcn:Item:Group>
+    </twig:shadcn:Card:Content>
+</twig:shadcn:Card>

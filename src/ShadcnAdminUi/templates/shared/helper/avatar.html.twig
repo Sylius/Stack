@@ -1,0 +1,15 @@
+{% macro default(img, class, initials, size = 'default') %}
+    <twig:shadcn:Avatar :size="size" class="{{ class }}">
+        {% if img %}
+            <twig:shadcn:Avatar:Image src="{{ img }}" class="block" />
+        {% else %}
+            <twig:shadcn:Avatar:Fallback class="uppercase">
+                {% if initials %}{{ initials }}{% else %}{{ ux_icon('lucide:user', {class: 'size-4', 'aria-hidden': 'true'}) }}{% endif %}
+            </twig:shadcn:Avatar:Fallback>
+        {% endif %}
+    </twig:shadcn:Avatar>
+{% endmacro %}
+
+{% macro small(img, class, initials) %}
+    {{ _self.default(img, class, initials, 'sm') }}
+{% endmacro %}

@@ -1,0 +1,33 @@
+{# Same signature as the BootstrapAdminUi macro, based on the shadcn Collapsible component. The "flag" item option is not supported. #}
+{% macro accordion(items, open = false, auto_close = null, flush = false) %}
+    {% set accordion_id = 'accordion-' ~ random() %}
+    {% set auto_close = auto_close is not same as(false) %}
+
+    <twig:shadcn:Card
+        class="gap-0 divide-y overflow-visible py-0 {{ flush ? 'rounded-none ring-0' : '' }}"
+        :data-controller="auto_close ? 'admin--accordion' : false"
+    >
+        {% for item in items %}
+            {% set item = {open: open, icon: null}|merge(item) %}
+            {% set content_id = item.id|default(accordion_id ~ '-' ~ loop.index) %}
+            <twig:shadcn:Collapsible :open="item.open">
+                <twig:shadcn:Collapsible:Trigger>
+                    <h2>
+                        <button
+                            type="button"
+                            class="group/trigger flex w-full items-center gap-2 px-4 py-3 text-start text-sm font-medium hover:bg-muted/50"
+                            {{ html_attr(collapsible_trigger_attrs, {'aria-controls': content_id}, auto_close ? {'data-action': 'admin--accordion#closeOthers'|html_attr_type('sst')} : {}) }}
+                        >
+                            {% if item.icon %}{{ ux_icon(item.icon, {class: 'size-4 text-muted-foreground', 'aria-hidden': 'true'}) }}{% endif %}
+                            <span class="flex-1">{{ item.title|default('Title') }}</span>
+                            {{ ux_icon('lucide:chevron-down', {class: 'size-4 text-muted-foreground transition-transform group-data-[state=open]/trigger:rotate-180', 'aria-hidden': 'true'}) }}
+                        </button>
+                    </h2>
+                </twig:shadcn:Collapsible:Trigger>
+                <twig:shadcn:Collapsible:Content :id="content_id" class="px-4 pb-4">
+                    {{ item.content|default('Content') }}
+                </twig:shadcn:Collapsible:Content>
+            </twig:shadcn:Collapsible>
+        {% endfor %}
+    </twig:shadcn:Card>
+{% endmacro %}

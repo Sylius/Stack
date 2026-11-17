@@ -1,0 +1,16 @@
+{%- props
+    ## boolean Whether this is the current page.
+    active = false
+-%}
+<twig:shadcn:Button
+    as="a"
+    variant="{{ active ? 'outline' : 'ghost' }}"
+    size="icon"
+    aria-current="{{ active ? 'page' : 'false' }}"
+    data-slot="pagination-link"
+    data-active="{{ active ? 'true' : 'false' }}"
+    {{ ...attributes }}
+>
+    {##- The page number or navigation icon. -#}
+    {{- block(outerBlocks.content) -}}
+</twig:shadcn:Button>

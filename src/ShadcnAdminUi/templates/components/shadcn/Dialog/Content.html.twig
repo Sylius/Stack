@@ -1,0 +1,35 @@
+{%- props
+    ## boolean Whether to display the close button in the top-right corner.
+    showCloseButton = true
+-%}
+{%- set _dialog_id = inject('dialog.id') -%}
+{%- set _dialog_titleId = inject('dialog.titleId') -%}
+{%- set _dialog_descriptionId = inject('dialog.descriptionId') -%}
+
+<dialog
+    id="{{ _dialog_id }}"
+    aria-labelledby="{{ _dialog_titleId }}"
+    aria-describedby="{{ _dialog_descriptionId }}"
+    data-slot="dialog-content"
+    data-shadcn--dialog-target="dialog"
+    {{ attributes.defaults({
+        class: 'fixed top-1/2 left-1/2 z-50 w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl bg-popover p-4 text-sm text-popover-foreground ring-1 ring-foreground/10 outline-none sm:max-w-sm opacity-0 scale-95 transition-all duration-100 backdrop:duration-100 open:grid open:scale-100 open:opacity-100 open:backdrop:bg-black/10 supports-backdrop-filter:open:backdrop:backdrop-blur-xs starting:open:scale-95 starting:open:opacity-0 data-closing:scale-95 data-closing:opacity-0 data-closing:backdrop:bg-transparent supports-backdrop-filter:data-closing:backdrop:backdrop-blur-none'|tailwind_classes,
+        'data-action': 'keydown.esc->shadcn--dialog#close:prevent click->shadcn--dialog#closeOnClickOutside',
+    }) }}
+>
+    {##- The dialog content, typically includes `Dialog:Header` and optionally `Dialog:Footer`. -#}
+    {%- block content %}{% endblock -%}
+    {% if showCloseButton %}
+        <twig:shadcn:Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            class="absolute top-2 end-2"
+            data-slot="dialog-close"
+            data-action="click->shadcn--dialog#close"
+        >
+            <twig:ux:icon name="lucide:x" />
+            <span class="sr-only">Close</span>
+        </twig:shadcn:Button>
+    {% endif %}
+</dialog>

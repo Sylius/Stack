@@ -1,0 +1,41 @@
+{%- props
+    ## array A list of error messages (strings or objects with a `message` property).
+    errors = []
+-%}
+{%- set slot_content -%}
+    {##- Custom error content, overrides the `errors` prop if provided. -#}
+    {%- block content %}{% endblock -%}
+{%- endset -%}
+{%- set slot_content = slot_content|trim -%}
+
+{%- if slot_content == '' -%}
+    {%- set messages = [] -%}
+    {%- for error in errors|default([]) -%}
+        {%- set message = error.message ?? error -%}
+        {%- if message is not same as(false) and message is not null and message != '' and not (message in messages) -%}
+            {%- set messages = messages|merge([message]) -%}
+        {%- endif -%}
+    {%- endfor -%}
+{%- endif -%}
+
+{%- if slot_content != '' or (messages ?? [])|length > 0 -%}
+    <div
+        role="alert"
+        data-slot="field-error"
+        {{ attributes.defaults({
+            class: 'text-destructive text-sm font-normal'|tailwind_classes,
+        }) }}
+    >
+        {%- if slot_content != '' -%}
+            {{ slot_content }}
+        {%- elseif (messages ?? [])|length == 1 -%}
+            {{ messages[0] }}
+        {%- else -%}
+            <ul class="ms-4 flex list-disc flex-col gap-1">
+                {%- for message in messages|default([]) -%}
+                    <li>{{ message }}</li>
+                {%- endfor -%}
+            </ul>
+        {%- endif -%}
+    </div>
+{%- endif -%}

@@ -1,0 +1,11 @@
+{% set logo %}{% hook 'logo' %}{% endset %}
+
+<twig:shadcn:Sidebar:Header>
+    <twig:shadcn:Sidebar:Menu>
+        <twig:shadcn:Sidebar:MenuItem>
+            <twig:shadcn:Sidebar:MenuButton as="a" size="lg" href="{{ path('sylius_admin_ui_dashboard') }}">
+                {{ logo }}
+            </twig:shadcn:Sidebar:MenuButton>
+        </twig:shadcn:Sidebar:MenuItem>
+    </twig:shadcn:Sidebar:Menu>
+</twig:shadcn:Sidebar:Header>

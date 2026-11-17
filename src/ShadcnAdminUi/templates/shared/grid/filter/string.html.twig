@@ -1,0 +1,13 @@
+{% form_theme form '@SyliusShadcnAdminUi/shared/form_theme.html.twig' %}
+
+<div class="flex flex-col gap-2" data-slot="field">
+    <label for="{{ form.value.vars.id }}" class="flex w-fit items-center gap-1 text-sm leading-snug font-medium select-none">{{ filter.label|trans }}</label>
+    <div class="flex gap-2">
+        {% if form.type is defined %}
+            <div class="w-36 shrink-0">{{ form_widget(form.type, {attr: {'aria-label': 'sylius.ui.filter'|trans}}) }}</div>
+        {% endif %}
+        <div class="min-w-0 flex-1">
+            {{ form_widget(form.value, {attr: {placeholder: form.value.vars.label|trans}}) }}
+        </div>
+    </div>
+</div>

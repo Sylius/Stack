@@ -1,0 +1,7 @@
+{% set resources = resources|default(hookable_metadata.context.resources|default(null)) %}
+
+{% if resources.data is defined and resources.data|length == 0 %}
+    <div data-slot="empty" class="flex w-full min-w-0 flex-1 flex-col items-center justify-center gap-4 rounded-xl border border-dashed bg-card p-10 text-center text-balance">
+        {% hook 'no_results' %}
+    </div>
+{% endif %}

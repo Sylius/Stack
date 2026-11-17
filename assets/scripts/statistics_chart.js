@@ -10,8 +10,9 @@ function renderChart() {
   }
 
   const styles = getComputedStyle(document.documentElement);
-  const labelColor = styles.getPropertyValue('--tblr-body-color').trim();
-  const primaryColor = styles.getPropertyValue('--tblr-primary').trim();
+  const cssVar = (...names) => names.map((name) => styles.getPropertyValue(name).trim()).find(Boolean);
+  const labelColor = cssVar('--tblr-body-color', '--foreground');
+  const primaryColor = cssVar('--tblr-primary', '--primary');
 
   const options = {
     colors: [primaryColor],
@@ -121,7 +122,7 @@ if (element) {
 
   const themeObserver = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
-      if (mutation.attributeName === 'data-bs-theme') {
+      if (mutation.attributeName === 'data-bs-theme' || mutation.attributeName === 'data-theme') {
         chart.destroy();
         renderChart();
       }

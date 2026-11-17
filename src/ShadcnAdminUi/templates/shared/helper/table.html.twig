@@ -1,0 +1,108 @@
+{# Same macro API as BootstrapAdminUi (headers / row), with the shadcn Table classes. #}
+{% macro headers(grid, definition, request_attributes) %}
+    {% import '@SyliusShadcnAdminUi/shared/helper/sorting.html.twig' as sorting %}
+
+    {% if definition.actionGroups.bulk is defined and definition.getEnabledActions('bulk')|length > 0 %}
+        <th data-slot="table-head" class="h-10 w-10 px-2 text-start align-middle">
+            {{ include('@SyliusShadcnAdminUi/shared/helper/_checkbox.html.twig', {
+                attributes: {
+                    'aria-label': 'sylius.ui.all'|trans,
+                    'data-admin--grid-selection-target': 'all',
+                    'data-action': 'admin--grid-selection#toggleAll',
+                },
+            }, false) }}
+        </th>
+    {% endif %}
+
+    {% for field in definition.fields|sylius_sort_by('position') %}
+        {% if field.enabled %}
+            {% if field.isSortable %}
+                {{ sorting.table_header(grid, field, request_attributes) }}
+            {% else %}
+                <th data-slot="table-head" class="{{ ('h-10 px-2 text-start align-middle font-medium whitespace-nowrap text-foreground sylius-table-column-' ~ field.name ~ ' ' ~ field.options.vars.th_class|default(''))|tailwind_classes }}">{{ field.label|trans }}</th>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {% if definition.actionGroups.item is defined and definition.getEnabledActions('item')|length > 0 %}
+        <th data-slot="table-head" class="h-10 px-2 text-end align-middle font-medium whitespace-nowrap text-foreground sylius-table-column-actions">
+            <span class="sr-only">{{ 'sylius.ui.actions'|trans }}</span>
+        </th>
+    {% endif %}
+{% endmacro %}
+
+{% macro row(grid, definition, row) %}
+    {% import '@SyliusShadcnAdminUi/shared/helper/dropdown.html.twig' as dropdown %}
+    {% from '@SyliusShadcnAdminUi/shared/helper/ui.html.twig' import button_class %}
+
+    {#
+        Below md the row becomes a card (same markup, CSS only, so there is no duplicated markup or ids):
+        a 3-column grid (bulk checkbox | title | row actions) with the actions top-right and each cell as a "label … value" line.
+        A field can opt into a richer card with options.vars.mobile:
+          title  (card heading, top-left), badge (short line under the title, e.g. a status),
+          meta   (muted line without label), hidden (not shown on mobile).
+    #}
+    <tr data-slot="table-row" class="item border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted max-md:grid max-md:grid-cols-[auto_minmax(0,1fr)_auto] max-md:gap-y-1.5 max-md:p-3" {{ sylius_test_html_attribute('row') }} {{ sylius_test_html_attribute('resource-id', row.id|default(null)) }}>
+        {% if definition.actionGroups.bulk is defined and definition.getEnabledActions('bulk')|length > 0 and row.id is defined %}
+            <td data-slot="table-cell" class="w-10 p-2 align-middle max-md:col-start-1 max-md:row-start-1 max-md:w-auto max-md:p-0 max-md:pe-3">
+                {{ include('@SyliusShadcnAdminUi/shared/helper/_checkbox.html.twig', {
+                    attributes: {
+                        value: row.id,
+                        'aria-label': row.id,
+                        'data-admin--grid-selection-target': 'item',
+                        'data-action': 'admin--grid-selection#refresh',
+                    },
+                }, false) }}
+            </td>
+        {% endif %}
+
+        {% for field in definition.enabledFields|sylius_sort_by('position') %}
+            {# vars.wrap: let a long-text column wrap instead of widening the table #}
+            {% set mobile_class = {
+                title: 'max-md:col-span-1 max-md:col-start-2 max-md:row-start-1 max-md:block max-md:text-start max-md:text-base max-md:font-medium max-md:before:content-none',
+                badge: 'max-md:order-1 max-md:col-span-2 max-md:col-start-2 max-md:block max-md:justify-self-start max-md:text-start max-md:before:content-none',
+                meta: 'max-md:order-2 max-md:col-span-2 max-md:col-start-2 max-md:block max-md:text-start max-md:text-muted-foreground max-md:before:content-none',
+                hidden: 'max-md:hidden',
+            }[field.options.vars.mobile|default('')] ?? 'max-md:order-3' %}
+            <td data-slot="table-cell" data-label="{{ field.label|trans }}" class="{{ ('p-2 align-middle ' ~ (field.options.vars.wrap|default(false) ? 'min-w-48 whitespace-normal break-words' : 'whitespace-nowrap') ~ ' ' ~ field.options.vars.td_class|default('') ~ ' max-md:col-span-full max-md:flex max-md:min-w-0 max-md:items-baseline max-md:justify-between max-md:gap-3 max-md:p-0 max-md:text-end max-md:whitespace-normal max-md:before:shrink-0 max-md:before:text-start max-md:before:text-muted-foreground max-md:before:content-[attr(data-label)] ' ~ mobile_class)|tailwind_classes }}">
+                {% if field.name == 'code' %}
+                    <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">{{ sylius_grid_render_field(grid, field, row) }}</code>
+                {% else %}
+                    {{ sylius_grid_render_field(grid, field, row) }}
+                {% endif %}
+            </td>
+        {% endfor %}
+
+        {% if definition.actionGroups.item is defined and definition.getEnabledActions('item')|length > 0 %}
+            <td data-slot="table-cell" class="p-2 align-middle whitespace-nowrap max-md:col-start-3 max-md:row-start-1 max-md:self-start max-md:p-0 max-md:ps-3" {{ sylius_test_html_attribute('actions') }}>
+                <div class="flex items-center justify-end gap-0.5">
+                    {% for action in definition.getEnabledActions('item')|sylius_sort_by('position') %}
+                        {{ sylius_grid_render_action(grid, action, row) }}
+                    {% endfor %}
+
+                    {% if definition.actionGroups.subitem is defined and definition.getEnabledActions('subitem')|length > 0 %}
+                        {% set subactions %}
+                            {% for action in definition.getEnabledActions('subitem')|sylius_sort_by('position') %}
+                                {{ sylius_grid_render_action(grid, action, row) }}
+                            {% endfor %}
+                        {% endset %}
+                        {% if subactions|trim|length > 0 %}
+                            {% set more_button %}
+                                <span class="{{ button_class('ghost', 'icon-sm') }}" title="{{ 'sylius_shadcn_admin_ui.ui.more'|trans }}">
+                                    {{ ux_icon('lucide:ellipsis', {'aria-hidden': 'true'}) }}
+                                    <span class="sr-only">{{ 'sylius_shadcn_admin_ui.ui.more'|trans }}</span>
+                                </span>
+                            {% endset %}
+                            {# Action templates render icon-only buttons (label in .sr-only): in the menu, stretch each trigger (the element carrying title) into a labelled item. #}
+                            {% set menu_class = 'flex flex-col *:w-full [&_[title]]:h-auto [&_[title]]:w-full [&_[title]]:justify-start [&_[title]]:gap-2 [&_[title]]:px-1.5 [&_[title]]:py-1 [&_[title]]:font-normal [&_[title].text-muted-foreground]:text-popover-foreground [&_[title]_.sr-only]:not-sr-only [&_[title]_.sr-only]:whitespace-nowrap' %}
+                            {{ dropdown.default({id: 'row-' ~ row.id|default(random()), customTrigger: more_button, content: subactions, direction: 'down-end', class: menu_class}) }}
+                        {% else %}
+                            {# Keep the menu slot so the other action icons stay aligned from row to row #}
+                            <span class="inline-block size-7 shrink-0" aria-hidden="true"></span>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </td>
+        {% endif %}
+    </tr>
+{% endmacro %}

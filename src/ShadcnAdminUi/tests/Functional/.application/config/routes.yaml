@@ -1,0 +1,7 @@
+# The demo has no front office: the root redirects to the admin panel.
+home:
+    path: /
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+    defaults:
+        route: sylius_admin_ui_dashboard
+        permanent: false

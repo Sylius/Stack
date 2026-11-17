@@ -1,0 +1,12 @@
+{% set last_error = hookable_metadata.context.last_error|default(null) %}
+
+{% if last_error is not null %}
+    <twig:shadcn:Alert
+        variant="destructive"
+        class="border-destructive/30 bg-destructive/5"
+        {{ ...sylius_test_form_attribute('invalid-credentials-message').attr|default({}) }}
+    >
+        {{ ux_icon('lucide:circle-alert', {'aria-hidden': 'true'}) }}
+        <twig:shadcn:Alert:Description>{{ last_error.messageKey|trans(last_error.messageData, 'security') }}</twig:shadcn:Alert:Description>
+    </twig:shadcn:Alert>
+{% endif %}

@@ -1,2 +1,2 @@
 imports:
-  - { resource: '../../src/BootstrapAdminUi/config/app.php' }
+    - { resource: '../../src/BootstrapAdminUi/config/app.php' }

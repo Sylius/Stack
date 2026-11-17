@@ -1,0 +1,27 @@
+app:
+    ui:
+        book: Book
+        books: Books
+        new_book: New book
+        library: Library
+        title: Title
+        title_help: The title as printed on the cover.
+        author_name: Author
+        category: Category
+        choose_category: Choose a category
+        summary: Summary
+        available: Available
+        created_at: Created at
+        dashboard_subtitle: Library overview
+        total_books: Books in catalog
+        available_books: Available
+        unavailable_books: Unavailable
+        categories: Categories
+        latest_books: Latest additions
+        latest_books_description: The 5 most recently added books
+        see_all: See all
+        by_category: Books by category
+        section: Section
+        submenu: Submenu
+        section_1: Section 1
+        item_1: Item 1

@@ -1,0 +1,13 @@
+<div class="relative px-2 pt-2 group-data-[collapsible=icon]:hidden">
+    <label for="admin-menu-search" class="sr-only">{{ 'sylius.ui.search_menu'|trans }}</label>
+    {{ ux_icon('lucide:search', {class: 'pointer-events-none absolute start-4 top-1/2 mt-1 size-4 -translate-y-1/2 text-muted-foreground', 'aria-hidden': 'true'}) }}
+    <twig:shadcn:Sidebar:Input
+        id="admin-menu-search"
+        type="search"
+        autocomplete="off"
+        placeholder="{{ 'sylius.ui.search_menu'|trans }}..."
+        class="ps-8"
+        data-admin--menu-search-target="input"
+        data-action="input->admin--menu-search#filter keydown->admin--menu-search#clear"
+    />
+</div>

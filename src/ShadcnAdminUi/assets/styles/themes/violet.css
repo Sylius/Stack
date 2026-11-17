@@ -1,0 +1,25 @@
+/*
+ * Sylius Shadcn Admin UI - "violet" accent theme.
+ *
+ * Colors the primary actions, the focus rings and the active sidebar items in "violet". Combine it with a base color theme.
+ * Enable it with "sylius_shadcn_admin_ui.themes", or import it in your Tailwind entry.
+ * Plain CSS (no Tailwind directive): switching themes needs no rebuild.
+ */
+
+:root {
+    --primary: oklch(0.541 0.281 293.009);
+    --primary-foreground: oklch(0.969 0.016 293.756);
+    --ring: oklch(0.702 0.183 293.541);
+    --sidebar-primary: oklch(0.541 0.281 293.009);
+    --sidebar-primary-foreground: oklch(0.969 0.016 293.756);
+    --sidebar-ring: oklch(0.702 0.183 293.541);
+}
+
+.dark {
+    --primary: oklch(0.606 0.25 292.717);
+    --primary-foreground: oklch(0.969 0.016 293.756);
+    --ring: oklch(0.491 0.27 292.581);
+    --sidebar-primary: oklch(0.606 0.25 292.717);
+    --sidebar-primary-foreground: oklch(0.969 0.016 293.756);
+    --sidebar-ring: oklch(0.491 0.27 292.581);
+}

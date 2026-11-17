@@ -1,0 +1,11 @@
+<twig:shadcn:Button
+    variant="ghost"
+    size="icon-sm"
+    data-controller="admin--theme-switcher"
+    data-action="admin--theme-switcher#toggle"
+    aria-label="{{ 'sylius_shadcn_admin_ui.ui.toggle_theme'|trans }}"
+    title="{{ 'sylius_shadcn_admin_ui.ui.toggle_theme'|trans }}"
+>
+    <twig:ux:icon name="lucide:sun" class="dark:hidden" />
+    <twig:ux:icon name="lucide:moon" class="hidden dark:block" />
+</twig:shadcn:Button>

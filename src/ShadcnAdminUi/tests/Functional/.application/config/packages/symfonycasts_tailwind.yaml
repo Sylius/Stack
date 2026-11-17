@@ -1,0 +1,10 @@
+symfonycasts_tailwind:
+    binary_version: 'v4.3.3'
+    input_css:
+        # Stylesheet of the admin panel (imports the theme of the bundle).
+        - '%kernel.project_dir%/assets/styles/admin.css'
+
+when@test:
+    symfonycasts_tailwind:
+        # Tests render the pages without building the stylesheet.
+        strict_mode: false

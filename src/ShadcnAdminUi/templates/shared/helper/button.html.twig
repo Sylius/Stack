@@ -1,0 +1,77 @@
+{#
+ # Same macro API as @SyliusBootstrapAdminUi/shared/helper/button.html.twig, so your custom
+ # templates only need the namespace to be changed.
+ #
+ # Extra params: variant ('default'|'secondary'|'outline'|'ghost'|'destructive'|'link')
+ #}
+{% macro default(params = {}) %}
+    {% from '@SyliusShadcnAdminUi/shared/helper/ui.html.twig' import button_class, html_attributes %}
+
+    {% set params = {
+        attr: null,
+        class: null,
+        text: 'Button',
+        disabled: false,
+        dropdown: false,
+        icon: null,
+        icon_class: null,
+        icon_only: false,
+        id: null,
+        size: null,
+        type: 'button',
+        url: null,
+        form: null,
+        variant: 'outline',
+    }|merge(params) %}
+
+    {% set size = params.icon_only
+        ? (params.size == 'large' ? 'icon-lg' : (params.size == 'small' ? 'icon-sm' : 'icon'))
+        : (params.size == 'large' ? 'lg' : (params.size == 'small' ? 'sm' : 'default')) %}
+    {% set class = button_class(params.variant, size, params.class|default('')) %}
+    {% set icon_attributes = {class: params.icon_class|default(''), 'aria-hidden': 'true'}|merge(params.icon_only ? {} : {'data-icon': 'inline-start'}) %}
+    {% set icon = params.icon ? ux_icon(params.icon, icon_attributes) %}
+    {% set label = params.icon_only ? '<span class="sr-only">' ~ params.text|e ~ '</span>' : params.text|e %}
+
+    {% if params.url %}
+        <a href="{{ params.url }}"
+            {%- if params.id %} id="{{ params.id }}"{% endif %}
+            data-slot="button"
+            class="{{ class }}"
+            {%- if params.disabled %} aria-disabled="true" tabindex="-1"{% endif %}
+            {%- if params.icon_only %} title="{{ params.text }}"{% endif %}
+            {{- html_attributes(params.attr) }}>
+            {{- icon|raw }}{{ label|raw -}}
+        </a>
+    {% else %}
+        <button type="{{ params.type }}"
+            {%- if params.id %} id="{{ params.id }}"{% endif %}
+            {%- if params.form %} form="{{ params.form }}"{% endif %}
+            data-slot="button"
+            class="{{ class }}"
+            {%- if params.disabled %} disabled{% endif %}
+            {%- if params.icon_only %} title="{{ params.text }}"{% endif %}
+            {{- html_attributes(params.attr) }}>
+            {{- icon|raw }}{{ label|raw -}}
+        </button>
+    {% endif %}
+{% endmacro %}
+
+{% macro primary(params = {}) %}
+    {{ _self.default({variant: 'default'}|merge(params)) }}
+{% endmacro %}
+
+{% macro delete(params = {}) %}
+    {{ _self.default({text: 'sylius.ui.delete'|trans, variant: 'destructive'}|merge(params)) }}
+{% endmacro %}
+
+{% macro create(params = {}) %}
+    {{ _self.primary({type: 'submit', text: 'sylius.ui.create'|trans}|merge(params)) }}
+{% endmacro %}
+
+{% macro update(params = {}) %}
+    {{ _self.primary({type: 'submit', text: 'sylius.ui.update'|trans}|merge(params)) }}
+{% endmacro %}
+
+{% macro cancel(params = {}) %}
+    {{ _self.default({text: 'sylius.ui.cancel'|trans, url: app.request.headers.get('referer'), variant: 'outline'}|merge(params)) }}
+{% endmacro %}

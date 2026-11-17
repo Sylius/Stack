@@ -1,0 +1,39 @@
+{% extends '@SyliusShadcnAdminUi/shared/components/confirmation_modal.html.twig' %}
+{% from '@SyliusShadcnAdminUi/shared/helper/ui.html.twig' import button_class, html_attributes %}
+
+{% props id = null, path = null, label = 'sylius.ui.delete', icon = 'lucide:trash-2', disabled = false, form_attr = null, type = 'delete', modal_id = null, icon_only = true %}
+
+{% if modal_id is null %}
+    {% set modal_id = 'delete-modal-' ~ id %}
+{% endif %}
+
+{% block trigger %}
+    <button
+        type="button"
+        class="{{ icon_only ? button_class('ghost', 'icon-sm', 'text-destructive hover:bg-destructive/10 hover:text-destructive') : button_class('destructive') }}"
+        title="{{ label|trans }}"
+        {% if disabled %}disabled{% endif %}
+        {{ trigger_attributes }}
+    >
+        {{ ux_icon(icon, {'aria-hidden': 'true'}|merge(icon_only ? {} : {'data-icon': 'inline-start'})) }}
+        <span class="{{ icon_only ? 'sr-only' : '' }}">{{ label|trans }}</span>
+    </button>
+{% endblock %}
+
+{% block description %}{{ 'sylius_shadcn_admin_ui.ui.irreversible_action'|trans }}{% endblock %}
+
+{% block media %}
+    {{ ux_icon('lucide:trash-2', {class: 'text-destructive', 'aria-hidden': 'true'}) }}
+{% endblock %}
+
+{% block footer %}
+    <form action="{{ path }}" method="post" class="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end" {{- html_attributes(form_attr) }}>
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token(id) }}">
+
+        <button type="button" class="{{ button_class('outline') }}" data-action="shadcn--alert-dialog#close">{{ 'sylius.ui.cancel'|trans }}</button>
+        <button type="submit" class="{{ button_class('destructive', 'default', 'bg-destructive text-white hover:bg-destructive/90 dark:bg-destructive/60') }}" {{ sylius_test_html_attribute('confirm-button') }}>
+            {{ label|trans }}
+        </button>
+    </form>
+{% endblock %}

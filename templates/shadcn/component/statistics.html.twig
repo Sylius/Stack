@@ -1,0 +1,9 @@
+<div
+    {{ sylius_test_html_attribute('statistics-component') }}
+    class="flex flex-col gap-6" {{ attributes }}
+>
+    {% hook 'statistics' with {
+        statistics_data: statistics,
+        period,
+    } %}
+</div>
