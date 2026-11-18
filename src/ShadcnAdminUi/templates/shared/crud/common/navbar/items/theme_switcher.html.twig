@@ -1,11 +1,39 @@
-<twig:shadcn:Button
-    variant="ghost"
-    size="icon-sm"
-    data-controller="admin--theme-switcher"
-    data-action="admin--theme-switcher#toggle"
-    aria-label="{{ 'sylius_shadcn_admin_ui.ui.toggle_theme'|trans }}"
-    title="{{ 'sylius_shadcn_admin_ui.ui.toggle_theme'|trans }}"
->
-    <twig:ux:icon name="lucide:sun" class="dark:hidden" />
-    <twig:ux:icon name="lucide:moon" class="hidden dark:block" />
-</twig:shadcn:Button>
+{% set modes = {
+    light: 'lucide:sun',
+    dark: 'lucide:moon',
+    auto: 'lucide:monitor',
+} %}
+
+<twig:shadcn:DropdownMenu id="admin-theme-switcher" align="end" data-controller="admin--theme-switcher">
+    <twig:shadcn:DropdownMenu:Trigger>
+        <twig:shadcn:Button
+            variant="ghost"
+            size="icon-sm"
+            aria-label="{{ 'sylius_shadcn_admin_ui.ui.toggle_theme'|trans }}"
+            title="{{ 'sylius_shadcn_admin_ui.ui.toggle_theme'|trans }}"
+            {{ ...dropdown_menu_trigger_attrs }}
+        >
+            {# The icon of the selected mode; auto when the mode is not known yet. #}
+            <twig:ux:icon name="lucide:sun" class="hidden in-data-[theme-mode=light]:block" />
+            <twig:ux:icon name="lucide:moon" class="hidden in-data-[theme-mode=dark]:block" />
+            <twig:ux:icon name="lucide:monitor" class="in-data-[theme-mode=light]:hidden in-data-[theme-mode=dark]:hidden" />
+        </twig:shadcn:Button>
+    </twig:shadcn:DropdownMenu:Trigger>
+    <twig:shadcn:DropdownMenu:Content class="w-36">
+        <twig:shadcn:DropdownMenu:RadioGroup>
+            {% for mode, icon in modes %}
+                <twig:shadcn:DropdownMenu:RadioItem
+                    value="{{ mode }}"
+                    closeOnSelect
+                    data-admin--theme-switcher-target="option"
+                    data-admin--theme-switcher-mode-param="{{ mode }}"
+                    data-action="admin--theme-switcher#select"
+                    {{ ...sylius_test_form_attribute('theme-switcher-option', mode).attr|default({}) }}
+                >
+                    <twig:ux:icon name="{{ icon }}" />
+                    {{ ('sylius.ui.theme_' ~ mode)|trans }}
+                </twig:shadcn:DropdownMenu:RadioItem>
+            {% endfor %}
+        </twig:shadcn:DropdownMenu:RadioGroup>
+    </twig:shadcn:DropdownMenu:Content>
+</twig:shadcn:DropdownMenu>
