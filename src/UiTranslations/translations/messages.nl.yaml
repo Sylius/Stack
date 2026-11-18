@@ -46,7 +46,7 @@ sylius:
         not_equal: 'Niet gelijk aan'
         not_in: 'Niet in'
         pagination:
-            number_of_results: 'Toont %from% tot %to% van %total% resultaten'
+            number_of_results: 'Toont %from% tot %to% van %total% resultaat|Toont %from% tot %to% van %total% resultaten'
         report_it: 'Meld het'
         reset: Resetten
         search: Zoeken
