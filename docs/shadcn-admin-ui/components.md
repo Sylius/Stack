@@ -37,7 +37,7 @@ Same components as BootstrapAdminUi, under the `sylius_shadcn_admin_ui:` prefix.
 | Component                            | Purpose                                         | Main props                                                        |
 |--------------------------------------|-------------------------------------------------|-------------------------------------------------------------------|
 | `sylius_shadcn_admin_ui:delete_modal`       | Delete button + confirmation dialog + CSRF form | `id`, `path`, `label`, `icon`, `icon_only`, `disabled`, `form_attr` |
-| `sylius_shadcn_admin_ui:confirmation_modal` | Generic confirmation dialog                     | `modal_id`, `title`, `description`, `size`; blocks `trigger`, `footer` |
+| `sylius_shadcn_admin_ui:confirmation_modal` | Generic confirmation dialog                     | `modal_id`, `title`, `description`, `size`, `confirm_label`, `confirm_variant`, `confirm_attributes`; blocks `trigger`, `footer` |
 | `sylius_shadcn_admin_ui:copyable`           | Value followed by a copy button                 | `value`, `copy_label`, `copied_label`, `error_label`              |
 | `sylius_shadcn_admin_ui:copy_to_clipboard`  | Copy button alone                               | `value`, `button_class`, `disabled`                               |
 | `sylius_shadcn_admin_ui:badge`              | Colored badge                                   | `color`, `light`, `href`, `label`                                 |
@@ -50,6 +50,24 @@ Same components as BootstrapAdminUi, under the `sylius_shadcn_admin_ui:` prefix.
 
 <twig:sylius_shadcn_admin_ui:delete_modal id="{{ book.id }}" path="{{ path('app_admin_book_delete', {id: book.id}) }}" />
 ```
+
+`confirm_label` adds a confirm button next to Cancel. Its `confirm_attributes` are added to the button, and its
+`data-action` runs after the dialog closes: a Live action or any Stimulus action needs no `footer` override.
+
+```twig
+<twig:sylius_shadcn_admin_ui:confirmation_modal
+    title="Archive this book?"
+    confirm_label="Archive"
+    confirm_variant="destructive"
+    :confirm_attributes="{'data-action': 'live#action', 'data-live-action-param': 'archive'}"
+>
+    <twig:block name="trigger">
+        <button type="button" {{ trigger_attributes }}>Archive</button>
+    </twig:block>
+</twig:sylius_shadcn_admin_ui:confirmation_modal>
+```
+
+`{type: 'submit', form: 'publish-form'}` submits a form of the page instead.
 
 `color` accepts every name of the [tone palette](theming.md#the-tone-macro). The `pulse` halo is disabled when the
 user prefers reduced motion.

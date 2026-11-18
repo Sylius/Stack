@@ -2,9 +2,14 @@
  # Confirmation dialog based on the shadcn AlertDialog (same markup and controller), with
  # overridable blocks: trigger, media, header, description, footer.
  # In your trigger, print {{ trigger_attributes }} on the element that opens the dialog.
+ #
+ # confirm_label adds a confirm button next to Cancel, so the footer block rarely needs an override:
+ #   confirm_variant:    'default', 'destructive'... (button variants)
+ #   confirm_attributes: attributes of the confirm button. Its "data-action" runs after closing the dialog,
+ #                       "type" defaults to "button" ("submit" with "form" submits a form of the page).
  #}
-{% props modal_id = null, type = null, title = null, description = null, size = 'default' %}
-{% from '@SyliusShadcnAdminUi/shared/helper/ui.html.twig' import button_class %}
+{% props modal_id = null, type = null, title = null, description = null, size = 'default', confirm_label = null, confirm_variant = 'default', confirm_attributes = {} %}
+{% from '@SyliusShadcnAdminUi/shared/helper/ui.html.twig' import button_class, html_attributes %}
 
 {% set modal_id = modal_id ?? ('confirmation-modal-' ~ random()) %}
 {% set trigger_attributes %}data-shadcn--alert-dialog-target="trigger" data-action="click->shadcn--alert-dialog#open" aria-haspopup="dialog" aria-expanded="false" aria-controls="{{ modal_id }}"{% endset %}
@@ -37,6 +42,18 @@
             <div data-slot="alert-dialog-footer" class="-mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t bg-muted/50 p-4 sm:flex-row sm:justify-end">
                 {% block footer %}
                     <button type="button" class="{{ button_class('outline') }}" data-action="shadcn--alert-dialog#close">{{ 'sylius.ui.cancel'|trans }}</button>
+                    {% if confirm_label %}
+                        {% set confirm_attributes = confirm_attributes|default({}) %}
+                        <button
+                            type="{{ confirm_attributes.type|default('button') }}"
+                            class="{{ confirm_variant == 'destructive'
+                                ? button_class('destructive', 'default', 'bg-destructive text-white hover:bg-destructive/90 dark:bg-destructive/60')
+                                : button_class(confirm_variant) }}"
+                            data-action="{{ ('shadcn--alert-dialog#close ' ~ confirm_attributes['data-action']|default(''))|trim }}"
+                            {{- html_attributes(confirm_attributes|filter((value, name) => name not in ['type', 'data-action'])) }}
+                            {{ sylius_test_html_attribute('confirm-button') }}
+                        >{{ confirm_label|trans }}</button>
+                    {% endif %}
                 {% endblock %}
             </div>
         {% endblock %}
