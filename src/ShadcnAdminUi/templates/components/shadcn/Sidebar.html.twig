@@ -1,0 +1,85 @@
+{%- props
+    ## 'left'|'right' On which side of the page the sidebar sits.
+    side = 'left',
+    ## 'sidebar'|'floating'|'inset' The visual variant.
+    variant = 'sidebar',
+    ## 'icon'|'offcanvas'|'none' How the desktop sidebar collapses.
+    collapsible = 'icon',
+    ## string Accessible name for the sidebar landmark.
+    label = 'Sidebar'
+-%}
+{%- set _sidebar_initial_open = inject('sidebar.defaultOpen', true) -%}
+{%- set _sidebar_nested = inject('sidebar.nested', false) -%}
+{%- do provide('sidebar.nested', true) -%}
+{%- set _sidebar_content -%}
+    {## Typically a `Sidebar:Header`, `Sidebar:Content`, `Sidebar:Footer` and an optional `Sidebar:Rail`. -#}
+    {% block content %}{% endblock %}
+{%- endset -%}
+{%- if 'none' == collapsible -%}
+    <{{ _sidebar_nested ? 'div' : 'aside' }}
+        data-slot="sidebar"
+        data-side="{{ side }}"
+        data-variant="{{ variant }}"
+        data-collapsible=""
+        data-collapsible-mode="{{ collapsible }}"
+        {{ attributes.defaults({
+            'aria-label': _sidebar_nested ? null : label,
+            class: 'flex h-full w-(--sidebar-width) flex-col bg-sidebar text-sidebar-foreground'|tailwind_classes,
+        }) }}
+    >
+        {{ _sidebar_content|raw }}
+    </{{ _sidebar_nested ? 'div' : 'aside' }}>
+{%- else -%}
+    {%- set _sidebar_id = inject('sidebar.id', 'sidebar') -%}
+    <twig:shadcn:Sheet id="{{ _sidebar_id }}-mobile" :side="side" class="md:hidden">
+        <twig:shadcn:Sheet:Content :showCloseButton="false" class="w-(--sidebar-width-mobile) overflow-x-hidden overflow-y-auto bg-sidebar p-0 text-sidebar-foreground">
+            <twig:shadcn:Sheet:Header class="sr-only">
+                <twig:shadcn:Sheet:Title>{{ label }}</twig:shadcn:Sheet:Title>
+                <twig:shadcn:Sheet:Description>Displays the mobile sidebar.</twig:shadcn:Sheet:Description>
+            </twig:shadcn:Sheet:Header>
+            <div data-slot="sidebar-mobile-inner" class="flex h-full w-full flex-col"></div>
+        </twig:shadcn:Sheet:Content>
+    </twig:shadcn:Sheet>
+    <div
+        class="group peer hidden text-sidebar-foreground md:block"
+        data-slot="sidebar"
+        data-side="{{ side }}"
+        data-variant="{{ variant }}"
+        data-collapsible="{{ _sidebar_initial_open ? '' : collapsible }}"
+        data-collapsible-mode="{{ collapsible }}"
+        data-state="{{ _sidebar_initial_open ? 'expanded' : 'collapsed' }}"
+    >
+        <div
+            class="{{ 'relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear group-data-[collapsible=offcanvas]:w-0'
+                ~ ('floating' == variant or 'inset' == variant ? ' group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]' : '')
+                ~ ('sidebar' == variant ? ' group-data-[collapsible=icon]:w-(--sidebar-width-icon)' : '')
+                ~ ('right' == side ? ' rotate-180' : '') }}"
+            data-slot="sidebar-gap"
+            aria-hidden="true"
+        ></div>
+        <aside
+            data-slot="sidebar-container"
+            {{ attributes.defaults({
+                'aria-label': label,
+                class: ('fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex'
+                    ~ ('left' == side
+                        ? ' left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]'
+                        : ' right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]'
+                    )
+                    ~ ('floating' == variant or 'inset' == variant ? ' p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]' : '')
+                    ~ ('sidebar' == variant ? ' group-data-[collapsible=icon]:w-(--sidebar-width-icon)' : '')
+                    ~ ('sidebar' == variant and 'left' == side ? ' border-r border-sidebar-border' : '')
+                    ~ ('sidebar' == variant and 'right' == side ? ' border-l border-sidebar-border' : '')
+                )|tailwind_classes,
+            }) }}
+        >
+            <div
+                class="{{ 'flex h-full w-full flex-col bg-sidebar group-data-[collapsible=icon]:not-has-[[data-slot=dropdown-menu][data-state=open]]:overflow-hidden'
+                    ~ ('floating' == variant ? ' rounded-lg shadow-sm ring-1 ring-sidebar-border' : '') }}"
+                data-slot="sidebar-inner"
+            >
+                {{ _sidebar_content|raw }}
+            </div>
+        </aside>
+    </div>
+{%- endif -%}

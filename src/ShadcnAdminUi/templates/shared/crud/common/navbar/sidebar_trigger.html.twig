@@ -1,0 +1,15 @@
+<div class="flex items-center gap-2">
+    <twig:shadcn:Button
+        variant="ghost"
+        size="icon-sm"
+        class="-ms-1"
+        data-controller="admin--sidebar-trigger"
+        data-action="admin--sidebar-trigger#toggle"
+        aria-controls="admin-sidebar"
+        aria-label="{{ 'sylius_shadcn_admin_ui.ui.toggle_sidebar'|trans }}"
+        title="{{ 'sylius_shadcn_admin_ui.ui.toggle_sidebar'|trans }} (Ctrl+B)"
+    >
+        <twig:ux:icon name="lucide:panel-left" class="rtl:rotate-180" />
+    </twig:shadcn:Button>
+    <twig:shadcn:Separator orientation="vertical" class="me-2 data-vertical:h-4 data-vertical:self-center" />
+</div>

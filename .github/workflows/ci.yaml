@@ -96,8 +96,9 @@ jobs:
                     
             -   name: "Install & compile assets"
                 run: |
-                    bin/console importmap:install      
-                    bin/console asset-map:compile      
+                    bin/console importmap:install
+                    bin/console tailwind:build
+                    bin/console asset-map:compile
 
             -   name: Run PHPUnit
                 run: vendor/bin/phpunit
@@ -137,6 +138,29 @@ jobs:
             -   name: Run JavaScript tests (Bootstrap Admin UI)
                 if: matrix.php == '8.3' && matrix.symfony == '^7.4'
                 working-directory: src/BootstrapAdminUi
+                run: |
+                    yarn install --frozen-lockfile --non-interactive
+                    yarn test
+
+            - name: "Restrict packages' versions (Shadcn Admin Ui)"
+              run: |
+                  (cd src/ShadcnAdminUi/ && composer config --no-plugins allow-plugins.symfony/runtime true)
+                  (cd src/ShadcnAdminUi/ && composer config extra.symfony.require "${{ matrix.symfony }}")
+
+            -   name: "Install dependencies (Shadcn Admin Ui)"
+                run: (cd src/ShadcnAdminUi/ && composer update --no-interaction --no-scripts)
+
+            -   name: "Build the assets (Shadcn Admin Ui)"
+                run: |
+                    (cd src/ShadcnAdminUi/ && APP_ENV=test php tests/Functional/.application/bin/console importmap:install)
+                    (cd src/ShadcnAdminUi/ && APP_ENV=test php tests/Functional/.application/bin/console tailwind:build)
+
+            -   name: Run PHPUnit (Shadcn Admin Ui)
+                run: (cd src/ShadcnAdminUi/ && vendor/bin/phpunit)
+
+            -   name: Run JavaScript tests (Shadcn Admin UI)
+                if: matrix.php == '8.3' && matrix.symfony == '^7.4'
+                working-directory: src/ShadcnAdminUi
                 run: |
                     yarn install --frozen-lockfile --non-interactive
                     yarn test

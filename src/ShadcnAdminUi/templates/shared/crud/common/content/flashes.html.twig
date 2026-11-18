@@ -1,0 +1,38 @@
+{% set session = _context.app.session|default(null) %}
+
+{% if session is not null and session.started and session.flashbag.peekAll|length > 0 %}
+    {% set styles = {
+        success: {icon: 'lucide:circle-check', variant: 'default', class: 'border-success/30 bg-success/5 *:[svg]:text-success'},
+        error: {icon: 'lucide:circle-alert', variant: 'destructive', class: 'border-destructive/30 bg-destructive/5'},
+        info: {icon: 'lucide:info', variant: 'default', class: 'border-info/30 bg-info/5 *:[svg]:text-info'},
+        warning: {icon: 'lucide:triangle-alert', variant: 'default', class: 'border-warning/40 bg-warning/5 *:[svg]:text-warning'},
+    } %}
+
+    <div class="flex flex-col gap-3" {{ sylius_test_html_attribute('sylius-flashes-container') }}>
+        {% for type in ['success', 'error', 'info', 'warning'] %}
+            {% for flash in session.flashbag.get(type) %}
+                <twig:shadcn:Alert
+                    :variant="styles[type].variant"
+                    class="{{ styles[type].class }}"
+                    data-controller="admin--dismissible"
+                    {{ ...sylius_test_form_attributes({'sylius-flash-message': null, 'sylius-flash-message-type': type}).attr|default({}) }}
+                >
+                    {{ ux_icon(styles[type].icon, {'aria-hidden': 'true'}) }}
+                    <twig:shadcn:Alert:Title>{{ ('sylius.ui.' ~ type)|trans }}</twig:shadcn:Alert:Title>
+                    <twig:shadcn:Alert:Description>
+                        {% if flash is iterable %}
+                            {{ flash.message|trans(flash.parameters, 'flashes') }}
+                        {% else %}
+                            {{ flash|trans({}, 'flashes') }}
+                        {% endif %}
+                    </twig:shadcn:Alert:Description>
+                    <twig:shadcn:Alert:Action>
+                        <twig:shadcn:Button variant="ghost" size="icon-xs" class="text-muted-foreground" data-action="admin--dismissible#close" aria-label="{{ 'sylius_shadcn_admin_ui.ui.close'|trans }}">
+                            {{ ux_icon('lucide:x', {'aria-hidden': 'true'}) }}
+                        </twig:shadcn:Button>
+                    </twig:shadcn:Alert:Action>
+                </twig:shadcn:Alert>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endif %}

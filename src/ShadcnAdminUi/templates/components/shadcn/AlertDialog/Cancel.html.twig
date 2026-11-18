@@ -1,0 +1,10 @@
+{%- props
+    ## 'default'|'secondary'|'destructive'|'outline'|'ghost'|'link' The button style variant.
+    variant = 'outline',
+    ## 'default'|'sm'|'lg'|'xs'|'icon' The button size.
+    size = 'default'
+-%}
+<twig:shadcn:Button variant="{{ variant }}" size="{{ size }}" data-slot="alert-dialog-cancel" data-action="click->shadcn--alert-dialog#close" {{ ...attributes }}>
+    {##- The cancel button label. -#}
+    {{- block(outerBlocks.content) -}}
+</twig:shadcn:Button>

@@ -6,6 +6,7 @@ sylius:
             remember_me: 'Zapamiętaj mnie'
     ui:
         actions: 'Akcje'
+        admin_panel: 'Panel administracyjny'
         administration_panel_login: 'Logowanie do panelu administracyjnego'
         all: 'Wszystko'
         all_rights_reserved: 'Wszystkie prawa zastrzeżone'

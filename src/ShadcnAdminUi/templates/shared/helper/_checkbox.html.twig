@@ -1,0 +1,15 @@
+{# Markup of the shadcn Checkbox recipe, usable from macros and includes. #}
+{% from '@SyliusShadcnAdminUi/shared/helper/ui.html.twig' import html_attributes %}
+<span data-slot="checkbox" class="group relative grid size-4 shrink-0 grid-cols-1">
+    <input
+        type="checkbox"
+        class="peer col-start-1 row-start-1 size-4 appearance-none rounded-[4px] border border-input bg-transparent transition-colors outline-none checked:border-primary checked:bg-primary indeterminate:border-primary indeterminate:bg-primary focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:bg-input/30 dark:checked:bg-primary forced-colors:appearance-auto"
+        {{- html_attributes(attributes|default({})) }}
+    >
+    <span data-slot="checkbox-indicator" class="pointer-events-none col-start-1 row-start-1 flex items-center justify-center text-primary-foreground opacity-0 group-has-checked:opacity-100">
+        {{ ux_icon('lucide:check', {class: 'size-3.5', 'aria-hidden': 'true'}) }}
+    </span>
+    <span class="pointer-events-none col-start-1 row-start-1 hidden items-center justify-center text-primary-foreground group-has-indeterminate:flex">
+        {{ ux_icon('lucide:minus', {class: 'size-3.5', 'aria-hidden': 'true'}) }}
+    </span>
+</span>

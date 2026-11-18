@@ -1,0 +1,25 @@
+/*
+ * Sylius Shadcn Admin UI - "green" accent theme.
+ *
+ * Colors the primary actions, the focus rings and the active sidebar items in "green". Combine it with a base color theme.
+ * Enable it with "sylius_shadcn_admin_ui.themes", or import it in your Tailwind entry.
+ * Plain CSS (no Tailwind directive): switching themes needs no rebuild.
+ */
+
+:root {
+    --primary: oklch(0.627 0.194 149.214);
+    --primary-foreground: oklch(0.982 0.018 155.826);
+    --ring: oklch(0.792 0.209 151.711);
+    --sidebar-primary: oklch(0.627 0.194 149.214);
+    --sidebar-primary-foreground: oklch(0.982 0.018 155.826);
+    --sidebar-ring: oklch(0.792 0.209 151.711);
+}
+
+.dark {
+    --primary: oklch(0.723 0.219 149.579);
+    --primary-foreground: oklch(0.266 0.065 152.934);
+    --ring: oklch(0.527 0.154 150.069);
+    --sidebar-primary: oklch(0.723 0.219 149.579);
+    --sidebar-primary-foreground: oklch(0.266 0.065 152.934);
+    --sidebar-ring: oklch(0.527 0.154 150.069);
+}

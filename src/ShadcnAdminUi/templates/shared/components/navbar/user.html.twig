@@ -1,0 +1,42 @@
+{% if user %}
+    {% set identifier = user.userIdentifier %}
+    <twig:shadcn:DropdownMenu id="admin-user-menu" align="end">
+        <twig:shadcn:DropdownMenu:Trigger>
+            <twig:shadcn:Button variant="ghost" class="h-9 gap-2 px-1.5" {{ ...dropdown_menu_trigger_attrs }} {{ ...sylius_test_form_attribute('user-dropdown').attr|default({}) }}>
+                <twig:shadcn:Avatar size="sm">
+                    <twig:shadcn:Avatar:Fallback class="text-xs font-medium uppercase">{{ identifier|slice(0, 2) }}</twig:shadcn:Avatar:Fallback>
+                </twig:shadcn:Avatar>
+                <span class="hidden flex-col items-start leading-tight xl:flex">
+                    <span class="text-[0.7rem] text-muted-foreground">{{ 'sylius.ui.hello'|trans }}</span>
+                    <span class="max-w-40 truncate text-sm">{{ identifier }}</span>
+                </span>
+                <twig:ux:icon name="lucide:chevrons-up-down" class="hidden text-muted-foreground xl:block" />
+            </twig:shadcn:Button>
+        </twig:shadcn:DropdownMenu:Trigger>
+        <twig:shadcn:DropdownMenu:Content class="w-56">
+            <twig:shadcn:DropdownMenu:Label>
+                <span class="block truncate text-sm font-medium text-foreground">{{ identifier }}</span>
+            </twig:shadcn:DropdownMenu:Label>
+            <twig:shadcn:DropdownMenu:Separator />
+            {% for menu_item in menu_items %}
+                {% set menu_item = {type: null, class: null, icon: null, variant: 'default'}|merge(menu_item) %}
+                {% if menu_item.type == 'header' %}
+                    <twig:shadcn:DropdownMenu:Label>{{ menu_item.title|trans }}</twig:shadcn:DropdownMenu:Label>
+                {% elseif menu_item.type == 'divider' %}
+                    <twig:shadcn:DropdownMenu:Separator />
+                {% else %}
+                    <twig:shadcn:DropdownMenu:Item
+                        as="a"
+                        href="{{ menu_item.url }}"
+                        variant="{{ menu_item.variant }}"
+                        class="{{ menu_item.class }}"
+                        {{ ...sylius_test_form_attribute('user-dropdown-item', menu_item.title|trans).attr|default({}) }}
+                    >
+                        {% if menu_item.icon %}<twig:ux:icon name="{{ menu_item.icon }}" />{% endif %}
+                        {{ menu_item.title|trans }}
+                    </twig:shadcn:DropdownMenu:Item>
+                {% endif %}
+            {% endfor %}
+        </twig:shadcn:DropdownMenu:Content>
+    </twig:shadcn:DropdownMenu>
+{% endif %}

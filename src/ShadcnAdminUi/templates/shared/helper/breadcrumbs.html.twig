@@ -1,0 +1,22 @@
+{# Same signature as the BootstrapAdminUi macro: items = [{name, url?, active?}, ...] #}
+{% macro breadcrumbs(items) %}
+    {% set items = items|filter(item => item is not empty) %}
+    <twig:shadcn:Breadcrumb>
+        <twig:shadcn:Breadcrumb:List>
+            {% for item in items %}
+                {% if not loop.first %}
+                    <twig:shadcn:Breadcrumb:Separator />
+                {% endif %}
+                <twig:shadcn:Breadcrumb:Item>
+                    {% if item.url is defined and item.url and not (item.active|default(false)) %}
+                        <twig:shadcn:Breadcrumb:Link href="{{ item.url }}">{{ item.name|trans }}</twig:shadcn:Breadcrumb:Link>
+                    {% elseif loop.last %}
+                        <twig:shadcn:Breadcrumb:Page>{{ item.name|trans }}</twig:shadcn:Breadcrumb:Page>
+                    {% else %}
+                        {{ item.name|trans }}
+                    {% endif %}
+                </twig:shadcn:Breadcrumb:Item>
+            {% endfor %}
+        </twig:shadcn:Breadcrumb:List>
+    </twig:shadcn:Breadcrumb>
+{% endmacro %}

@@ -1,0 +1,13 @@
+{% set form = hookable_metadata.context.form|default(null) %}
+
+{% if form is not null and form.vars.submitted and form.vars.valid == false %}
+    <twig:shadcn:Alert
+        variant="destructive"
+        class="border-destructive/30 bg-destructive/5"
+        {{ ...sylius_test_form_attribute('form-error-alert').attr|default({}) }}
+    >
+        {{ ux_icon('lucide:circle-alert', {'aria-hidden': 'true'}) }}
+        <twig:shadcn:Alert:Title>{{ 'sylius.ui.error'|trans }}</twig:shadcn:Alert:Title>
+        <twig:shadcn:Alert:Description>{{ 'sylius.ui.this_form_contains_errors'|trans }}</twig:shadcn:Alert:Description>
+    </twig:shadcn:Alert>
+{% endif %}

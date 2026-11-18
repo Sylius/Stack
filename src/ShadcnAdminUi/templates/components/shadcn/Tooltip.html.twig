@@ -1,0 +1,31 @@
+{%- props
+    ## string Unique identifier for the tooltip.
+    id,
+    ## number Delay in milliseconds before showing the tooltip.
+    delayDuration = 0
+-%}
+{%- set _tooltip_id = id -%}
+{%- set _tooltip_trigger_id = id ~ '_trigger' -%}
+{%- set _tooltip_wrapper_id = id ~ '_wrapper' -%}
+{%- set _tooltip_content_id = id ~ '_content' -%}
+{%- set _tooltip_arrow_id = id ~ '_arrow' -%}
+{%- set _tooltip_delay_duration = delayDuration -%}
+{%- do provide('tooltip.triggerId', _tooltip_trigger_id) -%}
+{%- do provide('tooltip.wrapperId', _tooltip_wrapper_id) -%}
+{%- do provide('tooltip.contentId', _tooltip_content_id) -%}
+{%- do provide('tooltip.arrowId', _tooltip_arrow_id) -%}
+<div
+    id="{{ _tooltip_id }}"
+    data-slot="tooltip"
+    data-shadcn--tooltip-delay-duration-value="{{ _tooltip_delay_duration }}"
+    data-shadcn--tooltip-wrapper-selector-value="#{{ _tooltip_wrapper_id }}"
+    data-shadcn--tooltip-content-selector-value="#{{ _tooltip_content_id }}"
+    data-shadcn--tooltip-arrow-selector-value="#{{ _tooltip_arrow_id }}"
+    {{ attributes.defaults({
+        class: 'relative inline-block'|tailwind_classes,
+        'data-controller': 'shadcn--tooltip',
+    }) }}
+>
+    {##- The tooltip structure, typically includes `Tooltip:Trigger` and `Tooltip:Content`. -#}
+    {%- block content %}{% endblock -%}
+</div>

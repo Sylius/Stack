@@ -1,0 +1,8 @@
+<twig:shadcn:Sidebar:Content data-controller="admin--menu-search">
+    {{ include('@SyliusShadcnAdminUi/shared/crud/common/sidebar/search.html.twig') }}
+
+    {{ knp_menu_render('sylius_admin_ui.menu.sidebar', {
+        template: '@SyliusShadcnAdminUi/shared/crud/common/sidebar/menu/menu.html.twig',
+        currentClass: 'active',
+    }) }}
+</twig:shadcn:Sidebar:Content>

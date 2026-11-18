@@ -208,6 +208,8 @@ final class BookGrid extends AbstractGrid
 
 You can configure the template for the export action 
 
+{% tabs %}
+{% tab title="BootstrapAdminUi" %}
 {% code title="templates/shared/grid/action/export.html.twig" lineNumbers="true" %}
 ```twig
 {% set path = options.link.url|default(path(options.link.route|default(grid.requestConfiguration.getRouteName('export')), options.link.parameters|default([]))) %}
@@ -223,6 +225,26 @@ You can configure the template for the export action
 </a>
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="ShadcnAdminUi" %}
+{% code title="templates/shared/grid/action/export.html.twig" lineNumbers="true" %}
+```twig
+{% set path = options.link.url|default(path(options.link.route|default(grid.requestConfiguration.getRouteName('export')), options.link.parameters|default([]))) %}
+
+{% set message = action.label %}
+{% if message is empty %}
+    {% set message = 'app.ui.export' %}
+{% endif %}
+
+<twig:shadcn:Button as="a" variant="outline" href="{{ path }}?{{ app.request.query.all()|url_encode }}">
+    <twig:ux:icon name="{{ action.icon|default('lucide:file-spreadsheet') }}" data-icon="inline-start" />
+    {{ message|trans }}
+</twig:shadcn:Button>
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 ## Configure the translation key
 

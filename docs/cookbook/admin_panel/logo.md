@@ -58,6 +58,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
   
 ```
 
+{% hint style="info" %}
+With ShadcnAdminUi, the logo is configured without a template: see [Branding](../../shadcn-admin-ui/configuration.md#branding-logo-name-title).
+{% endhint %}
+
 ## How to customize the login page logo
 
 To customize the login page logo,you need to set new logo template at `sylius_admin.security.login.logo` twig hook. Choose the YAML or the PHP version.
@@ -108,3 +112,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 ```twig
 <img src="{{ asset('images/logo.png') }}" alt="Your Brand name" class="sylius navbar-brand-image">
 ```
+
+{% hint style="info" %}
+With ShadcnAdminUi, the logo is configured without a template: see [Branding](../../shadcn-admin-ui/configuration.md#branding-logo-name-title).
+{% endhint %}

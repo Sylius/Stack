@@ -1,0 +1,9 @@
+{% from '@SyliusShadcnAdminUi/shared/helper/ui.html.twig' import button_class %}
+
+{% set path = options.link.url|default(path(options.link.route|default(grid.requestConfiguration.getRouteName('create')), options.link.parameters|default([]))) %}
+{% set message = action.label is empty ? 'sylius.ui.create' : action.label %}
+
+<a href="{{ path }}" class="{{ button_class('default') }}" {{ sylius_test_html_attribute('create-action') }}>
+    {{ ux_icon(action.icon|default('lucide:plus'), {'data-icon': 'inline-start', 'aria-hidden': 'true'}) }}
+    {{ message|trans }}
+</a>

@@ -1,0 +1,55 @@
+{% set statistics_data = hookable_metadata.context.statistics_data %}
+{% set period = hookable_metadata.context.period %}
+
+<twig:shadcn:Card>
+    <twig:shadcn:Card:Header>
+        <twig:shadcn:Card:Title>{{ 'app.ui.talks'|trans }}</twig:shadcn:Card:Title>
+        <twig:shadcn:Card:Action class="flex flex-wrap items-center gap-2">
+            <div class="flex items-center gap-1" role="group">
+                {% for range in [
+                    {period: '2 weeks', interval: 'day', label: 'app.ui.statistics.2weeks'},
+                    {period: 'month', interval: 'day', label: 'app.ui.statistics.month'},
+                    {period: 'year', interval: 'month', label: 'app.ui.statistics.year', test: 'year-split-into-months'},
+                ] %}
+                    <twig:shadcn:Button
+                        :variant="period == range.period ? 'default' : 'ghost'"
+                        size="sm"
+                        aria-pressed="{{ period == range.period ? 'true' : 'false' }}"
+                        data-action="live#action"
+                        data-live-action-param="prevent|changeRange"
+                        data-live-period-param="{{ range.period }}"
+                        data-live-interval-param="{{ range.interval }}"
+                        {{ ...(range.test is defined ? sylius_test_form_attribute(range.test).attr|default({}) : {}) }}
+                    >
+                        {{ range.label|trans }}
+                    </twig:shadcn:Button>
+                {% endfor %}
+            </div>
+            <div class="flex items-center gap-1">
+                <twig:shadcn:Button
+                    variant="outline"
+                    size="icon-sm"
+                    aria-label="{{ 'Previous'|trans({}, 'pagerfanta') }}"
+                    data-action="live#action"
+                    data-live-action-param="prevent|getPreviousPeriod"
+                    {{ ...sylius_test_form_attribute('previous-period').attr|default({}) }}
+                >
+                    <twig:ux:icon name="lucide:chevron-left" class="rtl:rotate-180" />
+                </twig:shadcn:Button>
+                <twig:shadcn:Button
+                    variant="outline"
+                    size="icon-sm"
+                    aria-label="{{ 'Next'|trans({}, 'pagerfanta') }}"
+                    data-action="live#action"
+                    data-live-action-param="prevent|getNextPeriod"
+                    {{ ...sylius_test_form_attribute('next-period').attr|default({}) }}
+                >
+                    <twig:ux:icon name="lucide:chevron-right" class="rtl:rotate-180" />
+                </twig:shadcn:Button>
+            </div>
+        </twig:shadcn:Card:Action>
+    </twig:shadcn:Card:Header>
+    <twig:shadcn:Card:Content>
+        <div id="statistics-chart" data-intervals="{{ statistics_data.talks_summary.intervals|json_encode }}" data-talks="{{ statistics_data.talks_summary.talks|json_encode }}"></div>
+    </twig:shadcn:Card:Content>
+</twig:shadcn:Card>

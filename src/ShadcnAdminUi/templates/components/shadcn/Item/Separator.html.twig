@@ -1,0 +1,11 @@
+{%- props
+    ## 'horizontal'|'vertical' The separator orientation.
+    orientation = 'horizontal',
+    ## bool Whether the separator is purely decorative (not semantic).
+    decorative = true
+-%}
+<twig:shadcn:Separator
+    orientation="{{ orientation }}"
+    decorative="{{ decorative }}"
+    {{ ...attributes.defaults({class: 'my-2'|tailwind_classes}) }}
+/>

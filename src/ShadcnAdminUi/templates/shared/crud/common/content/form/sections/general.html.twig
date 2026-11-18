@@ -1,0 +1,17 @@
+{% set fields %}{% hook 'general' %}{% endset %}
+
+<twig:shadcn:Card>
+    {% if hookable_metadata.configuration.title is defined %}
+        <twig:shadcn:Card:Header>
+            <twig:shadcn:Card:Title>{{ hookable_metadata.configuration.title|trans }}</twig:shadcn:Card:Title>
+            {% if hookable_metadata.configuration.description is defined %}
+                <twig:shadcn:Card:Description>{{ hookable_metadata.configuration.description|trans }}</twig:shadcn:Card:Description>
+            {% endif %}
+        </twig:shadcn:Card:Header>
+    {% endif %}
+    <twig:shadcn:Card:Content>
+        <div class="grid grid-cols-1 gap-6">
+            {{ fields }}
+        </div>
+    </twig:shadcn:Card:Content>
+</twig:shadcn:Card>

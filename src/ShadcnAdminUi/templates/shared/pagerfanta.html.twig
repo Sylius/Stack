@@ -1,0 +1,56 @@
+{#- Pagerfanta view with the shadcn Pagination look. Plain HTML: Pagerfanta renders it block by block. -#}
+{%- extends '@BabDevPagerfanta/default.html.twig' -%}
+
+{%- block pager_widget -%}
+    <nav role="navigation" aria-label="pagination" data-slot="pagination" class="flex">
+        <ul data-slot="pagination-content" class="flex items-center gap-0.5">
+            {{- block('pager') -}}
+        </ul>
+    </nav>
+{%- endblock pager_widget -%}
+
+{%- block page_link -%}
+    <li data-slot="pagination-item"><a data-slot="pagination-link" href="{{- path -}}" {{ sylius_test_html_attribute('page', page) }} class="inline-flex size-8 items-center justify-center rounded-lg text-sm font-medium transition-all hover:bg-muted hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 outline-none dark:hover:bg-muted/50">{{- page -}}</a></li>
+{%- endblock page_link -%}
+
+{%- block current_page_link -%}
+    <li data-slot="pagination-item"><span data-slot="pagination-link" aria-current="page" {{ sylius_test_html_attribute('current-page') }} class="inline-flex size-8 items-center justify-center rounded-lg border border-border bg-background text-sm font-medium dark:border-input dark:bg-input/30">{{- page -}}</span></li>
+{%- endblock current_page_link -%}
+
+{%- block previous_page_link -%}
+    <li data-slot="pagination-item">
+        <a href="{{- path -}}" rel="prev" aria-label="{{- block('previous_page_message') -}}" class="inline-flex h-8 items-center justify-center gap-1 rounded-lg ps-1.5 pe-2.5 text-sm font-medium transition-all hover:bg-muted hover:text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50 dark:hover:bg-muted/50">
+            {{ ux_icon('lucide:chevron-left', {class: 'size-4 rtl:rotate-180', 'aria-hidden': 'true'}) }}<span class="hidden sm:block">{{- block('previous_page_message') -}}</span>
+        </a>
+    </li>
+{%- endblock previous_page_link -%}
+
+{%- block previous_page_link_disabled -%}
+    <li data-slot="pagination-item">
+        <span aria-disabled="true" class="inline-flex h-8 items-center justify-center gap-1 rounded-lg ps-1.5 pe-2.5 text-sm font-medium opacity-50">
+            {{ ux_icon('lucide:chevron-left', {class: 'size-4 rtl:rotate-180', 'aria-hidden': 'true'}) }}<span class="hidden sm:block">{{- block('previous_page_message') -}}</span>
+        </span>
+    </li>
+{%- endblock previous_page_link_disabled -%}
+
+{%- block next_page_link -%}
+    <li data-slot="pagination-item">
+        <a href="{{- path -}}" rel="next" aria-label="{{- block('next_page_message') -}}" class="inline-flex h-8 items-center justify-center gap-1 rounded-lg ps-2.5 pe-1.5 text-sm font-medium transition-all hover:bg-muted hover:text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50 dark:hover:bg-muted/50">
+            <span class="hidden sm:block">{{- block('next_page_message') -}}</span>{{ ux_icon('lucide:chevron-right', {class: 'size-4 rtl:rotate-180', 'aria-hidden': 'true'}) }}
+        </a>
+    </li>
+{%- endblock next_page_link -%}
+
+{%- block next_page_link_disabled -%}
+    <li data-slot="pagination-item">
+        <span aria-disabled="true" class="inline-flex h-8 items-center justify-center gap-1 rounded-lg ps-2.5 pe-1.5 text-sm font-medium opacity-50">
+            <span class="hidden sm:block">{{- block('next_page_message') -}}</span>{{ ux_icon('lucide:chevron-right', {class: 'size-4 rtl:rotate-180', 'aria-hidden': 'true'}) }}
+        </span>
+    </li>
+{%- endblock next_page_link_disabled -%}
+
+{%- block ellipsis -%}
+    <li data-slot="pagination-item" aria-hidden="true">
+        <span data-slot="pagination-ellipsis" class="flex size-8 items-center justify-center">{{ ux_icon('lucide:ellipsis', {class: 'size-4'}) }}</span>
+    </li>
+{%- endblock ellipsis -%}

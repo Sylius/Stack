@@ -1,0 +1,24 @@
+{#- Colored badge: shape of the shadcn badge, color taken from the palette (shared/helper/palette.html.twig). -#}
+{%- props
+    ## string|null Palette color (primary, success, danger, blue, azure...: see shared/helper/palette.html.twig); empty: neutral outlined badge.
+    color = 'secondary',
+    ## boolean Tinted (true) or filled (false) background.
+    light = true,
+    ## boolean Kept for compatibility: the badge is always rounded.
+    pill = false,
+    ## string|null Renders an <a> instead of a <span>.
+    href = null,
+    ## string Text of the badge when no content is given.
+    label = ''
+-%}
+{%- from '@SyliusShadcnAdminUi/shared/helper/palette.html.twig' import tone -%}
+
+{%- set classes = 'group/badge inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-4xl border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-all focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:hover:opacity-80 [&>svg]:pointer-events-none [&>svg]:size-3! ' ~ (color is empty ? 'border-border text-foreground' : tone(color, light ? 'soft' : 'solid')|trim) -%}
+{%- set tag = href is null ? 'span' : 'a' -%}
+
+<{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} data-slot="badge" {{ attributes.defaults({class: classes|tailwind_classes}) }}>
+    {#- Text of the badge and inline content (icon...). -#}
+    {%- block content -%}
+        {{- label -}}
+    {%- endblock -%}
+</{{ tag }}>

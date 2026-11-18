@@ -1,0 +1,13 @@
+{% set statistics_data = hookable_metadata.context.statistics_data %}
+
+<twig:shadcn:Card>
+    <twig:shadcn:Card:Header>
+        <twig:shadcn:Card:Description>{{ 'app.ui.conferences'|trans }}</twig:shadcn:Card:Description>
+        <twig:shadcn:Card:Title class="text-3xl font-semibold tabular-nums" {{ ...sylius_test_form_attribute('total-conferences').attr|default({}) }}>
+            {{ statistics_data.business_activity_summary.totalConferences }}
+        </twig:shadcn:Card:Title>
+        <twig:shadcn:Card:Action>
+            <twig:ux:icon name="lucide:calendar" class="size-5 text-muted-foreground" />
+        </twig:shadcn:Card:Action>
+    </twig:shadcn:Card:Header>
+</twig:shadcn:Card>

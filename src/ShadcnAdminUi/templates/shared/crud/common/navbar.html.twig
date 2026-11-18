@@ -1,0 +1,6 @@
+<header
+    data-slot="admin-navbar"
+    class="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-2 border-b bg-background/80 px-4 backdrop-blur transition-[margin] duration-200 ease-linear supports-backdrop-filter:bg-background/60 md:ms-(--admin-sidebar-offset) lg:px-6 print:hidden"
+>
+    {% hook 'sylius_admin.common.component.navbar' with {_prefixes: []} %}
+</header>

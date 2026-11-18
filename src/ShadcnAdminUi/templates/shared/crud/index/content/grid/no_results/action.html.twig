@@ -1,0 +1,8 @@
+{% from '@SyliusShadcnAdminUi/shared/helper/ui.html.twig' import button_class %}
+
+{% if _context.route is defined and (_context.hidden is not defined or _context.hidden == false) %}
+    <a href="{{ path(_context.route) }}" class="{{ button_class('default') }}">
+        {{ ux_icon(_context.icon|default('lucide:plus'), {'data-icon': 'inline-start', 'aria-hidden': 'true'}) }}
+        {{ _context.translation_key|default('sylius.ui.add_new_entry')|trans }}
+    </a>
+{% endif %}

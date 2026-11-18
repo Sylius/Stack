@@ -311,6 +311,8 @@ return static function (ContainerConfigurator $container): void {
 {% endtab %}
 {% endtabs %}
 
+{% tabs %}
+{% tab title="BootstrapAdminUi" %}
 {% code title="templates/book/show/content/body.html.twig" overflow="wrap" lineNumbers="true" %}
 ```twig
 {% set book = hookable_metadata.context.book %}
@@ -328,6 +330,24 @@ return static function (ContainerConfigurator $container): void {
 </div>
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="ShadcnAdminUi" %}
+{% code title="templates/book/show/content/body.html.twig" overflow="wrap" lineNumbers="true" %}
+```twig
+{% set book = hookable_metadata.context.book %}
+
+<twig:shadcn:Card>
+    <twig:shadcn:Card:Content>
+        <p>
+            {{ book.description|nl2br }}
+        </p>
+    </twig:shadcn:Card:Content>
+</twig:shadcn:Card>
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 {% hint style="info" %}
 Note that you can also [replace the default title](page_titles.md).

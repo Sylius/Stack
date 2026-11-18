@@ -1,0 +1,17 @@
+{#
+ # Variant ('sidebar', 'floating' or 'inset'): set for every page by the "sylius_shadcn_admin_ui.sidebar.variant"
+ # bundle option, overridable per page hook through this hookable configuration (see README).
+ #}
+{% set sidebar_variant = hookable_metadata.configuration.variant|default('sidebar') %}
+
+{# Rendered first: hooks must run in the template context, not inside a component block. #}
+{% set sidebar_content %}
+    {% hook 'sylius_admin.common.component.sidebar' with {_prefixes: []} %}
+{% endset %}
+
+<twig:sylius_shadcn_admin_ui:sidebar_provider>
+    <twig:shadcn:Sidebar collapsible="icon" :variant="sidebar_variant" label="{{ 'sylius_shadcn_admin_ui.ui.menu'|trans }}" class="print:hidden">
+        {{ sidebar_content }}
+        <twig:shadcn:Sidebar:Rail />
+    </twig:shadcn:Sidebar>
+</twig:sylius_shadcn_admin_ui:sidebar_provider>

@@ -1,0 +1,12 @@
+sylius_twig_hooks:
+    hooks:
+        'app.copy_to_clipboard':
+            copy:
+                component: 'sylius_shadcn_admin_ui:copy_to_clipboard'
+                props:
+                    value: '@=_context.value'
+        'app.copyable':
+            copy:
+                component: 'sylius_shadcn_admin_ui:copyable'
+                props:
+                    value: '@=_context.value'

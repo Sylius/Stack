@@ -1,0 +1,4 @@
+{# Color themes enabled with "sylius_shadcn_admin_ui.themes": loaded before the Tailwind entry, so its own overrides still win. #}
+{% for theme in hookable_metadata.configuration.themes|default([]) %}
+    <link rel="stylesheet" href="{{ asset(theme ends with '.css' ? theme : '@sylius/shadcn-admin-ui/styles/themes/' ~ theme ~ '.css') }}">
+{% endfor %}

@@ -426,6 +426,8 @@ the workflow configuration you set up.
 You can also include your transition button actions in any Twig template by leveraging the `workflow_can` function. The button
 will only be generated when your Symfony Workflow config allows it.
 
+{% tabs %}
+{% tab title="BootstrapAdminUi" %}
 {% code lineNumbers=true %}
 ```twig
 {% if workflow_can(application, 'cancel') %}
@@ -443,3 +445,24 @@ will only be generated when your Symfony Workflow config allows it.
 {% endif %}
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="ShadcnAdminUi" %}
+{% code lineNumbers=true %}
+```twig
+{% if workflow_can(application, 'cancel') %}
+    <form method="post" action="{{ path('app_admin_application_cancel', {id: application.id}) }}">
+        <input type="hidden" name="_token"
+               value="{{ csrf_token('apply_transition') }}">
+        <twig:shadcn:Button type="submit" variant="ghost" size="icon-sm"
+                title="{{ 'app.ui.application.cancel'|trans }}"
+        >
+            <twig:ux:icon name="streamline-stickies-color:cancel-2" />
+            <span class="sr-only">{{ 'app.ui.application.cancel'|trans }}</span>
+        </twig:shadcn:Button>
+    </form>
+{% endif %}
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}

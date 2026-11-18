@@ -1,0 +1,8 @@
+<span
+    aria-hidden="true"
+    data-slot="pagination-ellipsis"
+    {{ attributes.defaults({class: ('flex size-8 items-center justify-center [&_svg:not([class*=\'size-\'])]:size-4 ')|tailwind_classes}) }}
+>
+    <twig:ux:icon name="lucide:more-horizontal" />
+    <span class="sr-only">More pages</span>
+</span>

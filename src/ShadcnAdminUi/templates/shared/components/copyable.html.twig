@@ -1,0 +1,22 @@
+{% props
+    value = null,
+    hookableMetadata = null,
+    disabled = false,
+    button_class = null,
+    copy_label = 'sylius.ui.copy_to_clipboard',
+    copied_label = 'sylius.ui.copied_to_clipboard',
+    error_label = 'sylius.ui.unable_to_copy_to_clipboard'
+%}
+
+<span {{ attributes.defaults({class: 'inline-flex items-center gap-1'}) }}>
+    {% block content %}{{ value }}{% endblock %}
+
+    {{ component('sylius_shadcn_admin_ui:copy_to_clipboard', attributes.nested('button').all()|merge({
+        value: value,
+        disabled: disabled,
+        button_class: button_class,
+        copy_label: copy_label,
+        copied_label: copied_label,
+        error_label: error_label,
+    })) }}
+</span>
