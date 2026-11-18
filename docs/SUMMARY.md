@@ -68,6 +68,7 @@
 ## 🎨 Bootstrap Admin UI
 
 * [Getting started](bootstrap-admin-ui/getting-started.md)
+* [Assets](bootstrap-admin-ui/assets.md)
 * Components
   * [Copy to clipboard](bootstrap-admin-ui/components/copy-to-clipboard.md)
 

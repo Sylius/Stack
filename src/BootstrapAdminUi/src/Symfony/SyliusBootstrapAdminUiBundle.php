@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sylius\BootstrapAdminUi\Symfony;
 
+use Symfony\Component\AssetMapper\AssetMapperInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -42,6 +43,18 @@ final class SyliusBootstrapAdminUiBundle extends AbstractBundle
 
         $loader->load('services.php');
 
+        if ($this->isAssetMapperAvailable($builder)) {
+            // Exposes the bundle Stimulus controllers to AssetMapper,
+            // so they can be enabled from the application "assets/controllers.json" file.
+            $builder->prependExtensionConfig('framework', [
+                'asset_mapper' => [
+                    'paths' => [
+                        dirname(__DIR__, 2) . '/assets/controllers' => '@sylius/bootstrap-admin-ui/controllers',
+                    ],
+                ],
+            ]);
+        }
+
         if (!isset($bundles['SyliusAdminUiBundle'])) {
             return;
         }
@@ -50,5 +63,20 @@ final class SyliusBootstrapAdminUiBundle extends AbstractBundle
             'enable_autoprefixing' => true,
             'hook_name_section_separator' => '#',
         ]);
+    }
+
+    private function isAssetMapperAvailable(ContainerBuilder $builder): bool
+    {
+        if (!interface_exists(AssetMapperInterface::class)) {
+            return false;
+        }
+
+        /** @var array<string, array{path: string}> $bundlesMetadata */
+        $bundlesMetadata = $builder->getParameter('kernel.bundles_metadata');
+        if (!isset($bundlesMetadata['FrameworkBundle'])) {
+            return false;
+        }
+
+        return is_file($bundlesMetadata['FrameworkBundle']['path'] . '/Resources/config/asset_mapper.php');
     }
 }
