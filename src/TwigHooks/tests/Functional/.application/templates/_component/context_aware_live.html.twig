@@ -1,0 +1,6 @@
+<div {{ attributes }}>
+    flag: {{ hookable_metadata.context.flag ? 'yes' : 'no' }}
+    product: {{ hookable_metadata.context.product.name }}
+    secret: {{ hookable_metadata.context.secret ?? 'none' }}
+    {% hook 'nested' %}
+</div>

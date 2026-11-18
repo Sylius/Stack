@@ -32,6 +32,17 @@ sylius_twig_hooks:
             dummy:
                 component: 'app:dummy_live'
 
+        'hookable_live_component_with_context':
+            context_aware:
+                component: 'app:context_aware_live'
+                props:
+                    productName: '@=_context.product.name'
+
+        'hookable_live_component_with_context.nested':
+            flagged:
+                template: 'hookable_live_component/nested.html.twig'
+                condition: '@=_context.flag'
+
         'hookable_twig_component':
             dummy:
                 component: 'app:dummy'

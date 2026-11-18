@@ -13,7 +13,12 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\TwigHooks\Functional\Twig;
 
+use Sylius\TwigHooks\Bag\DataBag;
+use Sylius\TwigHooks\Bag\ScalarDataBag;
+use Sylius\TwigHooks\Hook\Metadata\HookMetadata;
+use Sylius\TwigHooks\Hookable\Metadata\HookableMetadata;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\UX\LiveComponent\Test\InteractsWithLiveComponents;
 use Twig\Environment as Twig;
 
 /**
@@ -21,6 +26,8 @@ use Twig\Environment as Twig;
  */
 final class HookableLiveComponentTest extends KernelTestCase
 {
+    use InteractsWithLiveComponents;
+
     public function testItRendersHookableLiveComponentWithUsingTwigHooks(): void
     {
         $this->assertSame(
@@ -43,11 +50,46 @@ final class HookableLiveComponentTest extends KernelTestCase
         );
     }
 
-    private function render(string $path): string
+    public function testItRendersHookableLiveComponentWithTheHookableContext(): void
+    {
+        $rendered = $this->render(
+            'hookable_live_component/hookable_component_rendered_with_context.html.twig',
+            ['product' => (object) ['name' => 'Mug']],
+        );
+
+        $this->assertStringContainsString('flag: yes', $rendered);
+        $this->assertStringContainsString('product: Mug', $rendered);
+        $this->assertStringContainsString('secret: s3cr3t', $rendered);
+        $this->assertStringContainsString('nested product: Mug', $rendered);
+    }
+
+    public function testItKeepsTheHookableContextOnReRender(): void
+    {
+        $hookName = 'hookable_live_component_with_context';
+        $context = new DataBag(['flag' => true, 'product' => (object) ['name' => 'Mug'], 'secret' => 's3cr3t']);
+
+        $component = $this->createLiveComponent('app:context_aware_live', [
+            'hookableMetadata' => new HookableMetadata(new HookMetadata($hookName, $context), $context, new ScalarDataBag([]), [$hookName]),
+            'productName' => 'Mug',
+        ]);
+
+        $rendered = $component->refresh()->render()->toString();
+
+        $this->assertStringContainsString('flag: yes', $rendered);
+        $this->assertStringContainsString('product: Mug', $rendered);
+        $this->assertStringContainsString('secret: none', $rendered);
+        $this->assertStringContainsString('nested product: Mug', $rendered);
+        $this->assertStringNotContainsString('s3cr3t', $rendered);
+    }
+
+    /**
+     * @param array<string, mixed> $context
+     */
+    private function render(string $path, array $context = []): string
     {
         /** @var Twig $twig */
         $twig = $this->getContainer()->get('twig');
 
-        return $twig->render($path);
+        return $twig->render($path, $context);
     }
 }
