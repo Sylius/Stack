@@ -1,8 +1,8 @@
 {% set form = hookable_metadata.context.form|default(null) %}
 
-{% if form is not null and form.vars.valid == false %}
-    <div class="container-xl">
-        <div class="sylius alert alert-danger" role="alert" {{ sylius_test_html_attribute('form-error-alert') }}>
+{% if form is not null and form.vars.valid is same as(false) %}
+    <div class="container-xl mt-4">
+        <div class="sylius alert alert-danger mb-0" role="alert" {{ sylius_test_html_attribute('form-error-alert') }}>
             <div class="d-flex">
                 <div>{{ ux_icon('tabler:exclamation-circle') }}</div>
                 <div class="mx-2">
