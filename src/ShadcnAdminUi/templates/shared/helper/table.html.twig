@@ -86,6 +86,8 @@
                                 {{ sylius_grid_render_action(grid, action, row) }}
                             {% endfor %}
                         {% endset %}
+                        {# admin--grid-row-menu turns the actions into menu items, for the arrow keys #}
+                        {% set subactions_menu %}<div class="flex flex-col *:w-full" {{ stimulus_controller('admin--grid-row-menu') }}>{{ subactions }}</div>{% endset %}
                         {% if subactions|trim|length > 0 %}
                             {% set more_button %}
                                 <span class="{{ button_class('ghost', 'icon-sm') }}" title="{{ 'sylius_shadcn_admin_ui.ui.more'|trans }}">
@@ -94,8 +96,8 @@
                                 </span>
                             {% endset %}
                             {# Action templates render icon-only buttons (label in .sr-only): in the menu, stretch each trigger (the element carrying title) into a labelled item. #}
-                            {% set menu_class = 'flex flex-col *:w-full [&_[title]]:h-auto [&_[title]]:w-full [&_[title]]:justify-start [&_[title]]:gap-2 [&_[title]]:px-1.5 [&_[title]]:py-1 [&_[title]]:font-normal [&_[title].text-muted-foreground]:text-popover-foreground [&_[title]_.sr-only]:not-sr-only [&_[title]_.sr-only]:whitespace-nowrap' %}
-                            {{ dropdown.default({id: 'row-' ~ row.id|default(random()), customTrigger: more_button, content: subactions, direction: 'down-end', class: menu_class}) }}
+                            {% set menu_class = '[&_[title]]:h-auto [&_[title]]:w-full [&_[title]]:justify-start [&_[title]]:gap-2 [&_[title]]:px-1.5 [&_[title]]:py-1 [&_[title]]:font-normal [&_[title].text-muted-foreground]:text-popover-foreground [&_[title]_.sr-only]:not-sr-only [&_[title]_.sr-only]:whitespace-nowrap' %}
+                            {{ dropdown.default({id: 'row-' ~ row.id|default(random()), customTrigger: more_button, content: subactions_menu, direction: 'down-end', class: menu_class}) }}
                         {% else %}
                             {# Keep the menu slot so the other action icons stay aligned from row to row #}
                             <span class="inline-block size-7 shrink-0" aria-hidden="true"></span>

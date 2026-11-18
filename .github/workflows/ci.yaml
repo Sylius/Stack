@@ -158,6 +158,13 @@ jobs:
             -   name: Run PHPUnit (Shadcn Admin Ui)
                 run: (cd src/ShadcnAdminUi/ && vendor/bin/phpunit)
 
+            -   name: Run JavaScript tests (Shadcn Admin UI)
+                if: matrix.php == '8.3' && matrix.symfony == '^7.4'
+                working-directory: src/ShadcnAdminUi
+                run: |
+                    yarn install --frozen-lockfile --non-interactive
+                    yarn test
+
             - name: "Restrict packages' versions (Twig Hooks)"
               run: |
                   (cd src/TwigHooks/ && composer config --no-plugins allow-plugins.symfony/runtime true)

@@ -3,6 +3,8 @@
  # templates only need the namespace to be changed.
  #
  # Extra params: variant ('default'|'secondary'|'outline'|'ghost'|'destructive'|'link')
+ # dropdown: true adds a chevron; an attribute map (the DropdownMenu trigger attributes) is also
+ # rendered, before attr, so these attributes win over a duplicate in attr.
  #}
 {% macro default(params = {}) %}
     {% from '@SyliusShadcnAdminUi/shared/helper/ui.html.twig' import button_class, html_attributes %}
@@ -31,6 +33,7 @@
     {% set icon_attributes = {class: params.icon_class|default(''), 'aria-hidden': 'true'}|merge(params.icon_only ? {} : {'data-icon': 'inline-start'}) %}
     {% set icon = params.icon ? ux_icon(params.icon, icon_attributes) %}
     {% set label = params.icon_only ? '<span class="sr-only">' ~ params.text|e ~ '</span>' : params.text|e %}
+    {% set chevron = params.dropdown and not params.icon_only ? ux_icon('lucide:chevron-down', {'data-icon': 'inline-end', class: 'opacity-60', 'aria-hidden': 'true'}) %}
 
     {% if params.url %}
         <a href="{{ params.url }}"
@@ -39,8 +42,9 @@
             class="{{ class }}"
             {%- if params.disabled %} aria-disabled="true" tabindex="-1"{% endif %}
             {%- if params.icon_only %} title="{{ params.text }}"{% endif %}
+            {%- if params.dropdown is iterable %} {{ html_attr(params.dropdown) }}{% endif %}
             {{- html_attributes(params.attr) }}>
-            {{- icon|raw }}{{ label|raw -}}
+            {{- icon|raw }}{{ label|raw }}{{ chevron|raw -}}
         </a>
     {% else %}
         <button type="{{ params.type }}"
@@ -50,8 +54,9 @@
             class="{{ class }}"
             {%- if params.disabled %} disabled{% endif %}
             {%- if params.icon_only %} title="{{ params.text }}"{% endif %}
+            {%- if params.dropdown is iterable %} {{ html_attr(params.dropdown) }}{% endif %}
             {{- html_attributes(params.attr) }}>
-            {{- icon|raw }}{{ label|raw -}}
+            {{- icon|raw }}{{ label|raw }}{{ chevron|raw -}}
         </button>
     {% endif %}
 {% endmacro %}

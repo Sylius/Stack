@@ -20,6 +20,7 @@ use Sylius\Bundle\GridBundle\Builder\Action\UpdateAction;
 use Sylius\Bundle\GridBundle\Builder\ActionGroup\BulkActionGroup;
 use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
 use Sylius\Bundle\GridBundle\Builder\ActionGroup\MainActionGroup;
+use Sylius\Bundle\GridBundle\Builder\ActionGroup\SubItemActionGroup;
 use Sylius\Bundle\GridBundle\Builder\Field\DateTimeField;
 use Sylius\Bundle\GridBundle\Builder\Field\StringField;
 use Sylius\Bundle\GridBundle\Builder\Field\TwigField;
@@ -74,7 +75,8 @@ final class BookGrid extends AbstractGrid implements ResourceAwareGridInterface
             )
             ->addField(DateTimeField::create('createdAt', 'd/m/Y')->setLabel('app.ui.created_at')->setSortable(true))
             ->addActionGroup(MainActionGroup::create(CreateAction::create()))
-            ->addActionGroup(ItemActionGroup::create(ShowAction::create(), UpdateAction::create(), DeleteAction::create()))
+            ->addActionGroup(ItemActionGroup::create(ShowAction::create()))
+            ->addActionGroup(SubItemActionGroup::create(UpdateAction::create(), DeleteAction::create()))
             ->addActionGroup(BulkActionGroup::create(DeleteAction::create()))
         ;
     }
