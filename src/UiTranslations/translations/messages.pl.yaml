@@ -57,6 +57,7 @@ sylius:
         theme_light: 'Jasny'
         this_form_contains_errors: 'Ten formularz zawiera błędy.'
         to: 'Do'
+        toggle_sidebar: 'Przełącz pasek boczny'
         toggle_theme: 'Zmień motyw'
         unable_to_copy_to_clipboard: 'Nie udało się skopiować do schowka'
         update: 'Zaktualizuj'
