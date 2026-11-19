@@ -57,6 +57,7 @@ sylius:
         theme_light: 'Hell'
         this_form_contains_errors: 'Dieses Formular enthält Fehler.'
         to: 'Bis'
+        toggle_sidebar: 'Seitenleiste umschalten'
         toggle_theme: 'Design wechseln'
         unable_to_copy_to_clipboard: 'Kopieren in die Zwischenablage nicht möglich'
         update: 'Aktualisieren'

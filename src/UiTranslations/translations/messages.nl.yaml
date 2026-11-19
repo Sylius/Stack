@@ -61,6 +61,7 @@ sylius:
         theme_light: 'Licht'
         this_form_contains_errors: 'Dit formulier bevat fouten.'
         to: Tot
+        toggle_sidebar: 'Zijbalk wisselen'
         toggle_theme: 'Thema wisselen'
         update: Bijwerken
         value: Waarde

@@ -64,6 +64,7 @@ sylius:
         theme_light: 'Light'
         this_form_contains_errors: 'This form contains errors.'
         to: To
+        toggle_sidebar: 'Toggle sidebar'
         toggle_theme: 'Toggle theme'
         unable_to_copy_to_clipboard: Unable to copy to clipboard
         update: Update
