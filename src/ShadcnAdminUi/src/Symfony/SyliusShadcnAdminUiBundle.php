@@ -123,12 +123,15 @@ final class SyliusShadcnAdminUiBundle extends AbstractBundle
 
             // Registers the bundle controllers next to the application ones.
             // Their identifiers come from their sub-directory: "shadcn--dialog", "admin--grid-selection"...
-            $builder->prependExtensionConfig('stimulus', [
-                'controller_paths' => [
-                    '%kernel.project_dir%/assets/controllers',
-                    $this->getPath() . '/assets/controllers',
-                ],
-            ]);
+            // Configuring "stimulus" without StimulusBundle enabled would make the container compilation fail.
+            if (isset($bundles['StimulusBundle'])) {
+                $builder->prependExtensionConfig('stimulus', [
+                    'controller_paths' => [
+                        '%kernel.project_dir%/assets/controllers',
+                        $this->getPath() . '/assets/controllers',
+                    ],
+                ]);
+            }
         }
     }
 
