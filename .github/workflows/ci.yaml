@@ -176,3 +176,51 @@ jobs:
                 run: |
                     yarn install --frozen-lockfile --non-interactive
                     yarn test
+
+    sqlite:
+        runs-on: ubuntu-latest
+        name: "Test application / PHP 8.4 / Symfony ^7.4 / SQLite"
+        env:
+            APP_ENV: test
+            COMPOSER_ROOT_VERSION: "dev-main"
+            DATABASE_URL: "sqlite:///%kernel.project_dir%/var/data_%kernel.environment%.db"
+        steps:
+            -   name: "Checkout"
+                uses: actions/checkout@v3
+
+            -   name: "Setup PHP"
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: "8.4"
+                    extensions: pdo_sqlite
+                    tools: 'composer:v2, flex'
+                    coverage: none
+
+            -   name: "Restrict packages' versions"
+                run: composer config extra.symfony.require "^7.4"
+
+            -   name: Get Composer cache directory
+                id: composer-cache
+                run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+            -   name: "Setup cache"
+                uses: actions/cache@v3
+                with:
+                    path: |
+                        ${{ steps.composer-cache.outputs.dir }}
+                    key: ${{ github.run_id }}-${{ runner.os }}-sqlite-${{ hashFiles('composer.json') }}-symfony-^7.4
+
+            -   name: "Install dependencies"
+                run: composer update --no-interaction --no-scripts
+
+            -   name: Create Testing database
+                run: bin/console doctrine:schema:create
+
+            -   name: "Install & compile assets"
+                run: |
+                    bin/console importmap:install
+                    bin/console tailwind:build
+                    bin/console asset-map:compile
+
+            -   name: Run PHPUnit
+                run: vendor/bin/phpunit
