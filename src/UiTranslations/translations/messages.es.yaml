@@ -52,6 +52,7 @@ sylius:
         theme_light: 'Claro'
         this_form_contains_errors: 'Este formulario contiene errores.'
         to: 'Hasta'
+        toggle_sidebar: 'Alternar barra lateral'
         toggle_theme: 'Cambiar tema'
         unable_to_copy_to_clipboard: 'No se pudo copiar al portapapeles'
         update: 'Actualizar'

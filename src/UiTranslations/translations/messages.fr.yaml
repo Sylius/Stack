@@ -64,6 +64,7 @@ sylius:
         theme_light: 'Clair'
         this_form_contains_errors: 'Ce formulaire contient des erreurs.'
         to: 'À'
+        toggle_sidebar: 'Afficher/masquer le menu'
         toggle_theme: 'Changer de thème'
         unable_to_copy_to_clipboard: 'Impossible de copier dans le presse-papiers'
         update: 'Mise à jour'

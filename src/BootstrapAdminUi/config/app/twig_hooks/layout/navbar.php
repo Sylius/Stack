@@ -17,6 +17,10 @@ return static function (ContainerConfigurator $container): void {
     $container->extension('sylius_twig_hooks', [
         'hooks' => [
             'sylius_admin.common.component.navbar' => [
+                'sidebar_trigger' => [
+                    'template' => '@SyliusBootstrapAdminUi/shared/crud/common/navbar/sidebar_trigger.html.twig',
+                    'priority' => 100,
+                ],
                 'menu' => [
                     'template' => '@SyliusBootstrapAdminUi/shared/crud/common/navbar/menu.html.twig',
                 ],
