@@ -1,0 +1,8 @@
+# What the application needs to run as WebAssembly, in a service worker: the
+# sessions are in /stack, that is kept in IndexedDB, as the database. The
+# service worker is stopped after 30 s without a request, and the files in
+# memory with it.
+framework:
+    session:
+        handler_id: session.handler.native_file
+        save_path: /stack/sessions
