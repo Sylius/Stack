@@ -211,6 +211,11 @@ function build_task(
     // WebAssembly makes its own, with 32-bit ones
     fs()->remove(EMBED . '/var');
 
+    // The web server serves the avatars, under the base path: vich_uploader_asset()
+    // does not add it. Keep in sync with config/packages/vich_uploader.yaml
+    $vich = EMBED . '/config/packages/vich_uploader.yaml';
+    fs()->dumpFile($vich, preg_replace('{(uri_prefix:\s*)\S*(avatars/speakers)}', '${1}' . $basePath . '${2}', file_get_contents($vich)));
+
     io()->section('PHP as WebAssembly');
     build([stack()], $set);
 

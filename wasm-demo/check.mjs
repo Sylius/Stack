@@ -46,6 +46,13 @@ async function request(method, url, body = '') {
     return { ...response, text: decoder.decode(response.body) };
 }
 
+const home = await request('GET', '/');
+const homeLocation = home.headers.find(([name]) => 'location' === name.toLowerCase())?.[1] ?? '';
+if (![301, 302].includes(home.status) || !homeLocation.endsWith('/admin/')) {
+    throw new Error(`The home page does not redirect to the admin panel (${home.status}, ${homeLocation}): ${home.stderr}`);
+}
+console.log(`${home.status} / -> ${homeLocation}`);
+
 const login = await request('GET', '/admin/login');
 const token = login.text.match(/name="_csrf_admin_security_token" value="([^"]+)"/)?.[1];
 if (200 !== login.status || undefined === token) {
