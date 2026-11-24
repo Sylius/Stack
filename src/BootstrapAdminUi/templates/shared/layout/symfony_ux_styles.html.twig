@@ -1,1 +1,12 @@
-<link rel="stylesheet" href="{{ asset('bundles/syliusbootstrapadminui/symfony_ux.css') }}">
+{#
+    With an importmap entrypoint (see the "importmap_entrypoint" option), the application starts its own
+    Stimulus application: its importmap is loaded instead of the prebuilt Symfony UX assets.
+    It is loaded in the <head>, for the stylesheets it imports to be rendered with the page.
+    The importmap() function only exists with AssetMapper, hence the separate template.
+#}
+{% set entrypoint = hookable_metadata.configuration.entrypoint|default(null) %}
+{% if entrypoint is not null %}
+    {{ include('@SyliusBootstrapAdminUi/shared/layout/importmap.html.twig', {entrypoint: entrypoint}) }}
+{% else %}
+    <link rel="stylesheet" href="{{ asset('bundles/syliusbootstrapadminui/symfony_ux.css') }}">
+{% endif %}

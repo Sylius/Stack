@@ -21,8 +21,15 @@ Nothing else is needed: this works whether your application uses Webpack Encore,
 
 ## Using your own Stimulus application (AssetMapper)
 
-If your application starts its own Stimulus application, for instance with AssetMapper, disable both `symfony_ux` hookables and load your importmap instead.
-Follow the [Using AssetMapper](../getting-started.md#using-assetmapper) guide.
+If your application starts its own Stimulus application with AssetMapper, set the importmap entrypoint that starts it:
+
+```yaml
+sylius_bootstrap_admin_ui:
+    importmap_entrypoint: app
+```
+
+Both `symfony_ux` hookables then load your importmap (in the `<head>`) instead of the prebuilt Stimulus application and Symfony UX stylesheets.
+Follow the [Using AssetMapper](../getting-started.md#using-assetmapper) guide to prepare your Stimulus application.
 
 ## Stimulus controllers
 
@@ -34,10 +41,11 @@ The package provides the following Stimulus controllers:
 | `theme-switcher`    | the theme switcher of the navbar                                             |
 
 They are registered by the prebuilt `symfony_ux` Stimulus application.
-When you disable it and start your own Stimulus application with AssetMapper, the package registers them in it: it exposes its `assets/controllers/` directory to AssetMapper and adds it to the `stimulus.controller_paths` option, next to your `assets/controllers/` directory. Nothing else is needed.
+When you use your own Stimulus application instead (the `importmap_entrypoint` option), the package registers them in it: it exposes its `assets/controllers/` directory to AssetMapper and adds it to the `stimulus.controller_paths` option, next to your `assets/controllers/` directory. Nothing else is needed.
 
 {% hint style="warning" %}
 Do not load the prebuilt `symfony_ux` Stimulus application and your own one on the same page: both would connect these controllers (and the Symfony UX ones) to the same elements, so the theme switcher for instance would toggle twice on each click.
+The `importmap_entrypoint` option takes care of it.
 {% endhint %}
 
 ### Versions that do not register their controllers

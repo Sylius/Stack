@@ -132,7 +132,7 @@ Register the controller **once in the application's existing Stimulus applicatio
 
 ### AssetMapper
 
-Follow the [AssetMapper setup](../../getting-started.md#using-assetmapper) to disable the package's `symfony_ux` entrypoint when starting your own Stimulus application.
+Follow the [AssetMapper setup](../../getting-started.md#using-assetmapper) to replace the package's `symfony_ux` entrypoint with your own Stimulus application (the `importmap_entrypoint` option).
 
 The package registers its controllers in the Stimulus application started by StimulusBundle, with the `copy-to-clipboard` identifier: nothing else to configure.
 If you registered it yourself by following a previous version of this page (`app.register('copy-to-clipboard', ...)`, a local importmap entry, an `asset_mapper` path), remove that code.

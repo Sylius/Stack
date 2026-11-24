@@ -77,7 +77,7 @@ Now, it's your turn!
 ### Using AssetMapper
 
 By default, the `sylius/bootstrap-admin-ui` package loads prebuilt assets that start their own Stimulus application (the `symfony_ux` hookables).
-If your application uses [AssetMapper](https://symfony.com/doc/current/frontend/asset_mapper.html) and starts its own Stimulus application, disable these prebuilt assets to avoid running two Stimulus applications (and duplicate Ajax calls), and take control of Stimulus initialization in your own code.
+If your application uses [AssetMapper](https://symfony.com/doc/current/frontend/asset_mapper.html) and starts its own Stimulus application, replace these prebuilt assets with your importmap to avoid running two Stimulus applications (and duplicate Ajax calls), and take control of Stimulus initialization in your own code.
 
 #### Preparing Stimulus for AssetMapper
 
@@ -135,34 +135,16 @@ php bin/console importmap:require @symfony/stimulus-bundle @hotwired/stimulus
 
 The `@symfony/ux-autocomplete` and `@symfony/ux-live-component` packages also need their importmap entries (such as `tom-select` and the `tom-select/dist/css/*.css` files). Symfony Flex adds them when it installs these packages; if one is missing, add it with `php bin/console importmap:require`.
 
-#### Disabling the prebuilt Stimulus app & Symfony UX stylesheets
+#### Loading your importmap in the admin panel
 
-Disable the `symfony_ux` hookables of the `sylius/bootstrap-admin-ui` package and add your own hookable that loads your importmap entrypoint.
-
-Load the importmap in the `sylius_admin.base#stylesheets` hook (in the `<head>`) rather than in the `sylius_admin.base#javascripts` one (at the end of the `<body>`):
-the stylesheets imported by your JavaScript (Tom Select, Live Components, your own CSS) are then loaded before the page is rendered, which avoids a flash of unstyled content.
-Hookables are rendered by descending priority, and the package stylesheets use the default priority (`0`): a negative priority makes sure your stylesheets come after them and can override them.
+Set the importmap entrypoint that starts your Stimulus application:
 
 {% tabs %}
 {% tab title="YAML" %}
 {% code title="config/packages/sylius_bootstrap_admin_ui.yaml" lineNumbers="true" %}
 ```yaml
-sylius_twig_hooks:
-    hooks:
-        # ...
-        'sylius_admin.base#stylesheets':
-            # Disabling Symfony UX stylesheets
-            symfony_ux:
-                enabled: false
-            # New hookable, rendered after the package stylesheets
-            app:
-                template: 'base/stylesheets/app.html.twig'
-                priority: -100
-
-        'sylius_admin.base#javascripts':
-            # Disabling Stimulus App
-            symfony_ux:
-                enabled: false
+sylius_bootstrap_admin_ui:
+    importmap_entrypoint: app
 ```
 {% endcode %}
 {% endtab %}
@@ -173,29 +155,8 @@ sylius_twig_hooks:
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // ...
-
-    $containerConfigurator->extension('sylius_twig_hooks', [
-        'hooks' => [
-            'sylius_admin.base#stylesheets' => [
-                // Disabling Symfony UX stylesheets
-                'symfony_ux' => [
-                    'enabled' => false,
-                ],
-                // New hookable, rendered after the package stylesheets
-                'app' => [
-                    'template' => 'base/stylesheets/app.html.twig',
-                    'priority' => -100,
-                ],
-            ],
-
-            'sylius_admin.base#javascripts' => [
-                // Disabling Stimulus App
-                'symfony_ux' => [
-                    'enabled' => false,
-                ],
-            ],
-        ],
+    $containerConfigurator->extension('sylius_bootstrap_admin_ui', [
+        'importmap_entrypoint' => 'app',
     ]);
 };
 ```
@@ -203,11 +164,21 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 {% endtab %}
 {% endtabs %}
 
-{% code title="templates/base/stylesheets/app.html.twig" lineNumbers="true" %}
-```twig
-{{ importmap('app') }}
+The `symfony_ux` hookables of the `sylius_admin.base#stylesheets` and `sylius_admin.base#javascripts` hooks then stop loading the prebuilt Stimulus application and Symfony UX stylesheets, and your importmap is loaded instead.
+It is loaded in the `<head>`: the stylesheets imported by your JavaScript (Tom Select, Live Components, your own CSS) are rendered with the page, which avoids a flash of unstyled content.
+
+{% hint style="info" %}
+The option sets the `entrypoint` configuration of both `symfony_ux` hookables. You can also set it per hook with Twig Hooks, as for the `entrypoint` of the Shadcn Admin UI layout:
+
+```yaml
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin.base#stylesheets':
+            symfony_ux: { configuration: { entrypoint: 'app' } }
+        'sylius_admin.base#javascripts':
+            symfony_ux: { configuration: { entrypoint: 'app' } }
 ```
-{% endcode %}
+{% endhint %}
 
 #### Starting Stimulus App
 

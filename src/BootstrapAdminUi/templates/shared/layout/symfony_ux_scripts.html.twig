@@ -1,1 +1,4 @@
-<script src="{{ asset('bundles/syliusbootstrapadminui/symfony_ux.js') }}"></script>
+{# With an importmap entrypoint, the Stimulus application is started by the importmap loaded in the <head>. #}
+{% if hookable_metadata.configuration.entrypoint|default(null) is null %}
+    <script src="{{ asset('bundles/syliusbootstrapadminui/symfony_ux.js') }}"></script>
+{% endif %}
