@@ -107,94 +107,72 @@ jobs:
                 run: |
                     APP_LOCALE=fr vendor/bin/phpunit --testsuite="TranslationsTestSuite"
 
-            - name: "Restrict packages' versions (Admin Ui)"
-              run: |
-                  (cd src/AdminUi/ && composer config --no-plugins allow-plugins.symfony/runtime true)
-                  (cd src/AdminUi/ && composer config extra.symfony.require "${{ matrix.symfony }}")
+    packages:
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                package: [ "AdminUi", "BootstrapAdminUi", "ShadcnAdminUi", "TwigExtra", "TwigHooks", "UiTranslations" ]
+                versions:
+                    - { php: "8.2", symfony: "^6.4" }
+                    - { php: "8.2", symfony: "^7.4" }
+                    - { php: "8.3", symfony: "^6.4" }
+                    - { php: "8.3", symfony: "^7.4" }
+                    - { php: "8.4", symfony: "^8.1" }
+        name: "${{ matrix.package }} / PHP ${{ matrix.versions.php }} / Symfony ${{ matrix.versions.symfony }}"
+        env:
+            APP_ENV: test
+            COMPOSER_ROOT_VERSION: "dev-main"
+        defaults:
+            run:
+                working-directory: src/${{ matrix.package }}
+        steps:
+            -   name: "Checkout"
+                uses: actions/checkout@v3
 
-            -   name: "Install dependencies (Admin Ui)"
-                run: (cd src/AdminUi/ && composer update --no-interaction --no-scripts)
+            -   name: "Setup PHP"
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: "${{ matrix.versions.php }}"
+                    tools: 'composer:v2, flex'
+                    coverage: none
 
-            -   name: Run PHPUnit (Admin Ui)
-                run: (cd src/AdminUi/ && vendor/bin/phpunit)
+            -   name: "Restrict packages' versions"
+                run: |
+                    composer config --no-plugins allow-plugins.symfony/runtime true
+                    composer config extra.symfony.require "${{ matrix.versions.symfony }}"
 
-            - name: "Restrict packages' versions (Bootstrap Admin Ui)"
-              run: |
-                  (cd src/BootstrapAdminUi/ && composer config --no-plugins allow-plugins.symfony/runtime true)
-                  (cd src/BootstrapAdminUi/ && composer config extra.symfony.require "${{ matrix.symfony }}")
+            -   name: Get Composer cache directory
+                id: composer-cache
+                run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-            -   name: "Install dependencies (Bootstrap Admin Ui)"
-                run: (cd src/BootstrapAdminUi/ && composer update --no-interaction --no-scripts)
+            -   name: "Setup cache"
+                uses: actions/cache@v3
+                with:
+                    path: |
+                        ${{ steps.composer-cache.outputs.dir }}
+                    key: ${{ github.run_id }}-${{ runner.os }}-${{ matrix.package }}-${{ hashFiles(format('src/{0}/composer.json', matrix.package)) }}-symfony-${{ matrix.versions.symfony }}
 
-            -   name: Run PHPUnit (Bootstrap Admin Ui)
-                run: (cd src/BootstrapAdminUi/ && vendor/bin/phpunit)
+            -   name: "Install dependencies"
+                run: composer update --no-interaction --no-scripts
 
-            -   name: Setup Node.js for Bootstrap Admin UI tests
-                if: matrix.php == '8.3' && matrix.symfony == '^7.4'
+            -   name: "Build the assets"
+                if: matrix.package == 'ShadcnAdminUi'
+                run: |
+                    php tests/Functional/.application/bin/console importmap:install
+                    php tests/Functional/.application/bin/console tailwind:build
+
+            -   name: Run PHPUnit
+                run: vendor/bin/phpunit
+
+            -   name: Setup Node.js
+                if: (matrix.package == 'BootstrapAdminUi' || matrix.package == 'ShadcnAdminUi') && matrix.versions.php == '8.3' && matrix.versions.symfony == '^7.4'
                 uses: actions/setup-node@v4
                 with:
                     node-version: '24'
 
-            -   name: Run JavaScript tests (Bootstrap Admin UI)
-                if: matrix.php == '8.3' && matrix.symfony == '^7.4'
-                working-directory: src/BootstrapAdminUi
+            -   name: Run JavaScript tests
+                if: (matrix.package == 'BootstrapAdminUi' || matrix.package == 'ShadcnAdminUi') && matrix.versions.php == '8.3' && matrix.versions.symfony == '^7.4'
                 run: |
                     yarn install --frozen-lockfile --non-interactive
                     yarn test
-
-            - name: "Restrict packages' versions (Shadcn Admin Ui)"
-              run: |
-                  (cd src/ShadcnAdminUi/ && composer config --no-plugins allow-plugins.symfony/runtime true)
-                  (cd src/ShadcnAdminUi/ && composer config extra.symfony.require "${{ matrix.symfony }}")
-
-            -   name: "Install dependencies (Shadcn Admin Ui)"
-                run: (cd src/ShadcnAdminUi/ && composer update --no-interaction --no-scripts)
-
-            -   name: "Build the assets (Shadcn Admin Ui)"
-                run: |
-                    (cd src/ShadcnAdminUi/ && APP_ENV=test php tests/Functional/.application/bin/console importmap:install)
-                    (cd src/ShadcnAdminUi/ && APP_ENV=test php tests/Functional/.application/bin/console tailwind:build)
-
-            -   name: Run PHPUnit (Shadcn Admin Ui)
-                run: (cd src/ShadcnAdminUi/ && vendor/bin/phpunit)
-
-            -   name: Run JavaScript tests (Shadcn Admin UI)
-                if: matrix.php == '8.3' && matrix.symfony == '^7.4'
-                working-directory: src/ShadcnAdminUi
-                run: |
-                    yarn install --frozen-lockfile --non-interactive
-                    yarn test
-
-            - name: "Restrict packages' versions (Twig Hooks)"
-              run: |
-                  (cd src/TwigHooks/ && composer config --no-plugins allow-plugins.symfony/runtime true)
-                  (cd src/TwigHooks/ && composer config extra.symfony.require "${{ matrix.symfony }}")
-
-            -   name: "Install dependencies (Twig Hooks)"
-                run: (cd src/TwigHooks/ && composer update --no-interaction --no-scripts)
-
-            -   name: Run PHPUnit (Twig Hooks)
-                run: (cd src/TwigHooks/ && vendor/bin/phpunit)
-
-            - name: "Restrict packages' versions (Twig Extra)"
-              run: |
-                  (cd src/TwigExtra/ && composer config --no-plugins allow-plugins.symfony/runtime true)
-                  (cd src/TwigExtra/ && composer config extra.symfony.require "${{ matrix.symfony }}")
-
-            -   name: "Install dependencies (Twig Extra)"
-                run: (cd src/TwigExtra/ && composer update --no-interaction --no-scripts)
-
-            -   name: Run PHPUnit (Twig Extra)
-                run: (cd src/TwigExtra/ && vendor/bin/phpunit)
-
-            - name: "Restrict packages' versions (Ui Translations)"
-              run: |
-                  (cd src/UiTranslations/ && composer config --no-plugins allow-plugins.symfony/runtime true)
-                  (cd src/UiTranslations/ && composer config extra.symfony.require "${{ matrix.symfony }}")
-
-            -   name: "Install dependencies (Ui Translations)"
-                run: (cd src/UiTranslations/ && composer update --no-interaction --no-scripts)
-
-            -   name: Run PHPUnit (Ui Translations)
-                run: (cd src/UiTranslations/ && vendor/bin/phpunit)
-
