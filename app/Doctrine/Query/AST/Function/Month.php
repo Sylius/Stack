@@ -50,7 +50,7 @@ final class Month extends FunctionNode
         }
 
         if ($platform instanceof SqlitePlatform) {
-            return sprintf('CAST(STRFTIME("%%m", %s) AS NUMBER)', $sqlWalker->walkArithmeticPrimary($this->date));
+            return sprintf("CAST(STRFTIME('%%m', %s) AS INTEGER)", $sqlWalker->walkArithmeticPrimary($this->date));
         }
 
         throw new \RuntimeException(sprintf('Platform "%s" is not supported!', $platform::class));
