@@ -1,0 +1,10 @@
+# The credentials of the demo, on the login page, as on demo.sylius.com: after
+# the header, before the flashes and the form, whose priority is 0
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin.security.login.page.content':
+            header:
+                priority: 200
+            credentials:
+                template: 'demo/security/login/credentials.html.twig'
+                priority: 100

@@ -134,6 +134,9 @@ function embed(
     run(['bin/switch-admin-ui', $ui], context: $embed);
     if ('shadcn' === $ui) {
         run(['bin/switch-admin-theme', ...$theme], context: $embed);
+        // What only works with shadcn, as the test credentials on the login
+        // page: before the Tailwind stylesheet is built, for its classes
+        fs()->mirror(__DIR__ . '/overlay-shadcn', EMBED, options: ['override' => true]);
     }
 
     io()->section('The public files, that the server serves, not PHP');
