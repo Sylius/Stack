@@ -20,12 +20,9 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
-    deploy:
+    build:
         runs-on: ubuntu-latest
-        name: "Build and deploy the demo"
-        environment:
-            name: github-pages
-            url: ${{ steps.deployment.outputs.page_url }}
+        name: "Build the demo"
         env:
             COMPOSER_ROOT_VERSION: "dev-main"
         defaults:
@@ -85,6 +82,17 @@ jobs:
                 with:
                     path: wasm-demo/public
 
+    # A job of its own, as GitHub's starter workflow: the build exports the
+    # runtime token of Actions to its steps, for the cache of buildx, and
+    # deploy-pages then finds no artifact
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        name: "Deploy the demo"
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
+        steps:
             -   name: "Deploy to GitHub Pages"
                 id: deployment
                 uses: actions/deploy-pages@v4
