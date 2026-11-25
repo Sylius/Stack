@@ -73,17 +73,17 @@ final class ApplicationGrid
                     ->setSortable(true),
             )
             ->withItemActions(
-                ApplyTransitionAction::create(name: 'accept', route: 'app_admin_application_accept')
-                    ->setIcon('ep:success-filled')
+                ApplyTransitionAction::create(name: 'accept', route: 'app_admin_application_accept', options: ['class' => 'outline-success'])
+                    ->setIcon('tabler:circle-check')
                     ->setLabel('app.ui.accept'),
-                ApplyTransitionAction::create(name: 'reject', route: 'app_admin_application_reject')
-                    ->setIcon('flat-color-icons:cancel')
+                ApplyTransitionAction::create(name: 'reject', route: 'app_admin_application_reject', options: ['class' => 'outline-danger'])
+                    ->setIcon('tabler:circle-x')
                     ->setLabel('app.ui.reject'),
-                ApplyTransitionAction::create(name: 'hold', route: 'app_admin_application_hold')
-                    ->setIcon('iconmind:wait-approval-outline-thin')
+                ApplyTransitionAction::create(name: 'hold', route: 'app_admin_application_hold', options: ['class' => 'outline-warning'])
+                    ->setIcon('tabler:clock-pause')
                     ->setLabel('app.ui.hold'),
-                ApplyTransitionAction::create(name: 'cancel', route: 'app_admin_application_cancel')
-                    ->setIcon('streamline-stickies-color:cancel-2')
+                ApplyTransitionAction::create(name: 'cancel', route: 'app_admin_application_cancel', options: ['class' => 'outline-secondary'])
+                    ->setIcon('tabler:ban')
                     ->setLabel('app.ui.cancel'),
             );
     }
