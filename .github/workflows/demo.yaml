@@ -6,8 +6,7 @@ name: Demo
 
 on:
     push:
-        # demo/php-wasm: to try it on a fork, before it is merged
-        branches: [ main, demo/php-wasm ]
+        branches: [ main ]
     workflow_dispatch: ~
 
 permissions:
