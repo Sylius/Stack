@@ -1,0 +1,5 @@
+app:
+    demo:
+        password: Password
+        test_credentials: Test credentials
+        username: Username

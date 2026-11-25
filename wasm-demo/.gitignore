@@ -1,0 +1,8 @@
+/.castor/vendor/
+/build/
+/public/build/
+/public/assets/
+/public/avatars/
+/public/bundles/
+/public/404.html
+/.castor.stub.php

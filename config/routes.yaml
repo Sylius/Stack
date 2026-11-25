@@ -1,8 +1,8 @@
 index:
     path: /
-    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
     defaults:
-        template: base.html.twig
+        route: sylius_admin_ui_dashboard
 
 basic_create:
     path: /basic/create
