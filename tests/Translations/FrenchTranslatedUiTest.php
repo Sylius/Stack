@@ -161,7 +161,7 @@ final class FrenchTranslatedUiTest extends WebTestCase
         $this->client->request('GET', '/admin/books');
 
         // Test flash message
-        self::assertSelectorTextContains('[data-test-sylius-flash-message]', 'Book a bien été mis à jour.');
+        self::assertSelectorTextContains('[data-test-sylius-flash-message]', 'Mise à jour de Book réussie.');
 
         /** @var Proxy<Book> $book */
         $book = BookFactory::find(['title' => 'Carrie']);
@@ -211,6 +211,6 @@ final class FrenchTranslatedUiTest extends WebTestCase
         $this->client->request('GET', '/admin/books');
 
         // Test flash message
-        self::assertSelectorTextContains('[data-test-sylius-flash-message]', 'Book a bien été supprimé.');
+        self::assertSelectorTextContains('[data-test-sylius-flash-message]', 'Suppression de Book réussie.');
     }
 }
