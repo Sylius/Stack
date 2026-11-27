@@ -40,6 +40,14 @@ class UserDropdownComponent
         return $this->tokenStorage->getToken()?->getUser();
     }
 
+    #[ExposeInTemplate(name: 'avatar_url')]
+    public function getAvatarUrl(): ?string
+    {
+        $user = $this->getUser();
+
+        return null === $user ? null : $this->resolveAvatarUrl($user);
+    }
+
     /**
      * @return array<array-key, array{title?: string, url?: string, icon?: string, type?: string, class?: string, variant?: string}>
      */
@@ -53,5 +61,10 @@ class UserDropdownComponent
                 'icon' => 'lucide:log-out',
             ],
         ];
+    }
+
+    protected function resolveAvatarUrl(UserInterface $user): ?string
+    {
+        return null;
     }
 }

@@ -4,6 +4,9 @@
         <twig:shadcn:DropdownMenu:Trigger>
             <twig:shadcn:Button variant="ghost" class="h-9 gap-2 px-1.5" {{ ...dropdown_menu_trigger_attrs }} {{ ...sylius_test_form_attribute('user-dropdown').attr|default({}) }}>
                 <twig:shadcn:Avatar size="sm">
+                    {% if avatar_url|default(null) %}
+                        <twig:shadcn:Avatar:Image src="{{ avatar_url }}" />
+                    {% endif %}
                     <twig:shadcn:Avatar:Fallback class="text-xs font-medium uppercase">{{ identifier|slice(0, 2) }}</twig:shadcn:Avatar:Fallback>
                 </twig:shadcn:Avatar>
                 <span class="hidden flex-col items-start leading-tight xl:flex">
