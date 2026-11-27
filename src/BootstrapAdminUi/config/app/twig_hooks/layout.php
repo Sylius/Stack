@@ -29,6 +29,8 @@ return static function (ContainerConfigurator $container): void {
                 ],
                 'styles' => [
                     'template' => '@SyliusBootstrapAdminUi/shared/layout/stylesheets.html.twig',
+                    // Rendered before the "symfony_ux" hookable, so the importmap stylesheets can override it
+                    'priority' => 100,
                 ],
                 'symfony_ux' => [
                     'template' => '@SyliusBootstrapAdminUi/shared/layout/symfony_ux_styles.html.twig',
