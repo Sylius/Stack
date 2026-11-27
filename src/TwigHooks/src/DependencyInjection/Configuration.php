@@ -17,15 +17,23 @@ use Sylius\TwigHooks\Hookable\DisabledHookable;
 use Sylius\TwigHooks\Hookable\HookableComponent;
 use Sylius\TwigHooks\Hookable\HookableTemplate;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeParentInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 final class Configuration implements ConfigurationInterface
 {
+    /**
+     * @phpstan-return TreeBuilder<'array'>
+     */
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('sylius_twig_hooks');
 
+        /**
+         * @var ArrayNodeDefinition $rootNode
+         * @phpstan-var ArrayNodeDefinition<NodeParentInterface|null> $rootNode
+         */
         $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
@@ -41,6 +49,9 @@ final class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
+    /**
+     * @phpstan-param ArrayNodeDefinition<NodeParentInterface|null> $rootNode
+     */
     private function addSupportedHookableTypesConfiguration(ArrayNodeDefinition $rootNode): void
     {
         $rootNode
@@ -58,6 +69,9 @@ final class Configuration implements ConfigurationInterface
         ;
     }
 
+    /**
+     * @phpstan-param ArrayNodeDefinition<NodeParentInterface|null> $rootNode
+     */
     private function addHooksConfiguration(ArrayNodeDefinition $rootNode): void
     {
         $rootNode
@@ -69,11 +83,16 @@ final class Configuration implements ConfigurationInterface
                         ->arrayPrototype()
                             ->beforeNormalization()
                                 ->always(function ($v) {
+                                    $isTypeDefined = isset($v['type']);
                                     $isComponentDefined = isset($v['component']);
                                     $isTemplateDefined = isset($v['template']);
                                     $isDisabled = isset($v['enabled']) && $v['enabled'] === false;
 
                                     if (!$isComponentDefined && !$isTemplateDefined && !$isDisabled) {
+                                        return $v;
+                                    }
+
+                                    if (true === $isTypeDefined && false === $isDisabled) {
                                         return $v;
                                     }
 
@@ -89,6 +108,16 @@ final class Configuration implements ConfigurationInterface
                             ->end()
                             ->validate()
                                 ->always(static function ($v) {
+                                    $type = $v['type'] ?? null;
+                                    if ('template' === $type) {
+                                        $v['component'] = null;
+                                        $v['props'] = [];
+                                    }
+
+                                    if ('component' === $type) {
+                                        $v['template'] = null;
+                                    }
+
                                     $component = $v['component'] ?? null;
                                     $template = $v['template'] ?? null;
                                     $enabled = $v['enabled'] ?? true;
