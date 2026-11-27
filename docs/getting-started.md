@@ -76,30 +76,90 @@ Now, it's your turn!
 
 ### Using AssetMapper
 
-To prevent duplicate Ajax calls, disable the auto-initialized Stimulus app and Symfony UX stylesheets from the `sylius/bootstrap-admin-ui` package, so you can take control of Stimulus initialization in your own code.
+By default, the `sylius/bootstrap-admin-ui` package loads prebuilt assets that start their own Stimulus application (the `symfony_ux` hookables).
+If your application uses [AssetMapper](https://symfony.com/doc/current/frontend/asset_mapper.html) and starts its own Stimulus application, disable these prebuilt assets to avoid running two Stimulus applications (and duplicate Ajax calls), and take control of Stimulus initialization in your own code.
 
-#### Disabling Stimulus app & Symfony UX stylesheets from third party package
+#### Preparing Stimulus for AssetMapper
 
-First, you need to disable the Stimulus App started by the `sylius/bootstrap-admin-ui` package and add a custom javascript app hook for the asset mapper.
+StimulusBundle needs an `assets/controllers.json` file and an `assets/controllers/` directory.
+When the StimulusBundle recipe was applied on a Webpack Encore project, the `assets/controllers/` directory may not exist. In this case, Symfony Flex fails with `The "assets/controllers" directory does not exist` and does not add `@symfony/stimulus-bundle` to your `importmap.php`.
+
+Create the directory if needed:
+
+```bash
+mkdir -p assets/controllers
+touch assets/controllers/.gitignore
+```
+
+Then declare the Symfony UX controllers used by the admin panel, with the same autoimported stylesheets as the prebuilt assets:
+
+{% code title="assets/controllers.json" lineNumbers="true" %}
+```json
+{
+    "controllers": {
+        "@symfony/ux-autocomplete": {
+            "autocomplete": {
+                "enabled": true,
+                "fetch": "eager",
+                "autoimport": {
+                    "tom-select/dist/css/tom-select.default.css": false,
+                    "tom-select/dist/css/tom-select.bootstrap4.css": false,
+                    "tom-select/dist/css/tom-select.bootstrap5.css": true
+                }
+            }
+        },
+        "@symfony/ux-live-component": {
+            "live": {
+                "enabled": true,
+                "fetch": "eager",
+                "autoimport": {
+                    "@symfony/ux-live-component/dist/live.min.css": true
+                }
+            }
+        }
+    },
+    "entrypoints": []
+}
+```
+{% endcode %}
+
+{% hint style="info" %}
+The Stimulus controllers shipped with the `sylius/bootstrap-admin-ui` package (used by the [copy to clipboard](bootstrap-admin-ui/components/copy-to-clipboard.md) components and the theme switcher of the navbar) are registered automatically: nothing to add for them.
+{% endhint %}
+
+Make sure StimulusBundle and Stimulus are in your `importmap.php`:
+
+```bash
+php bin/console importmap:require @symfony/stimulus-bundle @hotwired/stimulus
+```
+
+The `@symfony/ux-autocomplete` and `@symfony/ux-live-component` packages also need their importmap entries (such as `tom-select` and the `tom-select/dist/css/*.css` files). Symfony Flex adds them when it installs these packages; if one is missing, add it with `php bin/console importmap:require`.
+
+#### Disabling the prebuilt Stimulus app & Symfony UX stylesheets
+
+Disable the `symfony_ux` hookables of the `sylius/bootstrap-admin-ui` package and add your own hookable that loads your importmap entrypoint.
+
+Load the importmap in the `sylius_admin.base#stylesheets` hook (in the `<head>`) rather than in the `sylius_admin.base#javascripts` one (at the end of the `<body>`):
+the stylesheets imported by your JavaScript (Tom Select, Live Components, your own CSS) are then loaded before the page is rendered, which avoids a flash of unstyled content.
+Hookables are rendered by descending priority, and the package stylesheets use the default priority (`0`): a negative priority makes sure your stylesheets come after them and can override them.
 
 {% tabs %}
 {% tab title="YAML" %}
-{% code lineNumbers="true" %}
+{% code title="config/packages/sylius_bootstrap_admin_ui.yaml" lineNumbers="true" %}
 ```yaml
-# config/packages/sylius_bootstrap_admin_ui.yaml
-# ...
 sylius_twig_hooks:
     hooks:
         # ...
-        # Disabling Symfony UX stylesheets
         'sylius_admin.base#stylesheets':
+            # Disabling Symfony UX stylesheets
             symfony_ux:
-                enabled: false    
-           
-        'sylius_admin.base#javascripts':
+                enabled: false
+            # New hookable, rendered after the package stylesheets
             app:
-                priority: 200
-                template: 'base/javascripts/app.html.twig'
+                template: 'base/stylesheets/app.html.twig'
+                priority: -100
+
+        'sylius_admin.base#javascripts':
             # Disabling Stimulus App
             symfony_ux:
                 enabled: false
@@ -122,20 +182,20 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 'symfony_ux' => [
                     'enabled' => false,
                 ],
-            ],
-            
-            'sylius_admin.base#javascripts' => [
-                // New hook
+                // New hookable, rendered after the package stylesheets
                 'app' => [
-                    'priority' => 200,
-                    'template' => 'base/javascripts/app.html.twig',
-                ],                
-                // Disabling Stimulus App        
+                    'template' => 'base/stylesheets/app.html.twig',
+                    'priority' => -100,
+                ],
+            ],
+
+            'sylius_admin.base#javascripts' => [
+                // Disabling Stimulus App
                 'symfony_ux' => [
                     'enabled' => false,
                 ],
             ],
-        ],    
+        ],
     ]);
 };
 ```
@@ -143,7 +203,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 {% endtab %}
 {% endtabs %}
 
-{% code title="base/javascripts/app.html.twig" lineNumbers="true" %}
+{% code title="templates/base/stylesheets/app.html.twig" lineNumbers="true" %}
 ```twig
 {{ importmap('app') }}
 ```
@@ -151,17 +211,27 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
 #### Starting Stimulus App
 
+The StimulusBundle recipe starts the Stimulus application of your importmap entrypoint:
+
+{% code title="assets/stimulus_bootstrap.js" lineNumbers="true" %}
 ```js
-// assets/bootstrap.js
 import { startStimulusApp } from '@symfony/stimulus-bundle';
 
 const app = startStimulusApp();
 // register any custom, 3rd party controllers here
 // app.register('some_controller_name', SomeImportedController);
 ```
+{% endcode %}
 
+{% code title="assets/app.js" lineNumbers="true" %}
 ```js
-// assets/app.js
-import './bootstrap.js';
+import './stimulus_bootstrap.js';
 // ...
 ```
+{% endcode %}
+
+{% hint style="info" %}
+Older versions of the recipe name this file `assets/bootstrap.js`.
+{% endhint %}
+
+The controllers declared in `assets/controllers.json`, the ones in your `assets/controllers/` directory and the ones of the `sylius/bootstrap-admin-ui` package are registered automatically.
