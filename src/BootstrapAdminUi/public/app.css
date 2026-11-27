@@ -76,7 +76,7 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- */.page-wrapper .page-header{margin-top:0;padding-bottom:var(--tblr-page-padding-y);padding-top:var(--tblr-page-padding-y);position:sticky;top:-1px;z-index:999}.page-wrapper .page-header.is-sticky{background:var(--tblr-body-bg);border-bottom:var(--tblr-border-width) solid var(--tblr-border-color);box-shadow:var(--tblr-shadow-card)}.page-wrapper .page-body{margin-top:0}/*!
+ */.page-wrapper .page-header{margin-top:0;padding-bottom:var(--tblr-page-padding-y);padding-top:var(--tblr-page-padding-y)}.page-wrapper .page-header[data-sticky-header]{position:sticky;top:-1px;z-index:999}.page-wrapper .page-header.is-sticky{background:var(--tblr-body-bg);border-bottom:var(--tblr-border-width) solid var(--tblr-border-color);box-shadow:var(--tblr-shadow-card)}.page-wrapper .page-body{margin-top:0}/*!
  * This file is part of the Sylius package.
  *
  * (c) Sylius Sp. z o.o.
