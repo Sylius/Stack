@@ -1,0 +1,21 @@
+name: 'Close Pull Request'
+
+on:
+    pull_request_target:
+        types: [opened, reopened]
+
+permissions:
+    pull-requests: write
+
+jobs:
+    close_pull_request:
+        name: Close Pull Request
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Close the pull request
+                run: |
+                    gh pr close "$PULL_REQUEST" --repo "$REPOSITORY" --comment "Thank you for your contribution! This repository is a read-only split of the [Sylius Stack](https://github.com/Sylius/Stack) monorepo, so pull requests cannot be merged here. Please open your pull request on https://github.com/Sylius/Stack instead."
+                env:
+                    GH_TOKEN: ${{ github.token }}
+                    PULL_REQUEST: ${{ github.event.pull_request.number }}
+                    REPOSITORY: ${{ github.repository }}

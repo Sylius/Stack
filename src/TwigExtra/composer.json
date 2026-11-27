@@ -13,6 +13,10 @@
             "homepage": "https://github.com/Sylius/Stack/contributors"
         }
     ],
+    "support": {
+        "issues": "https://github.com/Sylius/Stack/issues",
+        "source": "https://github.com/Sylius/Stack"
+    },
     "require": {
         "php": "^8.1",
         "symfony/http-kernel": "^6.4 || ^7.4 || ^8.0",
