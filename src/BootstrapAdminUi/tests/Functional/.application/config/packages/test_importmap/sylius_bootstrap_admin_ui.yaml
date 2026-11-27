@@ -1,0 +1,2 @@
+sylius_bootstrap_admin_ui:
+    importmap_entrypoint: app
