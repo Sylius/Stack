@@ -3,6 +3,10 @@
     "description": "Build your Tailwind CSS and shadcn/ui admin panels with Sylius and Symfony UX",
     "type": "symfony-bundle",
     "license": "MIT",
+    "support": {
+        "issues": "https://github.com/Sylius/Stack/issues",
+        "source": "https://github.com/Sylius/Stack"
+    },
     "require": {
         "php": "^8.1",
         "knplabs/knp-menu-bundle": "^3.0",
