@@ -1,0 +1,26 @@
+{#
+    Badge rendering macro for grid fields.
+    
+    Accepts:
+    - Objects implementing BadgeableInterface (enums with getLabel(), getColor(), getIcon(), getValue())
+    - Arrays with keys: label, color, icon, value
+    - Simple strings
+    
+    Options can override labels, colors, and icons via options.vars.labels, options.vars.colors, options.vars.icons
+#}
+{% macro default(data, options) %}
+    {% set badgeData = sylius_badge_data(data, options|default({})) %}
+    
+    {% if badgeData %}
+        <span class="d-inline-flex gap-1 badge bg-{{ badgeData.color }}-lt" {{ sylius_test_html_attribute('badge', badgeData.value ?? badgeData.label) }}>
+            {% if badgeData.icon %}
+                {% if ':' in badgeData.icon %}
+                    {{ ux_icon(badgeData.icon, {'class': 'icon icon-sm'}) }}
+                {% else %}
+                    {{ badgeData.icon }}
+                {% endif %}
+            {% endif %}
+            {{ badgeData.label }}
+        </span>
+    {% endif %}
+{% endmacro %}
