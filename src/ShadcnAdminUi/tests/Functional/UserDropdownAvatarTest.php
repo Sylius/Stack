@@ -22,6 +22,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\User\InMemoryUser;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\UX\TwigComponent\ComponentFactory;
+use Symfony\UX\TwigComponent\ComponentRenderer;
 
 final class UserDropdownAvatarTest extends KernelTestCase
 {
@@ -63,9 +65,16 @@ final class UserDropdownAvatarTest extends KernelTestCase
                 return $user->getUserIdentifier() === 'jane@example.com' ? $this->url : null;
             }
         };
-        $container->set('sylius_shadcn_admin_ui.twig.component.navbar.user_dropdown', static fn () => $component);
+        /** @var ComponentFactory $componentFactory */
+        $componentFactory = $container->get('ux.twig_component.component_factory');
+        /** @var ComponentRenderer $componentRenderer */
+        $componentRenderer = $container->get('ux.twig_component.component_renderer');
 
-        $html = $this->render("{{ component('sylius_shadcn_admin_ui:navbar:user_dropdown') }}");
+        $html = $componentRenderer->render($componentFactory->mountFromObject(
+            $component,
+            [],
+            $componentFactory->metadataFor('sylius_shadcn_admin_ui:navbar:user_dropdown'),
+        ));
         $crawler = new Crawler($html);
         $tokenStorage->setToken(null);
         self::assertNull($component->getAvatarUrl());
