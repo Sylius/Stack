@@ -113,8 +113,8 @@ This column type works exactly the same way as _StringField_, but expects a _Dat
 
 Available options:
 
-* `format` - defaults to `Y:m:d H:i:s`, you can set it to any supported format (see [https://www.php.net/manual/en/datetime.format.php](https://www.php.net/manual/en/datetime.format.php))
-* `timezone` - defaults to `%sylius_grid.timezone%` parameter, null if such a parameter does not exist, you can set it to any supported timezone (see [https://www.php.net/manual/en/timezones.php](https://www.php.net/manual/en/timezones.php))
+* `format` - defaults to `Y-m-d H:i:s`, you can set it to any supported format (see [https://www.php.net/manual/en/datetime.format.php](https://www.php.net/manual/en/datetime.format.php))
+* `timezone` - defaults to `%sylius_grid.timezone%` parameter, null if such a parameter does not exist, you can set it to any supported timezone (see [https://www.php.net/manual/en/timezones.php](https://www.php.net/manual/en/timezones.php)). Set it to `null` explicitly to keep the timezone of the date itself.
 
 {% tabs %}
 {% tab title="PHP (recommended)" %}
@@ -142,7 +142,7 @@ final class UserGrid extends AbstractGrid
     {
         $gridBuilder
             ->withFields(
-                DateTimeField::create('birthday', 'Y:m:d H:i:s', null) // this format and timezone are the default value, but you can modify them
+                DateTimeField::create('birthday', 'd/m/Y H:i', 'Europe/Paris') // the format and timezone are optional
                     ->setLabel('app.ui.birthday')
             )
         ;
@@ -163,8 +163,8 @@ sylius_grid:
                     type: datetime
                     label: app.ui.birthday
                     options:
-                        format: 'Y:m:d H:i:s'
-                        timezone: null
+                        format: 'd/m/Y H:i'
+                        timezone: 'Europe/Paris'
 ```
 {% endcode %}
 {% endtab %}
@@ -181,7 +181,7 @@ use Sylius\Bundle\GridBundle\Config\GridConfig;
 return static function (GridConfig $grid): void {
     $grid->addGrid(GridBuilder::create('app_user', '%app.model.user.class%')
         ->withFields(
-            DateTimeField::create('birthday', 'Y:m:d H:i:s', null) // this format and timezone are the default value, but you can modify them
+            DateTimeField::create('birthday', 'd/m/Y H:i', 'Europe/Paris') // the format and timezone are optional
                 ->setLabel('app.ui.birthday')
         )
     )
@@ -192,12 +192,12 @@ return static function (GridConfig $grid): void {
 {% endtabs %}
 
 {% hint style="warning" %}
-If you want to call the `setOptions` function, you must pass both `'format'` and `'timezone'` as arguments again. Otherwise, they will be unset.
+If you call the `setOptions` function, pass `'format'` and `'timezone'` again to keep them. Otherwise, they fall back to their defaults.
 
 ```php
 $field->setOptions([
-    'format' => 'Y-m-d H:i:s',
-    'timezone' => 'null'
+    'format' => 'd/m/Y H:i',
+    'timezone' => 'Europe/Paris',
 
     // Your options here
 ]);
