@@ -44,4 +44,9 @@ class HookableMetadata
     {
         return new self($this->renderedBy, $this->context, $configuration, $this->prefixes);
     }
+
+    public function withContext(DataBagInterface $context): self
+    {
+        return new self($this->renderedBy, $context, $this->configuration, $this->prefixes);
+    }
 }
